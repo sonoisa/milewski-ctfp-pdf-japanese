@@ -45,18 +45,14 @@
               babel
               bookcover
               catchfile
-              ccicons
               chngcntr
               collectbox
               currfile
               emptypage
               enumitem
               environ
-              esvect
               fgruler
               fontaxes
-              fourier
-              fouriernc
               framed
               fvextra
               idxlayout
@@ -70,30 +66,17 @@
               lettrine
               libertine
               libertinus-fonts
-              libertinus-type1
-              libertinust1math
               listings
-              lxfonts
-              mathabx
               mdframed
               microtype
               minifp
               minted
-              multido
               mweights
               needspace
               newtx
-              newtxsf
-              newpx
               noindentafter
-              noto
               nowidow
-              opensans
               scheme-medium
-              siunitx
-              stix
-              stix2-otf
-              stix2-type1
               subfigure
               subfiles
               textpos
@@ -103,31 +86,12 @@
               titlesec
               todonotes
               trimspaces
-              ulem
               upquote
               wrapfig
               xifthen
-              xits
               xpatch
               xstring
-              yhmath
               zref
-              platex
-              uplatex
-              cjk
-              ipaex
-              plautopatch
-              dvipdfmx
-              luaotfload
-              adobemapping
-              etoolbox
-              everysel
-              filehook
-              atbegshi
-              ltxcmds
-              pdftexcmds
-              luatexja
-              haranoaji
               ;
 
             inconsolata-lgc-latex = {
@@ -176,13 +140,9 @@
               buildPhase = ''
                 runHook preBuild
 
-                mkdir -p .cache/texmf-var
-
-                env TEXMFHOME=.cache TEXMFVAR=.cache/texmf-var \
                 latexmk -file-line-error -shell-escape -logfilewarninglist \
                         -interaction=nonstopmode -halt-on-error -norc \
-                        -jobname=ctfp \
-                        -pdflatex="lualatex %O %S" -pdflua \
+                        -jobname=ctfp -pdflatex="xelatex %O %S" -pdfxe \
                         "$basename.tex"
 
                 runHook postBuild

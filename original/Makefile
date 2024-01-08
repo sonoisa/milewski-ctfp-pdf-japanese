@@ -8,9 +8,6 @@ LATEXMK_COMMAND = $(TEXLIVE_RUN) latexmk $(LATEXMK_ARGS)
 # Make does not offer a recursive wildcard function, so here's one:
 rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 
-setup:
-	nix develop
-
 ctfp:
 	cd src; $(LATEXMK_COMMAND) -jobname=ctfp ctfp-reader.tex
 
