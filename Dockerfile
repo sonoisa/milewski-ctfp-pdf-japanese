@@ -3,6 +3,9 @@
 # ========
 FROM ubuntu:20.04 AS nix-base
 
+ENV TZ=Asia/Tokyo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN apt-get -y update && \
     apt-get -y install --no-install-recommends \
       curl \
