@@ -1,79 +1,96 @@
-![GitHub stars][github stars]
-[![GitHub Workflow Status][github workflow status]][github actions link]
-[![Download][download badge]][github latest release]
-[![License][license badge]][github latest release]
+# プログラマのための圏論 (Category Theory For Programmers 日本語版）
 
-# Category Theory For Programmers
-
-An _unofficial_ PDF version of "**C**ategory **T**heory **F**or **P**rogrammers"
-by [Bartosz Milewski][bartosz github], converted from his [blogpost
-series][blogpost series] (_with permission!_).
+これは[Category Theory For Programmers 非公式PDF版](https://github.com/hmemcpy/milewski-ctfp-pdf)を日本語に翻訳するプロジェクトです。
 
 ![Category Theory for Programmers][ctfp image]
 
-## Buy the book
 
-- **[Standard edition in full-color hardcover
-  print][buy regular edition on blurb]**
-  - Publish date: 12 August, 2019.
-  - Based off release tag [v1.3.0][v1.3.0 github release link]. See
-    [errata-1.3.0](errata-1.3.0.md) for changes and fixes since print.
-- **[Scala Edition in paperback][buy scala edition on blurb]**
-  - Publish date: 12 August, 2019.
-  - Based off release tag [v1.3.0][v1.3.0 github release link]. See
-    [errata-scala](errata-scala.md) for changes and fixes since print.
+## PDF
 
-## Build the book
+組版済みのPDFファイルは下記からダウンロードできます。
+まだ翻訳の修正途中であるため、変な部分が多々あると思います。
 
-The building workflow requires [Nix][nix website]. After [installing
-Nix][nix download website], you need to enable the upcoming "flake" feature
-which must be [enabled manually][nixos wiki flake] the time being. This is
-needed to expose the new Nix commands and flakes support that are hidden behind
-feature-flags.
+- 閲覧用
+  - [Standard Edition](https://github.com/sonoisa/milewski-ctfp-pdf-japanese/blob/master/build/ctfp.pdf)
+  - [Scala Edition](https://github.com/sonoisa/milewski-ctfp-pdf-japanese/blob/master/build/ctfp-scala.pdf)
+  - [OCaml Edition](https://github.com/sonoisa/milewski-ctfp-pdf-japanese/blob/master/build/ctfp-ocaml.pdf)
 
-Afterwards, type `nix flake show` in the root directory of the project to see
-all the available versions of this book. Then type `nix build .#<edition>` to
-build the edition you want (Haskell, Scala, OCaml, Reason and their printed
-versions). For example, to build the Scala edition you'll have to type
-`nix build .#ctfp-scala`.
+- 印刷用
+  - [Standard Edition](https://github.com/sonoisa/milewski-ctfp-pdf-japanese/blob/master/build/ctfp-print.pdf)
+  - [Scala Edition](https://github.com/sonoisa/milewski-ctfp-pdf-japanese/blob/master/build/ctfp-print-scala.pdf)
+  - [OCaml Edition](https://github.com/sonoisa/milewski-ctfp-pdf-japanese/blob/master/build/ctfp-print-ocaml.pdf)
 
-Upon successful compilation, the PDF file will be placed in the `result`
-directory.
 
-The command `nix develop` will provide a shell containing all the required
-dependencies to build the book manually using the provided `Makefile`. To build
-the `ctfp-scala` edition, just run `make ctfp-scala`.
+## 翻訳の進捗状況
 
-## Contribute
+- [x] ChatGPTを用いた全ページの機械翻訳
+- [x] サンプリングしたページにおける単語レベルの誤訳の修正
+- [ ] 各ページの翻訳修正
+  - [ ] 0.0
+  - [ ] 1.1
+  - [ ] 1.2
+  - [ ] 1.3
+  - [ ] 1.4
+  - [ ] 1.5
+  - [ ] 1.6
+  - [ ] 1.7
+  - [ ] 1.8
+  - [ ] 1.9
+  - [ ] 1.10
+  - [ ] 2.1
+  - [ ] 2.2
+  - [ ] 2.3
+  - [ ] 2.4
+  - [ ] 2.5
+  - [ ] 2.6
+  - [ ] 3.1
+  - [ ] 3.2
+  - [ ] 3.3
+  - [ ] 3.4
+  - [ ] 3.5
+  - [ ] 3.6
+  - [ ] 3.7
+  - [ ] 3.8
+  - [ ] 3.9
+  - [ ] 3.10
+  - [ ] 3.11
+  - [ ] 3.12
+  - [ ] 3.13
+  - [ ] 3.14
+  - [ ] 3.15
+  - [ ] その他のページ
 
-Contributors are welcome to contribute to this book by sending pull-requests.
-Once reviewed, the changes are merged in the main branch and will be
-incorporated in the next release.
 
-**Note from [Bartosz][bartosz github]**: I really appreciate all your
-contributions. You made this book much better than I could have imagined. Thank
-you!
+## 組版の手順
 
-Find the [list of contributors on Github][contributors].
+1. Dockerイメージをビルドします。
+```
+$ docker build -t ctfp:latest .
+```
+2. Dockerコンテナを起動します。以降、コンテナ内で作業をします。
+```
+$ docker run -it -v .:/doc ctfp:latest
+```
+3. 組版に必要なライブラリをインストールします。
+```
+$ cd /doc
+$ nix develop
+```
+4. 組版を実行します。例えば、Scala版の組版をするには次のコマンドを実行します。その他のターゲットはMakefileをご確認ください。
+```
+$ make ctfp-scala
+```
 
-## Acknowledgements
+組版が成功すると、`build`ディレクトリにPDFファイルが見つかるでしょう。
 
-PDF LaTeX source and the tools to create it are based on the work by [Andres
-Raba][andres raba github]. The book content is taken, with permission, from
-[Bartosz Milewski][bartosz github]'s blogpost series, and adapted to the LaTeX
-format.
-
-The original blog post acknowledgments by Bartosz are consolidated in the
-_Acknowledgments_ page at the end of the book.
 
 ## License
 
-The PDF book, `.tex` files, and associated images and figures in directories
-`src/fig` and `src/content` are licensed under [Creative Commons
-Attribution-ShareAlike 4.0 International License][license cc by sa].
+本書のPDFや、`src/fig` と `src/content` に格納されたTeXファイルや画像ファイルは[Creative Commons
+Attribution-ShareAlike 4.0 International License][license cc by sa]ライセンスに従います。
 
-The script files `scraper.py` and others are licensed under [GNU General Public
-License version 3][license gnu gpl].
+スクリプトファイル `scraper.py` などは[GNU General Public
+License version 3][license gnu gpl]ライセンスに従います。
 
 [download badge]:
   https://img.shields.io/badge/Download-latest-green.svg?style=flat-square
