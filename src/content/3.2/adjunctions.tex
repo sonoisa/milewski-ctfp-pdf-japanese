@@ -1,39 +1,15 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{I}{n mathematics we have} various ways of saying that one thing is like
-another. The strictest is equality. Two things are equal if there is no
-way to distinguish one from another. One can be substituted for the
-other in every imaginable context. For instance, did you notice that we
-used \newterm{equality} of morphisms every time we talked about commuting
-diagrams? That's because morphisms form a set (hom-set) and set elements
-can be compared for equality.
+\lettrine[lhang=0.17]{数}{学}では、あるものが他のものと似ているということを様々な方法で表現します。最も厳密なのは等価性です。二つのものが等しいとは、一方を他方と区別できないことを意味します。一方をどんな想像上の文脈においても他方と置き換えることができます。例えば、可換図式について話すたびに、射の\newterm{等価性}を使ったことに気付きましたか？それは射が集合 (ホム集合) を形成し、集合の要素は等価性で比較できるからです。
 
-But equality is often too strong. There are many examples of things
-being the same for all intents and purposes, without actually being
-equal. For instance, the pair type \code{(Bool, Char)} is not
-strictly equal to \code{(Char, Bool)}, but we understand that they
-contain the same information. This concept is best captured by an
-\newterm{isomorphism} between two types --- a morphism that's invertible.
-Since it's a morphism, it preserves the structure; and being ``iso''
-means that it's part of a round trip that lands you in the same spot, no
-matter on which side you start. In the case of pairs, this isomorphism
-is called \code{swap}:
+しかし、等価性はしばしば強すぎます。実際に等しくないけれども、すべての意図と目的において同じであるものの多くの例があります。例えば、ペア型\code{(Bool, Char)}は厳密には\code{(Char, Bool)}と等しくありませんが、同じ情報を含んでいることがわかります。この概念は、二つの型の間の\newterm{同型}、すなわち可逆な射によって最もよく捉えられます。それが射であるため、構造を保持し、「iso」であることは、どちら側から始めても同じ場所に着地する往復の一部であることを意味します。ペアの場合、この同型は\code{swap}と呼ばれます: 
 
 \src{snippet01}
-\code{swap} happens to be its own inverse.
+\code{swap}はたまたま自己逆です。
 
-\section{Adjunction and Unit/Counit Pair}
+\section{随伴と単位/余単位の対}
 
-When we talk about categories being isomorphic, we express this in terms
-of mappings between categories, a.k.a. functors. We would like to be
-able to say that two categories $\cat{C}$ and $\cat{D}$ are isomorphic if
-there exists a functor $R$ (``right'') from $\cat{C}$ to $\cat{D}$,
-which is invertible. In other words, there exists another functor
-$L$ (``left'') from $\cat{D}$ back to $\cat{C}$ which, when
-composed with $R$, is equal to the identity functor $I$.
-There are two possible compositions, $R \circ L$ and
-$L \circ R$; and two possible identity functors: one in $\cat{C}$
-and another in $\cat{D}$.
+圏が同型であると言うとき、それは圏の間の写像、つまり関手の観点で表現されます。二つの圏$\cat{C}$と$\cat{D}$が同型である場合、$\cat{C}$から$\cat{D}$への関手$R$ (「右」) が存在し、それが可逆であると言えます。言い換えれば、$\cat{D}$から$\cat{C}$に戻る別の関手$L$ (「左」) が存在し、$R$と合成したものが恒等関手$I$と等しくなります。可能な合成は$R \circ L$と$L \circ R$の二つで、可能な恒等関手は$\cat{C}$に一つ、$\cat{D}$にもう一つあります。
 
 \begin{figure}[H]
   \centering
@@ -41,67 +17,35 @@ and another in $\cat{D}$.
 \end{figure}
 
 \noindent
-But here's the tricky part: What does it mean for two functors to be
-\emph{equal}? What do we mean by this equality:
+しかし、ここで厄介な部分があります: 二つの関手が\emph{等しい}とはどういう意味ですか？以下の等式はどういう意味でしょうか: 
 \[R \circ L = I_{\cat{D}}\]
-or this one:
+あるいはこれは: 
 \[L \circ R = I_{\cat{C}}\]
-It would be reasonable to define functor equality in terms of equality
-of objects. Two functors, when acting on equal objects, should produce
-equal objects. But we don't, in general, have the notion of object
-equality in an arbitrary category. It's just not part of the definition.
-(Going deeper into this rabbit hole of ``what equality really is,'' we
-would end up in Homotopy Type Theory.)
+関手の等価性を対象の等価性の観点で定義するのは合理的でしょう。等しい対象に作用する二つの関手は等しい対象を生成すべきです。しかし、一般には、任意の圏における対象の等価性の概念を持っていません。それは単に定義の一部ではありません。 (「等価性が本当に何であるか」というこの問題の深淵に深く踏み込むと、私たちはホモトピー型理論に行き着くでしょう。) 
 
-You might argue that functors \emph{are} morphisms in the category of
-categories, so they should be equality-comparable. And indeed, as long
-as we are talking about small categories, where objects form a set, we
-can indeed use the equality of elements of a set to equality-compare
-objects.
+関手は圏の圏における射であるため、等価性比較が可能であるべきだと主張するかもしれません。そして確かに、私たちが小さい圏について話している限り、対象が集合を形成するところでは、集合の要素の等価性を使って対象を等価性比較することができます。
 
-But, remember, $\Cat$ is really a $\cat{2}$-category. Hom-sets in a
-$\cat{2}$-category have additional structure --- there are $2$-morphisms acting
-between $1$-morphisms. In $\Cat$, $1$-morphisms are functors, and
-$2$-morphisms are natural transformations. So it's more natural (can't
-avoid this pun!) to consider natural isomorphisms as substitutes for
-equality when talking about functors.
+しかし、$\Cat$は実際には$\cat{2}$-圏です。$\cat{2}$-圏のホム集合には追加の構造があります―$1$-射間で作用する$2$-射があります。$\Cat$では、$1$-射は関手で、$2$-射は自然変換です。ですから、関手について話すときに等価性の代わりに自然同型を考慮する方が自然 (このダジャレは避けられません！) です。
 
-So, instead of isomorphism of categories, it makes sense to consider a
-more general notion of \newterm{equivalence}. Two categories $\cat{C}$ and
-$\cat{D}$ are \emph{equivalent} if we can find two functors going back
-and forth between them, whose composition (either way) is
-\newterm{naturally isomorphic} to the identity functor. In other words,
-there is a two-way natural transformation between the composition
-$R \circ L$ and the identity functor $I_{\cat{D}}$, and another
-between $L \circ R$ and the identity functor $I_{\cat{C}}$.
+したがって、圏の同型の代わりに、二つの圏$\cat{C}$と$\cat{D}$が\newterm{同値}であると考える方が一般的です。私たちは二つの圏の間を往復する関手を見つけることができ、その合成 (どちらの方向でも) が恒等関手と\newterm{自然に同型}です。つまり、合成$R \circ L$と恒等関手$I_{\cat{D}}$の間には二方向の自然変換があり、もう一方は$L \circ R$と恒等関手$I_{\cat{C}}$の間にあります。
 
-Adjunction is even weaker than equivalence, because it doesn't require
-that the composition of the two functors be \emph{isomorphic} to the
-identity functor. Instead it stipulates the existence of a \newterm{one
-  way} natural transformation from $I_{\cat{D}}$ to $R \circ L$, and
-another from $L \circ R$ to $I_{\cat{C}}$. Here are the signatures of
-these two natural transformations:
+随伴は同値よりもさらに弱いです。それは二つの関手の合成が恒等関手に\emph{同型}である必要はなく、$I_{\cat{D}}$から$R \circ L$への\newterm{一方向}の自然変換と、$L \circ R$から$I_{\cat{C}}$へのもう一方の存在を要求するだけです。これら二つの自然変換のシグネチャはこうです: 
 \begin{gather*}
   \eta \Colon I_{\cat{D}} \to R \circ L \\
   \varepsilon \Colon L \circ R \to I_{\cat{C}}
 \end{gather*}
-$\eta$ is called the unit, and $\varepsilon$ the counit of the adjunction.
+$\eta$は単位と呼ばれ、$\varepsilon$は随伴の余単位です。
 
-Notice the asymmetry between these two definitions. In general, we don't
-have the two remaining mappings:
+これら二つの定義の間の非対称性に注意してください。一般に、私たちは残りの二つの写像を持っていません: 
 \begin{gather*}
-  R \circ L \to I_{\cat{D}} \quad\quad\text{not necessarily} \\
-  I_{\cat{C}} \to L \circ R \quad\quad\text{not necessarily}
+  R \circ L \to I_{\cat{D}} \quad\quad\text{必ずしもではありません} \\
+  I_{\cat{C}} \to L \circ R \quad\quad\text{必ずしもではありません}
 \end{gather*}
-Because of this asymmetry, the functor $L$ is called the
-\newterm{left adjoint} to the functor $R$, while the functor
-$R$ is the right adjoint to $L$. (Of course, left and
-right make sense only if you draw your diagrams one particular way.)
+この非対称性のために、関手$L$は関手$R$の\newterm{左随伴}と呼ばれ、関手$R$は$L$の右随伴です。 (もちろん、左と右はあなたが図を特定の方法で描く場合にのみ意味があります。) 
 
-The compact notation for the adjunction is:
+随伴のコンパクトな表記は: 
 \[L \dashv R\]
-To better understand the adjunction, let's analyze the unit and the
-counit in more detail.
+随伴をより深く理解するために、単位と余単位をもっと詳しく分析しましょう。
 
 \begin{figure}[H]
   \centering
@@ -109,18 +53,11 @@ counit in more detail.
 \end{figure}
 
 \noindent
-Let's start with the unit. It's a natural transformation, so it's a
-family of morphisms. Given an object $d$ in $\cat{D}$, the
-component of $\eta$ is a morphism between $I d$, which is equal to
-$d$, and $(R \circ L) d$; which, in the picture, is called
-$d'$:
+まず単位から始めましょう。それは自然変換なので、射の族です。$\cat{D}$の対象$d$を与えられたとき、$\eta$のコンポーネントは$I d$、つまり$d$自身と$(R \circ L) d$の間の射です。図では、$d'$と呼ばれています: 
 \[\eta_d \Colon d \to (R \circ L) d\]
-Notice that the composition $R \circ L$ is an endofunctor in $\cat{D}$.
+$R \circ L$の合成は$\cat{D}$の自己関手です。
 
-This equation tells us that we can pick any object $d$ in
-$\cat{D}$ as our starting point, and use the round trip functor
-$R \circ L$ to pick our target object $d'$. Then we
-shoot an arrow --- the morphism $\eta_d$ --- to our target.
+この方程式は、任意の対象$d$を$\cat{D}$で始点として選び、$R \circ L$の往復関手を使って目標対象$d'$を選ぶことができることを教えてくれます。そして私たちは矢印 --- 射$\eta_d$ --- を目標に向けて撃ちます。
 
 \begin{figure}[H]
   \centering
@@ -128,27 +65,16 @@ shoot an arrow --- the morphism $\eta_d$ --- to our target.
 \end{figure}
 
 \noindent
-By the same token, the component of the counit $\varepsilon$ can be described as:
+同様に、余単位$\varepsilon$のコンポーネントは次のように記述できます: 
 \[\varepsilon_{c} \Colon (L \circ R) c \to c\]
-It tells us that we
-can pick any object $c$ in $\cat{C}$ as our target, and use the
-round trip functor $L \circ R$ to pick the source
-$c' = (L \circ R) c$. Then we shoot the arrow --- the morphism
-$\varepsilon_{c}$ --- from the source to the target.
+これは、任意の対象$c$を$\cat{C}$で目標として選び、往復関手$L \circ R$を使って出発点$c' = (L \circ R) c$を選ぶことができることを示しています。そして私たちは矢印 --- 射$\varepsilon_{c}$ --- を出発点から目標へ撃ちます。
 
-Another way of looking at unit and counit is that unit lets us
-\emph{introduce} the composition $R \circ L$ anywhere we could
-insert an identity functor on $\cat{D}$; and counit lets us
-\emph{eliminate} the composition $L \circ R$, replacing it with the
-identity on $\cat{C}$. That leads to some ``obvious'' consistency
-conditions, which make sure that introduction followed by elimination
-doesn't change anything:
+単位と余単位を見るもう一つの方法は、単位が$\cat{D}$上の恒等関手のどこにでも合成$R \circ L$を\emph{導入}することを可能にし、余単位が$\cat{C}$上の恒等関手と置き換えることで合成$L \circ R$を\emph{排除}することを可能にするということです。これは、導入に続いて排除が何も変えないことを確実にするいくつかの「明白な」整合性条件につながります: 
 \begin{gather*}
   L = L \circ I_{\cat{D}} \to L \circ R \circ L \to I_{\cat{C}} \circ L = L \\
   R = I_{\cat{D}} \circ R \to R \circ L \circ R \to R \circ I_{\cat{C}} = R
 \end{gather*}
-These are called triangular identities because they make the following
-diagrams commute:
+これらは三角恒等式と呼ばれるもので、以下の図式を可換にします: 
 
 \begin{figure}[H]
   \centering
@@ -173,85 +99,39 @@ diagrams commute:
 \end{figure}
 
 \noindent
-These are diagrams in the functor category: the arrows are natural
-transformations, and their composition is the horizontal composition of
-natural transformations. In components, these identities become:
+これらは関手圏の図式です: 射は自然変換であり、その合成は自然変換の水平合成です。コンポーネントでこれらの恒等式を表現すると、次のようになります: 
 \begin{gather*}
   \varepsilon_{L d} \circ L \eta_d = \id_{L d} \\
   R \varepsilon_{c} \circ \eta_{R c} = \id_{R c}
 \end{gather*}
-We often see unit and counit in Haskell under different names. Unit is
-known as \code{return} (or \code{pure}, in the definition of
-\code{Applicative}):
+単位と余単位はHaskellで異なる名前でよく見かけます。単位は\code{return} (または\code{Applicative}の定義における\code{pure}) として知られています: 
 
 \src{snippet02}
-and counit as \code{extract}:
+余単位は\code{extract}として知られています: 
 
 \src{snippet03}
-Here, \code{m} is the (endo-) functor corresponding to $R \circ L$,
-and \code{w} is the (endo-) functor corresponding to $L \circ R$. As
-we'll see later, they are part of the definition of a monad and a
-comonad, respectively.
+ここで、\code{m}は$R \circ L$に対応する(自己)関手で、\code{w}は$L \circ R$に対応するv(自己)関手です。後ほど見るように、これらはモナドと余モナドの定義の一部です。
 
-If you think of an endofunctor as a container, the unit (or
-\code{return}) is a polymorphic function that creates a default box
-around a value of arbitrary type. The counit (or \code{extract}) does
-the reverse: it retrieves or produces a single value from a container.
+自己関手をコンテナと考えると、単位 (または\code{return}) は任意の型の値の周りにデフォルトのボックスを作成する多相的関数です。余単位 (または\code{extract}) はその逆で、コンテナから単一の値を取り出すか生成します。
 
-We'll see later that every pair of adjoint functors defines a monad and
-a comonad. Conversely, every monad or comonad may be factorized into a
-pair of adjoint functors --- this factorization is not unique, though.
+後ほど見るように、随伴のペアごとにモナドと余モナドが定義されます。逆に、すべてのモナドまたは余モナドは随伴のペアに分解することができます―この分解は一意ではありませんが。
 
-In Haskell, we use monads a lot, but only rarely factorize them into
-pairs of adjoint functors, primarily because those functors would
-normally take us out of $\Hask$.
+Haskellでは、私たちはモナドを頻繁に使用しますが、通常それらを随伴のペアに分解することは稀です。主に、それらの関手が通常私たちを$\Hask$の外に連れて行くからです。
 
-We can however define adjunctions of \newterm{endofunctors} in Haskell.
-Here's part of the definition taken from
-\code{Data.Functor.Adjunction}:
+しかし、Haskellでは\newterm{自己関手}の随伴を定義することができます。こちらが\code{Data.Functor.Adjunction}からの定義の一部です: 
 
 \src{snippet04}
-This definition requires some explanation. First of all, it describes a
-multi-parameter type class --- the two parameters being \code{f} and
-\code{u}. It establishes a relation called \code{Adjunction} between
-these two type constructors.
+この定義はいくつかの説明が必要です。まず第一に、それは複数のパラメータ型クラスを記述しています―二つのパラメータは\code{f}と\code{u}です。それはこれら二つの型コンストラクタ間の関係として\code{Adjunction}を確立します。
 
-Additional conditions, after the vertical bar, specify functional
-dependencies. For instance, \code{f -> u} means that
-\code{u} is determined by \code{f} (the relation between \code{f}
-and \code{u} is a function, here on type constructors). Conversely,
-\code{u -> f} means that, if we know \code{u}, then
-\code{f} is uniquely determined.
+垂直バーの後の追加条件は機能依存性を指定します。例えば、\code{f -> u}は\code{u}が\code{f}によって決定されることを意味します (ここでは型コンストラクタ上の関数としての関係です) 。逆に、\code{u -> f}は、\code{u}を知っていれば、\code{f}が一意に決定されることを意味します。
 
-I'll explain in a moment why, in Haskell, we can impose the condition
-that the right adjoint \code{u} be a \newterm{representable} functor.
+\section{随伴とホム集合}
 
-\section{Adjunctions and Hom-Sets}
+随伴の別の同等の定義は、ホム集合の自然同型の観点からです。この定義は、これまでに検討してきた普遍構成とうまく結びついています。何か特有の射が、何かの構成を因数分解するという声明を聞くたびに、それをある集合からホム集合への写像として考えるべきです。「特有の射を選ぶ」ということの意味です。
 
-There is an equivalent definition of the adjunction in terms of natural
-isomorphisms of hom-sets. This definition ties nicely with universal
-constructions we've been studying so far. Every time you hear the
-statement that there is some unique morphism, which factorizes some
-construction, you should think of it as a mapping of some set to a
-hom-set. That's the meaning of ``picking a unique morphism.''
+さらに、因数分解はしばしば自然変換の観点で記述されます。因数分解には可換図式が関与します―ある射が二つの射 (因数) の合成に等しいです。自然変換は射を可換図式に写像します。したがって、普遍構成では、私たちは射から可換図式へ、そして特有の射へ行きます。私たちは射から射へ、あるいは一つのホム集合から別のホム集合へ (通常は異なる圏内) の写像を終えます。この写像が可逆であり、それがすべてのホム集合に自然に拡張できる場合、私たちは随伴を持っています。
 
-Furthermore, factorization can be often described in terms of natural
-transformations. Factorization involves commuting diagrams --- some
-morphism being equal to a composition of two morphisms (factors). A
-natural transformation maps morphisms to commuting diagrams. So, in a
-universal construction, we go from a morphism to a commuting diagram,
-and then to a unique morphism. We end up with a mapping from morphism to
-morphism, or from one hom-set to another (usually in different
-categories). If this mapping is invertible, and if it can be naturally
-extended across all hom-sets, we have an adjunction.
-
-The main difference between universal constructions and adjunctions is
-that the latter are defined globally --- for all hom-sets. For instance,
-using a universal construction you can define a product of two select
-objects, even if it doesn't exist for any other pair of objects in that
-category. As we'll see soon, if the product of \emph{any pair} of
-objects exists in a category, it can be also defined through an
-adjunction.
+普遍構成と随伴の主な違いは、後者が全てのホム集合に対して大局的に定義されるということです。例えば、普遍構成を使用して、それがその圏の他のどのペアの対象に対しても存在しないかもしれないある選択された対象の積を定義することができます。すぐに見るように、\emph{任意のペア}の対象の積が圏内に存在する場合、それはまた随伴を通じて定義することもできます。
 
 \begin{figure}[H]
   \centering
@@ -259,156 +139,78 @@ adjunction.
 \end{figure}
 
 \noindent
-Here's the alternative definition of the adjunction using hom-sets. As
-before, we have two functors $L \Colon \cat{D} \to \cat{C}$ and
-$R \Colon \cat{C} \to \cat{D}$. We pick two arbitrary objects: the
-source object $d$ in $\cat{D}$, and the target object $c$
-in $\cat{C}$. We can map the source object $d$ to $\cat{C}$ using
-$L$. Now we have two objects in $\cat{C}$, $L d$ and
-$c$. They define a hom-set:
+ここに、ホム集合を使用して随伴を定義するための別の方法があります。前と同様に、私たちは二つの関手$L \Colon \cat{D} \to \cat{C}$と$R \Colon \cat{C} \to \cat{D}$を持っています。私たちは二つの任意の対象を選びます: $\cat{D}$の出発対象$d$と$\cat{C}$の目標対象$c$です。$L$を使って出発対象$d$を$\cat{C}$に写像することができます。今、私たちは$\cat{C}$内の二つの対象、$L d$と$c$を持っています。彼らはホム集合を定義します: 
 \[\cat{C}(L d, c)\]
-Similarly, we can map the target object $c$ using $R$. Now
-we have two objects in $\cat{D}$, $d$ and $R c$. They,
-too, define a hom set:
+同様に、$R$を使って目標対象$c$を写像することができます。今、私たちは$\cat{D}$内の二つの対象、$d$と$R c$を持っています。彼らもホム集合を定義します: 
 \[\cat{D}(d, R c)\]
-We say that $L$ is left adjoint to $R$ iff there is an
-isomorphism of hom sets:
+私たちは、$L$が$R$の左随伴であると言います、もしホム集合の同型が存在すれば: 
 \[\cat{C}(L d, c) \cong \cat{D}(d, R c)\]
-that is natural both in $d$ and $c$.
-Naturality means that the source $d$ can be varied smoothly
-across $\cat{D}$; and the target $c$, across $\cat{C}$. More
-precisely, we have a natural transformation $\varphi$ between the
-following two (covariant) functors from $\cat{C}$ to $\Set$. Here's
-the action of these functors on objects:
+これは、$d$と$c$の両方において自然です。自然というのは、出発点$d$を$\cat{D}$を通してスムーズに変化させることができること、および目標点$c$を$\cat{C}$を通して変化させることができることを意味します。より正確には、私たちは以下の二つの (共変) 関手間の自然変換$\varphi$を持っています。これらは$\cat{C}$から$\Set$への関手の対象への作用です: 
 \begin{gather*}
   c \to \cat{C}(L d, c) \\
   c \to \cat{D}(d, R c)
 \end{gather*}
-The other natural transformation, $\psi$, acts between the following
-(contravariant) functors:
+もう一方の自然変換、$\psi$は、以下の (反変) 関手間で作用します: 
 \begin{gather*}
   d \to \cat{C}(L d, c) \\
   d \to \cat{D}(d, R c)
 \end{gather*}
-Both natural transformations must be invertible.
+両方の自然変換は可逆でなければなりません。
 
-It's easy to show that the two definitions of the adjunction are
-equivalent. For instance, let's derive the unit transformation starting
-from the isomorphism of hom-sets:
+二つの随伴の定義が等価であることを示すのは容易です。例えば、ホム集合の同型から出発して単位変換を導き出しましょう: 
 \[\cat{C}(L d, c) \cong \cat{D}(d, R c)\]
-Since this isomorphism works for any object $c$, it must also
-work for $c = L d$:
+この同型が任意の対象$c$に対して機能するので、それは$c = L d$に対しても機能しなければなりません: 
 \[\cat{C}(L d, L d) \cong \cat{D}(d, (R \circ L) d)\]
-We know that the left hand side must contain at least one morphism, the
-identity. The natural transformation will map this morphism to an
-element of $\cat{D}(d, (R \circ L) d)$ or, inserting the identity
-functor $I$, a morphism in:
+左側には少なくとも一つの射、恒等射が含まれていることがわかります。自然変換はこの射を$\cat{D}(d, (R \circ L) d)$の要素、つまり恒等関手$I$を挿入して: 
 \[\cat{D}(I d, (R \circ L) d)\]
-We get a family of morphisms parameterized by $d$. They form a
-natural transformation between the functor $I$ and the functor
-$R \circ L$ (the naturality condition is easy to verify). This is
-exactly our unit, $\eta$.
+の射へ写像します。$d$によってパラメータ化された射の族を得ます。それらは関手$I$と関手$R \circ L$間の自然変換を形成します (自然性条件は容易に検証できます) 。これはまさに私たちの単位$\eta$です。
 
-Conversely, starting from the existence of the unit and counit, we can
-define the transformations between hom-sets. For instance, let's pick an
-arbitrary morphism $f$ in the hom-set $\cat{C}(L d, c)$. We
-want to define a $\varphi$ that, acting on $f$, produces a
-morphism in $\cat{D}(d, R c)$.
+逆に、単位と余単位の存在から出発して、ホム集合間の変換を定義することができます。例えば、$\cat{C}(L d, c)$のホム集合の任意の射$f$を選びましょう。$\varphi$を定義したいと思いますが、それは$f$に作用して$\cat{D}(d, R c)$の射を生成します。
 
-There isn't really much choice. One thing we can try is to lift
-$f$ using $R$. That will produce a morphism $R f$
-from $R (L d)$ to $R c$ --- a morphism that's an
-element of $\cat{D}((R \circ L) d, R c)$.
+実際に選択肢はあまりありません。一つの試みとして、$f$を$R$を使って引き上げることができます。それは$R (L d)$から$R c$への射$R f$を生成します―$\cat{D}((R \circ L) d, R c)$の射です。
 
-What we need for a component of $\varphi$, is a morphism from
-$d$ to $R c$. That's not a problem, since we can use a
-component of $\eta_d$ to get from $d$ to
-$(R \circ L) d$. We get:
+私たちが必要とする$\varphi$のコンポーネントは、$d$から$R c$への射です。それは問題ありません、なぜなら$\eta_d$のコンポーネントを使って$d$から$(R \circ L) d$へ行くことができます。私たちは得ます: 
 \[\varphi_f = R f \circ \eta_d\]
-The other direction is analogous, and so is the derivation of $\psi$.
+逆方向は類推的であり、$\psi$の導出も同様です。
 
-Going back to the Haskell definition of \code{Adjunction}, the natural
-transformations $\varphi$ and $\psi$ are replaced by polymorphic
-(in \code{a} and \code{b}) functions \code{leftAdjunct} and
-\code{rightAdjunct}, respectively. The functors $L$ and
-$R$ are called \code{f} and \code{u}:
+Haskellの\code{Adjunction}の定義に戻ると、自然変換$\varphi$と$\psi$はそれぞれ\code{leftAdjunct}と\code{rightAdjunct}という\code{a}と\code{b}における多相的 (polymorphic) 関数に置き換えられます。関手$L$と$R$は\code{f}と\code{u}と呼ばれます: 
 
 \src{snippet05}
-The equivalence between the \code{unit}/\code{counit} formulation
-and the \code{leftAdjunct}/\allowbreak\code{rightAdjunct} formulation is
-witnessed by these mappings:
+\code{unit}/\code{counit}の定義と\code{leftAdjunct}/\code{rightAdjunct}の定義との間の同等性は、これらの写像によって証明されます: 
 
 \src{snippet06}
-It's very instructive to follow the translation from the categorical
-description of the adjunction to Haskell code. I highly encourage this
-as an exercise.
+圏の記述からHaskellコードへの翻訳を追うことは非常に教育的です。これを練習として強く推奨します。
 
-We are now ready to explain why, in Haskell, the right adjoint is
-automatically a \hyperref[representable-functors]{representable
-  functor}. The reason for this is that, to the first approximation, we
-can treat the category of Haskell types as the category of sets.
+Haskellにおいて、右随伴が自動的に\hyperref[representable-functors]{表現可能関手}である理由を説明する準備ができました。これは、第一近似として、Haskellの型の圏を集合の圏として扱うことができるためです。
 
-When the right category $\cat{D}$ is $\Set$, the right adjoint
-$R$ is a functor from $\cat{C}$ to $\Set$. Such a functor is
-representable if we can find an object $\mathit{rep}$ in $\cat{C}$ such
-that the hom-functor $\cat{C}(\mathit{rep}, \_)$ is naturally isomorphic to
-$R$. It turns out that, if $R$ is the right adjoint of
-some functor $L$ from $\Set$ to $\cat{C}$, such an object
-always exists --- it's the image of the singleton set $()$ under
-$L$:
+右圏$\cat{D}$が$\Set$の場合、右随伴$R$は$\cat{C}$から$\Set$への関手です。そのような関手が表現可能である場合、私たちは$\cat{C}$内のある対象$\mathit{rep}$を見つけることができ、ホム関手$\cat{C}(\mathit{rep}, \_)$が$R$と自然に同型であると言えます。実際には、もし$R$が$\Set$から$\cat{C}$へのいくつかの関手$L$の右随伴である場合、そのような対象は常に存在します―それは単集合$()$の下での$L$の像です: 
 \[\mathit{rep} = L ()\]
-Indeed, the adjunction tells us that the following two hom-sets are
-naturally isomorphic:
+確かに、随伴によれば、次の二つのホム集合が自然に同型です: 
 \[\cat{C}(L (), c) \cong \Set((), R c)\]
-For a given $c$, the right hand side is the set of functions from
-the singleton set $()$ to $R c$. We've seen earlier that
-each such function picks one element from the set $R c$. The set
-of such functions is isomorphic to the set $R c$. So we have:
+与えられた$c$に対して、右側は単集合$()$から$R c$への関数の集合です。私たちは以前に見たように、各そのような関数が$R c$の集合から一つの要素を選びます。その関数の集合は$R c$の集合と同型です。ですから、私たちは持っています: 
 \[\cat{C}(L (), -) \cong R\]
-which shows that $R$ is indeed representable.
+これは$R$が確かに表現可能であることを示しています。
 
-\section{Product from Adjunction}
+\section{随伴からの積}
 
-We have previously introduced several concepts using universal
-constructions. Many of those concepts, when defined globally, are easier
-to express using adjunctions. The simplest non-trivial example is that
-of the product. The gist of the \hyperref[products-and-coproducts]{universal
-  construction of the product} is the ability to factorize any
-product-like candidate through the universal product.
+私たちは普遍構成を使用していくつかの概念を以前に紹介しました。それらの概念は、大局的に定義されるとき、随伴を使用して表現する方が容易です。最も簡単な非自明な例は積の概念です。\hyperref[products-and-coproducts]{積の普遍構成}の要点は、任意の積候補を普遍的積を通じて因数分解する能力です。
 
-More precisely, the product of two objects $a$ and $b$ is
-the object $(a\times{}b)$ (or \code{(a, b)} in the Haskell
-notation) equipped with two morphisms $\mathit{fst}$ and $\mathit{snd}$ such
-that, for any other candidate $c$ equipped with two morphisms
-$p \Colon c \to a$ and $q \Colon c \to b$, there
-exists a unique morphism $m \Colon c \to (a, b)$ that
-factorizes $p$ and $q$ through $\mathit{fst}$ and $\mathit{snd}$.
+より正確には、二つの対象$a$と$b$の積は対象$(a\times{}b)$ (またはHaskellの記法で\code{(a, b)}) であり、二つの射$\mathit{fst}$と$\mathit{snd}$で装備されており、任意の他の候補$c$が二つの射
+$p \Colon c \to a$と$q \Colon c \to b$で装備されている場合、$\mathit{fst}$と$\mathit{snd}$を通じて$p$と$q$を因数分解する一意の射$m \Colon c \to (a, b)$が存在します。
 
-As we've seen earlier, in Haskell, we can implement a \code{factorizer} that generates this
-morphism from the two projections:
+前に見たように、Haskellでは、この射を生成する\code{factorizer}を実装することができます: 
 
 \src{snippet07}
-It's easy to verify that the factorization conditions hold:
+因数分解条件が成り立つことを検証するのは簡単です: 
 
 \src{snippet08}
-We have a mapping that takes a pair of morphisms \code{p} and
-\code{q} and produces another morphism
-\code{m = factorizer p q}.
+私たちは、射のペア\code{p}と\code{q}を取り、別の射\code{m = factorizer p q}を生成する写像を持っています。
 
-How can we translate this into a mapping between two hom-sets that we
-need to define an adjunction? The trick is to go outside of
-$\Hask$ and treat the pair of morphisms as a single morphism in
-the product category.
+これを随伴の定義に必要な二つのホム集合間の写像にどのように翻訳するかですか？コツは$\Hask$の外に出て、射のペアを単一の射として扱う積圏を考えることです。
 
-Let me remind you what a product category is. Take two arbitrary
-categories $\cat{C}$ and $\cat{D}$. The objects in the product category
-$\cat{C}\times{}\cat{D}$ are pairs of objects, one from $\cat{C}$ and one from
-$\cat{D}$. The morphisms are pairs of morphisms, one from $\cat{C}$ and
-one from $\cat{D}$.
+積圏とは何かを思い出させてください。任意の二つの圏$\cat{C}$と$\cat{D}$を取ります。積圏$\cat{C}\times{}\cat{D}$内の対象は、$\cat{C}$から一つと$\cat{D}$から一つ、二つの対象のペアです。射は、$\cat{C}$から一つと$\cat{D}$から一つの射のペアです。
 
-To define a product in some category $\cat{C}$, we should start with the
-product category $\cat{C}\times{}\cat{C}$. Pairs of morphism from $\cat{C}$ are single
-morphisms in the product category $\cat{C}\times{}\cat{C}$.
+ある圏$\cat{C}$内の積を定義するには、積圏$\cat{C}\times{}\cat{C}$から始めるべきです。$\cat{C}$からの射のペアは、積圏$\cat{C}\times{}\cat{C}$内の単一の射です。
 
 \begin{figure}[H]
   \centering
@@ -416,53 +218,22 @@ morphisms in the product category $\cat{C}\times{}\cat{C}$.
 \end{figure}
 
 \noindent
-It might be a little confusing at first that we are using a product
-category to define a product. These are, however, very different
-products. We don't need a universal construction to define a product
-category. All we need is the notion of a pair of objects and a pair of
-morphisms.
+最初は少し混乱するかもしれませんが、積を定義するために積圏を使用していることは、これらが非常に異なる積であることを理解してください。積圏を定義するためには普遍構成が必要ありません。対象のペアと射のペアの概念が必要です。
 
-However, a pair of objects from $\cat{C}$ is \emph{not} an object in
-$\cat{C}$. It's an object in a different category, $\cat{C}\times{}\cat{C}$. We can
-write the pair formally as $\langle a, b \rangle$,
-where $a$ and $b$ are objects of $\cat{C}$. The universal
-construction, on the other hand, is necessary in order to define the
-object $a\times{}b$ (or \code{(a, b)} in Haskell), which is an object
-in \emph{the same} category $\cat{C}$. This object is supposed to
-represent the pair $\langle a, b \rangle$ in a way
-specified by the universal construction. It doesn't always exist and,
-even if it exists for some, might not exist for other pairs of objects
-in $\cat{C}$.
+しかし、$\cat{C}$からの対象のペアは$\cat{C}$内の対象では\emph{ありません}。それは別の圏、$\cat{C}\times{}\cat{C}$内の対象です。形式的には、$\cat{C}$の対象$a$と$b$を$\langle a, b \rangle$として書くことができます。一方、普遍構成は、$\cat{C}$内の同じ圏内の対象$a\times{}b$ (またはHaskellでの\code{(a, b)}) を定義するために必要です。この対象は、普遍構成で指定された方法で$\langle a, b \rangle$を代表することになります。それは常に存在するわけではなく、ある対象のペアに対して存在する場合でも、$\cat{C}$内の他のペアに対しては存在しないかもしれません。
 
-Let's now look at the \code{factorizer} as a mapping of hom-sets. The
-first hom-set is in the product category $\cat{C}\times{}\cat{C}$, and the second is
-in $\cat{C}$. A general morphism in $\cat{C}\times{}\cat{C}$ would be a pair of
-morphisms $\langle f, g \rangle$:
+では、\code{factorizer}をホム集合の写像として見てみましょう。最初のホム集合は積圏$\cat{C}\times{}\cat{C}$内にあり、二番目のものは$\cat{C}$内にあります。一般的な射は$\cat{C}\times{}\cat{C}$内で射のペア$\langle f, g \rangle$です: 
 \begin{gather*}
   f \Colon c' \to a \\
   g \Colon c'' \to b
 \end{gather*}
-with $c''$ potentially different from
-$c'$. But to define a product, we are interested in a
-special morphism in $\cat{C}\times{}\cat{C}$, the pair $p$ and $q$ that
-share the same source object $c$. That's okay: In the definition
-of an adjunction, the source of the left hom-set is not an arbitrary
-object --- it's the result of the left functor $L$ acting on some
-object from the right category. The functor that fits the bill is easy
-to guess --- it's the diagonal functor $\Delta$ from $\cat{C}$ to $\cat{C}\times{}\cat{C}$,
-whose action on objects is:
+$c''$は$c'$と異なる可能性があります。しかし、積を定義するためには、同じ出発対象$c$を共有する特別な射、$p$と$q$のペアに興味があります。それは大丈夫です: 随伴の定義では、左ホム集合の出発点は任意の対象ではありません―それは右圏からの何らかの対象に作用する左関手$L$の結果です。当てはまる関手は対角関手$\Delta$です。それは$\cat{C}$から$\cat{C}\times{}\cat{C}$への関手で、対象への作用は次のようになります: 
 \[\Delta c = \langle c, c \rangle\]
-The left-hand side hom-set in our adjunction should thus be:
+したがって、私たちの随伴の左側のホム集合は次のようになります: 
 \[(\cat{C}\times{}\cat{C})(\Delta c, \langle a, b \rangle)\]
-It's a hom-set in the product category. Its elements are pairs of
-morphisms that we recognize as the arguments to our \code{factorizer}:
+それは積圏のホム集合です。その要素は\code{factorizer}への引数として認識される射のペアです: 
 \[(c \to a) \to (c \to b) \ldots{}\]
-The right-hand side hom-set lives in $\cat{C}$, and it goes between the
-source object $c$ and the result of some functor $R$
-acting on the target object in $\cat{C}\times{}\cat{C}$. That's the functor that maps
-the pair $\langle a, b \rangle$ to our product object,
-$a\times{}b$. We recognize this element of the hom-set as the
-\emph{result} of the \code{factorizer}:
+右側のホム集合は$\cat{C}$内にあり、それは出発対象$c$といくつかの関手$R$が$\cat{C}\times{}\cat{C}$内の目標対象に作用した結果との間にあります。それは$\langle a, b \rangle$のペアを私たちの積対象$a\times{}b$に写像する関手です。このホム集合の要素は\code{factorizer}の\emph{結果}として認識されます: 
 \[\ldots{} \to (c \to (a, b))\]
 
 \begin{figure}[H]
@@ -471,74 +242,40 @@ $a\times{}b$. We recognize this element of the hom-set as the
 \end{figure}
 
 \noindent
-We still don't have a full adjunction. For that we first need our
-\code{factorizer} to be invertible --- we are building an
-\emph{isomorphism} between hom-sets. The inverse of the
-\code{factorizer} should start from a morphism $m$ --- a
-morphism from some object $c$ to the product object $a\times{}b$.
-In other words, $m$ should be an element of:
+私たちはまだ完全な随伴を持っていません。それにはまず、私たちの\code{factorizer}が可逆である必要があります―私たちはホム集合間の\emph{同型}を構成しています。\code{factorizer}の逆は、ある対象$c$から積対象$a\times{}b$への射$m$から始まるべきです。言い換えると、$m$は以下の要素でなければなりません: 
 \[\cat{C}(c, a\times{}b)\]
-The inverse factorizer should map $m$ to a morphism
-$\langle p, q \rangle$ in $\cat{C}\times{}\cat{C}$ that goes from
-$\langle c, c \rangle$ to
-$\langle a, b \rangle$; in other words, a morphism
-that's an element of:
+逆の因数分解器は$m$を$\langle c, c \rangle$から$\langle a, b \rangle$への射$\langle p, q \rangle$に写像する必要があります。言い換えると、それは以下の要素の射です: 
 \[(\cat{C}\times{}\cat{C})(\Delta\ c, \langle a, b \rangle)\]
-If that mapping exists, we conclude that there exists the right adjoint
-to the diagonal functor. That functor defines a product.
+その写像が存在する場合、私たちは対角関手の右随伴が存在すると結論付けます。その関手は積を定義します。
 
-In Haskell, we can always construct the inverse of the
-\code{factorizer} by composing \code{m} with, respectively,
-\code{fst} and \code{snd}.
+Haskellでは、\code{m}をそれぞれ\code{fst}と\code{snd}で合成することによって、常に\code{factorizer}の逆を構成することができます。
 
 \begin{snip}{haskell}
 p = fst . m
 q = snd . m
 \end{snip}
-To complete the proof of the equivalence of the two ways of defining a
-product we also need to show that the mapping between hom-sets is
-natural in $a$, $b$, and $c$. I will leave this as
-an exercise for the dedicated reader.
+二つの方法で積を定義することの等価性の証明を完了するためには、ホム集合間の写像が$a$、$b$、そして$c$で自然であることを示す必要があります。これは献身的な読者にとっての演習として残します。
 
-To summarize what we have done: A categorical product may be defined
-globally as the \newterm{right adjoint} of the diagonal functor:
+要約すると、私たちが行ったこと: 圏の積は、対角関手の\newterm{右随伴}として大局的に定義されるかもしれません: 
 \[(\cat{C}\times{}\cat{C})(\Delta c, \langle a, b \rangle) \cong \cat{C}(c, a\times{}b)\]
-Here, $a\times{}b$ is the result of the action of our right adjoint
-functor $\mathit{Product}$ on the pair
-$\langle a, b \rangle$. Notice that any functor from
-$\cat{C}\times{}\cat{C}$ is a bifunctor, so $\mathit{Product}$ is a bifunctor. In
-Haskell, the $\mathit{Product}$ bifunctor is written simply as
-\code{(,)}. You can apply it to two types and get their product type,
-for instance:
+ここで、$a\times{}b$は私たちの右随伴関手$\mathit{Product}$の作用の結果です。$\langle a, b \rangle$のペアに作用します。任意の関手から$\cat{C}\times{}\cat{C}$へは双関手ですので、$\mathit{Product}$も双関手です。Haskellでは、$\mathit{Product}$双関手は単純に\code{(,)}として書かれます。それを二つの型に適用して、例えばその積型を得ることができます: 
 
 \src{snippet09}
 
-\section{Exponential from Adjunction}
+\section{随伴からの指数}
 
-The exponential $b^a$, or the function object $a \Rightarrow b$, can be
-defined using a \hyperref[function-types]{universal
-  construction}. This construction, if it exists for all pairs of objects,
-can be seen as an adjunction. Again, the trick is to concentrate on the
-statement:
+指数$b^a$、または関数対象$a \Rightarrow b$は、\hyperref[function-types]{普遍構成}を使用して定義することができます。この構成が全ての対象のペアに対して存在する場合、それは随伴として見ることができます。再び、コツは以下の声明に集中することです: 
 
 \begin{quote}
-  For any other object $z$ with a morphism $g \Colon z\times{}a \to b$
-  there is a unique morphism $h \Colon z \to (a \Rightarrow b)$
+  任意の他の対象$z$と射$g \Colon z\times{}a \to b$がある場合、一意の射$h \Colon z \to (a \Rightarrow b)$が存在します。
 \end{quote}
-This statement establishes a mapping between hom-sets.
+この声明はホム集合間の写像を確立します。
 
-In this case, we are dealing with objects in the same category, so the
-two adjoint functors are endofunctors. The left (endo-)functor
-$L$, when acting on object $z$, produces $z\times{}a$.
-It's a functor that corresponds to taking a product with some fixed
-$a$.
+この場合、私たちは同じ圏内の対象に取り組んでいるので、二つの随伴関手は自己関手です。左の自己関手$L$は、対象$z$に作用すると$z\times{}a$を生成します。それは、いくつかの固定された$a$との積を取る関手に対応します。
 
-The right (endo-)functor $R$, when acting on $b$ produces
-the function object $a \Rightarrow b$ (or $b^a$). Again, $a$ is
-fixed. The adjunction between these two functors is often written as:
+右の自己関手$R$は、$b$に作用すると関数対象$a \Rightarrow b$ (または$b^a$) を生成します。再び、$a$は固定されています。これら二つの関手の間の随伴はしばしば次のように書かれます: 
 \[-\times{}a \dashv (-)^a\]
-The mapping of hom-sets that underlies this adjunction is best seen by
-redrawing the diagram that we used in the universal construction.
+この随伴が基づいているホム集合の写像は、私たちが普遍構成で使用した図を再描画することによって最もよく見ることができます。
 
 \begin{figure}[H]
   \centering
@@ -546,40 +283,33 @@ redrawing the diagram that we used in the universal construction.
 \end{figure}
 
 \noindent
-Notice that the $\mathit{eval}$ morphism\footnote{See ch.9 on \hyperref[function-types]{universal
-    construction}.} is nothing else but the counit of
-this adjunction:
+$\mathit{eval}$射\footnote{第9章の\hyperref[function-types]{普遍構成}を参照。}はこの随伴の余単位に他なりません: 
 \[(a \Rightarrow b)\times{}a \to b\]
-where:
+ここで: 
 \[(a \Rightarrow b)\times{}a = (L \circ R) b\]
-I have previously mentioned that a universal construction defines a
-unique object, up to isomorphism. That's why we have ``the'' product and
-``the'' exponential. This property translates to adjunctions as well: if
-a functor has an adjoint, this adjoint is unique up to isomorphism.
+私は以前に述べた通り、普遍構成は一意の対象を定義します、同型までです。だから私たちは「積」と「指数」を持っています。これは随伴にも翻訳されます: もし関手が随伴を持つならば、この随伴は同型までに一意です。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Derive the naturality square for $\psi$, the transformation
-        between the two (contravariant) functors:
+    $\psi$の自然性四角形を導き出してください。これは二つの (反変) 関手間の変換です: 
         \begin{gather*}
           a \to \cat{C}(L a, b) \\
           a \to \cat{D}(a, R b)
         \end{gather*}
   \item
-        Derive the counit $\varepsilon$ starting from the hom-sets isomorphism in
-        the second definition of the adjunction.
+    第二の随伴定義のホム集合の同型から余単位$\varepsilon$を導き出してください。
   \item
-        Complete the proof of equivalence of the two definitions of the
-        adjunction.
+    二つの随伴定義の等価性の証明を完成させてください。
   \item
-        Show that the coproduct can be defined by an adjunction. Start with
-        the definition of the factorizer for a coproduct.
+    余積が随伴によって定義できることを示してください。余積の因数分解器の定義から始めてください。
   \item
-        Show that the coproduct is the left adjoint of the diagonal functor.
+    余積が対角関手の左随伴であることを示してください。
   \item
-        Define the adjunction between a product and a function object in
-        Haskell.
+    Haskellで積と関数対象間の随伴を定義してください。
 \end{enumerate}
+
+
+

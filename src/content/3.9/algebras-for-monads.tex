@@ -1,16 +1,8 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{I}{f we interpret} endofunctors as ways of defining expressions, algebras
-let us evaluate them and monads let us form and manipulate them. By
-combining algebras with monads we not only gain a lot of functionality
-but we can also answer a few interesting questions.
+\lettrine[lhang=0.17]{も}{し}自己関手を式の定義方法として解釈するならば、代数はそれらを評価する方法を提供し、モナドはそれらを形成し操作する方法を提供します。代数とモナドを組み合わせることで、多くの機能を得られるだけでなく、いくつかの興味深い問いにも答えることができます。
 
-One such question concerns the relation between monads and adjunctions.
-As we've seen, every adjunction \hyperref[monads-categorically]{defines
-  a monad} (and a comonad). The question is: Can every monad (comonad) be
-derived from an adjunction? The answer is positive. There is a whole
-family of adjunctions that generate a given monad. I'll show you two
-such adjunctions.
+そのような問いの一つは、モナドと随伴の関係についてです。見てきたように、すべての随伴はモナド (および余モナド) を定義します。問題は、すべてのモナド (余モナド) が随伴から導出されるかどうかです。この答えは肯定的です。与えられたモナドを生成する随伴の全ての族が存在します。私はそのような随伴を二つ示します。
 
 \begin{figure}[H]
   \centering
@@ -18,34 +10,18 @@ such adjunctions.
 \end{figure}
 
 \noindent
-Let's review the definitions. A monad is an endofunctor $m$
-equipped with two natural transformations that satisfy some coherence
-conditions. The components of these transformations at $a$ are:
+まず定義を見直しましょう。モナドは自己関手$m$で、いくつかの自然変換とそれらが満たすべき整合性条件で装備されています。これらの変換のコンポーネントは、$a$において以下のようになります: 
 \begin{align*}
   \eta_a & \Colon a \to m\ a         \\
   \mu_a  & \Colon m\ (m\ a) \to m\ a
 \end{align*}
-An algebra for the same endofunctor is a selection of a particular
-object --- the carrier $a$ --- together with the morphism:
+同じ自己関手のための代数は、特定の対象---担い手$a$---と射: 
 \[\mathit{alg} \Colon m\ a \to a\]
-The first thing to notice is that the algebra goes in the opposite
-direction to $\eta_a$. The intuition is that $\eta_a$ creates a
-trivial expression from a value of type $a$. The first coherence
-condition that makes the algebra compatible with the monad ensures that
-evaluating this expression using the algebra whose carrier is $a$
-gives us back the original value:
+を選択するものです。最初に気づくべきは、代数が$\eta_a$とは逆の方向に進むということです。直感的には、$\eta_a$は型$a$の値からトリビアルな式を作ります。代数をモナドと互換性のあるようにする最初の整合性条件は、担い手が$a$である代数を使ってこの式を評価すると、元の値が得られるということです: 
 \[\mathit{alg} \circ \eta_a = \id_a\]
-The second condition arises from the fact that there are two ways of
-evaluating the doubly nested expression $m\ (m\ a)$. We can first
-apply $\mu_a$ to flatten the expression, and then use the evaluator
-of the algebra; or we can apply the lifted evaluator to evaluate the
-inner expressions, and then apply the evaluator to the result. We'd like
-the two strategies to be equivalent:
+二番目の条件は、二重にネストされた式$m\ (m\ a)$を評価する二つの方法があるという事実から生じます。まず$\mu_a$を適用して式を平らにし、その後代数の評価子を使うか、あるいは持ち上げられた評価子を適用して内部の式を評価し、その結果に評価子を適用するかです。二つの戦略が等価であることが望ましいです: 
 \[\mathit{alg} \circ \mu_a = \mathit{alg} \circ m\ \mathit{alg}\]
-Here, \code{m alg} is the morphism resulting from lifting
-$\mathit{alg}$ using the functor $m$. The following commuting
-diagrams describe the two conditions (I replaced $m$ with
-$T$ in anticipation of what follows):
+ここで、\code{m alg}は関手$m$を使って$\mathit{alg}$から持ち上げられた射です。次の交換図は二つの条件を記述します (以下では何が来るかを予測して$m$を$T$に置き換えています) : 
 
 \begin{figure}[H]
   \centering
@@ -70,108 +46,50 @@ $T$ in anticipation of what follows):
 \end{figure}
 
 \noindent
-We can also express these conditions in Haskell:
+これらの条件をHaskellで表現することもできます。
 
 \src{snippet01}
-Let's look at a small example. An algebra for a list endofunctor
-consists of some type \code{a} and a function that produces an
-\code{a} from a list of \code{a}. We can express this function using
-\code{foldr} by choosing both the element type and the accumulator
-type to be equal to \code{a}:
+小さな例を見てみましょう。リスト自己関手の代数は、型\code{a}と、\code{a}のリストから\code{a}を生成する関数で構成されます。この関数は\code{foldr}を使って表現することができます。ここで要素の型も蓄積器の型も\code{a}に等しいと選択します: 
 
 \src{snippet02}
-This particular algebra is specified by a two-argument function, let's
-call it \code{f}, and a value \code{z}. The list functor happens to
-also be a monad, with \code{return} turning a value into a singleton
-list. The composition of the algebra, here \code{foldr f z}, after
-\code{return} takes \code{x} to:
+この特定の代数は二引数の関数、それを\code{f}と呼びましょう、と値\code{z}によって指定されます。リスト関手は偶然にもモナドで、\code{return}は値を単一のリストに変換します。代数の合成、ここでは\code{foldr f z}、\code{return}の後に適用されると、\code{x}を以下に変換します: 
 
 \src{snippet03}
-where the action of \code{f} is written in the infix notation. The
-algebra is compatible with the monad if the following coherence
-condition is satisfied for every \code{x}:
+ここで\code{f}の作用は中置記法で書かれています。代数がモナドと互換性がある場合、次の整合性条件がすべての\code{x}に対して満たされます: 
 
 \src{snippet04}
-If we look at \code{f} as a binary operator, this condition tells us
-that \code{z} is the right unit.
+\code{f}を二項演算子と見るならば、この条件は\code{z}が右単位要素であることを教えてくれます。
 
-The second coherence condition operates on a list of lists. The action
-of \code{join} concatenates the individual lists. We can then fold the
-resulting list. On the other hand, we can first fold the individual
-lists, and then fold the resulting list. Again, if we interpret
-\code{f} as a binary operator, this condition tells us that this
-binary operation is associative. These conditions are certainly
-fulfilled when \code{(a, f, z)} is a monoid.
+二番目の整合性条件はリストのリストに作用します。\code{join}の作用は個々のリストを連結します。結果のリストを畳み込むことができます。あるいは、個々のリストを最初に畳み込み、その結果のリストを畳み込むこともできます。再び、\code{f}を二項演算子と解釈すると、この条件はこの二項演算が結合的であることを教えてくれます。これらの条件は、\code{(a, f, z)}がモノイドであるとき確かに満たされます。
 
-\section{T-algebras}
+\section{T-代数}
 
-Since mathematicians prefer to call their monads $T$, they call
-algebras compatible with them T-algebras. T-algebras for a given monad $T$
-in a category $\cat{C}$ form a category called the Eilenberg-Moore
-category, often denoted by $\cat{C}^T$. Morphisms in that
-category are homomorphisms of algebras. These are the same homomorphisms
-we've seen defined for F-algebras.
+数学者が自分たちのモナドを$T$と呼ぶのを好むので、それらと互換性のある代数をT-代数と呼びます。ある圏$\cat{C}$の中で与えられたモナド$T$のT-代数は、Eilenberg-Moore圏と呼ばれることが多い圏を形成し、通常$\cat{C}^T$と表記されます。その圏の射は代数の準同型です。これらはF-代数に定義されたのと同じ準同型です。
 
-A T-algebra is a pair consisting of a carrier object and an evaluator,
-$(a, f)$. There is an obvious forgetful functor $U^T$ from
-$\cat{C}^T$ to $\cat{C}$, which maps $(a, f)$ to $a$. It
-also maps a homomorphism of T-algebras to a corresponding morphism
-between carrier objects in $\cat{C}$. You may remember from our discussion of
-adjunctions that the left adjoint to a forgetful functor is called a
-free functor.
+T-代数は担い手対象と評価子のペアです、$(a, f)$。明らかに$\cat{C}^T$から$\cat{C}$への忘却関手$U^T$があります。これは$(a, f)$を$a$に写します。またT-代数の準同型を$\cat{C}$の対応する担い手対象間の射に写します。随伴についての議論から覚えているかもしれませんが、忘却関手の左随伴は自由関手と呼ばれます。
 
-The left adjoint to $U^T$ is called $F^T$. It maps an object
-$a$ in $\cat{C}$ to a free algebra in $\cat{C}^T$. The carrier
-of this free algebra is $T a$. Its evaluator is a morphism from
-$T (T a)$ back to $T a$. Since $T$ is a monad,
-we can use the monadic $\mu_a$ (\code{join} in Haskell) as the
-evaluator.
+$U^T$の左随伴は$F^T$と呼ばれます。これは$\cat{C}$の対象$a$を$\cat{C}^T$の自由代数に写します。この自由代数の担い手は$T a$です。その評価子は$T (T a)$から$T a$への射です。$T$がモナドであるので、モナドの$\mu_a$ (Haskellでは\code{join}) を評価子として使用できます。
 
-We still have to show that this is a T-algebra. For that, two coherence
-conditions must be satisfied:
+これがT-代数であることを示すためには、二つの整合性条件が満たされている必要があります: 
 \begin{align*}
   \mathit{alg} & \circ \eta_{Ta} = \id_{Ta}     \\
   \mathit{alg} & \circ \mu_a = \mathit{alg} \circ T\ \mathit{alg}
 \end{align*}
-But these are just monadic laws, if you plug in $\mu$ for the
-algebra.
+しかし、これらは代数に$\mu$を代入した場合のモナド則にすぎません。
 
-As you may recall, every adjunction defines a monad. It turns out that
-the adjunction between $F^T$ and $U^T$
-defines the very monad $T$ that was used in the construction of
-the Eilenberg-Moore category. Since we can perform this construction for
-every monad, we conclude that every monad can be generated from an
-adjunction. Later I'll show you that there is another adjunction that
-generates the same monad.
+すでに見たように、すべての随伴はモナドを定義します。実は$F^T$と$U^T$の間の随伴は、その構成に使用されたモナド$T$そのものを定義します。すべてのモナドに対してこの構成を行うことができるので、すべてのモナドは随伴から生成されると結論づけることができます。後で、同じモナドを生成する別の随伴を示します。
 
-Here's the plan: First I'll show you that $F^T$ is indeed the left
-adjoint of $U^T$. I'll do it by defining the unit and the counit
-of this adjunction and proving that the corresponding triangular
-identities are satisfied. Then I'll show you that the monad generated by
-this adjunction is indeed our original monad.
+計画は次の通りです。まず$F^T$が実際に$U^T$の左随伴であることを示します。これを行うには、この随伴の単位と余単位を定義し、対応する三角恒等式が満たされていることを証明します。次に、この随伴によって生成されたモナドが実際に元のモナドであることを示します。
 
-The unit of the adjunction is the natural transformation:
+随伴の単位は自然変換です: 
 \[\eta \Colon I \to U^T \circ F^T\]
-Let's calculate the $a$ component of this transformation. The
-identity functor gives us $a$. The free functor produces the free
-algebra $(T a, \mu_a)$, and the forgetful functor reduces it to
-$T a$. Altogether we get a mapping from $a$ to
-$T a$. We'll simply use the unit of the monad $T$ as the
-unit of this adjunction.
+この変換の$a$コンポーネントを計算しましょう。恒等関手は私たちに$a$を与えます。自由関手は自由代数$(T a, \mu_a)$を生成し、忘却関手はそれを$T a$に減らします。合わせると、$a$から$T a$への写像を得ます。単純にモナド$T$の単位をこの随伴の単位として使用します。
 
-Let's look at the counit:
+余単位を見てみましょう: 
 \[\varepsilon \Colon F^T \circ U^T \to I\]
-Let's calculate its component at some T-algebra $(a, f)$. The
-forgetful functor forgets the $f$, and the free functor produces
-the pair $(T a, \mu_a)$. So in order to define the component of
-the counit $\varepsilon$ at $(a, f)$, we need the right morphism in
-the Eilenberg-Moore category, or a homomorphism of T-algebras:
+これのT-代数$(a, f)$でのコンポーネントを計算しましょう。忘却関手は$f$を忘れ、自由関手はペア$(T a, \mu_a)$を生成します。したがって、余単位$\varepsilon$のコンポーネントをT-代数$(a, f)$で定義するためには、Eilenberg-Moore圏内の正しい射、またはT-代数の準同型が必要です: 
 \[(T a, \mu_a) \to (a, f)\]
-Such a homomorphism should map the carrier $T a$ to $a$.
-Let's just resurrect the forgotten evaluator $f$. This time we'll
-use it as a homomorphism of T-algebras. Indeed, the same commuting
-diagram that makes $f$ a T-algebra may be re-interpreted to show
-that it's a homomorphism of T-algebras:
+このような準同型は担い手$T a$を$a$に写すべきです。忘れられた評価子$f$を復活させましょう。今度はT-代数の準同型としてそれを使用します。実際に、$f$がT-代数であることを示すのと同じ交換図は、それがT-代数の準同型であることを再解釈することで示すことができます: 
 
 \begin{figure}[H]
   \centering
@@ -184,12 +102,9 @@ that it's a homomorphism of T-algebras:
 \end{figure}
 
 \noindent
-We have thus defined the component of the counit natural transformation
-$\varepsilon$ at $(a, f)$ (an object in the category of T-algebras)
-to be $f$.
+これにより、T-代数圏の対象$(a, f)$での余単位自然変換$\varepsilon$のコンポーネントを$f$として定義しました。
 
-To complete the adjunction we also need to show that the unit and the
-counit satisfy triangular identities. These are:
+単位と余単位が三角恒等式を満たしていることを示すためには、それらも証明する必要があります。これらは次のようになります: 
 
 \begin{figure}[H]
   \centering
@@ -213,116 +128,76 @@ counit satisfy triangular identities. These are:
 \end{figure}
 
 \noindent
-The first one holds because of the unit law for the monad $T$.
-The second is just the law of the T-algebra $(a, f)$.
+最初の恒等式はモナド$T$の単位則によって支持されます。二番目のものはT-代数$(a, f)$の規則です。
 
-We have established that the two functors form an adjunction:
+これにより、二つの関手が随伴を形成することが確立されました: 
 \[F^T \dashv U^T\]
-Every adjunction gives rise to a monad. The round trip
+すべての随伴はモナドを引き起こします。往復
 \[U^T \circ F^T\]
-is the endofunctor in $\cat{C}$ that gives rise to the corresponding monad.
-Let's see what its action on an object $a$ is. The free algebra
-created by $F^T$ is $(T a, \mu_a)$. The forgetful functor
-$U^T$ drops the evaluator. So, indeed, we have:
+は、対応するモナドを生じさせる$\cat{C}$の自己関手です。対象$a$に対するその作用を見てみましょう。$F^T$によって作成された自由代数は$(T a, \mu_a)$です。忘却関手$U^T$は評価子を落とします。したがって、確かに: 
 \[U^T \circ F^T = T\]
-As expected, the unit of the adjunction is the unit of the monad $T$.
+予想通り、随伴の単位はモナド$T$の単位です。
 
-You may remember that the counit of the adjunction produces monadic
-multiplication through the following formula:
+随伴の余単位がモナドの乗算を次の式を通じて生成することを覚えておくかもしれません: 
 \[\mu = R \circ \varepsilon \circ L\]
-This is a horizontal composition of three natural transformations, two
-of them being identity natural transformations mapping, respectively,
-$L$ to $L$ and $R$ to $R$. The one in the
-middle, the counit, is a natural transformation whose component at an
-algebra $(a, f)$ is $f$.
+これは、それぞれ$L$から$L$へ、$R$から$R$への恒等自然変換である二つの自然変換と、中央にある余単位である三つの自然変換の水平合成です。余単位は、T-代数$(a, f)$でのコンポーネントが$f$である自然変換です。
 
-Let's calculate the component $\mu_a$. We first horizontally compose
-$\varepsilon$ after $F^T$, which results in the component of
-$\varepsilon$ at $F^T a$. Since $F^T$ takes $a$ to the
-algebra $(T a, \mu_a)$, and $\varepsilon$ picks the evaluator, we end
-up with $\mu_a$. Horizontal composition on the left with $U^T$
-doesn't change anything, since the action of $U^T$ on morphisms is
-trivial. So, indeed, the $\mu$ obtained from the adjunction is the
-same as the $\mu$ of the original monad $T$.
+$\mu_a$のコンポーネントを計算しましょう。最初に$F^T$の後に$\varepsilon$を水平合成します。これは$F^T a$での$\varepsilon$のコンポーネントを結果とします。$F^T$が$a$を代数$(T a, \mu_a)$に写し、$\varepsilon$が評価子を選ぶので、$\mu_a$で終わります。左側に$U^T$との水平合成は何も変えません、なぜなら$U^T$の射の作用は自明だからです。したがって、確かに、随伴から得られる$\mu$は元のモナド$T$の$\mu$と同じです。
 
-\section{The Kleisli Category}
+\section{Kleisli圏}
 
-We've seen the Kleisli category before. It's a category constructed from
-another category $\cat{C}$ and a monad $T$. We'll call this
-category $\cat{C}_T$. The objects in the Kleisli category
-$\cat{C}_T$ are the objects of $\cat{C}$, but the morphisms
-are different. A morphism $f_{\cat{K}}$ from $a$ to $b$ in
-the Kleisli category corresponds to a morphism $f$ from
-$a$ to $T b$ in the original category. We call this
-morphism a Kleisli arrow from $a$ to $b$.
+以前にKleisli圏について見ました。これは他の圏$\cat{C}$とモナド$T$から構成される圏です。この圏を$\cat{C}_T$と呼びます。Kleisli圏$\cat{C}_T$の対象は$\cat{C}$の対象ですが、射は異なります。Kleisli圏の射$f_{\cat{K}}$は、オリジナルの圏で$a$から$T b$への射$f$に対応します。この射を$a$から$b$へのKleisli射と呼びます。
 
-Composition of morphisms in the Kleisli category is defined in terms of
-monadic composition of Kleisli arrows. For instance, let's compose
-$g_{\cat{K}}$ after $f_{\cat{K}}$. In the Kleisli category we have:
+Kleisli圏の射の合成は、Kleisli射のモナド的合成に関して定義されます。例えば、$g_{\cat{K}}$を$f_{\cat{K}}$の後に合成しましょう。Kleisli圏では: 
 \begin{gather*}
   f_{\cat{K}} \Colon a \to b \\
   g_{\cat{K}} \Colon b \to c
 \end{gather*}
-which, in the category $\cat{C}$, corresponds to:
+これは、圏$\cat{C}$では以下に対応します: 
 \begin{gather*}
   f \Colon a \to T b \\
   g \Colon b \to T c
 \end{gather*}
-We define the composition:
+合成を定義します: 
 \[h_{\cat{K}} = g_{\cat{K}} \circ f_{\cat{K}}\]
-as a Kleisli arrow in $\cat{C}$
+$\cat{C}$のKleisli射として
 \begin{align*}
   h & \Colon a \to T c          \\
   h & = \mu \circ (T g) \circ f
 \end{align*}
-In Haskell we would write it as:
+Haskellでは次のように書きます: 
 
 \src{snippet05}
-There is a functor $F$ from $\cat{C}$ to $\cat{C}_T$
-which acts trivially on objects. On morphisms, it maps $f$ in
-$\cat{C}$ to a morphism in $\cat{C}_T$ by creating a
-Kleisli arrow that embellishes the return value of $f$. Given a
-morphism:
+$\cat{C}$から$\cat{C}_T$への関手$F$があり、これは対象に対して自明に作用します。射に対しては、$\cat{C}$の射$f$を、$f$の戻り値を飾るKleisli射を作成することによって$\cat{C}_T$の射に写します。射が与えられたとき: 
 \[f \Colon a \to b\]
-it creates a morphism in $\cat{C}_T$ with the
-corresponding Kleisli arrow:
+それは、対応するKleisli射を持つ$\cat{C}_T$の射を作成します: 
 \[\eta \circ f\]
-In Haskell we'd write it as:
+Haskellでは次のように書きます: 
 
 \src{snippet06}
-We can also define a functor $G$ from $\cat{C}_T$
-back to $\cat{C}$. It takes an object $a$ from the Kleisli
-category and maps it to an object $T a$ in $\cat{C}$. Its action
-on a morphism $f_{\cat{K}}$ corresponding to a Kleisli arrow:
+また$\cat{C}_T$から$\cat{C}$への関手$G$を定義することもできます。これはKleisli圏の対象$a$を$\cat{C}$の対象$T a$に写します。Kleisli射に対応する射$f_{\cat{K}}$: 
 \[f \Colon a \to T b\]
-is a morphism in $\cat{C}$:
+は、$\cat{C}$の射として
 \[T a \to T b\]
-given by first lifting $f$ and then applying $\mu$:
+です。これは最初に$f$を持ち上げてから$\mu$を適用することによって与えられます: 
 \[\mu_{T b} \circ T f\]
-In Haskell notation this would read:
+Haskellの表記ではこれは次のようになります: 
 
 \begin{snipv}
 G f\textsubscript{T} = join . fmap f
 \end{snipv}
-You may recognize this as the definition of monadic bind in terms of
-\code{join}.
+これは、\code{join}を使ってモナド的な束縛を定義する方法として認識できます。
 
-It's easy to see that the two functors form an adjunction:
+二つの関手が随伴を形成することは容易に見て取れます: 
 \[F \dashv G\]
-and their composition $G \circ F$ reproduces the original monad $T$.
+そして、それらの合成$G \circ F$は元のモナド$T$を再生産します。
 
-So this is the second adjunction that produces the same monad. In fact
-there is a whole category of adjunctions $\cat{Adj}(\cat{C}, T)$ that result
-in the same monad $T$ on $\cat{C}$. The Kleisli adjunction we've
-just seen is the initial object in this category, and the
-Eilenberg-Moore adjunction is the terminal object.
+これが同じモナドを生成する二番目の随伴です。実際、同じモナド$T$を結果とする随伴の全体の圏$\cat{Adj}(\cat{C}, T)$があります。先ほど見たKleisli随伴はこの圏の始対象であり、Eilenberg-Moore随伴は終対象です。
 
-\section{Coalgebras for Comonads}
+\section{余代数と余モナド}
 
-Analogous constructions can be done for any
-\hyperref[comonads]{comonad}
-$W$. We can define a category of coalgebras that are compatible
-with a comonad. They make the following diagrams commute:
+余モナド
+$W$に対しても類似の構成が行われます。私たちは余代数の圏を定義することができ、それは余モナドと互換性のある余代数です。それらは次の図を可換にします: 
 
 \begin{figure}[H]
   \centering
@@ -347,100 +222,79 @@ with a comonad. They make the following diagrams commute:
 \end{figure}
 
 \noindent
-where $\mathit{coa}$ is the coevaluation morphism of the coalgebra whose
-carrier is $a$:
+ここで$\mathit{coa}$は余代数の余評価射で、その担い手は$a$です: 
 \[\mathit{coa} \Colon a \to W a\]
-and $\varepsilon$ and $\delta$ are the two natural transformations
-defining the comonad (in Haskell, their components are called
-\code{extract} and \code{duplicate}).
+そして$\varepsilon$と$\delta$は余モナドを定義する二つの自然変換です (Haskellでは、それらのコンポーネントは\code{extract}と\code{duplicate}と呼ばれます) 。
 
-There is an obvious forgetful functor $U^W$ from the category of
-these coalgebras to $\cat{C}$. It just forgets the coevaluation. We'll
-consider its right adjoint $F^W$.
+これらの余代数から$\cat{C}$への明らかな忘却関手$U^W$があります。これは単に余評価を忘れます。右随伴$F^W$を考えます。
 \[U^W \dashv F^W\]
-The right adjoint to a forgetful functor is called a cofree functor.
-$F^W$ generates cofree coalgebras. It assigns, to an object
-$a$ in $\cat{C}$, the coalgebra $(W a, \delta_a)$. The
-adjunction reproduces the original comonad as the composite
-$U^W \circ F^W$.
+忘却関手の右随伴は余自由関手と呼ばれます。$F^W$は$\cat{C}$の対象$a$に対して、余代数$(W a, \delta_a)$を割り当てます。随伴は合成$U^W \circ F^W$として元の余モナドを再生産します。
 
-Similarly, we can construct a co-Kleisli category with co-Kleisli arrows
-and regenerate the comonad from the corresponding adjunction.
+同様に、余Kleisli圏を構成し、対応する随伴から余モナドを再生成することができます。
 
-\section{Lenses}
+\section{レンズ}
 
-Let's go back to our discussion of lenses. A lens can be written as a
-coalgebra:
+レンズに関する議論に戻りましょう。レンズは余代数として書くことができます: 
 \[\mathit{coalg}_s \Colon a \to \mathit{Store}\ s\ a\]
-for the functor $\mathit{Store}\ s$:
+関手$\mathit{Store}\ s$に対して: 
 
 \src{snippet07}
-This coalgebra can be also expressed as a pair of functions:
+この余代数は、関数のペアとしても表現できます: 
 \begin{align*}
   \mathit{set} & \Colon a \to s \to a \\
   \mathit{get} & \Colon a \to s
 \end{align*}
-(Think of $a$ as standing for ``all,'' and $s$ as a
-``small'' part of it.) In terms of this pair, we have:
+ (ここで$a$は「全部」と考え、$s$はそれの「小さい」部分としてください。) このペアの観点から、私たちは持っています: 
 \[\mathit{coalg}_s\ a = \mathit{Store}\ (\mathit{set}\ a)\ (\mathit{get}\ a)\]
-Here, $a$ is a value of type $a$. Notice that partially
-applied \code{set} is a function $s \to a$.
+ここで、$a$は型$a$の値です。部分適用された\code{set}は関数$s \to a$です。
 
-We also know that $\mathit{Store}\ s$ is a comonad:
+また、$\mathit{Store}\ s$が余モナドであることも知っています: 
 
 \src{snippet08}
-The question is: Under what conditions is a lens a coalgebra for this
-comonad? The first coherence condition:
+問題は、レンズがこの余モナドのための余代数である条件は何かということです。最初の整合性条件: 
 \[\varepsilon_a \circ \mathit{coalg} = \idarrow[a]\]
-translates to:
+は次のように翻訳されます: 
 \[\mathit{set}\ a\ (\mathit{get}\ a) = a\]
-This is the lens law that expresses the fact that if you set a field of
-the structure $a$ to its previous value, nothing changes.
+これはレンズの規則で、構造体$a$のフィールドを以前の値に設定しても何も変わらないという事実を表しています。
 
-The second condition:
+二番目の条件: 
 \[\mathit{fmap}\ \mathit{coalg} \circ \mathit{coalg} = \delta_a \circ \mathit{coalg}\]
-requires a little more work. First, recall the definition of
-\code{fmap} for the \code{Store} functor:
+はもう少し作業が必要です。まず、\code{Store}関手の\code{fmap}の定義を思い出してください: 
 
 \src{snippet09}
-Applying \code{fmap coalg} to the result of \code{coalg} gives us:
+\code{fmap coalg}を\code{coalg}の結果に適用すると、私たちは持っています: 
 
 \src{snippet10}
-On the other hand, applying \code{duplicate} to the result of
-\code{coalg} produces:
+一方、\code{duplicate}を\code{coalg}の結果に適用すると、生じるのは: 
 
 \src{snippet11}
-For these two expressions to be equal, the two functions under
-\code{Store} must be equal when acting on an arbitrary \code{s}:
+これら二つの式が等しいためには、\code{Store}の下の二つの関数が任意の\code{s}に作用するとき等しくなければなりません: 
 
 \src{snippet12}
-Expanding \code{coalg}, we get:
+\code{coalg}を展開すると、私たちは持っています: 
 
 \src{snippet13}
-This is equivalent to two remaining lens laws. The first one:
+これは残りの二つのレンズ則に相当します。最初の規則: 
 
 \src{snippet14}
-tells us that setting the value of a field twice is the same as setting
-it once. The second law:
+は、フィールドの値を二回設定するのと一回設定するのが同じであると言っています。二番目の規則: 
 
 \src{snippet15}
-tells us that getting a value of a field that was set to $s$
-gives $s$ back.
+は、$s$に設定されたフィールドの値を取得すると、$s$が戻ってくると言っています。
 
-In other words, a well-behaved lens is indeed a comonad coalgebra for
-the \code{Store} functor.
+言い換えれば、行儀の良いレンズは確かに\code{Store}関手のための余モナド余代数です。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        What is the action of the free functor
-        $F \Colon C \to C^T$ on morphisms. Hint: use the
-        naturality condition for monadic $\mu$.
+        自由関手
+        $F \Colon C \to C^T$の射に対する作用は何か。ヒント: モナドの$\mu$の自然性条件を使用します。
   \item
-        Define the adjunction:
+        随伴を定義してください: 
         \[U^W \dashv F^W\]
   \item
-        Prove that the above adjunction reproduces the original comonad.
+        上記の随伴が元の余モナドを再現することを証明してください。
 \end{enumerate}
+

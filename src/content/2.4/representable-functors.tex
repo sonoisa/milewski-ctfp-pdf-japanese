@@ -1,61 +1,19 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{I}{t's about time} we had a little talk about sets.
-Mathematicians have a love/hate relationship with set theory. It's the
-assembly language of mathematics --- at least it used to be. Category
-theory tries to step away from set theory, to some extent. For instance,
-it's a known fact that the set of all sets doesn't exist, but the category
-of all sets, $\Set$, does. So that's good. On the other hand, we assume that
-morphisms between any two objects in a category form a set. We even
-called it a hom-set. To be fair, there is a branch of category theory
-where morphisms don't form sets. Instead they are objects in another
-category. Those categories that use hom-objects rather than hom-sets,
-are called \newterm{enriched} categories. In what follows, though, we'll
-stick to categories with good old-fashioned hom-sets.
+\lettrine[lhang=0.17]{そ}{ろそろ}集合について少し話しましょう。
+数学者は集合理論と愛憎関係にあります。それは数学のアセンブリ言語のようなものです --- 少なくとも昔はそうでした。圏論は、ある程度、集合理論から距離を置こうとします。例えば、全ての集合の集合は存在しないというのが知られていますが、全ての集合の圏、$\Set$は存在します。だからそれは良いことです。一方で、圏の任意の二つの対象間の射は集合を形成すると仮定しています。我々はそれをホム集合と呼びました。公平を期すと、射が集合を形成しない圏論の分岐もあります。その代わりに、それらは別の圏の対象です。ホム集合ではなくホム対象を使用するそれらの圏は、\newterm{豊穣}な圏と呼ばれます。しかし、これから我々が扱うのは、良い古典的なホム集合を持つ圏です。
 
-A set is the closest thing to a featureless blob you can get outside of
-categorical objects. A set has elements, but you can't say much about
-these elements. If you have a finite set, you can count the elements.
-You can kind of count the elements of an infinite set using cardinal
-numbers. The set of natural numbers, for instance, is smaller than the
-set of real numbers, even though both are infinite. But, maybe
-surprisingly, a set of rational numbers is the same size as the set of
-natural numbers.
+集合は、圏論的対象の外で得られる、ほとんど特徴のないブロブに最も近いものです。集合には要素がありますが、これらの要素についてはあまり語ることができません。有限集合があれば、要素を数えることができます。無限集合の要素を、基数を使って何となく数えることができます。例えば、自然数の集合は実数の集合よりも小さいですが、どちらも無限です。しかし、驚くべきことに、有理数の集合は自然数の集合と同じ大きさです。
 
-Other than that, all the information about sets can be encoded in
-functions between them --- especially the invertible ones called
-isomorphisms. For all intents and purposes isomorphic sets are
-identical. Before I summon the wrath of foundational mathematicians, let
-me explain that the distinction between equality and isomorphism is of
-fundamental importance. In fact it is one of the main concerns of the
-latest branch of mathematics, the Homotopy Type Theory (HoTT). I'm
-mentioning HoTT because it's a pure mathematical theory that takes
-inspiration from computation, and one of its main proponents, Vladimir
-Voevodsky, had a major epiphany while studying the Coq theorem prover.
-The interaction between mathematics and programming goes both ways.
+それ以外に、集合に関する全ての情報は、それらの間の関数 --- 特に同型と呼ばれる可逆なもの --- にエンコードすることができます。全ての意図と目的において、同型な集合は同一です。基礎数学者の怒りを呼ぶ前に、等価性と同型の違いは、最新の数学の分岐、ホモトピー型理論 (HoTT) の主要な関心事の一つです。HoTTは計算からインスピレーションを得た純粋な数学理論であり、その主要な提唱者の一人であるVladimir Voevodskyは、Coq定理証明器を研究中に主要な啓示を得ました。数学とプログラミングの相互作用は双方向です。
 
-The important lesson about sets is that it's okay to compare sets of
-unlike elements. For instance, we can say that a given set of natural
-transformations is isomorphic to some set of morphisms, because a set is
-just a set. Isomorphism in this case just means that for every natural
-transformation from one set there is a unique morphism from the other
-set and vice versa. They can be paired against each other. You can't
-compare apples with oranges, if they are objects from different
-categories, but you can compare sets of apples against sets of oranges.
-Often transforming a categorical problem into a set-theoretical problem
-gives us the necessary insight or even lets us prove valuable theorems.
+集合に関する重要な教訓は、異なる要素の集合を比較することが許されるということです。たとえば、ある自然変換の集合が、ある射の集合と同型であると言えます、なぜなら集合はただの集合だからです。この場合の同型とは、一方の集合からの自然変換ごとに他方の集合から一意の射があり、その逆も同様であることを意味します。それらは互いにペアにすることができます。異なる圏の対象であれば、リンゴとオレンジを比較することはできませんが、リンゴの集合とオレンジの集合を比較することはできます。しばしば、圏論的な問題を集合理論的な問題に変換することで、必要な洞察を得たり、貴重な定理を証明することができます。
 
-\section{The Hom Functor}
+\section{ホム関手}
 
-Every category comes equipped with a canonical family of mappings to
-$\Set$. Those mappings are in fact functors, so they preserve the
-structure of the category. Let's build one such mapping.
+すべての圏は、$\Set$への標準的な写像の族を備えています。これらの写像は実際には関手であり、したがって圏の構造を保持します。そのような写像を一つ構成してみましょう。
 
-Let's fix one object $a$ in $\cat{C}$ and pick another object
-$x$ also in $\cat{C}$. The hom-set $\cat{C}(a, x)$ is a set, an
-object in $\Set$. When we vary $x$, keeping $a$
-fixed, $\cat{C}(a, x)$ will also vary in $\Set$. Thus we have a
-mapping from $x$ to $\Set$.
+$\cat{C}$の一つの対象$a$を固定し、$\cat{C}$内の別の対象$x$を選びます。ホム集合$\cat{C}(a, x)$は集合であり、$\Set$の対象です。$x$を変えると、$a$を固定したまま、$\cat{C}(a, x)$も$\Set$内で変わります。したがって、$x$から$\Set$への写像があります。
 
 \begin{figure}[H]
   \centering
@@ -63,26 +21,13 @@ mapping from $x$ to $\Set$.
 \end{figure}
 
 \noindent
-If we want to stress the fact that we are considering the hom-set as a
-mapping in its second argument, we use the notation $\cat{C}(a, -)$
-with the dash serving as the placeholder for the argument.
+ホム集合を第二引数の写像として考慮したい場合、記法$\cat{C}(a, -)$を使用し、ダッシュが引数のプレースホルダーとして機能します。
 
-This mapping of objects is easily extended to the mapping of morphisms.
-Let's take a morphism $f$ in $\cat{C}$ between two arbitrary
-objects $x$ and $y$. The object $x$ is mapped to
-the set $\cat{C}(a, x)$, and the object $y$ is mapped to
-$\cat{C}(a, y)$, under the mapping we have just defined. If this
-mapping is to be a functor, $f$ must be mapped to a function
-between the two sets: $\cat{C}(a, x) \to \cat{C}(a, y)$
+この対象の写像は容易に射の写像に拡張されます。$\cat{C}$内の任意の射$f$を、任意の対象$x$と$y$の間で取りましょう。対象$x$は集合$\cat{C}(a, x)$に写され、対象$y$は私たちが定義した写像の下で$\cat{C}(a, y)$に写されます。この写像が関手であるためには、$f$は二つの集合間の関数に写されなければなりません: $\cat{C}(a, x) \to \cat{C}(a, y)$
 
-Let's define this function point-wise, that is for each argument
-separately. For the argument we should pick an arbitrary element of
-$\cat{C}(a, x)$ --- let's call it $h$. Morphisms are
-composable, if they match end to end. It so happens that the target of
-$h$ matches the source of $f$, so their composition:
+この関数を点ごとに定義しましょう、つまり各引数に対して別々に。引数として$\cat{C}(a, x)$の任意の要素を選びましょう --- それを$h$と呼びます。射は、端と端が一致する場合に合成可能です。偶然にも$f$の源が$h$の目標と一致するので、その合成: 
 \[f \circ h \Colon a \to y\]
-is a morphism going from $a$ to $y$. It is therefore a
-member of $\cat{C}(a, y)$.
+は$a$から$y$への射です。したがって、それは$\cat{C}(a, y)$のメンバーです。
 
 \begin{figure}[H]
   \centering
@@ -90,243 +35,132 @@ member of $\cat{C}(a, y)$.
 \end{figure}
 
 \noindent
-We have just found our function from $\cat{C}(a, x)$ to
-$\cat{C}(a, y)$, which can serve as the image of $f$. If there
-is no danger of confusion, we'll write this lifted function as: $\cat{C}(a, f)$
-and its action on a morphism $h$ as:
+私たちはちょうど$\cat{C}(a, x)$から$\cat{C}(a, y)$への関数を見つけました、これが$f$の像として機能することができます。混乱の恐れがなければ、この持ち上げられた関数を$\cat{C}(a, f)$と書き、射$h$に対するその作用を次のように書きます: 
 \[\cat{C}(a, f) h = f \circ h\]
-Since this construction works in any category, it must also work in the
-category of Haskell types. In Haskell, the hom-functor is better known
-as the \code{Reader} functor:
+この構造が任意の圏で機能するので、Haskellの型の圏にも機能します。Haskellでは、ホム関手は\code{Reader}関手としてよりよく知られています: 
 
 \src{snippet01}
 
 \src{snippet02}
-Now let's consider what happens if, instead of fixing the source of the
-hom-set, we fix the target. In other words, we're asking the question if
-the mapping $\cat{C}(-, a)$ is also a functor. It is, but instead of being covariant, it's
-contravariant. That's because the same kind of matching of morphisms end
-to end results in postcomposition by $f$; rather than
-precomposition, as was the case with $\cat{C}(a, -)$.
+それでは、ホム集合の源を固定するのではなく、目標を固定した場合に何が起こるかを考えてみましょう。つまり、写像$\cat{C}(-, a)$も関手であるかという問いです。それはそうですが、共変であるのではなく反変です。それは、射の端と端の同じ種類の一致が、$\cat{C}(a, -)$の場合とは逆に、$f$による後方合成をもたらすからです。
 
-We have already seen this contravariant functor in Haskell. We called it
-\code{Op}:
+私たちはすでにHaskellでこの反変関手を見てきました。それは\code{Op}と呼ばれていました: 
 
 \src{snippet03}
 
 \src{snippet04}
-Finally, if we let both objects vary, we get a profunctor
-$\cat{C}(-, =)$, which is contravariant in the first argument and
-covariant in the second (to underline the fact that the two arguments
-may vary independently, we use a double dash as the second placeholder).
-We have seen this profunctor before, when we talked about functoriality:
+最終的に、両方の対象を変化させると、第一引数で反変で、第二引数で共変であるプロ関手$\cat{C}(-, =)$が得られます (二つの引数が独立して変化することを強調するために、第二プレースホルダーとしてダブルダッシュを使用します) 。私たちは以前、関手性について話をしたときにこのプロ関手を見ました: 
 
 \src{snippet05}
-The important lesson is that this observation holds in any category: the
-mapping of objects to hom-sets is functorial. Since contravariance is
-equivalent to a mapping from the opposite category, we can state this
-fact succinctly as:
+重要な教訓は、この観察が任意の圏で成り立つということです: 対象をホム集合に写す写像は関手的です。反変性が逆圏からの写像に相当するので、私たちはこの事実を簡潔に述べることができます: 
 \[C(-, =) \Colon \cat{C}^\mathit{op} \times \cat{C} \to \Set\]
 
-\section{Representable Functors}
+\section{表現可能関手}
 
-We've seen that, for every choice of an object $a$ in $\cat{C}$,
-we get a functor from $\cat{C}$ to $\Set$. This kind of
-structure-preserving mapping to $\Set$ is often called a
-\newterm{representation}. We are representing objects and morphisms of
-$\cat{C}$ as sets and functions in $\Set$.
+$\cat{C}$の任意の対象$a$を選ぶと、$\cat{C}$から$\Set$への関手が得られます。このような$\Set$への構造保存写像はしばしば\newterm{表現}と呼ばれます。$\cat{C}$の対象と射を$\Set$の集合と関数として表現しています。
 
-The functor $\cat{C}(a, -)$ itself is sometimes called representable.
-More generally, any functor $F$ that is naturally isomorphic to
-the hom-functor, for some choice of $a$, is called
-\newterm{representable}. Such a functor must necessarily be
-$\Set$-valued, since $\cat{C}(a, -)$ is.
+関手$\cat{C}(a, -)$自体は時々表現可能と呼ばれます。より一般的に、ホム関手に自然に同型であるような任意の関手$F$は、\newterm{表現可能}と呼ばれます。そのような関手は必然的に$\Set$値でなければならず、$\cat{C}(a, -)$がそうであるからです。
 
-I said before that we often think of isomorphic sets as identical. More
-generally, we think of isomorphic \emph{objects} in a category as
-identical. That's because objects have no structure other than their
-relation to other objects (and themselves) through morphisms.
+私は以前、私たちは通常同型な集合を同一と考えると言いました。より一般的には、圏内の同型な\emph{対象}を同一と考えます。それは、対象が射を通じて他の対象 (およびそれ自身) との関係以外に構造を持たないからです。
 
-For instance, we've previously talked about the category of monoids,
-$\cat{Mon}$, that was initially modeled with sets. But we were careful
-to pick as morphisms only those functions that preserved the monoidal
-structure of those sets. So if two objects in $\cat{Mon}$ are
-isomorphic, meaning there is an invertible morphism between them, they
-have exactly the same structure. If we peeked at the sets and functions
-that they were based upon, we'd see that the unit element of one monoid
-was mapped to the unit element of another, and that a product of two
-elements was mapped to the product of their mappings.
+例えば、私たちは以前、集合で初めてモデル化されたモノイドの圏、$\cat{Mon}$について話しました。しかし、我々はそれらの集合のモノイダル構造を保存する関数のみを射として選びました。したがって、$\cat{Mon}$内の二つの対象が同型である場合、つまりそれらの間に可逆な射がある場合、それらは正確に同じ構造を持っています。我々がそれらの基礎となる集合と関数を覗き見れば、一つのモノイドの単位素が別のモノイドの単位要素に写され、二つの要素の積がその写像の積に写されるのを見るでしょう。
 
-The same reasoning can be applied to functors. Functors between two
-categories form a category in which natural transformations play the
-role of morphisms. So two functors are isomorphic, and can be thought of
-as identical, if there is an invertible natural transformation between
-them.
+関手に対する同じ推論を適用することができます。二つの圏間の関手は、自然変換が射として機能する圏で形成されます。したがって、二つの関手が同型であり、それらが同一であると考えることができます。それらの間に可逆な自然変換がある場合。
 
-Let's analyze the definition of the representable functor from this
-perspective. For $F$ to be representable we require that: There
-be an object $a$ in $\cat{C}$; one natural transformation $\alpha$ from
-$\cat{C}(a, -)$ to $F$; another natural transformation, $\beta$, in
-the opposite direction; and that their composition be the identity
-natural transformation.
+表現可能関手の定義をこの視点から分析しましょう。$F$が表現可能であるためには、次が必要です: $\cat{C}$の中に対象$a$が存在し、$\cat{C}(a, -)$から$F$への自然変換$\alpha$が一つ、逆方向にはもう一つの自然変換$\beta$があり、そしてそれらの合成が恒等自然変換であること。
 
-Let's look at the component of $\alpha$ at some object $x$. It's a
-function in $\Set$:
+$\alpha$の$x$におけるコンポーネントを見てみましょう。それは$\Set$内の関数です: 
 \[\alpha_x \Colon \cat{C}(a, x) \to F x\]
-The naturality condition for this transformation tells us that, for any
-morphism $f$ from $x$ to $y$, the following diagram
-commutes:
+この変換の自然性条件は、$x$から$y$への任意の射$f$に対して、次の図式が可換であることを告げています: 
 \[F f \circ \alpha_x = \alpha_y \circ \cat{C}(a, f)\]
-In Haskell, we would replace natural transformations with polymorphic
-functions:
+Haskellでは、自然変換を多相関数で置き換えます: 
 
 \src{snippet06}
-with the optional \code{forall} quantifier. The naturality condition
+オプショナルの\code{forall}量化子を使います。自然性条件
 
 \src{snippet07}
-is automatically satisfied due to parametricity (it's one of those
-theorems for free I mentioned earlier), with the understanding that
-\code{fmap} on the left is defined by the functor $F$, whereas
-the one on the right is defined by the reader functor. Since
-\code{fmap} for reader is just function precomposition, we can be even
-more explicit. Acting on $h$, an element of $\cat{C}(a, x)$,
-the naturality condition simplifies to:
+は、パラメトリシティにより自動的に満たされます (私が以前言及した無料の定理の一つです) 、左側の\code{fmap}は関手$F$によって定義され、右側はReader関手によって定義されることを理解しています。Readerのための\code{fmap}はただの関数前置合成なので、より明確にすることができます。$\cat{C}(a, x)$の要素である$h$に作用すると、自然性条件は次のように単純化されます: 
 
 \src{snippet08}
-The other transformation, \code{beta}, goes the opposite way:
+逆方向の変換、\code{beta}は反対の方向に進みます: 
 
 \src{snippet09}
-It must respect naturality conditions, and it must be the inverse of \code{alpha}:
+それは自然性条件を尊重しなければならず、\code{alpha}の逆でなければなりません: 
 
 \begin{snip}{text}
 alpha . beta = id = beta . alpha
 \end{snip}
-We will see later that a natural transformation from $\cat{C}(a, -)$
-to any $\Set$-valued functor always exists as long as $F a$ is
-non-empty (Yoneda's lemma) but it is not necessarily invertible.
+私たちは後で、$F a$が空でない限り、$\cat{C}(a, -)$から任意の$\Set$値関手への自然変換が常に存在することを見るでしょう (米田の補題) が、それが必ずしも可逆ではないことも見るでしょう。
 
-Let me give you an example in Haskell with the list functor and
-\code{Int} as \code{a}. Here's a natural transformation that does
-the job:
+Haskellでのリスト関手と\code{Int}を\code{a}とする例を挙げましょう。ここでは仕事をする自然変換を次のように任意に選びます: 
 
 \src{snippet10}
-I have arbitrarily picked the number 12 and created a singleton list
-with it. I can then \code{fmap} the function \code{h} over this list
-and get a list of the type returned by \code{h}. (There are actually
-as many such transformations as there are list of integers.)
+私は任意に数12を選び、それで一つの要素のリストを作りました。その後、関数\code{h}をこのリスト上で\code{fmap}することができ、\code{h}によって返される型のリストを得ることができます。 (実際には、整数のリストと同じ数だけこのような変換が存在します。) 
 
-The naturality condition is equivalent to the composability of
-\code{map} (the list version of \code{fmap}):
+自然性条件は\code{map}の合成可能性 (\code{fmap}のリストバージョン) と同等です: 
 
 \src{snippet11}
-But if we tried to find the inverse transformation, we would have to go
-from a list of arbitrary type \code{x} to a function returning
-\code{x}:
+しかし、逆変換を見つけようとした場合、任意の型\code{x}のリストから\code{x}を返す関数へ行かなければなりません: 
 
 \src{snippet12}
-You might think of retrieving an \code{x} from the list, e.g., using
-\code{head}, but that won't work for an empty list. Notice that there
-is no choice for the type \code{a} (in place of \code{Int}) that
-would work here. So the list functor is not representable.
+例えば、\code{head}を使ってリストから\code{x}を取り出すことを考えるかもしれませんが、空のリストではうまくいきません。このため、\code{a}の型として (\code{Int}の代わりに) 機能する選択肢はありません。従ってリスト関手は表現可能ではありません。
 
-Remember when we talked about Haskell (endo-) functors being a little
-like containers? In the same vein we can think of representable functors
-as containers for storing memoized results of function calls (the
-members of hom-sets in Haskell are just functions). The representing
-object, the type $a$ in $\cat{C}(a, -)$, is thought of as the
-key type, with which we can access the tabulated values of a function.
-The transformation we called \code{alpha} is called \code{tabulate}, and its
-inverse, \code{beta}, is called \code{index}. Here's a (slightly simplified)
-\code{Representable} class definition:
+Haskellの(自己)関手がコンテナのようなものだと話したときのことを覚えていますか？同じ意味で、表現可能関手は関数呼び出しのメモ化結果を格納するコンテナとして考えることができます。Haskellではホム集合のメンバーは単なる関数です。表現する対象、$\cat{C}(a, -)$の型$a$は、関数の表計算値にアクセスするためのキー型と考えられます。私たちが\code{alpha}と呼んだ変換は\code{tabulate}と呼ばれ、その逆は\code{index}と呼ばれます。ここに (少し単純化された) \code{Representable}クラスの定義があります: 
 
 \src{snippet13}
-Notice that the representing type, our $a$, which is called
-\code{Rep f} here, is part of the definition of
-\code{Representable}. The star just means that \code{Rep f} is a
-type (as opposed to a type constructor, or other more exotic kinds).
+表している型、つまり我々の$a$である\code{Rep f}は、\code
 
-Infinite lists, or streams, which cannot be empty, are representable.
+{Representable}の定義の一部であることに注意してください。星印は単に\code{Rep f}が型であることを意味します (型コンストラクタや他のもっと奇妙なものとは対照的に) 。
+
+空でない無限リスト、またはストリームは表現可能です。
 
 \src{snippet14}
-You can think of them as memoized values of a function taking an
-\code{Integer} as an argument. (Strictly speaking, I should be using
-non-negative natural numbers, but I didn't want to complicate the code.)
+それらは引数として\code{Integer}を取る関数のメモ化値として考えることができます。 (厳密に言えば、非負の自然数を使うべきですが、コードを複雑にしたくありませんでした。) 
 
-To \code{tabulate} such a function, you create an infinite stream of
-values. Of course, this is only possible because Haskell is lazy. The
-values are evaluated on demand. You access the memoized values using
-\code{index}:
+そのような関数を\code{tabulate}するためには、値の無限ストリームを作成します。もちろん、これはHaskellが遅延評価であるために可能です。値は要求に応じて評価されます。\code{index}を使ってメモ化された値にアクセスします: 
 
 \src{snippet15}
-It's interesting that you can implement a single memoization scheme to
-cover a whole family of functions with arbitrary return types.
+興味深いことに、任意の戻り型の全ての族の関数に対して単一のメモ化スキームを実装することができます。
 
-Representability for contravariant functors is similarly defined, except
-that we keep the second argument of $\cat{C}(-, a)$ fixed. Or,
-equivalently, we may consider functors from $\cat{C}^\mathit{op}$
-to $\Set$, because $\cat{C}^\mathit{op}(a, -)$ is the same as
-$\cat{C}(-, a)$.
+反変関手に対する表現可能性も同様に定義されますが、$\cat{C}(-, a)$の第二引数を固定します。または、$\cat{C}^\mathit{op}$から$\Set$への関手として考えることができます、なぜなら$\cat{C}^\mathit{op}(a, -)$は$\cat{C}(-, a)$と同じだからです。
 
-There is an interesting twist to representability. Remember that
-hom-sets can internally be treated as exponential objects, in Cartesian
-closed categories. The hom-set $\cat{C}(a, x)$ is equivalent to
-$x^a$, and for a representable functor $F$ we can write: $-^a = F$.
+表現可能性には面白い捩れがあります。ホム集合は、デカルト閉圏内で指数対象として内部的に扱うことができることを覚えていますか。ホム集合$\cat{C}(a, x)$は$x^a$に相当し、表現可能関手$F$に対して、私たちは$-^a = F$と書くことができます。
 
-Let's take the logarithm of both sides, just for kicks: $a = \mathbf{log}F$
+両側に対数を取ってみましょう、単にキックのために: $a = \mathbf{log}F$
 
-Of course, this is a purely formal transformation, but if you know some
-of the properties of logarithms, it is quite helpful. In particular, it
-turns out that functors that are based on product types can be
-represented with sum types, and that sum-type functors are not in
-general representable (example: the list functor).
+もちろん、これは純粋に形式的な変換ですが、対数のいくつかの特性を知っていれば、それはかなり役立ちます。特に、積型に基づく関手は和型で表現されることがわかり、和型関手は一般的には表現可能ではありません (例: リスト関手) 。
 
-Finally, notice that a representable functor gives us two different
-implementations of the same thing --- one a function, one a data
-structure. They have exactly the same content --- the same values are
-retrieved using the same keys. That's the sense of ``sameness'' I was
-talking about. Two naturally isomorphic functors are identical as far as
-their contents are involved. On the other hand, the two representations
-are often implemented differently and may have different performance
-characteristics. Memoization is used as a performance enhancement and
-may lead to substantially reduced run times. Being able to generate
-different representations of the same underlying computation is very
-valuable in practice. So, surprisingly, even though it's not concerned
-with performance at all, category theory provides ample opportunities to
-explore alternative implementations that have practical value.
+最後に、表現可能関手は、同じことの二つの異なる実装を与えてくれることに注意してください --- 一つは関数、もう一つはデータ構造です。それらにはまったく同じ内容があり --- 同じキーを使って同じ値が取り出されます。それが私が話していた「同じさ」の感覚です。二つの自然に同型な関手は、その内容に関与する限りでは同一です。一方、二つの表現はしばしば異なって実装され、異なるパフォーマンス特性を持っています。メモ化はパフォーマンスの向上として使用され、大幅に実行時間を短縮することがあります。同じ基礎となる計算の異なる表現を生成する能力は、実際には非常に貴重です。従って、驚くべきことに、パフォーマンスに関しては全く関心がないにも関わらず、圏論は実用的な価値を持つ代替実装を探求するための豊富な機会を提供しています。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Show that the hom-functors map identity morphisms in \emph{C} to
-        corresponding identity functions in $\Set$.
+        ホム関手が\emph{C}内の恒等射を$\Set$内の対応する恒等関数に写すことを示してください。
   \item
-        Show that \code{Maybe} is not representable.
+        \code{Maybe}が表現可能でないことを示してください。
   \item
-        Is the \code{Reader} functor representable?
+        \code{Reader}関手は表現可能ですか？
   \item
-        Using \code{Stream} representation, memoize a function that squares
-        its argument.
+        \code{Stream}表現を使って、引数を二乗する関数をメモ化してください。
   \item
-        Show that \code{tabulate} and \code{index} for \code{Stream} are
-        indeed the inverse of each other. (Hint: use induction.)
+        \code{Stream}の\code{tabulate}と\code{index}が実際に互いの逆であることを示してください。 (ヒント: 帰納法を使用します。) 
   \item
-        The functor:
+        関手: 
 
         \begin{snip}{haskell}
 Pair a = Pair a a
 \end{snip}
-        is representable. Can you guess the type that represents it? Implement
-        \code{tabulate} and \code{index}.
+        は表現可能です。それを表現する型を推測できますか？\code{tabulate}と\code{index}を実装してください。
 \end{enumerate}
 
-\section{Bibliography}
+\section{参考文献}
 
 \begin{enumerate}
   \tightlist
   \item
-        The Catsters video about
+        表現可能関手についてのCatstersビデオ
         \urlref{https://www.youtube.com/watch?v=4QgjKUzyrhM}{representable
           functors}.
 \end{enumerate}

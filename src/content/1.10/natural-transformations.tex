@@ -1,32 +1,17 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{W}{e talked about} functors as mappings between categories that preserve
-their structure.
+\lettrine[lhang=0.17]{関}{手}について、それが圏間の構造を保つ写像として機能することを話しました。
 
-A functor ``embeds'' one category in another. It may
-collapse multiple things into one, but it never breaks connections. One
-way of thinking about it is that with a functor we are modeling one
-category inside another. The source category serves as a model, a
-blueprint, for some structure that's part of the target category.
+関手はある圏を別の圏に「埋め込む」ものです。それは多くのものを一つにまとめることはありますが、接続を断つことはありません。関手を使って、ある圏を別の圏内でモデル化していると考えることができます。ソース圏は、ターゲット圏の一部分の構造のためのモデル、設計図として機能します。
 
 \begin{figure}[H]
   \centering\includegraphics[width=0.4\textwidth]{images/1_functors.jpg}
 \end{figure}
 
 \noindent
-There may be many ways of embedding one category in another. Sometimes
-they are equivalent, sometimes very different. One may collapse the
-whole source category into one object, another may map every object to a
-different object and every morphism to a different morphism. The same
-blueprint may be realized in many different ways. Natural
-transformations help us compare these realizations. They are mappings of
-functors --- special mappings that preserve their functorial nature.
+ある圏を別の圏に埋め込む方法は多くあります。時にはそれらは同等のものもあれば、全く異なるものもあります。一つはソース圏全体を一つの対象に収縮させるかもしれませんが、別のものは各対象を異なる対象に、各射を異なる射に写像するかもしれません。同じ設計図が多くの異なる方法で実現されるのです。自然変換はこれらの実現を比較するのに役立ちます。関手の写像です --- それらの関手的性質を保持する特別な写像です。
 
-Consider two functors $F$ and $G$ between categories
-$\cat{C}$ and $\cat{D}$. If you focus on just one object $a$ in
-$\cat{C}$, it is mapped to two objects: $F a$ and $G a$.
-A mapping of functors should therefore map $F a$ to
-$G a$.
+圏$\cat{C}$ と $\cat{D}$ の間の関手 $F$ と $G$ を考えてください。$\cat{C}$ のただ一つの対象 $a$ に注目すると、それは二つの対象、$F a$ と $G a$ に写像されます。したがって、関手の写像は $F a$ を $G a$ に写像するべきです。
 
 \begin{figure}[H]
   \centering
@@ -34,41 +19,20 @@ $G a$.
 \end{figure}
 
 \noindent
-Notice that $F a$ and $G a$ are objects in the same
-category $\cat{D}$. Mappings between objects in the same category should
-not go against the grain of the category. We don't want to make
-artificial connections between objects. So it's \emph{natural} to use
-existing connections, namely morphisms. A natural transformation is a
-selection of morphisms: for every object $a$, it picks one
-morphism from $F a$ to $G a$. If we call the natural
-transformation $\alpha$, this morphism is called the \newterm{component}
-of $\alpha$ at $a$, or $\alpha_a$.
+$F a$ と $G a$ は同じ圏 $\cat{D}$ の対象であることに注意してください。同じ圏の対象間の写像は、圏の性質に逆らってはなりません。我々は対象間に人工的な接続を作りたくありません。したがって、既存の接続、すなわち射を使用するのが\emph{自然}です。自然変換は射の選択です: 各対象 $a$ に対して、$F a$ から $G a$ への一つの射を選びます。自然変換を $\alpha$ と呼ぶと、この射は $\alpha$ の $a$ における\newterm{コンポーネント}、または $\alpha_a$ と呼ばれます。
 
 \[\alpha_a \Colon F a \to G a\]
-Keep in mind that $a$ is an object in $\cat{C}$ while $\alpha_a$
-is a morphism in $\cat{D}$.
+$a$ は $\cat{C}$ の対象であるのに対し、$\alpha_a$ は $\cat{D}$ の射であることを念頭に置いてください。
 
-If, for some $a$, there is no morphism between $F a$ and
-$G a$ in $\cat{D}$, there can be no natural transformation
-between $F$ and $G$.
+もし $a$ について、$F a$ と $G a$ の間に $\cat{D}$ に射が存在しない場合、$F$ と $G$ の間に自然変換は存在しません。
 
-Of course that's only half of the story, because functors not only map
-objects, they map morphisms as well. So what does a natural
-transformation do with those mappings? It turns out that the mapping of
-morphisms is fixed --- under any natural transformation between $F$ and $G$,
-$F f$ must be transformed into $G f$. What's more, the
-mapping of morphisms by the two functors drastically restricts the
-choices we have in defining a natural transformation that's compatible
-with it. Consider a morphism $f$ between two objects $a$
-and $b$ in $\cat{C}$. It's mapped to two morphisms, $F f$
-and $G f$ in $\cat{D}$:
+もちろん、これは話の半分だけです。なぜなら関手は対象だけでなく射も写像するからです。では、自然変換はそれらの写像とはどのように関わるのでしょうか？射の写像は固定されています --- $F$ と $G$ の間の任意の自然変換の下で、$F f$ は $G f$ に変換されなければなりません。さらに、二つの関手による射の写像は、それと整合する自然変換を定義する際の選択肢を大きく制限します。$\cat{C}$ の二つの対象 $a$ と $b$ の間の射 $f$ を考えてみましょう。それは二つの射、$F f$ と $G f$ に $\cat{D}$ で写像されます: 
 
 \begin{gather*}
   F f \Colon F a \to F b \\
   G f \Colon G a \to G b
 \end{gather*}
-The natural transformation $\alpha$ provides two additional morphisms
-that complete the diagram in \emph{D}:
+自然変換 $\alpha$ は、\emph{D}で図式を完成させる二つの追加の射を提供します: 
 
 \begin{gather*}
   \alpha_a \Colon F a \to G a \\
@@ -81,15 +45,10 @@ that complete the diagram in \emph{D}:
 \end{figure}
 
 \noindent
-Now we have two ways of getting from $F a$ to $G b$. To
-make sure that they are equal, we must impose the \newterm{naturality
-  condition} that holds for any $f$:
+これで $F a$ から $G b$ への二つの方法があります。それらが等しいことを確かめるために、任意の $f$ に対して成り立つ\newterm{自然性条件}を課さなければなりません: 
 
 \[G f \circ \alpha_a = \alpha_b \circ F f\]
-The naturality condition is a pretty stringent requirement. For
-instance, if the morphism $F f$ is invertible, naturality
-determines $\alpha_b$ in terms of $\alpha_a$. It \emph{transports}
-$\alpha_a$ along $f$:
+自然性条件はかなり厳しい要求です。例えば、もし射 $F f$ が可逆なら、自然性は $\alpha_b$ を $\alpha_a$ の項で決定します。それは $f$ に沿って $\alpha_a$ を\emph{輸送}します: 
 
 \[\alpha_b = (G f) \circ \alpha_a \circ (F f)^{-1}\]
 
@@ -99,19 +58,9 @@ $\alpha_a$ along $f$:
 \end{figure}
 
 \noindent
-If there is more than one invertible morphism between two objects, all
-these transports have to agree. In general, though, morphisms are not
-invertible; but you can see that the existence of natural
-transformations between two functors is far from guaranteed. So the
-scarcity or the abundance of functors that are related by natural
-transformations may tell you a lot about the structure of categories
-between which they operate. We'll see some examples of that when we talk
-about limits and the Yoneda lemma.
+もし二つの対象の間に一つ以上の可逆射が存在するなら、これらの輸送は全て一致しなければなりません。一般に、射は可逆でないことが多いですが、二つの関手間に自然変換が存在する可能性は決して保証されていません。そのため、自然変換によって関連付けられる関手の希少性や豊富さは、それらが操作する圏の構造について多くのことを教えてくれるかもしれません。極限や米田の補題について話をするときに、その例をいくつか見ることになります。
 
-Looking at a natural transformation component-wise, one may say that it
-maps objects to morphisms. Because of the naturality condition, one may
-also say that it maps morphisms to commuting squares --- there is one
-commuting naturality square in $\cat{D}$ for every morphism in $\cat{C}$.
+自然変換をコンポーネントごとに見ると、それは対象を射に写像すると言えます。自然性条件のために、それは射を可換な四角形に写像するとも言えます --- $\cat{C}$ の各射について $\cat{D}$ に一つの可換な自然性の四角形があります。
 
 \begin{figure}[H]
   \centering
@@ -119,289 +68,168 @@ commuting naturality square in $\cat{D}$ for every morphism in $\cat{C}$.
 \end{figure}
 
 \noindent
-This property of natural transformations comes in very handy in a lot of
-categorical constructions, which often include commuting diagrams. With
-a judicious choice of functors, a lot of these commutativity conditions
-may be transformed into naturality conditions. We'll see examples of
-that when we get to limits, colimits, and adjunctions.
+自然変換のこの性質は、多くの圏論的構成に非常に便利で、それらはしばしば可換図式を含んでいます。関手の賢明な選択によって、多くのこれらの可換性条件は自然性条件に変換することができるかもしれません。極限、余極限、そして随伴について話をするときに、その例をいくつか見ることになります。
 
-Finally, natural transformations may be used to define isomorphisms of
-functors. Saying that two functors are naturally isomorphic is almost
-like saying they are the same. \newterm{Natural isomorphism} is defined as
-a natural transformation whose components are all isomorphisms
-(invertible morphisms).
+最後に、自然変換は関手の同型を定義するために使用することができます。二つの関手が自然に同型であると言うことは、ほとんど同じであると言うようなものです。\newterm{自然同型}は、そのコンポーネントが全て同型 (可逆射) である自然変換として定義されます。
 
-\section{Polymorphic Functions}
+\section{多相的関数}
 
-We talked about the role of functors (or, more specifically,
-endofunctors) in programming. They correspond to type constructors that
-map types to types. They also map functions to functions, and this
-mapping is implemented by a higher order function \code{fmap} (or
-\code{transform}, \code{then}, and the like in C++).
+プログラミングにおける関手 (具体的には、自己関手) の役割について話しました。それらは型を型に写像する型コンストラクタに相当します。関手は関数も関数に写像しますが、この写像は\code{fmap} (またはC++での\code{transform}、\code{then}など) という高階関数によって実装されます。
 
-To construct a natural transformation we start with an object, here a
-type, \code{a}. One functor, \code{F}, maps it to the type
-$F a$. Another functor, \code{G}, maps it to $G a$.
-The component of a natural transformation \code{alpha} at \code{a}
-is a function from $F a$ to $G a$. In pseudo-Haskell:
+自然変換を構成するには、ここでは型、\code{a}の対象から始めます。ある関手、\code{F}はそれを型 $F a$ に写像します。別の関手、\code{G}はそれを $G a$ に写像します。自然変換\code{alpha}の\code{a}におけるコンポーネントは、$F a$ から $G a$ への関数です。擬似Haskellで: 
 
 \begin{snipv}
 alpha\textsubscript{a} :: F a -> G a
 \end{snipv}
-A natural transformation is a polymorphic function that is defined for
-all types \code{a}:
+自然変換は、全ての型 \code{a} に対して定義される多相的関数です: 
 
 \src{snippet01}
-The \code{forall a} is optional in Haskell (and in fact requires
-turning on the language extension \code{ExplicitForAll}). Normally,
-you would write it like this:
+\code{forall a} は Haskell ではオプションです (実際には、言語拡張 \code{ExplicitForAll} をオンにする必要があります) 。通常、このように書きます: 
 
 \src{snippet02}
-Keep in mind that it's really a family of functions parameterized by
-\code{a}. This is another example of the terseness of the Haskell
-syntax. A similar construct in C++ would be slightly more verbose:
+心に留めておくべきことは、これは実際には \code{a} によってパラメータ化された関数の族であるということです。これは Haskell 構文の簡潔さの別の例です。C++ での同様の構造は少し冗長になるでしょう: 
 
 \begin{snip}{cpp}
 template<class A> G<A> alpha(F<A>);
 \end{snip}
-There is a more profound difference between Haskell's polymorphic
-functions and C++ generic functions, and it's reflected in the way these
-functions are implemented and type-checked. In Haskell, a polymorphic
-function must be defined uniformly for all types. One formula must work
-across all types. This is called \newterm{parametric polymorphism}.
+Haskell の多相的関数と C++ のジェネリック関数の間には、これらの関数が実装され、型検査される方法に反映されているより深い違いがあります。Haskell では、多相的関数はすべての型に対して一様に定義されなければなりません。一つの公式がすべての型にわたって機能しなければなりません。これは\newterm{パラメトリック多相性}と呼ばれます。
 
-C++, on the other hand, supports by default \newterm{ad hoc polymorphism},
-which means that a template doesn't have to be well-defined for all
-types. Whether a template will work for a given type is decided at
-instantiation time, where a concrete type is substituted for the type
-parameter. Type checking is deferred, which unfortunately often leads to
-incomprehensible error messages.
+一方、C++ はデフォルトで\newterm{アドホック多相性}をサポートしています。これは、テンプレートがすべての型に対して正しく定義される必要がないことを意味します。テンプレートが与えられた型で機能するかどうかは、具体的な型が型パラメータに代入されるインスタンス化の時に決定されます。型チェックは遅延され、残念ながらしばしば理解しがたいエラーメッセージを引き起こします。
 
-In C++, there is also a mechanism for function overloading and template
-specialization, which allows different definitions of the same function
-for different types. In Haskell this functionality is provided by type
-classes and type families.
+C++ にはまた、異なる型に対して同じ関数の異なる定義を可能にする関数のオーバーロードとテンプレートの特殊化のメカニズムもあります。Haskell では、この機能は型クラスと型の族によって提供されます。
 
-Haskell's parametric polymorphism has an unexpected consequence: any
-polymorphic function of the type:
+Haskell のパラメトリック多相性は意外な結果を持ちます: 型が: 
 
 \src{snippet03}
-where \code{F} and \code{G} are functors, automatically satisfies
-the naturality condition. Here it is in categorical notation ($f$
-is a function $f \Colon a \to b$):
+ここで、\code{F} と \code{G} は関手で、任意の多相的関数は自然性条件を自動的に満たします。ここで、圏論的な記法で ($f$ は関数 $f \Colon a \to b$ です) : 
 
 \[G f \circ \alpha_a = \alpha_b \circ F f\]
-In Haskell, the action of a functor \code{G} on a morphism \code{f}
-is implemented using \code{fmap}. I'll first write it in
-pseudo-Haskell, with explicit type annotations:
+Haskell では、関手 \code{G} 上の射 \code{f} の作用は \code{fmap} を使用して実装されます。まず、明示的な型注釈を使って擬似Haskellで書きます: 
 
 \begin{snipv}
 fmap\textsubscript{G} f . alpha\textsubscript{a} = alpha\textsubscript{b} . fmap\textsubscript{F} f
 \end{snipv}
-Because of type inference, these annotations are not necessary, and the
-following equation holds:
+型推論のため、これらの注釈は必要ありません、そして次の方程式が成立します: 
 
 \begin{snip}{text}
 fmap f . alpha = alpha . fmap f
 \end{snip}
-This is still not real Haskell --- function equality is not expressible
-in code --- but it's an identity that can be used by the programmer in
-equational reasoning; or by the compiler, to implement optimizations.
+これはまだ本物の Haskell ではありません --- 関数の等価性はコードで表現できないからです --- しかし、それはプログラマが等式推論に使用したり、コンパイラが最適化を実装するために使用できる恒等式です。
 
-The reason why the naturality condition is automatic in Haskell has to
-do with ``theorems for free.'' Parametric polymorphism, which is used to
-define natural transformations in Haskell, imposes very strong
-limitations on the implementation --- one formula for all types. These
-limitations translate into equational theorems about such functions. In
-the case of functions that transform functors, free theorems are the
-naturality conditions.\footnote{
-  You may read more about free theorems in my
-  blog \href{https://bartoszmilewski.com/2014/09/22/parametricity-money-for-nothing-and-theorems-for-free/}{``Parametricity:
+Haskell における自然性条件の自動性は「無料の定理」と関連しています。Haskell で自然変換を定義するために使用されるパラメトリック多相性は、すべての型にわたって一つの公式を課すという非常に強い制約を課します。これらの制約は、そのような関数に関する等式定理に変換されます。関手を変換する関数の場合、無料の定理は自然性条件です。\footnote{
+  無料の定理についてもっと読むことができます
+  ブログ \href{https://bartoszmilewski.com/2014/09/22/parametricity-money-for-nothing-and-theorems-for-free/}{``Parametricity:
     Money for Nothing and Theorems for Free}.''}
 
-One way of thinking about functors in Haskell that I mentioned earlier
-is to consider them generalized containers. We can continue this analogy
-and consider natural transformations to be recipes for repackaging the
-contents of one container into another container. We are not touching
-the items themselves: we don't modify them, and we don't create new
-ones. We are just copying (some of) them, sometimes multiple times, into
-a new container.
+関手を Haskell で考える一つの方法は、それらを一般化されたコンテナと見なすことです。この類推を続けて、自然変換を考えることができます。それは一つのコンテナの内容を別のコンテナに再梱包するためのレシピです。我々はアイテム自体に触れてはいけません: 私たちはそれらを変更したり、新しいものを作成したりしてはいけません。私たちはただ、それらを新しいコンテナに (時には複数回) コピーするだけです。
 
-The naturality condition becomes the statement that it doesn't matter
-whether we modify the items first, through the application of
-\code{fmap}, and repackage later; or repackage first, and then modify
-the items in the new container, with its own implementation of
-\code{fmap}. These two actions, repackaging and \code{fmap}ping, are
-orthogonal. ``One moves the eggs, the other boils them.''
+自然性条件は、アイテムを最初に \code{fmap} を通して変更し、後で再梱包するか、あるいは最初に再梱包してから、新しいコンテナの独自の実装でアイテムを変更するか、どちらを行っても問題がないという声明です。これら二つのアクション、再梱包と \code{fmap} は直交しています。「一方は卵を動かし、もう一方はそれらを茹でます。」
 
-Let's see a few examples of natural transformations in Haskell. The
-first is between the list functor, and the \code{Maybe} functor. It
-returns the head of the list, but only if the list is non-empty:
+Haskell での自然変換のいくつかの例を見てみましょう。最初は、リスト関手と \code{Maybe} 関手の間です。リストが空でない場合に限り、リストの先頭を返します: 
 
 \src{snippet04}
-It's a function polymorphic in \code{a}. It works for any type
-\code{a}, with no limitations, so it is an example of parametric
-polymorphism. Therefore it is a natural transformation between the two
-functors. But just to convince ourselves, let's verify the naturality
-condition.
+これは \code{a} に多相的な関数です。それはどんな型 \code{a} に対しても制限なく機能するので、パラメトリック多相性の一例です。したがって、それは二つの関手間の自然変換です。しかし、自然性条件を確認するために、私たち自身を納得させるために、それを検証しましょう。
 
 \src{snippet05}
-We have two cases to consider; an empty list:
+考慮すべき二つのケースがあります。空リスト: 
 
 \src{snippet06}
 
 \src{snippet07}
-and a non-empty list:
+そして空でないリスト: 
 
 \src{snippet08}
 
 \src{snippet09}
-I used the implementation of \code{fmap} for lists:
+私はリストのための \code{fmap} の実装を使用しました: 
 
 \src{snippet10}
-and for \code{Maybe}:
+そして \code{Maybe} のための: 
 
 \src{snippet11}
-An interesting case is when one of the functors is the trivial
-\code{Const} functor. A natural transformation from or to a
-\code{Const} functor looks just like a function that's either
-polymorphic in its return type or in its argument type.
+興味深いケースは、関手の一つが自明な \code{Const} 関手である場合です。 \code{Const} 関手からまたはそれへの自然変換は、それが返り型で多相的であるか、引数型で多相的であるかのいずれかのように見える関数のようです。
 
-For instance, \code{length} can be thought of as a natural
-transformation from the list functor to the \code{Const Int} functor:
+例えば、\code{length} はリスト関手から \code{Const Int} 関手への自然変換として考えることができます: 
 
 \src{snippet12}
-Here, \code{unConst} is used to peel off the \code{Const}
-constructor:
+ここで、\code{unConst} は \code{Const} コンストラクタを剥がすために使用されます: 
 
 \src{snippet13}
-Of course, in practice \code{length} is defined as:
+もちろん、実際には \code{length} は次のように定義されています: 
 
 \src{snippet14}
-which effectively hides the fact that it's a natural transformation.
+これは実際にそれが自然変換であるという事実を隠しています。
 
-Finding a parametrically polymorphic function \emph{from} a
-\code{Const} functor is a little harder, since it would require the
-creation of a value from nothing. The best we can do is:
+\code{Const} 関手からのパラメトリック多相的関数を見つけることは少し難しいかもしれません。それは何もないところから値を作り出す必要があるためです。最善を尽くせば: 
 
 \src{snippet15}
-Another common functor that we've seen already, and which will play an
-important role in the Yoneda lemma, is the \code{Reader} functor. I
-will rewrite its definition as a \code{newtype}:
+私たちがすでに見たもう一つの一般的な関手は、\code{Reader} 関手です。私はそれの定義を\code{newtype}として書き直します: 
 
 \src{snippet16}
-It is parameterized by two types, but is (covariantly) functorial only
-in the second one:
+それは二つの型によってパラメータ化されていますが、二つ目のものにのみ (共変的に) 関手的です: 
 
 \src{snippet17}
-For every type \code{e}, you can define a family of natural
-transformations from \code{Reader e} to any other functor \code{f}.
-We'll see later that the members of this family are always in one to one
-correspondence with the elements of \code{f e} (the
-\hyperref[the-yoneda-lemma]{Yoneda lemma}).
+あなたは任意の型 \code{e} に対して、\code{Reader e} から任意の他の関手 \code{f} への自然変換の族を定義することができます。後で見るように、この族のメンバーは常に \code{f e} の要素と一対一の対応関係にあります (\hyperref[the-yoneda-lemma]{米田の補題}) 。
 
-For instance, consider the somewhat trivial unit type \code{()} with
-one element \code{()}. The functor \code{Reader ()} takes any type
-\code{a} and maps it into a function type \code{() -> a}.
-These are just all the functions that pick a single element from the set
-\code{a}. There are as many of these as there are elements in
-\code{a}. Now let's consider natural transformations from this functor
-to the \code{Maybe} functor:
+例えば、要素 \code{()} を持つUnit型 \code{()} を考えてみましょう。関手 \code{Reader ()} は任意の型 \code{a} を関数型 \code{() -> a} に写像します。
+これらは単に \code{a} の集合から単一の要素を選ぶすべての関数です。
+\code{a} の要素と同じ数だけこれらが存在します。ここで、この関手から \code{Maybe} 関手への自然変換を考えてみましょう: 
 
 \src{snippet18}
-There are only two of these, \code{dumb} and \code{obvious}:
+これらのうちの二つだけが、\code{dumb} と \code{obvious} です: 
 
 \src{snippet19}
-and
+そして
 
 \src{snippet20}
-(The only thing you can do with \code{g} is to apply it to the unit
-value \code{()}.)
+ (\code{g} でできる唯一のことは、それを単位値 \code{()} に適用することです。) 
 
-And, indeed, as predicted by the Yoneda lemma, these correspond to the
-two elements of the \code{Maybe ()} type, which are \code{Nothing}
-and \code{Just ()}. We'll come back to the Yoneda lemma later ---
-this was just a little teaser.
+そして確かに、米田の補題によって予測されるように、これらは \code{Maybe ()} 型の二つの要素、\code{Nothing} と \code{Just ()} に対応しています。後で米田の補題に戻ります --- これはちょっとした予告でした。
 
-\section{Beyond Naturality}
+\section{自然性を越えて}
 
-A parametrically polymorphic function between two functors (including
-the edge case of the \code{Const} functor) is always a natural
-transformation. Since all standard algebraic data types are functors,
-any polymorphic function between such types is a natural transformation.
+二つの関手 (\code{Const} 関手のエッジケースを含む) の間のパラメトリック多相的関数は常に自然変換です。すべての標準的な代数的データ型が関手であるため、そのような型間の多相的関数は自然変換です。
 
-We also have function types at our disposal, and those are functorial in
-their return type. We can use them to build functors (like the
-\code{Reader} functor) and define natural transformations that are
-higher-order functions.
+また、関数型を私たちの手元に持っています。これらは返り値の型で関手的です。私たちはそれらを関手 (\code{Reader} 関手のような) を構成し、高階関数である自然変換を定義するために使用することができます。
 
-However, function types are not covariant in the argument type. They are
-\newterm{contravariant}. Of course contravariant functors are equivalent to
-covariant functors from the opposite category. Polymorphic functions
-between two contravariant functors are still natural transformations in
-the categorical sense, except that they work on functors from the
-opposite category to Haskell types.
+ただし、関数型は引数型で共変ではありません。\newterm{反変}です。もちろん反変関手は、逆圏からの共変関手に相当します。二つの反変関手間の多相的関数はまだ圏論的な意味で自然変換ですが、それは逆圏から Haskell 型への関手に対して機能します。
 
-You might remember the example of a contravariant functor we've looked
-at before:
+以前に見た反変関手の例を覚えているかもしれません: 
 
 \src{snippet21}
-This functor is contravariant in \code{a}:
+この関手は \code{a} で反変です: 
 
 \src{snippet22}
-We can write a polymorphic function from, say, \code{Op Bool} to
-\code{Op String}:
+例えば、\code{Op Bool} から \code{Op String} への多相的関数を書くことができます: 
 
 \src{snippet23}
-But since the two functors are not covariant, this is not a natural
-transformation in $\Hask$. However, because they are both
-contravariant, they satisfy the ``opposite'' naturality condition:
+しかし、二つの関手が共変でないため、これは $\Hask$ での自然変換ではありません。ただし、それらが共に反変であるため、「逆」の自然性条件を満たします: 
 
 \src{snippet24}[b]
-Notice that the function \code{f} must go in the opposite direction
-than what you'd use with \code{fmap}, because of the signature of
-\code{contramap}:
+\code{f} は、\code{fmap} を使用する際に使用するものとは逆方向でなければならないことに注意してください。これは \code{contramap} の署名からです: 
 
 \src{snippet25}
-Are there any type constructors that are not functors, whether covariant
-or contravariant? Here's one example:
+共変でも反変でもない型コンストラクタがありますか？ここに一つの例があります: 
 
 \src{snippet26}
-This is not a functor because the same type \code{a} is used both in
-the negative (contravariant) and positive (covariant) position. You
-can't implement \code{fmap} or \code{contramap} for this type.
-Therefore a function of the signature:
+これは関手ではありません。なぜなら同じ型 \code{a} が負 (反変) と正 (共変) の位置の両方で使用されているためです。そのため、\code{fmap} や \code{contramap} をこの型のために実装することはできません。したがって、以下の署名を持つ関数: 
 
 \src{snippet27}
-where \code{f} is an arbitrary functor, cannot be a natural
-transformation. Interestingly, there is a generalization of natural
-transformations, called dinatural transformations, that deals with such
-cases. We'll get to them when we discuss ends.
+ここで \code{f} は任意の関手で、自然変換にはなり得ません。興味深いことに、自然変換の一般化である、双自然変換と呼ばれるものが、このようなケースを扱います。私たちは、エンドについて議論する時に、それらについて説明します。
 
-\section{Functor Category}
+\section{関手圏}
 
-Now that we have mappings between functors --- natural transformations
---- it's only natural to ask the question whether functors form a
-category. And indeed they do! There is one category of functors for each
-pair of categories, $\cat{C}$ and $\cat{D}$. Objects in this category are functors from
-$\cat{C}$ to $\cat{D}$, and morphisms are natural transformations between those
-functors.
+関手間の写像 --- 自然変換 --- があると、関手が圏を形成するかという疑問が自然と生じます。そして実際、それらはします！圏のペアごとに一つの関手圏があります。この圏の対象は $\cat{C}$ から $\cat{D}$ への関手で、射はそれらの関手間の自然変換です。
 
-We have to define composition of two natural transformations, but that's
-quite easy. The components of natural transformations are morphisms, and
-we know how to compose morphisms.
+二つの自然変換の合成を定義する必要がありますが、それはかなり簡単です。自然変換のコンポーネントは射であり、射の合成方法を知っています。
 
-Indeed, let's take a natural transformation $\alpha$ from functor $F$ to $G$. Its
-component at object $a$ is some morphism:
+実際、関手 $F$ から $G$ への自然変換 $\alpha$ を取りましょう。対象 $a$ におけるそのコンポーネントは何らかの射です: 
 \[\alpha_a \Colon F a \to G a\]
-We'd like to compose $\alpha$ with $\beta$, which is a natural transformation from
-functor $G$ to $H$. The component of $\beta$ at $a$ is a morphism:
+関手 $G$ から $H$ への自然変換 $\beta$ と $\alpha$ を合成したいと思います。$a$ における $\beta$ のコンポーネントは射です: 
 \[\beta_a \Colon G a \to H a\]
-These morphisms are composable and their composition is another
-morphism:
+これらの射は合成可能で、その合成は別の射です: 
 \[\beta_a \circ \alpha_a \Colon F a \to H a\]
-We will use this morphism as the component of the natural transformation
-$\beta \cdot \alpha$ --- the composition of two natural transformations $\beta$ after $\alpha$:
+この射を自然変換 $\beta \cdot \alpha$ のコンポーネントとして使用します --- 二つの自然変換 $\beta$ の後に $\alpha$ の合成です: 
 \[(\beta \cdot \alpha)_a = \beta_a \circ \alpha_a\]
 
 \begin{figure}[H]
@@ -410,8 +238,7 @@ $\beta \cdot \alpha$ --- the composition of two natural transformations $\beta$ 
 \end{figure}
 
 \noindent
-One (long) look at a diagram convinces us that the result of this
-composition is indeed a natural transformation from F to H:
+一つ (長い) 図を見るだけで、この合成が実際には $F$ から $H$ への自然変換であることが確信できます: 
 \[H f \circ (\beta \cdot \alpha)_a = (\beta \cdot \alpha)_b \circ F f\]
 
 \begin{figure}[H]
@@ -420,22 +247,13 @@ composition is indeed a natural transformation from F to H:
 \end{figure}
 
 \noindent
-Composition of natural transformations is associative, because their
-components, which are regular morphisms, are associative with respect to
-their composition.
+自然変換の合成は結合的です、なぜならそれらのコンポーネント、通常の射であり、その合成に関して結合的だからです。
 
-Finally, for each functor F there is an identity natural transformation
-$1_F$ whose components are the identity morphisms:
+最後に、各関手 $F$ には、そのコンポーネントが恒等射である自己恒等自然変換 $1_F$ があります: 
 \[\id_{F a} \Colon F a \to F a\]
-So, indeed, functors form a category.
+したがって、確かに、関手は圏を形成します。
 
-A word about notation. Following Saunders Mac Lane I use the dot for the
-kind of natural transformation composition I have just described. The
-problem is that there are two ways of composing natural transformations.
-This one is called the vertical composition, because the functors are
-usually stacked up vertically in the diagrams that describe it. Vertical
-composition is important in defining the functor category. I'll explain
-horizontal composition shortly.
+表記法について一言。Saunders Mac Lane に従って、私は自然変換合成の種類について説明したばかりのものにドットを使用します。問題は、自然変換を合成する二つの方法があるということです。この一つは垂直合成と呼ばれます、なぜなら関手は通常、それを説明する図で縦に積み上げられるからです。垂直合成は関手圏を定義するのに重要です。間もなく水平合成について説明します。
 
 \begin{figure}[H]
   \centering
@@ -443,19 +261,9 @@ horizontal composition shortly.
 \end{figure}
 
 \noindent
-The functor category between categories $\cat{C}$ and $\cat{D}$ is written as
-$\cat{Fun(C, D)}$, or $\cat{{[}C, D{]}}$, or sometimes as
-$\cat{D^C}$. This last notation suggests that a functor category itself
-might be considered a function object (an exponential) in some other
-category. Is this indeed the case?
+圏 $\cat{C}$ と $\cat{D}$ の間の関手圏は $\cat{Fun(C, D)}$、または $\cat{{[}C, D{]}}$、時には $\cat{D^C}$ と書かれます。この最後の表記は、関手圏自体が何らかの他の圏の関数対象 (指数関数) と見なされうることを示唆しています。これは実際にそうなのでしょうか？
 
-Let's have a look at the hierarchy of abstractions that we've been
-building so far. We started with a category, which is a collection of
-objects and morphisms. Categories themselves (or, strictly speaking
-\emph{small} categories, whose objects form sets) are themselves objects
-in a higher-level category $\Cat$. Morphisms in that category are
-functors. A Hom-set in $\Cat$ is a set of functors. For instance
-$\cat{Cat(C, D)}$ is a set of functors between two categories $\cat{C}$ and $\cat{D}$.
+これまでに構成してきた抽象化の階層を見てみましょう。我々は対象と射の集まりである圏から始めました。圏自体 (厳密には、対象が集合を形成する\emph{小さい}圏) は、より高次元の圏 $\Cat$ の対象です。その圏の射は関手です。$\Cat$ のホム集合は関手の集合です。例えば $\cat{Cat(C, D)}$ は圏 $\cat{C}$ と $\cat{D}$ の間の関手の集合です。
 
 \begin{figure}[H]
   \centering
@@ -463,56 +271,27 @@ $\cat{Cat(C, D)}$ is a set of functors between two categories $\cat{C}$ and $\ca
 \end{figure}
 
 \noindent
-A functor category $\cat{{[}C, D{]}}$ is also a set of functors between two
-categories (plus natural transformations as morphisms). Its objects are
-the same as the members of $\cat{Cat(C, D)}$. Moreover, a functor category,
-being a category, must itself be an object of $\Cat$ (it so
-happens that the functor category between two small categories is itself
-small). We have a relationship between a Hom-set in a category and an
-object in the same category. The situation is exactly like the
-exponential object that we've seen in the last section. Let's see how we
-can construct the latter in $\Cat$.
+関手圏 $\cat{{[}C, D{]}}$ もまた二つの圏間の関手の集合 (及び射としての自然変換) です。その対象は $\cat{Cat(C, D)}$ のメンバーと同じです。さらに、関手圏は、圏であるため、それ自体が $\Cat$ の対象でなければなりません (二つの小さい圏間の関手圏はそれ自体小さいです) 。我々は圏内のホム集合と同じ圏内の対象との間の関係を持っています。この状況は、前章で見た指数関数対象と全く同じです。$\Cat$ で後者をどのように構成するか見てみましょう。
 
-As you may remember, in order to construct an exponential, we need to
-first define a product. In $\Cat$, this turns out to be relatively
-easy, because small categories are \emph{sets} of objects, and we know
-how to define Cartesian products of sets. So an object in a product
-category $\cat{C\times D}$ is just a pair of objects, $(c, d)$, one from $\cat{C}$
-and one from $\cat{D}$. Similarly, a morphism between two such pairs,
-$(c, d)$ and $(c', d')$, is a pair of morphisms, $(f, g)$, where
-$f \Colon c \to c'$ and $g \Colon d \to d'$. These pairs of morphisms
-compose component-wise, and there is always an identity pair that is
-just a pair of identity morphisms. To make the long story short,
-$\Cat$ is a full-blown Cartesian closed category in which there is
-an exponential object $\cat{D^C}$ for any pair of categories.
-And by ``object'' in $\Cat$ I mean a category, so
-$\cat{D^C}$ is a category, which we can identify with the
-functor category between $\cat{C}$ and $\cat{D}$.
+指数関数を構成するためには、まず積を定義する必要があります。$\Cat$ では、これは比較的簡単です。なぜなら小さい圏は\emph{集合}の対象であり、集合のデカルト積を定義する方法を知っているからです。そのため、積圏 $\cat{C\times D}$ の対象は単に対象のペア、$(c, d)$で、一つは $\cat{C}$ から、もう一つは $\cat{D}$ からです。同様に、二つのそのようなペア、$(c, d)$ と $(c', d')$ の間の射は、射のペア、$(f, g)$で、$f \Colon c \to c'$ と $g \Colon d \to d'$ です。これらの射のペアはコンポーネントごとに合成され、常に恒等射のペアが存在します。それは単に恒等射のペアです。要するに、$\Cat$ はデカルト閉圏であり、そこには任意の圏のペアの指数関数対象があります。
+そして「対象」によって $\Cat$ で意味するのは圏なので、$\cat{D^C}$ は圏です。これを圏 $\cat{C}$ と $\cat{D}$ の間の関手圏と同一視することができます。
 
-\section{2-Categories}
+\section{2-圏}
 
-With that out of the way, let's have a closer look at $\Cat$. By
-definition, any Hom-set in $\Cat$ is a set of functors. But, as we
-have seen, functors between two objects have a richer structure than
-just a set. They form a category, with natural transformations acting as
-morphisms. Since functors are considered morphisms in $\Cat$,
-natural transformations are morphisms between morphisms.
+それで済んだとして、$\Cat$ をより詳細に見てみましょう。定義により、$\Cat$ の任意のホム集合は関手の集合です。しかし、我々が見てきたように、二つの対象間の関手は単なる集合以上の豊かな構造を持っています。それらは自然変換を射として持つ圏を形成します。関手が $\Cat$ の射と見なされる場合、自然変換は射間の射です。
 
-This richer structure is an example of a $\cat{2}$-category, a generalization of
-a category where, besides objects and morphisms (which might be called
-$1$-morphisms in this context), there are also $2$-morphisms, which are
-morphisms between morphisms.
+この豊かな構造は、$\cat{2}$-圏の一例です。これは、対象と射 (この文脈では $1$-射と呼ばれるかもしれません) の他に、射間の射、つまり $2$-射がある圏の一般化です。
 
-In the case of $\Cat$ seen as a $\cat{2}$-category we have:
+$\Cat$ を $\cat{2}$-圏と見なした場合、我々は持っています: 
 
 \begin{itemize}
   \tightlist
   \item
-        Objects: (Small) categories
+        対象:  (小さい) 圏
   \item
-        1-morphisms: Functors between categories
+        1-射: 圏間の関手
   \item
-        2-morphisms: Natural transformations between functors.
+        2-射: 関手間の自然変換。
 \end{itemize}
 
 \begin{figure}[H]
@@ -521,26 +300,18 @@ In the case of $\Cat$ seen as a $\cat{2}$-category we have:
 \end{figure}
 
 \noindent
-Instead of a Hom-set between two categories $\cat{C}$ and $\cat{D}$, we have a
-Hom-category --- the functor category $\cat{D^C}$. We have
-regular functor composition: a functor $F$ from $\cat{D^C}$
-composes with a functor $G$ from $\cat{E^D}$ to give $G \circ F$ from
-$\cat{E^C}$. But we also have composition inside each
-Hom-category --- vertical composition of natural transformations, or
-2-morphisms, between functors.
+圏 $\cat{C}$ と $\cat{D}$ の間のホム集合の代わりに、我々はホム圏、関手圏 $\cat{D^C}$ を持っています。我々は通常の関手合成を持っています: 圏 $\cat{D^C}$ からの関手 $F$ は、圏 $\cat{E^D}$ からの関手 $G$ と合成して $\cat{E^C}$ からの $G \circ F$ を与えます。しかし、我々はまた、各ホム圏内の合成を持っています --- 関手、または 2-射間の自然変換の垂直合成。
 
-With two kinds of composition in a $\cat{2}$-category, the question arises: How
-do they interact with each other?
+二つの合成がある $\cat{2}$-圏では、それらがどのように相互作用するかという問題が生じます。
 
-Let's pick two functors, or 1-morphisms, in $\Cat$:
+$\Cat$ の二つの関手、または 1-射を選びましょう: 
 \begin{gather*}
   F \Colon \cat{C} \to \cat{D} \\
   G \Colon \cat{D} \to \cat{E}
 \end{gather*}
-and their composition:
+そしてそれらの合成: 
 \[G \circ F \Colon \cat{C} \to \cat{E}\]
-Suppose we have two natural transformations, $\alpha$ and $\beta$, that act,
-respectively, on functors $F$ and $G$:
+関手 $F$ と $G$ に作用する二つの自然変換、$\alpha$ と $\beta$ を持っていると仮定しましょう: 
 \begin{gather*}
   \alpha \Colon F \to F' \\
   \beta \Colon G \to G'
@@ -552,15 +323,9 @@ respectively, on functors $F$ and $G$:
 \end{figure}
 
 \noindent
-Notice that we cannot apply vertical composition to this pair, because
-the target of $\alpha$ is different from the source of $\beta$. In fact they are
-members of two different functor categories: $\cat{D^C}$ and $\cat{E^D}$.
-We can, however, apply composition to the functors
-$F'$ and $G'$, because the target of $F'$ is the source of $G'$ --- it's the
-category $\cat{D}$. What's the relation between the functors $G' \circ F'$ and $G \circ F$?
+$\alpha$ のターゲットは $\beta$ のソースと異なるため、このペアに垂直合成を適用することはできません。実際、それらは二つの異なる関手圏のメンバーです: $\cat{D^C}$ と $\cat{E^D}$。しかし、$F'$ と $G'$ の関手に合成を適用することはできます。なぜなら $F'$ のターゲットは $G'$ のソース、つまり圏 $\cat{D}$ です。$G' \circ F'$ と $G \circ F$ の関係は何でしょうか？
 
-Having $\alpha$ and $\beta$ at our disposal, can we define a natural transformation
-from $G \circ F$ to $G' \circ F'$? Let me sketch the construction.
+$\alpha$ と $\beta$ を持っている場合、$G \circ F$ から $G' \circ F'$ への自然変換を定義できますか？構成をスケッチします。
 
 \begin{figure}[H]
   \centering
@@ -568,56 +333,34 @@ from $G \circ F$ to $G' \circ F'$? Let me sketch the construction.
 \end{figure}
 
 \noindent
-As usual, we start with an object $a$ in $\cat{C}$. Its image splits into
-two objects in $\cat{D}$: $F a$ and $F'a$. There is also a
-morphism, a component of $\alpha$, connecting these two objects:
+通常のように、圏 $\cat{C}$ の対象 $a$ から始めます。その像は $\cat{D}$ の二つの対象、$F a$ と $F'a$ に分裂します。また、$\alpha$ のコンポーネントであるこれら二つの対象をつなぐ射があります: 
 \[\alpha_a \Colon F a \to F'a\]
-When going from $\cat{D}$ to $\cat{E}$, these two objects split further into four
-objects: $G (F a)$, $G'(F a)$, $G (F'a)$, $G'(F'a)$.
-We also have four morphisms forming a square. Two of these morphisms are
-the components of the natural transformation $\beta$:
+$\cat{D}$ から $\cat{E}$ へ行くと、これら二つの対象はさらに四つの対象に分裂します: $G (F a)$、$G'(F a)$、$G (F'a)$、$G'(F'a)$。また、四つの射を形成する四角形もあります。これらの射のうち二つは自然変換 $\beta$ のコンポーネントです: 
 \begin{gather*}
   \beta_{F a} \Colon G (F a) \to G'(F a) \\
   \beta_{F'a} \Colon G (F'a) \to G'(F'a)
 \end{gather*}
-The other two are the images of $\alpha_a$ under the two
-functors (functors map morphisms):
+他の二つは、関手による $\alpha_a$ の像です (関手は射を写像します) : 
 \begin{gather*}
   G \alpha_a \Colon G (F a) \to G (F'a) \\
   G'\alpha_a \Colon G'(F a) \to G'(F'a)
 \end{gather*}
-That's a lot of morphisms. Our goal is to find a morphism that goes from
-$G (F a)$ to $G'(F'a)$, a candidate for the
-component of a natural transformation connecting the two functors $G \circ F$
-and $G' \circ F'$. In fact there's not one but two paths we can take from
-$G (F a)$ to $G'(F'a)$:
+多くの射があります。私たちの目標は、$G (F a)$ から $G'(F'a)$ への射を見つけることです。これは $G \circ F$ と $G' \circ F'$ の二つの関手をつなぐ自然変換のコンポーネントの候補です。実際には $G (F a)$ から $G'(F'a)$ への二つのパスがあります: 
 \begin{gather*}
   G'\alpha_a \circ \beta_{F a} \\
   \beta_{F'a} \circ G \alpha_a
 \end{gather*}
-Luckily for us, they are equal, because the square we have formed turns
-out to be the naturality square for $\beta$.
+幸いにも、これらは等しいです。なぜなら、我々が形成した四角形は $\beta$ の自然性の四角形であるためです。
 
-We have just defined a component of a natural transformation from $G \circ F$
-to $G' \circ F'$. The proof of naturality for this transformation is pretty
-straightforward, provided you have enough patience.
+これで、$G \circ F$ から $G' \circ F'$ への自然変換のコンポーネントを定義しました。この変換の自然性の証明は、十分な忍耐があれば比較的簡単です。
 
-We call this natural transformation the \newterm{horizontal composition} of
-$\alpha$ and $\beta$:
+この自然変換を $\alpha$ と $\beta$ の\newterm{水平合成}と呼びます: 
 \[\beta \circ \alpha \Colon G \circ F \to G' \circ F'\]
-Again, following Mac Lane I use the small circle for horizontal
-composition, although you may also encounter star in its place.
+再び、Mac Lane に従って水平合成のために小さい円を使用しますが、その代わりに星を使用することもあります。
 
-Here's a categorical rule of thumb: Every time you have composition, you
-should look for a category. We have vertical composition of natural
-transformations, and it's part of the functor category. But what about
-the horizontal composition? What category does that live in?
+ここで圏論的な経験則があります: 合成があるたびに、その圏を探すべきです。自然変換の垂直合成は、関手圏の一部です。しかし、水平合成についてはどうでしょうか？それはどの圏に属していますか？
 
-The way to figure this out is to look at $\Cat$ sideways. Look at
-natural transformations not as arrows between functors but as arrows
-between categories. A natural transformation sits between two
-categories, the ones that are connected by the functors it transforms.
-We can think of it as connecting these two categories.
+これを理解する方法は、$\Cat$ を横から見ることです。自然変換を関手間の射としてではなく、圏間の射として考えます。自然変換は二つの圏、関手がつなぐそれらを間に置いています。私たちはそれをこれら二つの圏をつなぐものとして考えることができます。
 
 \begin{figure}[H]
   \centering
@@ -625,101 +368,59 @@ We can think of it as connecting these two categories.
 \end{figure}
 
 \noindent
-Let's focus on two objects of $\Cat$ --- categories $\cat{C}$ and $\cat{D}$. There
-is a set of natural transformations that go between functors that
-connect $\cat{C}$ to $\cat{D}$. These natural transformations are our new arrows from $\cat{C}$
-to $\cat{D}$. By the same token, there are natural transformations going between
-functors that connect $\cat{D}$ to $\cat{E}$, which we can treat as new arrows going
-from $\cat{D}$ to $\cat{E}$. Horizontal composition is the composition of these arrows.
+$\Cat$ の二つの対象、圏 $\cat{C}$ と $\cat{D}$ に焦点を当てましょう。$\cat{C}$ につながる関手間の自然変換の集合があります。これらの自然変換は、$\cat{C}$ から $\cat{D}$ への我々の新しい射です。同じように、$\cat{D}$ から $\cat{E}$ へつながる関手間の自然変換があります。これらを $\cat{D}$ から $\cat{E}$ への新しい射として扱います。水平合成は、これらの射の合成です。
 
-We also have an identity arrow going from $\cat{C}$ to $\cat{C}$. It's the identity
-natural transformation that maps the identity functor on $\cat{C}$ to itself.
-Notice that the identity for horizontal composition is also the identity
-for vertical composition, but not vice versa.
+また、$\cat{C}$ から $\cat{C}$ への恒等射があります。それは $\cat{C}$ 上の恒等関手に自分自身をマッピングする恒等自然変換です。水平合成の恒等射は、垂直合成の恒等射でもありますが、逆は必ずしも真ではありません。
 
-Finally, the two compositions satisfy the interchange law:
+最後に、二つの合成は交換則を満たします: 
 \[(\beta' \cdot \alpha') \circ (\beta \cdot \alpha) = (\beta' \circ \beta) \cdot (\alpha' \circ \alpha)\]
-I will quote Saunders Mac Lane here: The reader may enjoy writing down
-the evident diagrams needed to prove this fact.
+ここで、Saunders Mac Lane の言葉を引用します: この事実を証明するために必要な明白な図式を書き下すことを楽しむ読者がいるかもしれません。
 
-There is one more piece of notation that might come in handy in the
-future. In this new sideways interpretation of $\Cat$ there are
-two ways of getting from object to object: using a functor or using a
-natural transformation. We can, however, re-interpret the functor arrow
-as a special kind of natural transformation: the identity natural
-transformation acting on this functor. So you'll often see this
-notation:
+さらに、将来的に役立つかもしれないもう一つの表記法があります。この新しい横向きの解釈の $\Cat$ で、対象から対象への二つの方法があります: 関手を使用するか、自然変換を使用するかです。しかし、我々は関手の矢印をこの関手に作用する恒等自然変換として特別な種類の自然変換として再解釈することができます。そのため、このような表記をよく見かけます: 
 \[F \circ \alpha\]
-where $F$ is a functor from $\cat{D}$ to $\cat{E}$, and $\alpha$ is a natural transformation
-between two functors going from $\cat{C}$ to $\cat{D}$. Since you can't compose a
-functor with a natural transformation, this is interpreted as a
-horizontal composition of the identity natural transformation
-$1_F$ after $\alpha$.
+ここで $F$ は圏 $\cat{D}$ から $\cat{E}$ への関手であり、$\alpha$ は圏 $\cat{C}$ から $\cat{D}$ への二つの関手間の自然変換です。関手と自然変換を合成することはできませんが、これは恒等自然変換 $1_F$ の後に $\alpha$ を水平合成すると解釈されます。
 
-Similarly:
+同様に: 
 \[\alpha \circ F\]
-is a horizontal composition of $\alpha$ after $1_F$.
+は $\alpha$ の後に $1_F$ を水平合成すると解釈されます。
 
-\section{Conclusion}
+\section{結論}
 
-This concludes the first part of the book. We've learned the basic
-vocabulary of category theory. You may think of objects and categories
-as nouns; and morphisms, functors, and natural transformations as verbs.
-Morphisms connect objects, functors connect categories, natural
-transformations connect functors.
+これで本書の第一部が終わります。私たちは圏論の基本的な語彙を学びました。対象と圏を名詞として、射、関手、自然変換を動詞として考えることができます。射は対象をつなぎ、関手は圏をつなぎ、自然変換は関手をつなぎます。
 
-But we've also seen that, what appears as an action at one level of
-abstraction, becomes an object at the next level. A set of morphisms
-turns into a function object. As an object, it can be a source or a
-target of another morphism. That's the idea behind higher order
-functions.
+しかし、我々はまた見てきましたが、あるレベルの抽象化での行為は、次のレベルでの対象となります。射の集合は関数対象に変わります。対象として、それは他の射のソースまたはターゲットになることができます。これが高階関数の背後にあるアイディアです。
 
-A functor maps objects to objects, so we can use it as a type
-constructor, or a parametric type. A functor also maps morphisms, so it
-is a higher order function --- \code{fmap}. There are some simple
-functors, like \code{Const}, product, and coproduct, that can be used
-to generate a large variety of algebraic data types. Function types are
-also functorial, both covariant and contravariant, and can be used to
-extend algebraic data types.
+関手は対象を対象に写像するので、私たちはそれを型コンストラクタまたはパラメトリック型として使用することができます。関手はまた射を写像するので、それは高階関数 --- \code{fmap} です。いくつかのシンプルな関手、例えば \code{Const}、積、余積は、多様な代数的データ型を生成するために使用することができます。関数型もまた関手的です、共変的にも反変的にも、そして代数的データ型を拡張するために使用することができます。
 
-Functors may be looked upon as objects in the functor category. As such,
-they become sources and targets of morphisms: natural transformations. A
-natural transformation is a special type of polymorphic function.
+関手は、関手圏の対象と見なすことができます。そのようにして、彼らは射のソースとターゲットになります: 自然変換。自然変換は、特別なタイプの多相的関数です。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Define a natural transformation from the \code{Maybe} functor to the
-        list functor. Prove the naturality condition for it.
+        \code{Maybe} 関手からリスト関手への自然変換を定義し、それに対する自然性条件を証明してください。
   \item
-        Define at least two different natural transformations between
-        \code{Reader ()} and the list functor. How many different lists of
-        \code{()} are there?
+        \code{Reader ()} とリスト関手の間で少なくとも二つの異なる自然変換を定義してください。いくつ異なるリストの \code{()} が存在しますか？
   \item
-        Continue the previous exercise with \code{Reader Bool} and
-        \code{Maybe}.
+        前の課題を \code{Reader Bool} と \code{Maybe} で続けてください。
   \item
-        Show that horizontal composition of natural transformation satisfies
-        the naturality condition (hint: use components). It's a good exercise
-        in diagram chasing.
+        自然変換の水平合成が自然性条件を満たすことを示してください (ヒント: コンポーネントを使用します) 。図式を追う良い練習です。
   \item
-        Write a short essay about how you may enjoy writing down the evident
-        diagrams needed to prove the interchange law.
+        交換則を証明するために必要な明白な図式を書き下すことを楽しむかどうかについて短いエッセイを書いてください。
   \item
-        Create a few test cases for the opposite naturality condition of
-        transformations between different \code{Op} functors. Here's one
-        choice:
+        異なる \code{Op} 関手間の変換の逆自然性条件のいくつかのテストケースを作成してください。一つの選択は以下の通りです: 
 
-        \begin{snip}{haskell}
+\begin{snip}{haskell}
 op :: Op Bool Int
 op = Op (\x -> x > 0)
 \end{snip}
-        and
+そして
 
-        \begin{snip}{haskell}
+\begin{snip}{haskell}
 f :: String -> Int
 f x = read x
 \end{snip}
 \end{enumerate}
+
+

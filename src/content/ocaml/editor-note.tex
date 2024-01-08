@@ -1,25 +1,13 @@
 % !TEX root = ctfp-print.tex
 
-\lettrine[lhang=0.17]{T}{his is the} OCaml edition of \emph{Category Theory for Programmers}.
-It's been a tremendous success, making Bartosz Milewski's blog post series available as a nicely-
-typeset \acronym{PDF}, as well as a hardcover book. There have been numerous contributions made
-to improve the book, by fixing typos and errors, as well as translating the code snippets into
-other programming languages.
+\lettrine[lhang=0.17]{こ}{れは}、\emph{プログラマのための圏論}のOCaml版です。
+これは大成功を収め、Bartosz Milewskiのブログ投稿シリーズを、きれいにタイプセットされた\acronym{PDF}やハードカバーの本として利用可能にしました。この本を改善するために、誤字や誤りの修正、コードスニペットを他のプログラミング言語に翻訳するなど、数多くの貢献がありました。
 
-I am thrilled to present this edition of the book, containing the original Haskell code, followed by
-its OCaml counterpart. The OCaml code snippets were generously provided by
-\urlref{https://github.com/ArulselvanMadhavan/ocaml-ctfp}{ocaml-ctfp} contributors, slightly
-modified to suit the format of this book.
+私は、元のHaskellコードに続いてそのOCaml対応を含む、この版の本を提供することにわくわくしています。OCamlのコードスニペットは、\urlref{https://github.com/ArulselvanMadhavan/ocaml-ctfp}{ocaml-ctfp}の貢献者によって寛大に提供され、この本の形式に合うようにわずかに修正されました。
 
-To support code snippets in multiple languages, I am using a \LaTeX{} macro to load the code snippets
-from external files. This allows easily extending the book with other languages, while leaving the
-original text intact. Which is why you should mentally append the words ``and OCaml'' whenever you see
-``in Haskell'' in the text.
+複数言語のコードスニペットをサポートするために、外部ファイルからコードスニペットをロードする\LaTeX{}マクロを使用しています。これにより、他の言語で本を簡単に拡張しながら、元のテキストをそのままにしておくことができます。このため、テキストで「Haskellで」というテキストを見るたびに心の中で「そしてOCamlで」と言葉を付け足すべきです。
 
-The code is laid out in the following manner: the original Haskell code, followed by OCaml code.
-To distinguish between them, the code snippets are braced from the left with a vertical bar, in the primary
-color of the language's logo, \raisebox{-.2mm}{\includegraphics[height=.3cm]{fig/icons/haskell.png}},
-and \raisebox{-.2mm}{\includegraphics[height=.3cm]{fig/icons/ocaml.png}} respectively, e.g.:
+コードは以下のようにレウアウトされています: 元のHaskellコードに続いてOCamlコードがあります。それらを区別するために、コードスニペットはそれぞれの言語のロゴ \raisebox{-.2mm}{\includegraphics[height=.3cm]{fig/icons/haskell.png}} および \raisebox{-.2mm}{\includegraphics[height=.3cm]{fig/icons/ocaml.png}} の主要色を使用した縦棒で左側が囲まれています。例えば:
 
 \srcsnippet{content/1.1/code/haskell/snippet03.hs}{blue}{haskell}
 \unskip

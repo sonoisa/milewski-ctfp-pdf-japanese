@@ -1,4 +1,7 @@
-\documentclass[\OPTmodes]{book}
+% \documentclass[\OPTmodes]{book}
+
+\documentclass[\OPTmodes]{ltjsbook}
+\usepackage{luatexja}
 
 \usepackage[papersize={\OPTpaperesize},
             top=\OPTtopmargin,
@@ -32,6 +35,7 @@
 }                                                              %  the REPL without
 %--------------------------------------------------------------%  giving errors.
 
+
 % To use Libertine letters and numbers,
 % but tx-style operators in math environment:
 \usepackage[libertine]{newtxmath}
@@ -49,13 +53,15 @@
 \usepackage{emptypage}
 \usepackage{noindentafter}
 
+\usepackage[usenames,dvipsnames,x11names]{xcolor}
+
 \usepackage{graphicx}
 \usepackage{caption, wrapfig, framed, subfigure}
 \usepackage[export]{adjustbox}
 \captionsetup{labelformat=empty,font=scriptsize}
 \usepackage{titlecaps}
 
-\usepackage[usenames,dvipsnames,x11names]{xcolor}
+% \usepackage[usenames,dvipsnames,x11names]{xcolor}
 \usepackage{longtable}
 \usepackage{booktabs}
 % Workaround to fix mismatched left and right math delimiters. Taken from:
@@ -138,7 +144,7 @@
 \setlength{\DefaultNindent}{0em}
 
 % removes the "Part X" text from \part
-\renewcommand{\partname}{}
+% \renewcommand{\partname}{}
 \renewcommand{\thepart}{}
 
 \usepackage{xparse}
@@ -208,7 +214,8 @@
   \end{mdframed}
 }
 
-\newcommand{\acronym}[1]{\textsc{\MakeLowercase{#1}}}
+% \newcommand{\acronym}[1]{\textsc{\MakeLowercase{#1}}}
+\newcommand{\acronym}[1]{\textsc{\MakeUppercase{#1}}}
 \newcommand{\newterm}[1]{\index{#1}\emph{#1}}
 \newcommand{\code}[1]{\Verb+{#1}+}
 \newcommand{\heading}[1]{{\sffamily\bfseries #1}}

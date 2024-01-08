@@ -1,93 +1,41 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{A}{ category is small} if its objects form a set. But we know that
-there are things larger than sets. Famously, a set of all sets cannot be
-formed within the standard set theory (the Zermelo-Fraenkel theory,
-optionally augmented with the Axiom of Choice). So a category of all
-sets must be large. There are mathematical tricks like Grothendieck
-universes that can be used to define collections that go beyond sets.
-These tricks let us talk about large categories.
+\lettrine[lhang=0.17]{圏}{は}その対象が集合を形成するとき小さいとされます。しかし、集合より大きなものが存在することが知られています。有名な例として、全ての集合の集合は標準的な集合論 (Zermelo-Fraenkel理論、必要に応じて選択公理を付加したもの) 内では形成できません。従って、全ての集合の圏は大きなものでなければなりません。Grothendieck宇宙のような数学的トリックを使って、集合を超えたコレクションを定義することができます。これらのトリックにより、大きな圏について語ることができます。
 
-A category is \emph{locally small} if morphisms between any two objects
-form a set. If they don't form a set, we have to rethink a few
-definitions. In particular, what does it mean to compose morphisms if we
-can't even pick them from a set? The solution is to bootstrap ourselves
-by replacing hom-sets, which are objects in $\Set$, with
-\emph{objects} from some other category $\cat{V}$. The difference is
-that, in general, objects don't have elements, so we are no longer
-allowed to talk about individual morphisms. We have to define all
-properties of an \emph{enriched} category in terms of operations that
-can be performed on hom-objects as a whole. In order to do that, the
-category that provides hom-objects must have additional structure --- it
-must be a monoidal category. If we call this monoidal category $\cat{V}$,
-we can talk about a category $\cat{C}$ enriched over $\cat{V}$.
+圏が\emph{局所的に小さい}とは、任意の2つの対象間の射が集合を形成する場合を指します。もし集合を形成しない場合は、いくつかの定義を再考する必要があります。特に、射を集合から選び出すことができない場合、射の合成をどのように意味するかです。解決策として、\emph{対象}を集合圏$\Set$の対象ではなく、別の圏$\cat{V}$の対象に置き換えることによって、ホム集合をブートストラップします。一般に、対象は要素を持たないため、個々の射について話すことはもはや許されません。ホム対象全体に対して実行できる操作の観点から、\emph{豊穣}圏のすべての性質を定義する必要があります。これを行うためには、ホム対象を提供する圏には追加の構造が必要です --- それはモノイダル圏でなければなりません。このモノイダル圏を$\cat{V}$と呼ぶとすると、$\cat{V}$に豊穣化された圏$\cat{C}$について語ることができます。
 
-Beside size reasons, we might be interested in generalizing hom-sets to
-something that has more structure than mere sets. For instance, a
-traditional category doesn't have the notion of a distance between
-objects. Two objects are either connected by morphisms or not. All
-objects that are connected to a given object are its neighbors. Unlike
-in real life; in a category, a friend of a friend of a friend is as
-close to me as my bosom buddy. In a suitably enriched category, we can
-define distances between objects.
+大きさの理由以外に、単なる集合よりも多くの構造を持つものにホム集合を一般化することに興味があるかもしれません。例えば、伝統的な圏は対象間の距離の概念を持っていません。対象は射によって接続されているか、そうでないかのどちらかです。ある対象に接続されている全ての対象はその近隣です。現実とは異なり、圏では友達の友達の友達は自分の親友と同じくらい近いです。適切に豊穣化された圏では、対象間の距離を定義することができます。
 
-There is one more very practical reason to get some experience with
-enriched categories, and that's because a very useful online source of
-categorical knowledge, the \urlref{https://ncatlab.org/}{nLab}, is written
-mostly in terms of enriched categories.
+豊穣圏についての経験を積むためのもう一つの非常に実用的な理由は、圏論的知識の非常に便利なオンラインソースである\urlref{https://ncatlab.org/}{nLab}が、主に豊穣圏の観点から書かれているためです。
 
-\section{Why Monoidal Category?}
+\section{なぜモノイダル圏か？}
 
-When constructing an enriched category we have to keep in mind that we
-should be able to recover the usual definitions when we replace the
-monoidal category with $\Set$ and hom-objects with hom-sets. The
-best way to accomplish this is to start with the usual definitions and
-keep reformulating them in a point-free manner --- that is, without
-naming elements of sets.
+豊穣圏を構成する際には、モノイダル圏を$\Set$と置き換え、ホム対象をホム集合と置き換えたときに、通常の定義を回復できるように心に留めておく必要があります。これを達成する最善の方法は、通常の定義から始め、点を使わない方法 (つまり、集合の要素を名付けることなく) でそれらを再定式化することです。
 
-Let's start with the definition of composition. Normally, it takes a
-pair of morphisms, one from $\cat{C}(b, c)$ and one from
-$\cat{C}(a, b)$ and maps it to a morphism from $\cat{C}(a, c)$. In
-other words it's a mapping:
+まず合成の定義から始めましょう。通常、合成はペアの射を取ります。一つは$\cat{C}(b, c)$から、もう一つは$\cat{C}(a, b)$からで、これを$\cat{C}(a, c)$からの射にマップします。言い換えると、それは次のようなマッピングです: 
 \[\cat{C}(b, c)\times{}\cat{C}(a, b) \to \cat{C}(a, c)\]
-This is a function between sets --- one of them being the Cartesian
-product of two hom-sets. This formula can be easily generalized by
-replacing Cartesian product with something more general. A categorical
-product would work, but we can go even further and use a completely
-general tensor product.
+これは集合間の関数です --- そのうちの一つは2つのホム集合のデカルト積です。この公式は、デカルト積をもっと一般的なものに置き換えることで簡単に一般化できます。圏論的積が機能しますが、さらに一般的なテンソル積を使用することもできます。
 
-Next come the identity morphisms. Instead of picking individual elements
-from hom-sets, we can define them using functions from the singleton set
-$\cat{1}$:
+次に恒等射についてです。ホム集合から個々の要素を選ぶ代わりに、単集合$\cat{1}$からの関数を使ってそれらを定義することができます: 
 \[j_a \Colon \cat{1} \to \cat{C}(a, a)\]
-Again, we could replace the singleton set with the terminal object, but
-we can go even further by replacing it with the unit $i$ of the
-tensor product.
+再び、単集合を終対象に置き換えることができますが、テンソル積の単位要素$i$に置き換えることでさらに進むことができます。
 
-As you can see, objects taken from some monoidal category $\cat{V}$ are
-good candidates for hom-set replacement.
+ご覧のとおり、あるモノイダル圏$\cat{V}$から取られた対象はホム集合の置き換えに適しています。
 
-\section{Monoidal Category}
+\section{モノイダル圏}
 
-We've talked about monoidal categories before, but it's worth restating
-the definition. A monoidal category defines a tensor product that is a
-bifunctor:
+モノイダル圏について以前話しましたが、定義を再度述べる価値があります。モノイダル圏はテンソル積を定義し、それは双関手です: 
 \[\otimes \Colon \cat{V}\times{}\cat{V} \to \cat{V}\]
-We want the tensor product to be associative, but it's enough to satisfy
-associativity up to natural isomorphism. This isomorphism is called the
-associator. Its components are:
+テンソル積が結合的であることを望んでいますが、自然同型まで満たせば十分です。この同型は結合子 (associator) と呼ばれ、そのコンポーネントは次のとおりです: 
 \[\alpha_{a b c} \Colon (a \otimes b) \otimes c \to a \otimes (b \otimes c)\]
-It must be natural in all three arguments.
+これは全ての3つの引数において自然でなければなりません。
 
-A monoidal category must also define a special unit object $i$
-that serves as the unit of the tensor product; again, up to natural
-isomorphism. The two isomorphisms are called, respectively, the left and
-the right unitor, and their components are:
+モノイダル圏はまた、特別な単位対象$i$を定義しなければなりません。それはテンソル積の単位要素として機能し、再び自然同型までです。2つの同型はそれぞれ左単位子 (left uniter) と右単位子 (right uniter) と呼ばれ、それらのコンポーネントは以下の通りです: 
 \begin{align*}
   \lambda_a & \Colon i \otimes a \to a \\
   \rho_a    & \Colon a \otimes i \to a
 \end{align*}
-The associator and the unitors must satisfy coherence conditions:
+結合子と単位子は整合性条件を満たさなければなりません: 
 
 \begin{figure}[H]
   \centering
@@ -118,49 +66,26 @@ The associator and the unitors must satisfy coherence conditions:
 \end{figure}
 
 \noindent
-A monoidal category is called \newterm{symmetric} if there is a natural
-isomorphism with components:
+モノイダル圏が対称的であるとは、次のような自然同型のコンポーネントがあることを意味します: 
 \[\gamma_{a b} \Colon a \otimes b \to b \otimes a\]
-whose ``square is one'':
+その「二乗が1」です: 
 \[\gamma_{b a} \circ \gamma_{a b} = \idarrow[a \otimes b]\]
-and which is consistent with the monoidal structure.
+そしてそれがモノイダル構造と整合している必要があります。
 
-An interesting thing about monoidal categories is that you may be able
-to define the internal hom (the function object) as the right adjoint to
-the tensor product. You may recall that the standard definition of the
-function object, or the exponential, was through the right adjoint to
-the categorical product. A category in which such an object existed for
-any pair of objects was called Cartesian closed. Here is the adjunction
-that defines the internal hom in a monoidal category:
+モノイダル圏についての興味深い点は、内部ホム (関数対象) をテンソル積の右随伴として定義できるかもしれないことです。覚えておくべきことは、関数対象、または指数は、圏論的積の右随伴を通して標準的に定義されました。そのような対象が任意の対象のペアに対して存在した圏はデカルト閉と呼ばれました。ここではモノイダル圏における内部ホムの随伴を定義します: 
 \[\cat{V}(a \otimes b, c) \sim \cat{V}(a, [b, c])\]
-Following
-\urlref{http://www.tac.mta.ca/tac/reprints/articles/10/tr10.pdf}{G. M.
-  Kelly}, I'm using the notation ${[}b, c{]}$ for the internal
-hom. The counit of this adjunction is the natural transformation whose
-components are called evaluation morphisms:
+以下に従って、\urlref{http://www.tac.mta.ca/tac/reprints/articles/10/tr10.pdf}{G. M.
+Kelly}の記法を使います。内部ホムに${[}b, c{]}$を使用しています。この随伴の余単位は評価射と呼ばれる自然変換のコンポーネントです: 
 \[\varepsilon_{a b} \Colon ([a, b] \otimes a) \to b\]
-Notice that, if the tensor product is not symmetric, we may define
-another internal hom, denoted by ${[}{[}a, c{]}{]}$, using the
-following adjunction:
+テンソル積が対称的でない場合、次の随伴を使用して別の内部ホムを定義することができます: 
 \[\cat{V}(a \otimes b, c) \sim \cat{V}(b, [[a, c]])\]
-A monoidal category in which both are defined is called \newterm{biclosed}. An
-example of a category that is not biclosed is the category of
-endofunctors in $\Set$, with functor composition serving as tensor
-product. That's the category we used to define monads.
+両方が定義されているモノイダル圏は双閉と呼ばれます。$\Set$における自己関手の圏は、関手合成をテンソル積として使用する、双閉ではない圏の例です。これはモナドを定義するために使用した圏です。
 
-\section{Enriched Category}
+\section{豊穣圏}
 
-A category $\cat{C}$ enriched over a monoidal category $\cat{V}$ replaces
-hom-sets with hom-objects. To every pair of objects $a$ and
-$b$ in $\cat{C}$ we associate an object $\cat{C}(a, b)$ in
-$\cat{V}$. We use the same notation for hom-objects as we used for
-hom-sets, with the understanding that they don't contain morphisms. On
-the other hand, $\cat{V}$ is a regular (non-enriched) category with
-hom-sets and morphisms. So we are not entirely rid of sets --- we just
-swept them under the rug.
+モノイダル圏$\cat{V}$に豊穣化された圏$\cat{C}$はホム集合をホム対象に置き換えます。$\cat{C}$の任意の対象ペア$a$と$b$に対して、$\cat{V}$の対象$\cat{C}(a, b)$を関連付けます。ホム対象にも同じ記法を使用しますが、それが射を含まないことを理解しています。一方で$\cat{V}$は通常の (豊穣化されていない) 圏で、ホム集合と射を持っています。従って、集合から完全には脱却していません --- ただそれを隠しています。
 
-Since we cannot talk about individual morphisms in $\cat{C}$, composition
-of morphisms is replaced by a family of morphisms in $\cat{V}$:
+$\cat{C}$の個々の射について話すことができないため、射の合成は$\cat{V}$の射の族に置き換えられます: 
 \[\circ \Colon \cat{C}(b, c) \otimes \cat{C}(a, b) \to \cat{C}(a, c)\]
 
 \begin{figure}[H]
@@ -169,10 +94,9 @@ of morphisms is replaced by a family of morphisms in $\cat{V}$:
 \end{figure}
 
 \noindent
-Similarly, identity morphisms are replaced by a family of morphisms in
-$\cat{V}$:
+同様に、恒等射は$\cat{V}$の射の族に置き換えられます: 
 \[j_a \Colon i \to \cat{C}(a, a)\]
-where $i$ is the tensor unit in $\cat{V}$.
+ここで$i$は$\cat{V}$のテンソル単位です。
 
 \begin{figure}[H]
   \centering
@@ -180,8 +104,7 @@ where $i$ is the tensor unit in $\cat{V}$.
 \end{figure}
 
 \noindent
-Associativity of composition is defined in terms of the associator in
-$\cat{V}$:
+合成の結合性は$\cat{V}$の結合子に関して定義されます: 
 
 \begin{figure}[H]
   \centering
@@ -200,7 +123,7 @@ $\cat{V}$:
 \end{figure}
 
 \noindent
-Unit laws are likewise expressed in terms of unitors:
+単位則は同様に単位子を用いて表されます: 
 
 \begin{figure}[H]
   \centering
@@ -229,119 +152,44 @@ Unit laws are likewise expressed in terms of unitors:
   \end{subfigure}
 \end{figure}
 
-\section{Preorders}
+\section{前順序}
 
-A preorder is defined as a thin category, one in which every hom-set is
-either empty or a singleton. We interpret a non-empty set
-$\cat{C}(a, b)$ as the proof that $a$ is less than or equal to
-$b$. Such a category can be interpreted as enriched over a very
-simple monoidal category that contains just two objects, $0$ and $1$
-(sometimes called $\mathit{False}$ and $\mathit{True}$). Besides the mandatory identity
-morphisms, this category has a single morphism going from $0$ to $1$, let's
-call it $0 \to 1$. A simple monoidal structure can be
-established in it, with the tensor product modeling the simple
-arithmetic of $0$ and $1$ (i.e., the only non-zero product is $1 \otimes 1$).
-The identity object in this category is $1$. This is a strict monoidal
-category, that is, the associator and the unitors are identity
-morphisms.
+前順序は薄い圏、つまり各ホム集合が空であるか単集合である圏として定義されます。非空集合$\cat{C}(a, b)$を$a$が$b$以下である証明と解釈します。そのような圏は、非常に単純なモノイダル圏である$\mathit{False}$と$\mathit{True}$ (時には$0$と$1$とも呼ばれる) の2つの対象だけを含むモノイダル圏に豊穣化されることができます。必須の恒等射の他に、この圏には$0 \to 1$と行く単一の射があります。それに対して単純なモノイダル構造が確立されており、テンソル積は$0$と$1$の単純な算術をモデリングします (つまり、唯一の非ゼロ積は$1 \otimes 1$です) 。この圏の恒等対象は$1$です。これは厳密なモノイダル圏であり、結合子と単位子は恒等射です。
 
-Since in a preorder the-hom set is either empty or a singleton, we can
-easily replace it with a hom-object from our tiny category. The enriched
-preorder $\cat{C}$ has a hom-object $\cat{C}(a, b)$ for any pair of
-objects $a$ and $b$. If $a$ is less than or equal
-to $b$, this object is $1$; otherwise it's $0$.
+前順序において、ホム集合は空または単集合なので、私たちはそれを容易に我々の小さな圏からのホム対象に置き換えることができます。豊穣化された前順序$\cat{C}$は、任意の対象ペア$a$と$b$に対するホム対象$\cat{C}(a, b)$を持ちます。もし$a$が$b$以下ならば、この対象は$1$です。そうでなければ$0$です。
 
-Let's have a look at composition. The tensor product of any two objects
-is $0$, unless both of them are $1$, in which case it's $1$. If it's $0$, then
-we have two options for the composition morphism: it could be either
-$\idarrow[0]$ or $0 \to 1$. But if it's $1$, then the only
-option is $\idarrow[1]$. Translating this back to relations, this says
-that if $a \leqslant b$ and $b \leqslant c$ then
-$a \leqslant c$, which is exactly the transitivity law we
-need.
+合成について見てみましょう。任意の2つの対象のテンソル積は$0$ですが、両方が$1$の場合に限り$1$です。それが$0$の場合、合成射には2つの選択肢があります。$\idarrow[0]$か$0 \to 1$のどちらかです。しかし、それが$1$の場合、唯一の選択肢は$\idarrow[1]$です。これを関係に戻して解釈すると、$a \leqslant b$かつ$b \leqslant c$ならば$a \leqslant c$です。これはまさに必要な推移則です。
 
-What about the identity? It's a morphism from $1$ to $\cat{C}(a, a)$.
-There is only one morphism going from $1$, and that's the identity
-$\idarrow[1]$, so $\cat{C}(a, a)$ must be $1$. It means that
-$a \leqslant a$, which is the reflexivity law for a
-preorder. So both transitivity and reflexivity are automatically
-enforced, if we implement a preorder as an enriched category.
+恒等射についてはどうでしょうか。それは$1$から$\cat{C}(a, a)$への射です。$1$から行く唯一の射は恒等射$\idarrow[1]$なので、$\cat{C}(a, a)$は$1$でなければなりません。これは$a \leqslant a$であり、前順序の反射則です。従って、推移性と反射性は、前順序を豊穣圏として実装することで自動的に強制されます。
 
-\section{Metric Spaces}
+\section{距離空間}
 
-An interesting example is due to
+興味深い例の一つは
 \urlref{http://www.tac.mta.ca/tac/reprints/articles/1/tr1.pdf}{William
-  Lawvere}. He noticed that metric spaces can be defined using enriched
-categories. A metric space defines a distance between any two objects.
-This distance is a non-negative real number. It's convenient to include
-infinity as a possible value. If the distance is infinite, there is no
-way of getting from the starting object to the target object.
+  Lawvere}によるものです。彼は距離空間が豊穣圏を使って定義され得ることに気づきました。距離空間は任意の2つの対象間の距離を定義します。この距離は非負の実数です。無限大を可能な値として含めるのが便利です。距離が無限大の場合、始点の対象から目的の対象へ到達する方法はありません。
 
-There are some obvious properties that have to be satisfied by
-distances. One of them is that the distance from an object to itself
-must be zero. The other is the triangle inequality: the direct distance
-is no larger than the sum of distances with intermediate stops. We don't
-require the distance to be symmetric, which might seem weird at first
-but, as Lawvere explained, you can imagine that in one direction you're
-walking uphill, while in the other you're going downhill. In any case,
-symmetry may be imposed later as an additional constraint.
+距離によって満たされなければならないいくつかの明白な性質があります。その一つは、対象からそれ自身への距離がゼロでなければならないことです。もう一つは三角不等式です。直接の距離は中間停止点での距離の和を超えることはありません。距離が対称的でないことを要求しないのは最初は奇妙に思えるかもしれませんが、Lawvereが説明したように、一方の方向では上り坂を歩いている間に、他方の方向では下り坂を歩いていると想像することができます。いずれにせよ、対称性は後で追加の制約として課されるかもしれません。
 
-So how can a metric space be cast into a categorical language? We have
-to construct a category in which hom-objects are distances. Mind you,
-distances are not morphisms but hom-objects. How can a hom-object be a
-number? Only if we can construct a monoidal category $\cat{V}$ in which
-these numbers are objects. Non-negative real numbers (plus infinity)
-form a total order, so they can be treated as a thin category. A
-morphism between two such numbers $x$ and $y$ exists if
-and only if $x \geqslant y$ (note: this is the opposite
-direction to the one traditionally used in the definition of a
-preorder). The monoidal structure is given by addition, with zero
-serving as the unit object. In other words, the tensor product of two
-numbers is their sum.
+では、どのようにして距離空間を圏論の言葉に落とし込むことができるのでしょうか？ホム対象が距離である圏を構成する必要があります。注意してください、距離は射ではなくホム対象です。ホム対象が数である場合にのみ、これらの数が対象であるモノイダル圏$\cat{V}$を構成することができます。非負の実数 (プラス無限) は全順序を形成するので、薄い圏として扱うことができます。2つの数$x$と$y$の間の射は$x \geqslant y$の場合にのみ存在します (注: これは前順序の定義で通常使用される方向とは逆です) 。モノイダル構造は加算によって与えられ、ゼロが単位対象として機能します。言い換えると、2つの数のテンソル積はそれらの和です。
 
-A metric space is a category enriched over such a monoidal category. A
-hom-object $\cat{C}(a, b)$ from object $a$ to $b$ is a
-non-negative (possibly infinite) number that we will call the distance
-from $a$ to $b$. Let's see what we get for identity and
-composition in such a category.
+距離空間はそのようなモノイダル圏上で豊穣化された圏です。対象$a$から$b$へのホム対象$\cat{C}(a, b)$は、非負の (無限大の可能性もある) 数であり、それを$a$から$b$への距離と呼びます。恒等射と合成がそのような圏でどのように機能するか見てみましょう。
 
-By our definitions, a morphism from the tensorial unit, which is the
-number zero, to a hom-object $\cat{C}(a, a)$ is the relation:
+定義によれば、テンソル単位である数ゼロからホム対象$\cat{C}(a, a)$への射は関係です: 
 \[0 \geqslant \cat{C}(a, a)\]
-Since $\cat{C}(a, a)$ is a non-negative number, this condition tells
-us that the distance from $a$ to $a$ is always zero.
-Check!
+$\cat{C}(a, a)$が非負の数であるため、この条件は$a$から$a$への距離が常にゼロであることを私たちに伝えます。
+チェック！
 
-Now let's talk about composition. We start with the tensor product of
-two abutting hom-objects, $\cat{C}(b, c) \otimes \cat{C}(a, b)$. We have defined
-the tensor product as the sum of the two distances. Composition is a
-morphism in $\cat{V}$ from this product to $\cat{C}(a, c)$. A morphism
-in $\cat{V}$ is defined as the greater-or-equal relation. In other words,
-the sum of distances from $a$ to $b$ and from $b$
-to $c$ is greater than or equal to the distance from $a$
-to $c$. But that's just the standard triangle inequality. Check!
+では合成について話しましょう。2つの隣接するホム対象$\cat{C}(b, c) \otimes \cat{C}(a, b)$から始めます。テンソル積は2つの距離の和として定義されました。合成は$\cat{V}$内のこの積から$\cat{C}(a, c)$への射です。$\cat{V}$内の射は大なりイコール関係として定義されます。言い換えると、$a$から$b$への距離と$b$から$c$への距離の和は、$a$から$c$への距離よりも大きいか等しいです。しかし、それは標準的な三角不等式です。チェック！
 
-By re-casting the metric space in terms of an enriched category, we get
-the triangle inequality and the zero self-distance ``for free.''
+豊穣化された圏の概念を用いて距離空間を再構成することで、三角不等式と自己距離ゼロの性質を「無料で」得ることができます。
 
-\section{Enriched Functors}
+\section{豊穣関手}
 
-The definition of a functor involves the mapping of morphisms. In the
-enriched setting, we don't have the notion of individual morphisms, so
-we have to deal with hom-objects in bulk. Hom-objects are objects in a
-monoidal category $\cat{V}$, and we have morphisms between them at our
-disposal. It therefore makes sense to define enriched functors between
-categories when they are enriched over the same monoidal category
-$\cat{V}$. We can then use morphisms in $\cat{V}$ to map the hom-objects
-between two enriched categories.
+関手の定義には射の写像が含まれます。豊穣設定では、個々の射の概念がないため、ホム対象を一括で扱う必要があります。ホム対象はモノイダル圏$\cat{V}$の対象であり、それらの間には射があります。従って、同じモノイダル圏$\cat{V}$に豊穣化された圏間で豊穣関手を定義することは理にかなっています。$\cat{V}$の射を使用して、2つの豊穣圏間のホム対象を写像することができます。
 
-An \newterm{enriched functor} $F$ between two categories $\cat{C}$
-and $\cat{D}$, besides mapping objects to objects, also assigns, to every
-pair of objects in $\cat{C}$, a morphism in $\cat{V}$:
+豊穣関手$F$は、2つの圏$\cat{C}$と$\cat{D}$の間で、対象から対象への写像に加えて、$\cat{C}$内の各対象ペアに対して$\cat{V}$の射を割り当てます: 
 \[F_{a b} \Colon \cat{C}(a, b) \to \cat{D}(F a, F b)\]
-A functor is a structure-preserving mapping. For regular functors it
-meant preserving composition and identity. In the enriched setting, the
-preservation of composition means that the following diagram commute:
+関手は構造を保存する写像です。通常の関手では合成と恒等射を保存することが意味されました。豊穣設定では、合成の保存は以下の図が可換であることを意味します: 
 
 \begin{figure}[H]
   \centering
@@ -358,8 +206,7 @@ preservation of composition means that the following diagram commute:
 \end{figure}
 
 \noindent
-The preservation of identity is replaced by the preservation of the
-morphisms in $\cat{V}$ that ``select'' the identity:
+恒等射の保存は、「恒等を選ぶ」$\cat{V}$の射の保存に置き換えられます: 
 
 \begin{figure}[H]
   \centering
@@ -371,70 +218,36 @@ morphisms in $\cat{V}$ that ``select'' the identity:
   \end{tikzcd}
 \end{figure}
 
-\section{Self Enrichment}
+\section{自己豊穣化}
 
-A closed symmetric monoidal category may be self-enriched by replacing
-hom-sets with internal homs (see the definition above). To make this
-work, we have to define the composition law for internal homs. In other
-words, we have to implement a morphism with the following signature:
+閉じた対称モノイダル圏は、内部ホムを使用してホム集合を置き換えることで自己豊穣化することができます (上記の定義を参照) 。これを実現するために、内部ホムの合成則を定義する必要があります。言い換えれば、次のシグネチャを持つ射を実装する必要があります: 
 \[[b, c] \otimes [a, b] \to [a, c]\]
-This is not much different from any other programming task, except that,
-in category theory, we usually use point free implementations. We start
-by specifying the set whose element it's supposed to be. In this case,
-it's a member of the hom-set:
+これは、圏論では通常点を使わない実装を使用することを除けば、他のプログラミングタスクとそれほど変わりません。まず、それが所属すべき集合を指定します。この場合、それはホム集合のメンバーです: 
 \[\cat{V}([b, c] \otimes [a, b], [a, c])\]
-This hom-set is isomorphic to:
+このホム集合は次に同型です: 
 \[\cat{V}(([b, c] \otimes [a, b]) \otimes a, c)\]
-I just used the adjunction that defined the internal hom
-${[}a, c{]}$. If we can build a morphism in this new set, the
-adjunction will point us at the morphism in the original set, which we
-can then use as composition. We construct this morphism by composing
-several morphisms that are at our disposal. To begin with, we can use
-the associator $\alpha_{{[}b, c{]}\ {[}a, b{]}\ a}$ to reassociate the
-expression on the left:
+私たちがこの新しい集合で射を構成できれば、随伴が私たちを元の集合の射に指し示します。これは合成として使用することができます。私たちが利用可能ないくつかの射を合成することによって、この射を構成します。まず、結合子$\alpha_{{[}b, c{]}\ {[}a, b{]}\ a}$を使用して左側の式を再関連付けします: 
 \[([b, c] \otimes [a, b]) \otimes a \to [b, c] \otimes ([a, b] \otimes a)\]
-We can follow it with the counit of the adjunction $\varepsilon_{a b}$:
+それに続いて随伴の余単位$\varepsilon_{a b}$を使用します: 
 \[[b, c] \otimes ([a, b] \otimes a) \to [b, c] \otimes b\]
-And use the counit $\varepsilon_{b c}$ again to get to $c$. We have
-thus constructed a morphism:
+そして再び余単位$\varepsilon_{b c}$を使用して$c$に到達します。これにより、次の射が構成されます: 
 \[\varepsilon_{b c}\ .\ (\idarrow[{[b, c]}] \otimes \varepsilon_{a b})\ .\ \alpha_{[b, c] [a, b] a}\]
-that is an element of the hom-set:
+これはホム集合のメンバーです: 
 \[\cat{V}(([b, c] \otimes [a, b]) \otimes a, c)\]
-The adjunction will give us the composition law we were looking for.
+随伴は私たちが探していた合成則を提供します。
 
-Similarly, the identity:
+同様に、恒等射: 
 \[j_a \Colon i \to [a, a]\]
-is a member of the following hom-set:
+は次のホム集合のメンバーです: 
 \[\cat{V}(i, [a, a])\]
-which is isomorphic, through adjunction, to:
+これは随伴を通して次に同型です: 
 \[\cat{V}(i \otimes a, a)\]
-We know that this hom-set contains the left identity $\lambda_a$. We can
-define $j_a$ as its image under the adjunction.
+私たちはこのホム集合が左恒等子$\lambda_a$を含むことを知っています。私たちはそれを随伴の下でのイメージとして$j_a$として定義することができます。
 
-A practical example of self-enrichment is the category $\Set$ that
-serves as the prototype for types in programming languages. We've seen
-before that it's a closed monoidal category with respect to Cartesian
-product. In $\Set$, the hom-set between any two sets is itself a
-set, so it's an object in $\Set$. We know that it's isomorphic to
-the exponential set, so the external and the internal homs are
-equivalent. Now we also know that, through self-enrichment, we can use
-the exponential set as the hom-object and express composition in terms
-of Cartesian products of exponential objects.
+自己豊穣化の実用的な例は、プログラミング言語の型のプロトタイプとして機能する$\Set$圏です。以前見たように、$\Set$はデカルト積に関して閉じたモノイダル圏です。$\Set$において、任意の2つの集合間のホム集合はそれ自体が集合なので、$\Set$の対象です。私たちはそれが指数集合に同型であることを知っているので、外部ホムと内部ホムは等価です。今、自己豊穣化を通じて、指数集合をホム対象として使用し、デカルト積の指数対象の組み合わせに関して合成を表現することができることも知っています。
 
-\section{Relation to $\cat{2}$-Categories}
+\section{$\cat{2}$-圏との関連性}
 
-I talked about $\cat{2}$-categories in the context of $\Cat$, the category
-of (small) categories. The morphisms between categories are functors,
-but there is an additional structure: natural transformations between
-functors. In a $\cat{2}$-category, the objects are often called zero-cells;
-morphisms, $1$-cells; and morphisms between morphisms, $2$-cells. In
-$\Cat$ the $0$-cells are categories, $1$-cells are functors, and
-$2$-cells are natural transformations.
+私は以前、圏の圏である$\Cat$の文脈で$\cat{2}$-圏について話しました。圏間の射は関手ですが、さらに追加の構造があります: 関手間の自然変換です。$\cat{2}$-圏では、対象はしばしばゼロセル、射は$1$-セル、射間の射は$2$-セルと呼ばれます。$\Cat$では、$0$-セルは圏、$1$-セルは関手、そして$2$-セルは自然変換です。
 
-But notice that functors between two categories form a category too; so,
-in $\Cat$, we really have a \emph{hom-category} rather than a
-hom-set. It turns out that, just like $\Set$ can be treated as a
-category enriched over $\Set$, $\Cat$ can be treated as a
-category enriched over $\Cat$. Even more generally, just like
-every category can be treated as enriched over $\Set$, every
-$\cat{2}$-category can be considered enriched over $\Cat$.
+しかし、2つの圏間の関手もまた圏を形成することに注意してください。したがって、$\Cat$では、私たちは本当にホム集合ではなく\emph{ホム圏}を持っています。実際には、$\Set$が$\Set$上で豊穣化された圏として扱うことができるように、$\Cat$は$\Cat$上で豊穣化された圏として扱うことができます。さらに一般的には、任意の圏が$\Set$上で豊穣化された圏として扱われるように、任意の$\cat{2}$-圏は$\Cat$上で豊穣化されると考えることができます。

@@ -1,400 +1,234 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{N}{ow that we have covered} monads, we can reap the benefits of duality and
-get comonads for free simply by reversing the arrows and working in the
-opposite category.
+\lettrine[lhang=0.17]{モ}{ナド}を理解した今、射を反転させ逆圏で作業することで、双対性の恩恵を受けて余モナドを自由に得ることができます。
 
-Recall that, at the most basic level, monads are about composing Kleisli
-arrows:
+基本的に、モナドはKleisli射の合成に関するものです: 
 
 \src{snippet01}
-where \code{m} is a functor that is a monad. If we use the letter
-\code{w} (upside down \code{m}) for the comonad, we can define
-co-Kleisli arrows as morphism of the type:
+ここで、\code{m}はモナドである関手です。余モナドについては、文字\code{w} (\code{m}の逆さ) を使い、余Kleisli射を以下の型の射として定義できます: 
 
 \src{snippet02}
-The analog of the fish operator for co-Kleisli arrows is defined as:
+余Kleisli射のための魚オペレータの類似物は以下のように定義されます: 
 
 \src{snippet03}
-For co-Kleisli arrows to form a category we also have to have an
-identity co-Kleisli arrow, which is called \code{extract}:
+余Kleisli射が圏を形成するためには、\code{extract}と呼ばれる恒等的な余Kleisli射も必要です: 
 
 \src{snippet04}
-This is the dual of \code{return}. We also have to impose the laws of
-associativity as well as left- and right-identity. Putting it all
-together, we could define a comonad in Haskell as:
+これは\code{return}の双対です。また、結合則と左右の恒等則を課す必要があります。すべてをまとめると、Haskellで余モナドを定義することができます: 
 
 \src{snippet05}
-In practice, we use slightly different primitives, as we'll see shortly.
+実際には、後ほど見るように、わずかに異なる基本要素を使用します。
 
-The question is, what's the use for comonads in programming?
+では、プログラミングにおける余モナドの使用法は何でしょうか？
 
-\section{Programming with Comonads}
+\section{余モナドでのプログラミング}
 
-Let's compare the monad with the comonad. A monad provides a way of
-putting a value in a container using \code{return}. It doesn't give
-you access to a value or values stored inside. Of course, data
-structures that implement monads might provide access to their contents,
-but that's considered a bonus. There is no common interface for
-extracting values from a monad. And we've seen the example of the
-\code{IO} monad that prides itself in never exposing its contents.
+モナドと余モナドを比較してみましょう。モナドは\code{return}を使って値をコンテナに入れる方法を提供します。それはコンテナ内に保存された値や値へのアクセスを提供しません。もちろん、モナドを実装するデータ構造はその内容にアクセスを提供するかもしれませんが、それはボーナスと考えられます。モナドから値を抽出する共通のインターフェースはありません。そして、その内容を決して公開しない\code{IO}モナドの例を見てきました。
 
-A comonad, on the other hand, provides the means of extracting a single
-value from it. It does not give the means to insert values. So if you
-want to think of a comonad as a container, it always comes pre-filled
-with contents, and it lets you peek at it.
+一方、余モナドはそこから単一の値を抽出する手段を提供します。それは値を挿入する手段を提供しません。ですから、余モナドをコンテナと考えるなら、それは常に内容で満たされており、中身を覗くことができます。
 
-Just as a Kleisli arrow takes a value and produces some embellished
-result --- it embellishes it with context --- a co-Kleisli arrow takes a
-value together with a whole context and produces a result. It's an
-embodiment of \newterm{contextual computation}.
+Kleisli射が値を取り、何らかの文脈を加えた結果を生成するように --- それは文脈を加えることです --- 余Kleisli射は文脈全体と一緒に値を取り、結果を生成します。それは\newterm{文脈的計算}の体現です。
 
-\section{The Product Comonad}
+\section{積型余モナド}
 
-Remember the reader monad? We introduced it to tackle the problem of
-implementing computations that need access to some read-only environment
-\code{e}. Such computations can be represented as pure functions of
-the form:
+Readerモナドを覚えていますか？読み取り専用環境\code{e}へのアクセスが必要な計算を実装するためにそれを導入しました。そのような計算は以下の形式の純粋関数として表されます: 
 
 \src{snippet06}
-We used currying to turn them into Kleisli arrows:
+私たちはCurry化を使ってそれらをKleisli射に変換しました: 
 
 \src{snippet07}
-But notice that these functions already have the form of co-Kleisli
-arrows. Let's massage their arguments into the more convenient functor
-form:
+しかし、これらの関数はすでに余Kleisli射の形をしています。それらの引数をより便利な関手形式に整理しましょう: 
 
 \src{snippet08}
-We can easily define the composition operator by making the same
-environment available to the arrows that we are composing:
+合成オペレータを簡単に定義できます。合成している射に同じ環境を利用可能にします: 
 
 \src{snippet09}
-The implementation of \code{extract} simply ignores the environment:
+\code{extract}の実装は単純に環境を無視します: 
 
 \src{snippet10}
-Not surprisingly, the product comonad can be used to perform exactly the
-same computations as the reader monad. In a way, the comonadic
-implementation of the environment is more natural --- it follows the
-spirit of ``computation in context.'' On the other hand, monads come
-with the convenient syntactic sugar of the \code{do} notation.
+驚くべきことに、積型余モナドはReaderモナドとまったく同じ計算を実行するために使用することができます。ある意味で、余モナドの環境実装はより自然です --- それは「文脈における計算」の精神に従います。一方、モナドは\code{do}表記の便利な構文を持っています。
 
-The connection between the reader monad and the product comonad goes
-deeper, having to do with the fact that the reader functor is the right
-adjoint of the product functor. In general, though, comonads cover
-different notions of computation than monads. We'll see more examples
-later.
+Readerモナドと積型余モナドの間のつながりはさらに深く、Reader関手が積関手の右随伴であるという事実に関係しています。一般的には、余モナドはモナドとは異なる計算の概念をカバーします。後でさらに多くの例を見るでしょう。
 
-It's easy to generalize the \code{Product} comonad to arbitrary
-product types including tuples and records.
+任意の積型、タプルやレコードを含む、\code{Product}余モナドを一般化するのは簡単です。
 
-\section{Dissecting the Composition}
+\section{合成の解剖}
 
-Continuing the process of dualization, we could go ahead and dualize
-monadic bind and join. Alternatively, we can repeat the process we used
-with monads, where we studied the anatomy of the fish operator. This
-approach seems more enlightening.
+双対化のプロセスを続けると、モナド的な結合やjoinを双対化することができます。代わりに、魚オペレータの解剖に使用したプロセスを繰り返すことができます。このアプローチはより啓蒙的に思えます。
 
-The starting point is the realization that the composition operator must
-produce a co-Kleisli arrow that takes \code{w a} and produces a
-\code{c}. The only way to produce a \code{c} is to apply the second
-function to an argument of the type \code{w b}:
+出発点は、合成オペレータが\code{w a}を取り、\code{c}を生成する余Kleisli射を生成する必要があるという実現です。唯一の方法で\code{c}を生成するには、\code{w b}型の引数に第二の関数を適用することです: 
 
 \src{snippet11}
-But how can we produce a value of type \code{w b} that could be fed
-to \code{g}? We have at our disposal the argument of type
-\code{w a} and the function \code{f :: w a -> b}.
-The solution is to define the dual of bind, which is called extend:
+しかし、どのようにして\code{w b}型の値を生成し、それを\code{g}に供給することができるでしょうか？私たちが使用できるのは、型\code{w a}の引数と関数\code{f :: w a -> b}です。
+その解決策は、結合の双対であるextendを定義することです: 
 
 \src{snippet12}
-Using \code{extend} we can implement composition:
+\code{extend}を使って合成を実装できます: 
 
 \src{snippet13}
-Can we next dissect \code{extend}? You might be tempted to say, why
-not just apply the function \code{w a -> b} to the
-argument \code{w a}, but then you quickly realize that you'd have no
-way of converting the resulting \code{b} to \code{w b}. Remember,
-the comonad provides no means of lifting values. At this point, in the
-analogous construction for monads, we used \code{fmap}. The only way
-we could use \code{fmap} here would be if we had something of the type
-\code{w (w a)} at our disposal. If we could only turn \code{w a}
-into\\ \code{w (w a)}. And, conveniently, that would be exactly the
-dual of \code{join}. We call it \code{duplicate}:
+次に、\code{extend}を解剖できるかどうかを考えるかもしれません。関数\code{w a -> b}を引数\code{w a}に適用するだけでいいのではないかと誘惑されるかもしれませんが、その結果の\code{b}を\code{w b}に変換する方法がないことにすぐ気づきます。覚えておいてください、余モナドは値を持ち上げる手段を提供しません。この点で、モナドの類似構造では\code{fmap}を使いました。ここで\code{fmap}を使う唯一の方法は、\code{w (w a)}型のものを手元に持っている場合です。もし私たちが\code{w a}を\\ \code{w (w a)}に変換できればいいのです。そして、便利なことに、それはまさに\code{join}の双対です。それを\code{duplicate}と呼びます: 
 
 \src{snippet14}
-So, just like with the definitions of the monad, we have three
-equivalent definitions of the comonad: using co-Kleisli arrows,
-\code{extend}, or \code{duplicate}. Here's the Haskell definition
-taken directly from\\ \code{Control.Comonad} library:
+したがって、モナドの定義と同様に、余モナドには余Kleisli射、\code{extend}、または\code{duplicate}を使用する3つの同等の定義があります。以下は、\code{Control.Comonad}ライブラリから直接取られたHaskellの定義です: 
 
 \src{snippet15}
-Provided are the default implementations of \code{extend} in terms of
-\code{duplicate} and vice versa, so you only need to override one of
-them.
+\code{extend}と\code{duplicate}のデフォルト実装が提供されているため、どちらか一方をオーバーライドするだけで済みます。
 
-The intuition behind these functions is based on the idea that, in
-general, a comonad can be thought of as a container filled with values
-of type \code{a} (the product comonad was a special case of just one
-value). There is a notion of the ``current'' value, one that's easily
-accessible through \code{extract}. A co-Kleisli arrow performs some
-computation that is focused on the current value, but it has access to
-all the surrounding values. Think of the Conway's game of life. Each
-cell contains a value (usually just \code{True} or \code{False}). A
-comonad corresponding to the game of life would be a grid of cells
-focused on the ``current'' cell.
+これらの関数の背後にある直感は、一般的に余モナドを\code{a}型の値で満たされたコンテナと考えることに基づいています (積型余モナドはちょうど一つの値の特殊なケースでした) 。easily accessible through \code{extract}という「現在の」値があります。余Kleisli射は現在の値に焦点を当てた計算を実行しますが、周囲のすべての値にアクセスできます。Conwayのライフゲームを考えてみてください。各セルには値が含まれています (通常は単に\code{True}または\code{False}) 。ライフゲームの余モナドは「現在の」セルに焦点を当てたセルのグリッドに相当します。
 
-So what does \code{duplicate} do? It takes a comonadic container
-\code{w a} and produces a container of containers \code{w (w a)}.
-The idea is that each of these containers is focused on a different
-\code{a} inside \code{w a}. In the game of life, you would get a
-grid of grids, each cell of the outer grid containing an inner grid
-that's focused on a different cell.
+それでは\code{duplicate}は何をしますか？それは余モナドのコンテナ\code{w a}を取り、コンテナのコンテナ\code{w (w a)}を生成します。各コンテナが\code{w a}内の異なる\code{a}に焦点を当てているという考えです。ライフゲームであれば、外側のグリッドの各セルに、異なるセルに焦点を当てた内側のグリッドが含まれます。
 
-Now look at \code{extend}. It takes a co-Kleisli arrow and a comonadic
-container \code{w a} filled with \code{a}s. It applies the
-computation to all of these \code{a}s, replacing them with
-\code{b}s. The result is a comonadic container filled with
-\code{b}s. \code{extend} does it by shifting the focus from one
-\code{a} to another and applying the co-Kleisli arrow to each of them
-in turn. In the game of life, the co-Kleisli arrow would calculate the
-new state of the current cell. To do that, it would look at its context
---- presumably its nearest neighbors. The default implementation of
-\code{extend} illustrates this process. First we call
-\code{duplicate} to produce all possible foci and then we apply
-\code{f} to each of them.
+そして\code{extend}を見てください。それは余Kleisli射と\code{a}の\code{w a}で満たされた余モナドのコンテナを取ります。それはそれらのすべての\code{a}に計算を適用し、それらを\code{b}に置き換えます。結果は\code{b}で満たされた余モナドのコンテナです。\code{extend}は一つ一つの\code{a}に焦点を移動させ、それらのそれぞれに余Kleisli射を適用することでこれを行います。ライフゲームでは、余Kleisli射は現在のセルの新しい状態を計算します。そのためには、そのコンテキスト --- おそらく最も近い隣人 --- を見ることになります。\code{extend}のデフォルト実装はこのプロセスを示しています。最初に\code{duplicate}を呼び出してすべての可能な焦点を生成し、それからそれぞれに\code{f}を適用します。
 
-\section{The Stream Comonad}
+\section{ストリーム余モナド}
 
-This process of shifting the focus from one element of the container to
-another is best illustrated with the example of an infinite stream. Such
-a stream is just like a list, except that it doesn't have the empty
-constructor:
+コンテナの一つの要素から別の要素に焦点を移動するこのプロセスは、無限ストリームの例で最もよく示されます。そのようなストリームはリストのようなものですが、空のコンストラクタがありません: 
 
 \src{snippet16}
-It's trivially a \code{Functor}:
+それは自明に\code{Functor}です: 
 
 \src{snippet17}
-The focus of a stream is its first element, so here's the implementation
-of \code{extract}:
+ストリームの焦点はその最初の要素なので、こちらが\code{extract}の実装です: 
 
 \src{snippet18}
-\code{duplicate} produces a stream of streams, each focused on a
-different element.
+\code{duplicate}は異なる要素に焦点を当てたストリームのストリームを生成します。
 
 \src{snippet19}
-The first element is the original stream, the second element is the tail
-of the original stream, the third element is its tail, and so on, ad
-infinitum.
+最初の要素は元のストリームで、二番目の要素は元のストリームの尾です。三番目の要素はその尾で、以下同様に無限に続きます。
 
-Here's the complete instance:
+こちらが完全なインスタンスです: 
 
 \src{snippet20}
-This is a very functional way of looking at streams. In an imperative
-language, we would probably start with a method \code{advance} that
-shifts the stream by one position. Here, \code{duplicate} produces all
-shifted streams in one fell swoop. Haskell's laziness makes this
-possible and even desirable. Of course, to make a \code{Stream}
-practical, we would also implement the analog of \code{advance}:
+これはストリームを見る非常に機能的な方法です。命令型言語では、ストリームを一つの位置にシフトする\code{advance}メソッドから始めるかもしれません。ここでは、\code{duplicate}は一気にすべてのシフトされたストリームを生成します。Haskellの遅延評価はこれを可能にし、さらに望ましいものにします。もちろん、\code{Stream}を実用的にするためには、\code{advance}の類似物も実装します: 
 
 \src{snippet21}
-but it's never part of the comonadic interface.
+しかし、それは余モナドインターフェースの一部ではありません。
 
-If you had any experience with digital signal processing, you'll see
-immediately that a co-Kleisli arrow for a stream is just a digital
-filter, and \code{extend} produces a filtered stream.
+デジタル信号処理に何らかの経験があるなら、ストリームの余Kleisli射はただのデジタルフィルタであることがすぐにわかります。そして、\code{extend}はフィルタリングされたストリームを生成します。
 
-As a simple example, let's implement the moving average filter. Here's a
-function that sums \code{n} elements of a stream:
+簡単な例として、移動平均フィルタを実装しましょう。こちらはストリームの最初の\code{n}要素を合計する関数です: 
 
 \src{snippet22}
-Here's the function that calculates the average of the first \code{n}
-elements of the stream:
+こちらはストリームの最初の\code{n}要素の平均を計算する関数です: 
 
 \src{snippet23}
-Partially applied \code{average n} is a co-Kleisli arrow, so we can
-\code{extend} it over the whole stream:
+部分適用された\code{average n}は余Kleisli射なので、全体のストリームに\code{extend}することができます: 
 
 \src{snippet24}
-The result is the stream of running averages.
+結果は移動平均のストリームです。
 
-A stream is an example of a unidirectional, one-dimensional comonad. It
-can be easily made bidirectional or extended to two or more dimensions.
+ストリームは一方向、一次元の余モナドの例です。それは簡単に双方向にしたり、二次元以上に拡張することができます。
 
-\section{Comonad Categorically}
+\section{圏論的に余モナドを定義する}
 
-Defining a comonad in category theory is a straightforward exercise in
-duality. As with the monad, we start with an endofunctor \code{T}. The
-two natural transformations, $\eta$ and $\mu$, that define the monad are simply
-reversed for the comonad:
+圏論で余モナドを定義することは、双対性を利用することで直截的な演習です。モナドと同様に、私たちは自己関手\code{T}から始めます。モナドを定義する2つの自然変換$\eta$と$\mu$は、余モナドに対して単純に逆転します: 
 \begin{align*}
   \varepsilon & \Colon T \to I   \\
   \delta      & \Colon T \to T^2
 \end{align*}
-The components of these transformations correspond to \code{extract}
-and \code{duplicate}. Comonad laws are the mirror image of monad laws.
-No big surprise here.
+これらの変換のコンポーネントは\code{extract}と\code{duplicate}に対応します。余モナド則はモナド則の鏡像です。ここに大きな驚きはありません。
 
-Then there is the derivation of the monad from an adjunction. Duality
-reverses an adjunction: the left adjoint becomes the right adjoint and
-vice versa. And, since the composition $R \circ L$ defines a monad,
-$L \circ R$ must define a comonad. The counit of the adjunction:
+次に、随伴からモナドを導出します。双対性は随伴を逆転させます: 左随伴は右随伴になり、その逆もまた然りです。そして、$R \circ L$の合成がモナドを定義するので、$L \circ R$は余モナドを定義するはずです。随伴の余単位: 
 \[\varepsilon \Colon L \circ R \to I\]
-is indeed the same $\varepsilon$ that we see in the definition of the comonad ---
-or, in components, as Haskell's \code{extract}. We can also use the
-unit of the adjunction:
+は、実際には余モナドの定義で見るのと同じ$\varepsilon$です---または、Haskellの\code{extract}としてのコンポーネントとしてです。随伴の単位: 
 \[\eta \Colon I \to R \circ L\]
-to insert an $R \circ L$ in the middle of $L \circ R$ and
-produce $L \circ R \circ L \circ R$. Making $T^2$ from $T$
-defines the $\delta$, and that completes the definition of the comonad.
+を使用して、$L \circ R$の中間に$R \circ L$を挿入し、$L \circ R \circ L \circ R$を生成することができます。$T$から$T^2$を作ることが$\delta$を定義し、それが余モナドの定義を完成させます。
 
-We've also seen that the monad is a monoid. The dual of this statement
-would require the use of a comonoid, so what's a comonoid? The original
-definition of a monoid as a single-object category doesn't dualize to
-anything interesting. When you reverse the direction of all
-endomorphisms, you get another monoid. Recall, however, that in our
-approach to a monad, we used a more general definition of a monoid as an
-object in a monoidal category. The construction was based on two
-morphisms:
+また、モナドがモノイドであることも見てきました。この言明の双対は、余モノイドの使用を必要とするので、何が余モノイドですか？単一対象圏としてのモノイドの元の定義は、何か興味深いものに双対化されません。すべての自己射の方向を逆にしても、別のモノイドが得られます。しかし、モナドへの私たちのアプローチで、私たちはモノイダル圏における対象としてのモノイドのより一般的な定義を使用しました。その構造は二つの射に基づいていました: 
 \begin{align*}
   \mu  & \Colon m \otimes m \to m \\
   \eta & \Colon i \to m
 \end{align*}
-The reversal of these morphisms produces a comonoid in a monoidal
-category:
+これらの射の逆転はモノイダル圏内の余モノイドを生成します: 
 \begin{align*}
   \delta      & \Colon m \to m \otimes m \\
   \varepsilon & \Colon m \to i
 \end{align*}
-One can write a definition of a comonoid in Haskell:
+Haskellで余モノイドの定義を書くことができます: 
 
 \src{snippet25}
-but it is rather trivial. Obviously \code{destroy} ignores its
-argument.
+しかし、それはかなり自明です。明らかに\code{destroy}はその引数を無視します。
 
 \src{snippet26}
-\code{split} is just a pair of functions:
+\code{split}は単なる関数のペアです: 
 
 \src{snippet27}
-Now consider comonoid laws that are dual to the monoid unit laws.
+次に、モノイドの単位則に双対する余モノイド則を考えます。
 
 \src{snippet28}
-Here, \code{lambda} and \code{rho} are the left and right unitors,
-respectively (see the definition of
-\hyperref[monads-categorically]{monoidal
-  categories}). Plugging in the definitions, we get:
-
-\src{snippet29}
-which proves that \code{g = id}. Similarly, the second law expands
-to \code{f = id}. In conclusion:
+ここで、\code{lambda}と\code{rho}はそれぞれ左単位子と右単位子です (モノイダル圏の定義を参照してください) 。定義を差し込むと、\code{g = id}を得ます。同様に、二番目の規則は\code{f = id}に展開されます。結論として: 
 
 \src{snippet30}
-which shows that in Haskell (and, in general, in the category
-$\Set$) every object is a trivial comonoid.
+これはHaskell (および、一般的には圏$\Set$) では、すべての対象が自明な余モノイドであることを示しています。
 
-Fortunately there are other more interesting monoidal categories in
-which to define comonoids. One of them is the category of endofunctors.
-And it turns out that, just like the monad is a monoid in the category
-of endofunctors,
+幸いなことに、余モノイドを定義するための他のより興味深いモノイダル圏があります。その一つは自己関手の圏です。そして、モナドが自己関手の圏のモノイドであるように、
 
 \begin{quote}
-  The comonad is a comonoid in the category of endofunctors.
+  余モナドは自己関手の圏の余モノイドです。
 \end{quote}
 
-\section{The Store Comonad}
+\section{ストア余モナド}
 
-Another important example of a comonad is the dual of the state monad.
-It's called the costate comonad or, alternatively, the store comonad.
+もう一つの重要な余モナドの例は、状態モナドの双対です。それは余状態余モナドまたは、代替的にストア余モナドと呼ばれます。
 
-We've seen before that the state monad is generated by the adjunction
-that defines the exponentials:
+以前に、状態モナドは指数関数を定義する随伴によって生成されることを見ました: 
 \begin{align*}
   L z & = z\times{}s      \\
   R a & = s \Rightarrow a
 \end{align*}
-We'll use the same adjunction to define the costate comonad. A comonad
-is defined by the composition $L \circ R$:
+私たちは同じ随伴を使って余状態余モナドを定義します。余モナドは$L \circ R$の合成によって定義されます: 
 \[L (R a) = (s \Rightarrow a)\times{}s\]
-Translating this to Haskell, we start with the adjunction between the
-\code{Product} functor on the left and the \code{Reader} functor or the
-right. Composing \code{Product} after \code{Reader} is equivalent to
-the following definition:
+これをHaskellに翻訳すると、左側に\code{Product}関手、右側に\code{Reader}関手を持つ随伴から始めます。\code{Product}の後に\code{Reader}を組み合わせることは、次の定義と同等です: 
 
 \src{snippet31}
-The counit of the adjunction taken at the object $a$ is the
-morphism:
+随伴の余単位を対象$a$で取ると、射は以下のようになります: 
 \[\varepsilon_a \Colon ((s \Rightarrow a)\times{}s) \to a\]
-or, in Haskell notation:
+または、Haskellの表記で: 
 
 \src{snippet32}
-This becomes our \code{extract}:
+これが私たちの\code{extract}になります: 
 
 \src{snippet33}
-The unit of the adjunction:
+随伴の単位: 
 
 \src{snippet34}
-can be rewritten as partially applied data constructor:
+は部分的に適用されたデータコンストラクタとして書き直すことができます: 
 
 \src{snippet35}
-We construct $\delta$, or \code{duplicate}, as the horizontal composition:
+$\delta$、または\code{duplicate}を、水平合成として構成します: 
 \begin{align*}
   \delta & \Colon L \circ R \to L \circ R \circ L \circ R \\
   \delta & = L \circ \eta \circ R
 \end{align*}
-We have to sneak $\eta$ through the leftmost $L$, which is the
-\code{Product} functor. It means acting with $\eta$, or \code{Store f}, on
-the left component of the pair (that's what \code{fmap} for
-\code{Product} would do). We get:
+最左端の$L$を通して$\eta$をこっそりと通す必要があります。それは\code{Product}関手であるため、$\eta$、または\code{Store f}をペアの左側要素に作用させることを意味します (それが\code{Product}に対する\code{fmap}が行うことです) 。私たちは得ます: 
 
 \src{snippet36}
-(Remember that, in the formula for $\delta$, $L$ and $R$ stand
-for identity natural transformations whose components are identity
-morphisms.)
+ ($\delta$の式で、$L$と$R$は恒等自然変換を表し、そのコンポーネントは恒等射です。) 
 
-Here's the complete definition of the \code{Store} comonad:
+こちらが\code{Store}余モナドの完全な定義です: 
 
 \src{snippet37}
-You may think of the \code{Reader} part of \code{Store} as a
-generalized container of \code{a}s that are keyed using elements of
-the type \code{s}. For instance, if \code{s} is \code{Int},
-\code{Reader Int a} is an infinite bidirectional stream of
-\code{a}s. \code{Store} pairs this container with a value of the key
-type. For instance, \code{Reader Int a} is paired with an
-\code{Int}. In this case, \code{extract} uses this integer to index
-into the infinite stream. You may think of the second component of
-\code{Store} as the current position.
+あなたは\code{Reader}部分の\code{Store}を、\code{a}の一般化されたコンテナとして考えるかもしれません。それは\code{s}型の要素を使ってキー付けされています。例えば、\code{s}が\code{Int}であれば、\code{Reader Int a}は\code{a}の無限双方向ストリームです。\code{Store}はこのコンテナをキー型の値と組み合わせます。この場合、\code{extract}はこの整数を使用して無限ストリームをインデックス化します。第二のコンポーネントの\code{Store}を現在の位置と考えることができます。
 
-Continuing with this example, \code{duplicate} creates a new infinite
-stream indexed by an \code{Int}. This stream contains streams as its
-elements. In particular, at the current position, it contains the
-original stream. But if you use some other \code{Int} (positive or
-negative) as the key, you'd obtain a shifted stream positioned at that
-new index.
+この例を続けると、\code{duplicate}は\code{Int}でインデックス付けされた新しい無限ストリームを作成します。このストリームにはストリームが要素として含まれます。特に、現在の位置では、元のストリームが含まれます。しかし、他の\code{Int} (正または負) をキーとして使用した場合、その新しいインデックスに位置するシフトされたストリームを取得します。
 
-In general, you can convince yourself that when \code{extract} acts on
-the \code{duplicate}d \code{Store} it produces the original
-\code{Store} (in fact, the identity law for the comonad states that
-\code{extract . duplicate = id}).
+一般的に、\code{extract}が\code{duplicate}された\code{Store}に作用するとき、それは元の\code{Store}を生成します (実際には、余モナドの恒等則は\code{extract . duplicate = id}を述べています) 。
 
-The \code{Store} comonad plays an important role as the theoretical
-basis for the \code{Lens} library. Conceptually, the
-\code{Store s a} comonad encapsulates the idea of ``focusing'' (like
-a lens) on a particular substructure of the data type \code{a} using
-the type \code{s} as an index. In particular, a function of the type:
+\code{Store}余モナドは、\code{Lens}ライブラリの理論的基礎として重要な役割を果たします。概念的には、\code{Store s a}余モナドは、型\code{s}をインデックスとして使用してデータ型\code{a}の特定の部分構造に「焦点を当てる」 (レンズのように) ことのアイデアを包含します。特に、型が: 
 
 \src{snippet38}
-is equivalent to a pair of functions:
+の関数は、次のペアの関数と等価です: 
 
 \src{snippet39}
-If \code{a} is a product type, \code{set} could be implemented as
-setting the field of type \code{s} inside of \code{a} while
-returning the modified version of \code{a}. Similarly, \code{get}
-could be implemented to read the value of the \code{s} field from
-\code{a}. We'll explore these ideas more in the next section.
+\code{a}が積型の場合、\code{set}は\code{a}内の\code{s}型のフィールドを設定しながら、\code{a}の変更されたバージョンを返すとして実装することができます。同様に、\code{get}は\code{a}から\code{s}フィールドの値を読み取るために実装することができます。次のセクションでこれらのアイデアをさらに探求します。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Implement the Conway's Game of Life using the \code{Store} comonad.
-        Hint: What type do you pick for \code{s}?
+        \code{Store}余モナドを使用してConwayのライフゲームを実装してください。
+        ヒント: \code{s}にどんな型を選びますか？
 \end{enumerate}
+
+

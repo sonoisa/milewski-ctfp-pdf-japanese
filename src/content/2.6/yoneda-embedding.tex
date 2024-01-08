@@ -1,297 +1,121 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{W}{e've seen previously} that, when we fix an object $a$ in the
-category $\cat{C}$, the mapping $\cat{C}(a, -)$ is a (covariant)
-functor from $\cat{C}$ to $\Set$.
+\lettrine[lhang=0.17]{こ}{れまで}に、圏$\cat{C}$の対象$a$を固定した場合、写像$\cat{C}(a, -)$は$\cat{C}$から$\Set$への (共変) 関手であることを見てきました。
 \[x \to \cat{C}(a, x)\]
-(The codomain is $\Set$ because the hom-set $\cat{C}(a, x)$ is a
-\emph{set}.) We call this mapping a hom-functor --- we have previously
-defined its action on morphisms as well.
+ (終域は$\Set$です、なぜならホム集合$\cat{C}(a, x)$は\emph{集合}だからです。) この写像をホム関手と呼びます。--- 以前に射に対するその作用も定義しました。
 
-Now let's vary $a$ in this mapping. We get a new mapping that
-assigns the hom-\emph{functor} $\cat{C}(a, -)$ to any $a$.
+さて、この写像において$a$を変化させてみましょう。新しい写像が得られ、それは任意の$a$に対してホム\emph{関手}$\cat{C}(a, -)$を割り当てます。
 \[a \to \cat{C}(a, -)\]
-It's a mapping of objects from category $\cat{C}$ to functors, which are
-\emph{objects} in the functor category (see the section about functor
-categories in
-\hyperref[natural-transformations]{Natural
-  Transformations}). Let's use the notation $[\cat{C}, \Set]$ for the
-functor category from $\cat{C}$ to $\Set$. You may also recall that
-hom-functors are the prototypical
-\hyperref[representable-functors]{representable
-  functors}.
+これは対象から関手への写像であり、つまり$\cat{C}$の対象から関手圏の\emph{対象}への写像です (関手圏については\hyperref[natural-transformations]{自然変換}の節を参照してください) 。関手圏$\cat{C}$から$\Set$への記法として$[\cat{C}, \Set]$を使いましょう。また、ホム関手は典型的な\hyperref[representable-functors]{表現可能関手}であることを覚えているかもしれません。
 
-Every time we have a mapping of objects between two categories, it's
-natural to ask if such a mapping is also a functor. In other words
-whether we can lift a morphism from one category to a morphism in the
-other category. A morphism in $\cat{C}$ is just an element of
-$\cat{C}(a, b)$, but a morphism in the functor category
-$[\cat{C}, \Set]$ is a natural transformation. So we are looking
-for a mapping of morphisms to natural transformations.
+二つの圏の間に対象の写像がある場合、その写像が関手であるかどうか、つまり一方の圏の射を他方の圏の射に持ち上げることができるかどうかを自然に考えます。$\cat{C}$の射は$\cat{C}(a, b)$の要素ですが、関手圏$[\cat{C}, \Set]$の射は自然変換です。したがって、私たちは射を自然変換に写す写像を探しています。
 
-Let's see if we can find a natural transformation corresponding to a
-morphism $f \Colon a \to b$. First, lets see what
-$a$ and $b$ are mapped to. They are mapped to two
-functors: $\cat{C}(a, -)$ and $\cat{C}(b, -)$. We need a natural
-transformation between those two functors.
+射$f \Colon a \to b$に対応する自然変換を見つけられるか見てみましょう。まず、$a$と$b$が何に写されるかを見てみましょう。それらは二つの関手、$\cat{C}(a, -)$と$\cat{C}(b, -)$に写されます。この二つの関手の間の自然変換が必要です。
 
-And here's the trick: we use the Yoneda lemma:
+ここでコツがあります。米田の補題を使います: 
 \[[\cat{C}, \Set](\cat{C}(a, -), F) \cong F a\]
-and replace the generic $F$ with the hom-functor
-$\cat{C}(b, -)$. We get:
+そして一般的な$F$をホム関手$\cat{C}(b, -)$に置き換えます。私たちは得ます: 
 \[[\cat{C}, \Set](\cat{C}(a, -), \cat{C}(b, -)) \cong \cat{C}(b, a)\]
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.6\textwidth]{images/yoneda-embedding.jpg}
-\end{figure}
 
 \noindent
-This is exactly the natural transformation between the two hom-functors
-we were looking for, but with a little twist: We have a mapping between
-a natural transformation and a morphism --- an element of
-$\cat{C}(b, a)$ --- that goes in the ``wrong'' direction. But that's
-okay; it only means that the functor we are looking at is contravariant.
-
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.65\textwidth]{images/yoneda-embedding-2.jpg}
-\end{figure}
+これはまさに私たちが探していた二つのホム関手間の自然変換ですが、少し捻りがあります。自然変換と射---$\cat{C}(b, a)$の要素---との間には「逆」方向への写像があります。しかし、それは問題ありません。これは私たちが見ている関手が反変であることを意味します。
 
 \noindent
-Actually, we've got even more than we bargained for. The mapping from
-$\cat{C}$ to $[\cat{C}, \Set]$ is not only a contravariant functor
---- it is a \emph{fully faithful} functor. Fullness and faithfulness are
-properties of functors that describe how they map hom-sets.
+実際、私たちは想定以上のものを得ました。$\cat{C}$から$[\cat{C}, \Set]$への写像は反変関手だけでなく、\emph{充満忠実}関手です。充満性と忠実性は、関手がホム集合をどのように写像するかを記述する関手の性質です。
 
-A \emph{faithful} functor is \newterm{injective} on hom-sets, meaning that
-it maps distinct morphisms to distinct morphisms. In other words, it
-doesn't coalesce them.
+\emph{忠実}関手はホム集合において\newterm{単射}であり、つまりそれは異なる射を異なる射に写像します。言い換えれば、それは射をまとめてしまうことはありません。
 
-A \emph{full} functor is \newterm{surjective} on hom-sets, meaning that it
-maps one hom-set \emph{onto} the other hom-set, fully covering the
-latter.
+\emph{充満}関手はホム集合において\newterm{全射}であり、つまりそれは一つのホム集合を別のホム集合に\emph{上へ}写像し、後者を完全に覆います。
 
-A fully faithful functor $F$ is a \newterm{bijection} on hom-sets
---- a one to one matching of all elements of both sets. For every pair
-of objects $a$ and $b$ in the source category $\cat{C}$
-there is a bijection between $\cat{C}(a, b)$ and
-$\cat{D}(F a, F b)$, where $\cat{D}$ is the target category of
-$F$ (in our case, the functor category, $[\cat{C}, \Set]$).
-Notice that this doesn't mean that $F$ is a bijection on
-\emph{objects}. There may be objects in $\cat{D}$ that are not in the
-image of $F$, and we can't say anything about hom-sets for those
-objects.
+充満忠実関手$F$はホム集合上の\newterm{全単射}です---両方の集合の全ての要素の一対一の対応です。源の圏$\cat{C}$の任意の対象のペア$a$と$b$に対して、$\cat{C}(a, b)$と$\cat{D}(F a, F b)$の間には全単射があります。ここで$\cat{D}$は$F$の対象圏です (この場合、関手圏$[\cat{C}, \Set]$です) 。これは$F$が\emph{対象}上の全単射であるとは言いません。$\cat{D}$には$F$の像にない対象が存在するかもしれませんし、そのような対象のホム集合については何も言えません。
 
-\section{The Embedding}
+\section{埋め込み}
 
-The (contravariant) functor we have just described, the functor that
-maps objects in $\cat{C}$ to functors in $[\cat{C}, \Set]$:
+私たちがちょうど記述した (反変) 関手、つまり$\cat{C}$の対象を$[\cat{C}, \Set]$の関手に写す関手: 
 \[a \to \cat{C}(a, -)\]
-defines the \newterm{Yoneda embedding}. It \emph{embeds} a category
-$\cat{C}$ (strictly speaking, the category $\cat{C}^\mathit{op}$,
-because of contravariance) inside the functor category
-$[\cat{C}, \Set]$. It not only maps objects in $\cat{C}$ to
-functors, but also faithfully preserves all connections between them.
+は\newterm{米田埋め込み}を定義します。それは圏$\cat{C}$ (厳密には反変性のために$\cat{C}^\mathit{op}$) を関手圏$[\cat{C}, \Set]$内に\emph{埋め込む}ものです。それは$\cat{C}$の対象を関手に写すだけでなく、それらの間の全ての接続を忠実に保存します。
 
-This is a very useful result because mathematicians know a lot about the
-category of functors, especially functors whose codomain is
-$\Set$. We can get a lot of insight about an arbitrary category
-$\cat{C}$ by embedding it in the functor category.
+これは非常に有用な結果です。なぜなら、数学者は関手の圏、特に終域が$\Set$である関手について多くのことを知っているからです。私たちは任意の圏$\cat{C}$について、それを関手圏に埋め込むことによって多くの洞察を得ることができます。
 
-Of course there is a dual version of the Yoneda embedding, sometimes
-called the co-Yoneda embedding. Observe that we could have started by
-fixing the target object (rather than the source object) of each
-hom-set, $\cat{C}(-, a)$. That would give us a contravariant
-hom-functor. Contravariant functors from $\cat{C}$ to $\Set$ are
-our familiar presheaves (see, for instance,
-\hyperref[limits-and-colimits]{Limits
-  and Colimits}). The co-Yoneda embedding defines the embedding of a
-category $\cat{C}$ in the category of presheaves. Its action on morphisms
-is given by:
+もちろん、米田埋め込みには双対バージョンがあり、時に余米田埋め込みと呼ばれることもあります。私たちが各ホム集合の対象 (ソース対象ではなく) を固定することから始めることができたことに注意してください、$\cat{C}(-, a)$。それは私たちに反変ホム関手を与えます。$\cat{C}$から$\Set$への反変関手は私たちがよく知る前層 (例えば、\hyperref[limits-and-colimits]{極限と余極限}を参照してください) です。余米田埋め込みは圏$\cat{C}$を前層の圏に埋め込むことを定義します。射に対するその作用は以下の通りです: 
 \[[\cat{C}, \Set](\cat{C}(-, a), \cat{C}(-, b)) \cong \cat{C}(a, b)\]
-Again, mathematicians know a lot about the category of presheaves, so
-being able to embed an arbitrary category in it is a big win.
+再び、前層の圏について多くのことが知られているので、任意の圏をそこに埋め込むことができるのは大きな利点です。
 
-\section{Application to Haskell}
+\section{Haskellへの応用}
 
-In Haskell, the Yoneda embedding can be represented as the isomorphism
-between natural transformations amongst reader functors on the one hand,
-and functions (going in the opposite direction) on the other hand:
+Haskellでは、米田埋め込みはreader関手間の自然変換と、それとは逆方向の関数との間の同型として表現できます: 
 
 \begin{snipv}
 forall x. (a -> x) -> (b -> x) \ensuremath{\cong} b -> a
 \end{snipv}
-(Remember, the reader functor is equivalent to
-\code{((->) a)}.)
+ (reader関手は\code{((->) a)}と同等です。) 
 
-The left hand side of this identity is a polymorphic function that,
-given a function from \code{a} to \code{x} and a value of type
-\code{b}, can produce a value of type \code{x} (I'm uncurrying ---
-dropping the parentheses around --- the function
-\code{b -> x}). The only way this can be done for all
-\code{x} is if our function knows how to convert a \code{b} to an
-\code{a}. It has to secretly have access to a function
-\code{b -> a}.
+この恒等式の左辺は、\code{a}から\code{x}への関数と\code{b}の型の値を与えられたときに、\code{x}の型の値を生成することができる多相的関数です (私は関数\code{b -> x}の周りの括弧を落としています---非Curry化しています) 。これがすべての\code{x}に対して行える唯一の方法は、関数が\code{b}を\code{a}に変換する方法を密かに知っている場合です。
 
-Given such a converter, \code{btoa}, one can define the left hand
-side, call it \code{fromY}, as:
+そのようなコンバーター、\code{btoa}がある場合、左辺を\code{fromY}と呼び、次のように定義することができます: 
 
 \src{snippet01}
-Conversely, given a function \code{fromY} we can recover the converter
-by calling \code{fromY} with the identity:
+逆に、関数\code{fromY}が与えられれば、identityを呼び出すことによってコンバーターを回復することができます: 
 
 \src{snippet02}
-This establishes the bijection between functions of the type
-\code{fromY} and \code{btoa}.
+これは型\code{fromY}と\code{btoa}の関数の間の全単射を確立します。
 
-An alternative way of looking at this isomorphism is that it's a \acronym{CPS}
-encoding of a function from \code{b} to \code{a}. The argument
-\code{a -> x} is a continuation (the handler). The result
-is a function from \code{b} to \code{x} which, when called with a
-value of type \code{b}, will execute the continuation precomposed with
-the function being encoded.
+この同型を見る別の方法は、それが\code{b}から\code{a}への関数の\acronym{CPS}エンコーディングであるということです。引数\code{a -> x}は継続 (ハンドラー) です。結果は\code{b}から\code{x}への関数で、\code{b}の型の値が与えられたときに、エンコードされている関数を事前に合成して継続を実行します。
 
-The Yoneda embedding also explains some of the alternative
-representations of data structures in Haskell. In particular, it
-provides a \urlref{https://bartoszmilewski.com/2015/07/13/from-lenses-to-yoneda-embedding/}
-{very useful representation}
-of lenses from the \code{Control.Lens} library.
+米田埋め込みはまた、特にそれが\code{Control.Lens}ライブラリからのレンズの\urlref{https://bartoszmilewski.com/2015/07/13/from-lenses-to-yoneda-embedding/}{非常に有用な表現}を提供することによって、Haskellのデータ構造の代替表現を説明します。
 
-\section{Preorder Example}
+\section{前順序の例}
 
-This example was suggested by Robert Harper. It's the application of the
-Yoneda embedding to a category defined by a preorder. A preorder is a
-set with an ordering relation between its elements that's traditionally
-written as $\leqslant$ (less than or equal). The ``pre'' in
-preorder is there because we're only requiring the relation to be
-transitive and reflexive but not necessarily antisymmetric (so it's
-possible to have cycles).
+この例はRobert Harperによって提案されました。それは前順序によって定義される圏への米田埋め込みの適用です。前順序は$\leqslant$ (以下) として伝統的に書かれる要素間の順序関係を持つ集合です。前順序における「pre」は、関係が推移的で反射的であることが求められるのに対し、必ずしも反対称的でないということを意味します (したがって、サイクルが可能です) 。
 
-A set with the preorder relation gives rise to a category. The objects
-are the elements of this set. A morphism from object $a$ to
-$b$ either doesn't exist, if the objects cannot be compared or if
-it's not true that $a \leqslant b$; or it exists if
-$a \leqslant b$, and it points from $a$ to
-$b$. There is never more than one morphism from one object to
-another. Therefore any hom-set in such a category is either an empty set
-or a one-element set. Such a category is called \emph{thin}.
+前順序関係を持つ集合は圏を生み出します。対象はこの集合の要素です。対象$a$から$b$への射は、対象が比較できないか、$a \leqslant b$ でない場合には存在しないか、または $a \leqslant b$ の場合に存在し、$a$ から $b$ へと向かいます。一つの対象から別の対象への射は決して一つ以上存在しません。従って、このような圏の任意のホム集合は空集合か単集合です。このような圏を\emph{薄い}と呼びます。
 
-It's easy to convince yourself that this construction is indeed a
-category: The arrows are composable because, if
-$a \leqslant b$ and $b \leqslant c$ then
-$a \leqslant c$; and the composition is associative. We also
-have the identity arrows because every element is (less than or) equal
-to itself (reflexivity of the underlying relation).
+$a \leqslant b$ かつ $b \leqslant c$ ならば $a \leqslant c$ であることから、射は合成可能ですし、合成は結合的です。また、各要素は自分自身に等しい (関係の反射性) ので、恒等射も存在します。
 
-We can now apply the co-Yoneda embedding to a preorder category. In
-particular, we're interested in its action on morphisms:
+前順序圏に余米田埋め込みを適用することができます。特に、射の作用に興味があります。
 \[[\cat{C}, \Set](\cat{C}(-, a), \cat{C}(-, b)) \cong \cat{C}(a, b)\]
-The hom-set on the right hand side is non-empty if and only if
-$a \leqslant b$ --- in which case it's a one-element set.
-Consequently, if $a \leqslant b$, there exists a single
-natural transformation on the left. Otherwise there is no natural
-transformation.
+右側のホム集合は $a \leqslant b$ の場合に限り空でないです — その場合は単集合です。従って、$a \leqslant b$ ならば、左側には一つの自然変換が存在します。そうでない場合は自然変換は存在しません。
 
-So what's a natural transformation between hom-functors in a preorder?
-It should be a family of functions between sets $\cat{C}(-, a)$ and
-$\cat{C}(-, b)$. In a preorder, each of these sets can either be empty
-or a singleton. Let's see what kind of functions are there at our
-disposal.
+前順序におけるホム関手間の自然変換はどのようなものでしょうか？それは集合 $\cat{C}(-, a)$ と $\cat{C}(-, b)$ の間の関数の族です。前順序では、これらの各集合は空か単集合です。利用可能な関数の種類を見てみましょう。
 
-There is a function from an empty set to itself (the identity acting on
-an empty set), a function \code{absurd} from an empty set to a
-singleton set (it does nothing, since it only needs to be defined for
-elements of an empty set, of which there are none), and a function from
-a singleton to itself (the identity acting on a one-element set). The
-only combination that is forbidden is the mapping from a singleton to an
-empty set (what would the value of such a function be when acting on the
-single element?).
+空集合から自身への関数 (空集合に対する恒等関数) 、空集合から単集合への関数 (absurd、それは定義される必要があるが空集合の要素はないので何もしません) 、単集合から自身への関数 (単集合に対する恒等関数) があります。唯一許されていない組み合わせは、単集合から空集合への写像です (そのような関数が単一の要素に対してどのような値を取るか？) 。
 
-So our natural transformation will never connect a singleton hom-set to
-an empty hom-set. In other words, if $x \leqslant a$
-(singleton hom-set $\cat{C}(x, a)$) then $\cat{C}(x, b)$ cannot be
-empty. A non-empty $\cat{C}(x, b)$ means that $x$ is less or
-equal to $b$. So the existence of the natural transformation in
-question requires that, for every $x$, if
-$x \leqslant a$ then $x \leqslant b$.
-\[\text{for all } x, x \leqslant a \Rightarrow x \leqslant b\]
-On the other hand, co-Yoneda tells us that the existence of this natural
-transformation is equivalent to $\cat{C}(a, b)$ being non-empty, or to
-$a \leqslant b$. Together, we get:
-\[a \leqslant b \text{ if and only if for all } x, x \leqslant a \Rightarrow x \leqslant b\]
-We could have arrived at this result directly. The intuition is that, if
-$a \leqslant b$ then all elements that are below $a$
-must also be below $b$. Conversely, when you substitute
-$a$ for $x$ on the right hand side, it follows that
-$a \leqslant b$. But you must admit that arriving at this
-result through the Yoneda embedding is much more exciting.
+したがって、自然変換は決して単ホム集合を空ホム集合に接続しません。言い換えれば、もし $x \leqslant a$  (単ホム集合 $\cat{C}(x, a)$) ならば、$\cat{C}(x, b)$ は空であってはなりません。非空の $\cat{C}(x, b)$ は $x \leqslant b$ であることを意味します。従って、問題の自然変換の存在は、すべての $x$ に対して、$x \leqslant a$ ならば $x \leqslant b$ が必要です。
+\[\text{すべての } x に対して, x \leqslant a \Rightarrow x \leqslant b\]
+一方、余米田はこの自然変換の存在が $\cat{C}(a, b)$ が空でないこと、つまり $a \leqslant b$ であることと同等であると述べています。これらを合わせると、以下のことが得られます: 
+\[a \leqslant b \text{ は } すべての x に対して, x \leqslant a \Rightarrow x \leqslant b \text{ と同等です}\]
+この結果には直接到達することもできますが、米田埋め込みを通じてこの結果に到達することは、はるかに興奮します。
 
-\section{Naturality}
+\section{自然性}
 
-The Yoneda lemma establishes the isomorphism between the set of natural
-transformations and an object in $\Set$. Natural transformations
-are morphisms in the functor category $[\cat{C}, \Set]$. The set of
-natural transformation between any two functors is a hom-set in that
-category. The Yoneda lemma is the isomorphism:
+米田の補題は、自然変換の集合と$\Set$内の対象との間の同型を確立します。自然変換は関手圏$[\cat{C}, \Set]$内の射です。任意の二つの関手間の自然変換の集合は、その圏のホム集合です。米田の補題は次の同型です: 
 \[[\cat{C}, \Set](\cat{C}(a, -), F) \cong F a\]
-This isomorphism turns out to be natural in both $F$ and
-$a$. In other words, it's natural in $(F, a)$, a pair
-taken from the product category  $[\cat{C}, \Set] \times \cat{C}$. Notice
-that we are now treating $F$ as an \newterm{object} in the functor
-category.
+この同型は、$F$と$a$の両方について自然です。つまり、$[\cat{C}, \Set] \times \cat{C}$という積圏からのペア$(F, a)$について自然です。ここで、$F$を関手圏の\newterm{対象}として扱っていることに注目してください。
 
-Let's think for a moment what this means. A natural isomorphism is an
-invertible \emph{natural transformation} between two functors. And
-indeed, the right hand side of our isomorphism is a functor. It's a
-functor from $[\cat{C}, \Set] \times \cat{C}$ to $\Set$. Its action on
-a pair $(F, a)$ is a set --- the result of evaluating the
-functor $F$ at the object $a$. This is called the
-evaluation functor.
+これが意味することを少し考えてみましょう。自然同型は、二つの関手間の可逆な\emph{自然変換}です。そして確かに、私たちの同型の右側は関手です。それは$[\cat{C}, \Set] \times \cat{C}$から$\Set$への関手で、ペア$(F, a)$に対する作用は集合---関手$F$が対象$a$で評価された結果です。これは評価関手と呼ばれます。
 
-The left hand side is also a functor that takes $(F, a)$ to a
-set of natural transformations $[\cat{C}, \Set](\cat{C}(a, -), F)$.
+左側もまた関手で、$(F, a)$を自然変換の集合$[\cat{C}, \Set](\cat{C}(a, -), F)$に写像します。
 
-To show that these are really functors, we should also define their
-action on morphisms. But what's a morphism between a pair
-$(F, a)$ and $(G, b)$? It's a pair of morphisms,
-$(\Phi, f)$; the first being a morphism between functors --- a
-natural transformation --- the second being a regular morphism in
-$\cat{C}$.
+これらが本当に関手であることを示すためには、射に対するそれらの作用も定義する必要があります。しかし、ペア$(F, a)$と$(G, b)$の間の射とは何でしょうか？それは射のペア、$(\Phi, f)$です。一つ目は関手間の射---自然変換、二つ目は$\cat{C}$内の通常の射です。
 
-The evaluation functor takes this pair $(\Phi, f)$ and maps it to a
-function between two sets, $F a$ and $G b$. We can
-easily construct such a function from the component of $\Phi$ at
-$a$ (which maps $F a$ to $G a$) and the morphism
-$f$ lifted by $G$:
+評価関手はこのペア$(\Phi, f)$を取り、二つの集合$F a$と$G b$の間の関数に写像します。私たちは$\Phi$の$a$でのコンポーネント ($F a$から$G a$への写像) と、$G$によって持ち上げられた射$f$から、容易にそのような関数を構成することができます: 
 \[(G f) \circ \Phi_a\]
-Notice that, because of naturality of $\Phi$, this is the same as:
+$\Phi$の自然性により、これは以下と同じです: 
 \[\Phi_b \circ (F f)\]
-I'm not going to prove the naturality of the whole isomorphism --- after
-you've established what the functors are, the proof is pretty
-mechanical. It follows from the fact that our isomorphism is built up
-from functors and natural transformations. There is simply no way for it
-to go wrong.
+私はここでは同型の全体の自然性を証明しませんが、関手と自然変換から構成されているので、それが誤る余地はありません。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Express the co-Yoneda embedding in Haskell.
+        Haskellで余米田埋め込みを表現せよ。
   \item
-        Show that the bijection we established between \code{fromY} and
-        \code{btoa} is an isomorphism (the two mappings are the inverse of
-        each other).
+        \code{fromY} と \code{btoa} の間に確立した全単射が同型であることを示せ (二つの写像は互いに逆である) 。
   \item
-        Work out the Yoneda embedding for a monoid. What functor corresponds
-        to the monoid's single object? What natural transformations correspond
-        to monoid morphisms?
+        モノイドの米田埋め込みを詳しく調べよ。モノイドの単一の対象に対応する関手は何か？モノイドの射に対応する自然変換は何か？
   \item
-        What is the application of the \emph{covariant} Yoneda embedding to
-        preorders? (Question suggested by Gershom Bazerman.)
+        前順序に対する\emph{共変}米田埋め込みの応用は何か？ (Gershom Bazermanによる提案) 
   \item
-        Yoneda embedding can be used to embed an arbitrary functor category
-        $[\cat{C}, \cat{D}]$ in the functor category
-        $[[\cat{C}, \cat{D}], \Set]$. Figure out how it works on morphisms
-        (which in this case are natural transformations).
+        米田埋め込みを使って、任意の関手圏$[\cat{C}, \cat{D}]$を関手圏$[[\cat{C}, \cat{D}], \Set]$に埋め込む方法を考えよ。この場合、射 (つまり自然変換) に対する作用を図り出せ。
 \end{enumerate}

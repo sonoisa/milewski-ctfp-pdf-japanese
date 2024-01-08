@@ -1,58 +1,30 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{A}{category} is an embarrassingly simple concept.
-A category consists of \newterm{objects} and \newterm{arrows} that go between them. That's
-why categories are so easy to represent pictorially. An object can be
-drawn as a circle or a point, and an arrow\ldots{} is an arrow. (Just
-for variety, I will occasionally draw objects as piggies and arrows as
-fireworks.) But the essence of a category is \emph{composition}. Or, if you
-prefer, the essence of composition is a category. Arrows compose, so
-if you have an arrow from object $A$ to object $B$, and another arrow from
-object $B$ to object $C$, then there must be an arrow --- their composition
---- that goes from $A$ to $C$.
+\lettrine[lhang=0.17]{圏}{は}驚くほど単純な概念です。圏 (category) は\newterm{対象 (object)} とそれらの間を結ぶ\newterm{矢印 (arrow)} で構成されます。だから圏は図示しやすいのです。対象は円や点として描かれ、矢印は\ldots{}矢印です。(たまに変わり種として、対象を豚として、矢印を花火として描くこともあります。) しかし、圏の本質は\emph{合成}です。もしくは、合成の本質が圏です。矢印は合成できるので、対象$A$から$B$への矢印があり、さらに$B$から$C$への矢印があるならば --- それらの合成である --- $A$から$C$への矢印が存在しなければなりません。
 
 \begin{figure}
   \centering
   \includegraphics[width=0.8\textwidth]{images/img_1330.jpg}
-  \caption{In a category, if there is an arrow going from $A$ to $B$ and an arrow going from $B$ to $C$
-    then there must also be a direct arrow from $A$ to $C$ that is their composition. This diagram is not a full
-    category because it’s missing identity morphisms (see later).}
+  \caption{圏では、$A$から$B$への矢印と、$B$から$C$への矢印がある場合、それらの合成である$A$から$C$への直接の矢印も存在しなければなりません。この図は、恒等射 (後述) が欠けているため完全な圏ではありません。}
 \end{figure}
 
-\section{Arrows as Functions}
+\section{関数としての射}
 
-Is this already too much abstract nonsense? Do not despair. Let's talk
-concretes. Think of arrows, which are also called \newterm{morphisms}, as
-functions. You have a function $f$ that takes an argument of type $A$ and
-returns a $B$. You have another function $g$ that takes a $B$ and returns a $C$.
-You can compose them by passing the result of $f$ to $g$. You have just
-defined a new function that takes an $A$ and returns a $C$.
+抽象的すぎてナンセンスに感じますか？落胆しないでください。具体例で考えましょう。矢印、つまり\newterm{射 (morphism)} を関数と考えてみましょう。型$A$の引数を取り、$B$を返す関数$f$があります。そして、$B$を取り、$C$を返す別の関数$g$があります。それらを、$f$の結果を$g$に渡すことで合成することができます。これにより、$A$を取り、$C$を返す新しい関数が定義されました。
 
-In math, such composition is denoted by a small circle between
-functions: $g \circ f$. Notice the right to left order of composition. For some
-people this is confusing. You may be familiar with the pipe notation in
-Unix, as in:
+数学では、このような合成は関数の間に小さな円を置いて表されます: $g \circ f$。合成の順番が右から左であることに注意してください。この順序が混乱の原因となることもあります。Unixのパイプ記法`lsof | grep Chrome`や、F\#のchevron記法`>>`は左から右に進みますが、数学やHaskellでは関数は右から左に合成されます。「$g \circ f$」を「fの後にg」と読むと理解しやすいかもしれません。
 
-\begin{snip}{text}
-lsof | grep Chrome
-\end{snip}
-or the chevron \code{>>} in F\#, which both
-go from left to right. But in mathematics and in Haskell functions
-compose right to left. It helps if you read $g \circ f$ as ``g \emph{after} f.''
-
-Let's make this even more explicit by writing some C code. We have one
-function \code{f} that takes an argument of type \code{A} and
-returns a value of type \code{B}:
+さらに具体的にC言語のコードを書いてみましょう。型\code{A}の引数を取り、型\code{B}の値を返す関数\code{f}があります:
 
 \begin{snip}{text}
 B f(A a);
 \end{snip}
-and another:
+もう一つあります:
 
 \begin{snip}{text}
 C g(B b);
 \end{snip}
-Their composition is:
+それらの合成は以下のようになります:
 
 \begin{snip}{text}
 C g_after_f(A a)
@@ -60,214 +32,103 @@ C g_after_f(A a)
     return g(f(a));
 }
 \end{snip}
-Here, again, you see right-to-left composition: \code{g(f(a))}; this
-time in C.
+ここでも、再び右から左への合成が見られます: \code{g(f(a))}; 今回はC言語でです。
 
-I wish I could tell you that there is a template in the C++ Standard
-Library that takes two functions and returns their composition, but
-there isn't one. So let's try some Haskell for a change. Here's the
-declaration of a function from A to B:
+残念ながら、C++標準ライブラリには二つの関数を取ってその合成を返すテンプレートがないので、少しHaskellを試してみましょう。AからBへの関数の宣言は以下の通りです:
 
 \src{snippet01}
-Similarly:
+同様に:
 
 \src{snippet02}
-Their composition is:
+その合成は:
 
 \src{snippet03}
-Once you see how simple things are in Haskell, the inability to express
-straightforward functional concepts in C++ is a little embarrassing. In
-fact, Haskell will let you use Unicode characters so you can write
-composition as:
+Haskellのシンプルさを見ると、C++で直接的な関数概念を表現することができないのは少し恥ずかしいです。実際、HaskellではUnicode文字を使用して合成を書くことができます:
 % don't 'mathify' this block
 \begin{snip}{text}
 g ◦ f
 \end{snip}
 
-You can even use Unicode double colons and arrows:
+さらに、Unicodeの二重コロンと矢印も使用できます:
 % don't 'mathify' this block
 \begin{snipv}
 f \ensuremath{\Colon} A → B
 \end{snipv}
-So here's the first Haskell lesson: Double colon means ``has the type
-of\ldots{}'' A function type is created by inserting an arrow between
-two types. You compose two functions by inserting a period between them
-(or a Unicode circle).
+ここで最初のHaskellのレッスンです。二重コロンは「\ldots{}の型を持つ」という意味です。関数型は二つの型の間に矢印を挿入することで作成されます。二つの関数を合成するには、それらの間にピリオド (またはUnicodeの円) を挿入します。
 
-\section{Properties of Composition}
+\section{合成の特性}
 
-There are two extremely important properties that the composition in any
-category must satisfy.
+どんな圏でも合成が満たさなければならない二つの非常に重要な特性があります。
 
 \begin{enumerate}
   \item
-        Composition is associative. If you have three morphisms, $f$, $g$, and $h$,
-        that can be composed (that is, their objects match end-to-end), you
-        don't need parentheses to compose them. In math notation this is
-        expressed as:
+        合成は結合的です。三つの射、$f$、$g$、および$h$が合成できる (つまり、それらの対象が端から端まで一致する) 場合、それらを合成するために括弧は必要ありません。数学的な記法では、これは以下のように表されます:
         \[h \circ (g \circ f) = (h \circ g) \circ f = h \circ g \circ f\]
-        In (pseudo) Haskell:
+        (擬似) Haskellでは以下のようになります:
 
         \src{snippet04}[b]
-        (I said ``pseudo,'' because equality is not defined for functions.)
+        (「擬似」と言ったのは、関数に対する等価性は定義されていないからです。)
 
-        Associativity is pretty obvious when dealing with functions, but it may
-        be not as obvious in other categories.
+        関数を扱う場合、結合性はかなり明白ですが、他の圏ではそうとは限りません。
 
   \item
-        For every object $A$ there is an arrow which is a unit of composition.
-        This arrow loops from the object to itself. Being a unit of composition
-        means that, when composed with any arrow that either starts at $A$ or ends
-        at $A$, respectively, it gives back the same arrow. The unit arrow for
-        object A is called $\idarrow[A]$ (\newterm{identity} on $A$). In math
-        notation, if $f$ goes from $A$ to $B$ then
+        すべての対象$A$に対して、合成の単位となる射が存在します。この射は対象自体をループします。合成の単位であるとは、$A$から始まるか、または$A$で終わるいかなる射と合成しても、同じ射を返すということです。対象Aの単位射は$\idarrow[A]$ ($A$上の\newterm{恒等射}) と呼ばれます。数学的な記法では、$f$が$A$から$B$へ行く場合:
         \[f \circ \idarrow[A] = f\]
-        and
+        そして
         \[\idarrow[B] \circ f = f\]
 \end{enumerate}
-When dealing with functions, the identity arrow is implemented as the
-identity function that just returns back its argument. The
-implementation is the same for every type, which means this function is
-universally polymorphic. In C++ we could define it as a template:
+関数を扱う場合、恒等射はその引数をそのまま返す恒等関数として実装されます。この実装はすべての型に対して同じであり、これは関数が普遍的に多相的であることを意味します。C++ではテンプレートとして定義することができます:
 
 \begin{snip}{cpp}
 template<class T> T id(T x) { return x; }
 \end{snip}
-Of course, in C++ nothing is that simple, because you have to take into
-account not only what you're passing but also how (that is, by value, by
-reference, by const reference, by move, and so on).
+もちろん、C++では何を渡すかだけでなく、どのように渡すかも考慮に入れなければなりません (つまり、値として、参照として、const参照として、ムーブとしてなど)。
 
-In Haskell, the identity function is part of the standard library
-(called Prelude). Here's its declaration and definition:
+Haskellでは、恒等関数は標準ライブラリ (Preludeと呼ばれる) の一部です。こちらがその宣言と定義です:
 
 \src{snippet05}
-As you can see, polymorphic functions in Haskell are a piece of cake. In
-the declaration, you just replace the type with a type variable. Here's
-the trick: names of concrete types always start with a capital letter,
-names of type variables start with a lowercase letter. So here
-\code{a} stands for all types.
+ご覧の通り、Haskellでは多相的関数は簡単です。宣言で、型を型変数に置き換えるだけです。ポイントは、具体的な型の名前は常に大文字で始まり、型変数の名前は小文字で始まることです。ここでは\code{a}はすべての型を表しています。
 
-Haskell function definitions consist of the name of the function
-followed by formal parameters --- here just one, \code{x}. The body of
-the function follows the equal sign. This terseness is often shocking to
-newcomers but you will quickly see that it makes perfect sense. Function
-definition and function call are the bread and butter of functional
-programming so their syntax is reduced to the bare minimum. Not only are
-there no parentheses around the argument list but there are no commas
-between arguments (you'll see that later, when we define functions of
-multiple arguments).
+Haskell関数の定義は関数名に続けて公式のパラメータが続きます --- ここではただ一つ、\code{x}です。関数の本体は等号に続きます。この簡潔さは初心者にとってしばしば衝撃ですが、すぐにそれが完全に理にかなっていることがわかります。関数の定義と関数の呼び出しは関数型プログラミングの中心であるため、その構文は最小限に抑えられています。引数リストの周りに括弧がなく、引数間にコンマがないことに気づくでしょう (後で、複数の引数を持つ関数を定義するときにこれを見ることになります) 。
 
-The body of a function is always an expression --- there are no
-statements in functions. The result of a function is this expression ---
-here, just \code{x}.
+関数の本体は常に式です --- 関数内には文がありません。関数の結果はこの式です --- ここでは、単に\code{x}です。
 
-This concludes our second Haskell lesson.
+これで第二のHaskellレッスンが終了です。
 
-The identity conditions can be written (again, in pseudo-Haskell) as:
+恒等条件は (再び、擬似Haskellで) 以下のように書かれます:
 
 \src{snippet06}
-You might be asking yourself the question: Why would anyone bother with
-the identity function --- a function that does nothing? Then again, why
-do we bother with the number zero? Zero is a symbol for nothing. Ancient
-Romans had a number system without a zero and they were able to build
-excellent roads and aqueducts, some of which survive to this day.
+あなたは自分自身に疑問を持つかもしれません。なぜ誰かが何もしない恒等関数を気にするのでしょうか？それでも、なぜ私たちはゼロという数字を気にするのでしょうか？ゼロは無の象徴です。古代ローマ人はゼロのない数字システムを持っていましたが、それでも彼らは優れた道路や水道を建設しました。そのいくつかは今日まで残っています。
 
-Neutral values like zero or $\id$ are extremely useful when
-working with symbolic variables. That's why Romans were not very good at
-algebra, whereas the Arabs and the Persians, who were familiar with the
-concept of zero, were. So the identity function becomes very handy as an
-argument to, or a return from, a higher-order function. Higher order
-functions are what make symbolic manipulation of functions possible.
-They are the algebra of functions.
+シンボル変数を扱うとき、ゼロや$\id$のような中立的な値は非常に便利です。それが、代数を得意としなかったローマ人と、ゼロの概念に精通していたアラブ人やペルシャ人の違いです。ですから、高階関数への引数として、または返り値として、恒等関数は非常に便利です。高階関数は関数の象徴的な操作を可能にするものです。それらは関数の代数です。
 
-To summarize: A category consists of objects and arrows (morphisms).
-Arrows can be composed, and the composition is associative. Every object
-has an identity arrow that serves as a unit under composition.
+まとめると、圏は対象と矢印 (射) で構成されます。射は合成でき、その合成は結合的です。すべての対象には合成の単位となる恒等射があります。
 
-\section{Composition is the Essence of Programming}
+\section{プログラミングの本質は合成}
 
-Functional programmers have a peculiar way of approaching problems. They
-start by asking very Zen-like questions. For instance, when designing an
-interactive program, they would ask: What is interaction? When
-implementing Conway's Game of Life, they would probably ponder about the
-meaning of life. In this spirit, I'm going to ask: What is programming?
-At the most basic level, programming is about telling the computer what
-to do. ``Take the contents of memory address x and add it to the
-contents of the register EAX.'' But even when we program in assembly,
-the instructions we give the computer are an expression of something
-more meaningful. We are solving a non-trivial problem (if it were
-trivial, we wouldn't need the help of the computer). And how do we solve
-problems? We decompose bigger problems into smaller problems. If the
-smaller problems are still too big, we decompose them further, and so
-on. Finally, we write code that solves all the small problems. And then
-comes the essence of programming: we compose those pieces of code to
-create solutions to larger problems. Decomposition wouldn't make sense
-if we weren't able to put the pieces back together.
+関数型プログラマは問題に特有の方法でアプローチします。彼らは非常に禅的な質問から始めます。例えば、対話型プログラムを設計する際には、何が対話なのかと問います。コンウェイのライフゲームを実装する際には、生命の意味について考えるでしょう。この精神で、私たちはプログラミングとは何かという問いを立てます。最も基本的なレベルで、プログラミングはコンピュータに何をするかを伝えることです。「メモリアドレスxの内容をEAXレジスタの内容に加えてください。」しかし、たとえアセンブリ言語でプログラミングしていても、私たちがコンピュータに指示する命令は、より意味のある何かの表現です。私たちは重要な問題を解決しています (それが些細な問題であれば、コンピュータの助けは必要ないでしょう) 。そして、問題をどのように解決しますか？私たちは、大きな問題をより小さな問題に分解します。もし小さな問題がまだ大きすぎる場合は、さらに分解し続けます。そして最終的に、すべての小さな問題を解決するコードを書きます。そして、プログラミングの本質が現れます: それらのコードの断片を組み合わせて、より大きな問題の解決策を作り出します。分解は、分解した部分を再構築できなければ意味がありません。
 
-This process of hierarchical decomposition and recomposition is not
-imposed on us by computers. It reflects the limitations of the human
-mind. Our brains can only deal with a small number of concepts at a
-time. One of the most cited papers in psychology,
-\urlref{http://en.wikipedia.org/wiki/The_Magical_Number_Seven,_Plus_or_Minus_Two}{The
-  Magical Number Seven, Plus or Minus Two}, postulated that we can only
-keep $7 \pm 2$ ``chunks'' of information in our minds. The details of our
-understanding of the human short-term memory might be changing, but we
-know for sure that it's limited. The bottom line is that we are unable
-to deal with the soup of objects or the spaghetti of code. We need
-structure not because well-structured programs are pleasant to look at,
-but because otherwise our brains can't process them efficiently. We
-often describe some piece of code as elegant or beautiful, but what we
-really mean is that it's easy to process by our limited human minds.
-Elegant code creates chunks that are just the right size and come in
-just the right number for our mental digestive system to assimilate
-them.
+この階層的な分解と再構成のプロセスは、コンピュータによって私たちに課されたものではありません。それは人間の心の限界を反映しています。私たちの脳は、一度に扱える概念の数が限られています。心理学で最も引用される論文の一つである「魔法の数字7±2」は、私たちが心に留めることができる「チャンク」の数は「7±2」であると主張しています。人間の短期記憶に対する理解の詳細は変わるかもしれませんが、それが限られていることは確かです。要するに、私たちはオブジェクトのスープやコードのスパゲッティを処理することはできません。私たちは構造を必要とするのです。それは、うまく構造化されたプログラムが見た目に楽しいからではなく、そうでなければ私たちの脳が効率的に処理できないからです。私たちはしばしばあるコードの断片をエレガントあるいは美しいと表現しますが、私たちが本当に意味しているのは、それが私たちの限られた人間の心にとって消化しやすいということです。エレガントなコードは、私たちの精神的な消化システムに取り込むのにちょうど良いサイズと数のチャンクを作り出します。
 
-So what are the right chunks for the composition of programs? Their
-surface area has to increase slower than their volume. (I like this
-analogy because of the intuition that the surface area of a geometric
-object grows with the square of its size --- slower than the volume,
-which grows with the cube of its size.) The surface area is the
-information we need in order to compose chunks. The volume is the
-information we need in order to implement them. The idea is that, once a
-chunk is implemented, we can forget about the details of its
-implementation and concentrate on how it interacts with other chunks. In
-object-oriented programming, the surface is the class declaration of the
-object, or its abstract interface. In functional programming, it's the
-declaration of a function. (I'm simplifying things a bit, but that's the
-gist of it.)
+では、プログラムの構成に適したチャンクとは何でしょうか？その表面積は体積より遅く増加する必要があります。 (この類推が好きです。幾何学的な物体の表面積はサイズの二乗で増加し、体積はサイズの三乗で増加するという直感からです。) 表面積は、チャンクを構成するために必要な情報です。体積は、それらを実装するために必要な情報です。考え方は、一旦チャンクが実装されると、その実装の詳細を忘れて、他のチャンクとどのようにやり取りするかに集中できるということです。オブジェクト指向プログラミングでは、表面はオブジェクトのクラス宣言やその抽象インターフェースです。関数型プログラミングでは、それは関数の宣言です。 (少し単純化していますが、それが要点です。) 
 
-Category theory is extreme in the sense that it actively discourages us
-from looking inside the objects. An object in category theory is an
-abstract nebulous entity. All you can ever know about it is how it
-relates to other objects --- how it connects with them using arrows. This
-is how internet search engines rank web sites by analyzing incoming and
-outgoing links (except when they cheat). In object-oriented programming,
-an idealized object is only visible through its abstract interface (pure
-surface, no volume), with methods playing the role of arrows. The moment
-you have to dig into the implementation of the object in order to
-understand how to compose it with other objects, you've lost the
-advantages of your programming paradigm.
+圏論は極端な意味で、私たちに対象の内部を見ることを積極的に抑制します。圏論の対象は抽象的で曖昧な実体です。あなたがそれについて知り得るすべては、それがどのように他の対象と関係しているか、つまりそれが射を使ってどのように接続しているかです。これはインターネット検索エンジンが、インバウンドリンクとアウトバウンドリンクを分析することによってウェブサイトをランク付けする方法と似ています (彼らが不正を働かない限り) 。オブジェクト指向プログラミングでは、理想化されたオブジェクトはその抽象インターフェース (純粋な表面、ボリュームなし) を通じてのみ可視化され、メソッドは射の役割を果たします。オブジェクトの実装を掘り下げて、他のオブジェクトとどのように組み合わせるかを理解する必要がある瞬間に、あなたはプログラミングパラダイムの利点を失います。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Implement, as best as you can, the identity function in your favorite
-        language (or the second favorite, if your favorite language happens to
-        be Haskell).
+        あなたのお気に入りの言語で恒等関数を、できるだけよく実装してください (もしHaskellがあなたのお気に入りの言語であれば、2番目に好きな言語で試してください) 。
   \item
-        Implement the composition function in your favorite language. It takes
-        two functions as arguments and returns a function that is their
-        composition.
+        あなたのお気に入りの言語で合成関数を実装してください。それは2つの関数を引数として取り、それらの合成を返す関数です。
   \item
-        Write a program that tries to test that your composition function
-        respects identity.
+        あなたの合成関数が恒等を尊重するかどうかをテストするプログラムを書いてください。
   \item
-        Is the world-wide web a category in any sense? Are links morphisms?
+        世界中のウェブはいかなる意味で圏ですか？リンクは射ですか？
   \item
-        Is Facebook a category, with people as objects and friendships as
-        morphisms?
+        Facebookは圏ですか？人々を対象とし、友情を射とする場合。
   \item
-        When is a directed graph a category?
+        有向グラフはいつ圏になりますか？
 \end{enumerate}
+

@@ -1,52 +1,17 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{T}{he Ancient Greek} playwright Euripides once said: ``Every man is like
-the company he is wont to keep.'' We are defined by our relationships.
-Nowhere is this more true than in category theory. If we want to single
-out a particular object in a category, we can only do this by describing
-its pattern of relationships with other objects (and itself). These
-relationships are defined by morphisms.
+\lettrine[lhang=0.17]{古}{代ギリシャ}の劇作家、エウリピデスはかつてこう言いました:「すべての人は、よく交わる仲間によって定義される。」関係によって私たちは定義される。圏論においてこれが真実である場所はない。特定の対象を圏内で一つだけにしたい場合、他の対象 (および自己) との関係のパターンを説明することによってのみこれを行うことができます。これらの関係は射によって定義されます。
 
-There is a common construction in category theory called the
-\newterm{universal construction} for defining objects in terms of their
-relationships. One way of doing this is to pick a pattern, a particular
-shape constructed from objects and morphisms, and look for all its
-occurrences in the category. If it's a common enough pattern, and the
-category is large, chances are you'll have lots and lots of hits. The
-trick is to establish some kind of ranking among those hits, and pick
-what could be considered the best fit.
+圏論には、対象をそれらの関係に関して定義するための普遍構成と呼ばれる共通の構成法があります。これを行う一つの方法は、対象と射から構成された特定の形、あるパターンを選び、圏内でそのすべての発生を探すことです。それが十分に一般的なパターンであり、かつ圏が大きい場合、たくさんのヒットがあるでしょう。問題は、それらのヒットの中で何らかのランク付けを行い、最も適したものを選ぶことです。
 
-This process is reminiscent of the way we do web searches. A query is
-like a pattern. A very general query will give you large \emph{recall}:
-lots of hits. Some may be relevant, others not. To eliminate irrelevant
-hits, you refine your query. That increases its \emph{precision}.
-Finally, the search engine will rank the hits and, hopefully, the one
-result that you're interested in will be at the top of the list.
+このプロセスは、私たちがウェブ検索を行う方法を思い起こさせます。クエリはある種のパターンのようなものです。非常に一般的なクエリは大きなリコールをもたらします: たくさんのヒットがあります。その中には関連するものもあればそうでないものもあります。関連しないヒットを排除するために、クエリを洗練します。それによってその精度を高めます。最終的に、検索エンジンはヒットをランク付けし、望む結果がリストのトップに来ることを期待します。
 
-\section{Initial Object}
+\section{始対象}
 
-The simplest shape is a single object. Obviously, there are as many
-instances of this shape as there are objects in a given category. That's
-a lot to choose from. We need to establish some kind of ranking and try
-to find the object that tops this hierarchy. The only means at our
-disposal are morphisms. If you think of morphisms as arrows, then it's
-possible that there is an overall net flow of arrows from one end of the
-category to another. This is true in ordered categories, for instance in
-partial orders. We could generalize that notion of object precedence by
-saying that object $a$ is ``more initial'' than object $b$, if
-there is an arrow (a morphism) going from $a$ to $b$. We would
-then define \emph{the} initial object as one that has arrows going to
-all other objects. Obviously there is no guarantee that such an object
-exists, and that's okay. A bigger problem is that there may be too many
-such objects: The recall is good, but precision is lacking. The solution
-is to take a hint from ordered categories --- they allow at most one
-arrow between any two objects: there is only one way of being less-than
-or equal-to another object. Which leads us to this definition of the
-initial object:
+最も単純な形は単一の対象です。明らかに、この形のインスタンスは、与えられた圏の対象の数と同じです。選択するには多すぎます。何らかのランク付けを行い、この階層のトップにある対象を見つけようと試みる必要があります。私たちの手元にある唯一の手段は射です。射を矢印と考えるなら、圏の一方の端から他方へと全体的な矢印の流れがあるかもしれません。これは、たとえば半順序のような順序圏で真実です。対象 $a$ が対象 $b$ よりも「より始まり側」であるということを、$a$ から $b$ への矢印 (射) がある場合に一般化することができます。そして、他のすべての対象に向かう矢印を持つ\emph{始対象}を定義します。明らかにそのような対象が存在するとは限らないのですが、それで問題ありません。より大きな問題は、そのような対象が多すぎるかもしれないことです: 再現率 (recall) は良いが、適合率 (precision) に欠けます。解決策は、順序圏からヒントを得ることです。順序圏は、任意の2つの対象の間に高々1つの射しか許さない: 1つの対象が他の対象よりも小さいか等しい一つの方法しかありません。これに導かれて始対象のこの定義に至ります:
 
 \begin{quote}
-  The \textbf{initial object} is the object that has one and only one
-  morphism going to any object in the category.
+  \textbf{始対象}は、圏内の任意の対象に向かって1つだけ射を持つ対象です。
 \end{quote}
 
 \begin{figure}[H]
@@ -55,40 +20,21 @@ initial object:
 \end{figure}
 
 \noindent
-However, even that doesn't guarantee the uniqueness of the initial
-object (if one exists). But it guarantees the next best thing:
-uniqueness \newterm{up to isomorphism}. Isomorphisms are very important in
-category theory, so I'll talk about them shortly. For now, let's just
-agree that uniqueness up to isomorphism justifies the use of ``the'' in
-the definition of the initial object.
+しかし、これでも始対象の一意性 (存在する場合) を保証するわけではありません。しかし、次善のことを保証します: 同型\newterm{による一意性}。同型は圏論において非常に重要であり、その理由については間もなく話します。今のところ、同型による一意性が始対象の定義に「the」を使用することを正当化することに同意しましょう。
 
-Here are some examples: The initial object in a partially ordered set
-(often called a \newterm{poset}) is its least element. Some posets don't
-have an initial object --- like the set of all integers, positive and
-negative, with less-than-or-equal relation for morphisms.
+いくつかの例を挙げましょう: 半順序集合 (しばしば \newterm{poset} と呼ばれます) における始対象は、その最小要素です。いくつかの poset には始対象がありません。例えば、大小関係による射を持つすべての正と負の整数の集合です。
 
-In the category of sets and functions, the initial object is the empty
-set. Remember, an empty set corresponds to the Haskell type
-\code{Void} (there is no corresponding type in C++) and the unique
-polymorphic function from \code{Void} to any other type is called
-\code{absurd}:
+集合と関数の圏において、始対象は空集合です。空集合は Haskell の型 \code{Void} に対応し (C++には対応する型がありません) 、\code{Void} から他の任意の型への一意の多相的関数は \code{absurd} と呼ばれます:
 
 \src{snippet01}
-It's this family of morphisms that makes \code{Void} the initial
-object in the category of types.
+\code{Void} を型の圏の始対象にするのは、この射の族です。
 
-\section{Terminal Object}
+\section{終対象}
 
-Let's continue with the single-object pattern, but let's change the way
-we rank the objects. We'll say that object $a$ is ``more terminal''
-than object $b$ if there is a morphism going from $b$ to
-$a$ (notice the reversal of direction). We'll be looking for an
-object that's more terminal than any other object in the category.
-Again, we will insist on uniqueness:
+単一対象のパターンを続けてみましょうが、対象をランク付けする方法を変えます。対象 $a$ が対象 $b$ よりも「より終わり」であると言うことが、$b$ から $a$ への射がある場合に (矢印の方向が逆転したことに注意してください) 。圏の中で他のどの対象よりも「より終わり」である対象を探します。再び、一意性を主張します:
 
 \begin{quote}
-  The \textbf{terminal object} is the object with one and only one
-  morphism coming to it from any object in the category.
+  \textbf{終対象}は、圏内の任意の対象からそれに向かって1つだけ射を持つ対象です。
 \end{quote}
 
 \begin{figure}[H]
@@ -97,151 +43,64 @@ Again, we will insist on uniqueness:
 \end{figure}
 
 \noindent
-And again, the terminal object is unique, up to isomorphism, which I
-will show shortly. But first let's look at some examples. In a poset,
-the terminal object, if it exists, is the biggest object. In the
-category of sets, the terminal object is a singleton. We've already
-talked about singletons --- they correspond to the \code{void} type in
-C++ and the unit type \code{()} in Haskell. It's a type that has only
-one value --- implicit in C++ and explicit in Haskell, denoted by
-\code{()}. We've also established that there is one and only one pure
-function from any type to the unit type:
+そして再び、終対象は同型によって一意であり、それを間もなく示します。しかし、まずいくつかの例を見てみましょう。poset では、終対象が存在する場合、それは最大の対象です。集合の圏では、終対象は単集合です。私たちはすでに単集合について話しました。それは C++ の \code{void} 型と Haskell のUnit型 \code{()} に対応しています。それは唯一の値を持つ型です。C++では暗黙のうちに、Haskellでは明示的に、\code{()} として示されます。また、任意の型からUnit型への1つだけの純粋関数が存在することも確立しました:
 
 \src{snippet02}
-so all the conditions for the terminal object are satisfied.
+したがって、終対象のすべての条件が満たされています。
 
-Notice that in this example the uniqueness condition is crucial, because
-there are other sets (actually, all of them, except for the empty set)
-that have incoming morphisms from every set. For instance, there is a
-Boolean-valued function (a predicate) defined for every type:
+この例では、一意性の条件が重要であることに注意してください。なぜなら、空集合を除いて、他のすべての集合 (実際にはそれらすべて) が各集合からの入ってくる射を持っているからです。例えば、次のようなブール値関数 (述語) があります:
 
 \src{snippet03}
-But \code{Bool} is not a terminal object. There is at least one more
-\code{Bool}-valued function from every type (except \code{Void}, for which both functions are equal to \code{absurd}):
+しかし \code{Bool} は終対象ではありません。少なくとも \code{Void} 以外の各型からもう1つ以上の \code{Bool} 値関数があります:
 
 \src{snippet04}
-Insisting on uniqueness gives us just the right precision to narrow down
-the definition of the terminal object to just one type.
+一意性にこだわることで、終対象の定義を1つの型に正確に絞り込むことができます。
 
-\section{Duality}
+\section{双対性}
 
-You can't help but to notice the symmetry between the way we defined the
-initial object and the terminal object. The only difference between the
-two was the direction of morphisms. It turns out that for any category $\cat{C}$
-we can define the \newterm{opposite category} $\cat{C}^\mathit{op}$ just by
-reversing all the arrows. The opposite category automatically satisfies
-all the requirements of a category, as long as we simultaneously
-redefine composition. If original morphisms
-$f \Colon a \to b$ and $g \Colon b \to c$ composed
-to $h \Colon a \to c$ with $h = g \circ f$, then the reversed
-morphisms $f^\mathit{op} \Colon b \to a$ and $g^\mathit{op} \Colon c \to b$ will compose to
-$h^\mathit{op} \Colon c \to a$ with $h^\mathit{op} = f^\mathit{op} \circ g^\mathit{op}$. And reversing
-the identity arrows is a (pun alert!) no-op.
+始対象と終対象を定義する方法の間には、明らかな対称性があります。唯一の違いは射の方向です。任意の圏 $\cat{C}$ に対して、すべての射を逆転させることによって\newterm{逆圏} $\cat{C}^\mathit{op}$ を定義することができます。逆圏は、同時に合成を再定義する限り、自動的に圏の要件を満たします。もともとの射 $f \Colon a \to b$ と $g \Colon b \to c$ が $h \Colon a \to c$ に合成され、$h = g \circ f$ であった場合、逆転した射 $f^\mathit{op} \Colon b \to a$ と $g^\mathit{op} \Colon c \to b$ は $h^\mathit{op} \Colon c \to a$ に合成され、$h^\mathit{op} = f^\mathit{op} \circ g^\mathit{op}$ になります。そして、恒等射を逆転させることは (冗談を言うと！) 無操作です。
 
-Duality is a very important property of categories because it doubles
-the productivity of every mathematician working in category theory. For
-every construction you come up with, there is its opposite; and for
-every theorem you prove, you get one for free. The constructions in the
-opposite category are often prefixed with ``co'', so you have products
-and coproducts, monads and comonads, cones and cocones, limits and
-colimits, and so on. There are no cocomonads though, because reversing
-the arrows twice gets us back to the original state.
+双対性は、圏の非常に重要な性質です。なぜなら、それは圏論に取り組むすべての数学者の生産性を倍増させるからです。あなたが考案したすべての構成物には、その反対があります。そして、あなたが証明したすべての定理には、無料で1つもらえます。逆圏の構成物はしばしば「余 (co)」という接頭語が付けられるので、積と余積、モナドと余モナド、錐と余錐、極限と余極限などがあります。ただし、射を2回逆転させると元の状態に戻るため、余余モナドはありません。
 
-It follows then that a terminal object is the initial object in the
-opposite category.
+それにより、終対象は逆圏における始対象であるということになります。
 
-\section{Isomorphisms}
+\section{同型}
 
-As programmers, we are well aware that defining equality is a nontrivial
-task. What does it mean for two objects to be equal? Do they have to
-occupy the same location in memory (pointer equality)? Or is it enough
-that the values of all their components are equal? Are two complex
-numbers equal if one is expressed as the real and imaginary part, and
-the other as modulus and angle? You'd think that mathematicians would
-have figured out the meaning of equality, but they haven't. They have
-the same problem of multiple competing definitions for equality. There
-is the propositional equality, intensional equality, extensional
-equality, and equality as a path in homotopy type theory. And then there
-are the weaker notions of isomorphism, and even weaker of equivalence.
+プログラマとして、等価性を定義することが非自明な作業であることを私たちはよく知っています。2つの対象が等しいとはどういう意味ですか？ 彼らはメモリ内の同じ場所を占めなければならないのか？ (ポインタの等価性) それとも、すべてのコンポーネントの値が等しいことで十分でしょうか？ 2つの複素数が実部と虚部で表される場合と、大きさと角度で表される場合に等しいですか？ 数学者も等価性の意味を解明したわけではありません。彼らは提案的な等価性、内包的等価性、外延的等価性、ホモトピー型理論におけるパスとしての等価性など、複数の競合する等価性の定義を持っています。そして、それらは同型、さらに弱い概念である同値というより弱い概念を持っています。
 
-The intuition is that isomorphic objects look the same --- they have the
-same shape. It means that every part of one object corresponds to some
-part of another object in a one-to-one mapping. As far as our
-instruments can tell, the two objects are a perfect copy of each other.
-Mathematically it means that there is a mapping from object $a$ to
-object $b$, and there is a mapping from object $b$ back to
-object $a$, and they are the inverse of each other. In category
-theory we replace mappings with morphisms. An isomorphism is an
-invertible morphism; or a pair of morphisms, one being the inverse of
-the other.
+直感的には、同型な対象は同じ形をしています。それぞれの対象の一部が一対一で他の対象の何らかの部分に対応しています。私たちの計測器具では、2つの対象は完璧なコピーです。数学的には、対象 $a$ から対象 $b$ への写像があり、対象 $b$ から対象 $a$ への写像があり、それらは互いに逆です。圏論では、写像を射に置き換えます。同型は、互いに逆である射のペア、または可逆な射です。
 
-We understand the inverse in terms of composition and identity: Morphism
-$g$ is the inverse of morphism $f$ if their composition is the
-identity morphism. These are actually two equations because there are
-two ways of composing two morphisms:
+逆とは、合成と恒等射の観点で理解します。射 $g$ が射 $f$ の逆である場合、それらの合成は恒等射です。これは、2つの射を合成する2つの方法があるため、実際には2つの等式です: 
 
 \src{snippet05}
-When I said that the initial (terminal) object was unique up to
-isomorphism, I meant that any two initial (terminal) objects are
-isomorphic. That's actually easy to see. Let's suppose that we have two
-initial objects $i_{1}$ and $i_{2}$. Since
-$i_{1}$ is initial, there is a unique morphism $f$ from
-$i_{1}$ to $i_{2}$. By the same token, since
-$i_{2}$ is initial, there is a unique morphism $g$ from
-$i_{2}$ to $i_{1}$. What's the composition of
-these two morphisms?
+始対象 (終対象) が同型によって一意であると言ったとき、私は任意の2つの始対象 (終対象) が同型であるという意味でした。それは実際には容易にわかります。2つの始対象 $i_{1}$ と $i_{2}$ を持っていると仮定します。$i_{1}$ が始対象であるので、$i_{1}$ から $i_{2}$ への一意の射 $f$ があります。同様に、$i_{2}$ が始対象であるので、$i_{2}$ から $i_{1}$ への一意の射 $g$ があります。これら2つの射の合成は何でしょうか？
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{images/uniqueness.jpg}
-  \caption{All morphisms in this diagram are unique.}
+  \caption{この図のすべての射は一意です。}
 \end{figure}
 
 \noindent
-The composition $g \circ f$ must be a morphism from $i_{1}$ to
-$i_{1}$. But $i_{1}$ is initial so there can only
-be one morphism going from $i_{1}$ to $i_{1}$.
-Since we are in a category, we know that there is an identity morphism
-from $i_{1}$ to $i_{1}$, and since there is room
-for only one, that must be it. Therefore $g \circ f$ is equal to
-identity. Similarly, $f \circ g$ must be equal to identity, because there
-can be only one morphism from $i_{2}$ back to
-$i_{2}$. This proves that $f$ and $g$ must be the
-inverse of each other. Therefore any two initial objects are isomorphic.
+合成 $g \circ f$ は $i_{1}$ から $i_{1}$ への射でなければなりません。しかし、$i_{1}$ は始対象なので、$i_{1}$ から $i_{1}$ への射はただ一つしかありません。私たちは圏にいるので、$i_{1}$ から $i_{1}$ への恒等射があることを知っています。そして、ただ一つの場所しかないので、それがそれでなければならない。したがって $g \circ f$ は恒等射と等しいです。同様に、$f \circ g$ も恒等射と等しいです。なぜなら、$i_{2}$ から $i_{2}$ へ戻る射はただ一つしかありません。これにより、$f$ と $g$ は互いに逆でなければならないことが証明されます。したがって、任意の2つの始対象は同型です。
 
-Notice that in this proof we used the uniqueness of the morphism from
-the initial object to itself. Without that we couldn't prove the ``up to
-isomorphism'' part. But why do we need the uniqueness of $f$ and
-$g$? Because not only is the initial object unique up to
-isomorphism, it is unique up to \emph{unique} isomorphism. In principle,
-there could be more than one isomorphism between two objects, but that's
-not the case here. This ``uniqueness up to unique isomorphism'' is the
-important property of all universal constructions.
+この証明では、始対象からそれ自身への射の一意性を使用しました。それがなければ、私たちは「同型による一意性」の部分を証明することができません。しかし、$f$ と $g$ の一意性はなぜ必要なのでしょうか？ それは、始対象が同型によって一意であるだけでなく、\emph{一意の}同型によって一意であるからです。原理的には、2つの対象間に複数の同型が存在する可能性がありますが、ここではそうではありません。この「一意の同型による一意性」は、すべての普遍構成の重要な性質です。
 
-\section{Products}
+\section{積}
 
-The next universal construction is that of a product. We know what a
-Cartesian product of two sets is: it's a set of pairs. But what's the
-pattern that connects the product set with its constituent sets? If we
-can figure that out, we'll be able to generalize it to other categories.
+次の普遍構成は、積です。2つの集合のデカルト積が何であるかはわかっています: それはペアの集合です。しかし、積集合とその構成要素をつなぐパターンは何でしょうか？ それがわかれば、他の圏にそれを一般化することができます。
 
-All we can say is that there are two functions, the projections, from
-the product to each of the constituents. In Haskell, these two functions
-are called \code{fst} and \code{snd} and they pick, respectively,
-the first and the second component of a pair:
+積からそれぞれの構成要素への2つの関数、射影があるということだけが言えます。Haskellでは、これら2つの関数はそれぞれ \code{fst} と \code{snd} と呼ばれ、ペアの第一コンポーネントと第二コンポーネントを選びます:
 
 \src{snippet06}
 
 \src{snippet07}
-Here, the functions are defined by pattern matching their arguments: the
-pattern that matches any pair is \code{(x, y)}, and it extracts its
-components into variables \code{x} and \code{y}.
+ここでは、引数に対するパターンマッチングによって関数が定義されています: 任意のペアにマッチするパターンは \code{(x, y)} で、そのコンポーネントを変数 \code{x} と \code{y} に抽出します。
 
-These definitions can be simplified even further with the use of
-wildcards:
+これらの定義は、ワイルドカードの使用によってさらに単純化することができます: 
 
 \src{snippet08}
-In C++, we would use template functions, for instance:
+C++では、たとえばテンプレート関数を使用します: 
 
 \begin{snip}{cpp}
 template<class A, class B> A
@@ -249,12 +108,7 @@ fst(pair<A, B> const & p) {
     return p.first;
 }
 \end{snip}
-Equipped with this seemingly very limited knowledge, let's try to define
-a pattern of objects and morphisms in the category of sets that will
-lead us to the construction of a product of two sets, $a$ and
-$b$. This pattern consists of an object $c$ and two morphisms
-$p$ and $q$ connecting it to $a$ and $b$,
-respectively:
+この非常に限られた知識を武器に、集合の圏で2つの集合 $a$ と $b$ の積の構成につながる対象と射のパターンを定義しようとします。このパターンは、対象 $c$ と $a$ と $b$ にそれぞれ接続された2つの射 $p$ と $q$ で構成されます: 
 
 \src{snippet09}
 
@@ -264,8 +118,7 @@ respectively:
 \end{figure}
 
 \noindent
-All $c$s that fit this pattern will be considered candidates for
-the product. There may be lots of them.
+このパターンに適合するすべての $c$ は、積の候補と見なされます。それらはたくさんあるかもしれません。
 
 \begin{figure}[H]
   \centering
@@ -273,36 +126,19 @@ the product. There may be lots of them.
 \end{figure}
 
 \noindent
-For instance, let's pick, as our constituents, two Haskell types,
-\code{Int} and \code{Bool}, and get a sampling of candidates for
-their product.
+例えば、2つの Haskell 型、\code{Int} と \code{Bool} を構成要素として選び、それらの積の候補のサンプリングを得ましょう。
 
-Here's one: \code{Int}. Can \code{Int} be considered a candidate for
-the product of \code{Int} and \code{Bool}? Yes, it can --- and here
-are its projections:
+こちらは一つ: \code{Int}。 \code{Int} は \code{Int} と \code{Bool} の積の候補と見なすことができますか？ はい、それは可能です。そして、その射影はこちらです: 
 
 \src{snippet10}
-That's pretty lame, but it matches the criteria.
+それはかなり物足りないですが、基準に合っています。
 
-Here's another one: \code{(Int, Int, Bool)}. It's a tuple of three
-elements, or a triple. Here are two morphisms that make it a legitimate
-candidate (we are using pattern matching on triples):
+こちらは別の例: \code{(Int, Int, Bool)}。それは3つの要素、または3つ組のタプルです。こちらはそれを正当な候補にする2つの射です (3つ組に対するパターンマッチングを使用しています) : 
 
 \src{snippet11}
-You may have noticed that while our first candidate was too small --- it
-only covered the \code{Int} dimension of the product; the second was
-too big --- it spuriously duplicated the \code{Int} dimension.
+お気づきかもしれませんが、最初の候補は小さすぎます。それは積の \code{Int} の次元だけをカバーしています。一方、2番目は大きすぎます。それは \code{Int} の次元を不必要に複製しています。
 
-But we haven't explored yet the other part of the universal
-construction: the ranking. We want to be able to compare two instances
-of our pattern. We want to compare one candidate object $c$ and its
-two projections $p$ and $q$ with another candidate object
-$c'$ and its two projections $p'$ and $q'$. We would like
-to say that $c$ is ``better'' than $c'$ if there is a morphism
-$m$ from $c'$ to $c$ --- but that's too weak. We also
-want its projections to be ``better,'' or ``more universal,'' than the
-projections of $c'$. What it means is that the projections
-$p'$ and $q'$ can be reconstructed from $p$ and $q$ using $m$:
+しかし、私たちはまだ普遍構成のもう一方の部分、ランキングを探検していません。私たちは2つのパターンのインスタンスを比較することができるようにしたいです。候補の対象 $c$ とその2つの射影 $p$ と $q$ を、別の候補の対象 $c'$ とその2つの射影 $p'$ と $q'$ と比較したいです。$c$ が $c'$ よりも「良い」と言いたいのですが、そのためには $c'$ から $c$ への射 $m$ があることが不十分です。私たちは、その射影が $c'$ の射影よりも「より普遍的」、「より良い」であることも望みます。それが意味するのは、射影 $p'$ と $q'$ が $m$ を使って $p$ と $q$ から再構成できることです: 
 
 \src{snippet12}
 
@@ -312,15 +148,9 @@ $p'$ and $q'$ can be reconstructed from $p$ and $q$ using $m$:
 \end{figure}
 
 \noindent
-Another way of looking at these equations is that $m$
-\emph{factorizes} $p'$ and $q'$. Just pretend that these
-equations are in natural numbers, and the dot is multiplication:
-$m$ is a common factor shared by $p'$ and $q'$.
+これらの等式を別の角度から見ると、$m$ が $p'$ と $q'$ を\emph{因数分解}します。これらの等式が自然数であり、ドットが乗算であると想像してください: $m$ は $p'$ と $q'$ に共通する因子です。
 
-Just to build some intuitions, let me show you that the pair
-\code{(Int, Bool)} with the two canonical projections, \code{fst}
-and \code{snd} is indeed \emph{better} than the two candidates I
-presented before.
+少し直感を養うために、ペア \code{(Int, Bool)} と2つの標準的な射影、\code{fst} と \code{snd} が実際には前に提示した2つの候補よりも\emph{良い}ことを示しましょう。
 
 \begin{figure}[H]
   \centering
@@ -328,73 +158,47 @@ presented before.
 \end{figure}
 
 \noindent
-The mapping \code{m} for the first candidate is:
+最初の候補のための写像 \code{m} は: 
 
 \src{snippet13}
-Indeed, the two projections, \code{p} and \code{q} can be
-reconstructed as:
+確かに、2つの射影、\code{p} と \code{q} は再構成できます:
 
 \src{snippet14}
-The \code{m} for the second example is similarly uniquely determined:
+2番目の例のための \code{m} も同様に一意に決まります: 
 
 \src{snippet15}
-We were able to show that \code{(Int, Bool)} is better than either of
-the two candidates. Let's see why the opposite is not true. Could we
-find some \code{m'} that would help us reconstruct \code{fst}
-and \code{snd} from \code{p} and \code{q}?
+私たちは \code{(Int, Bool)} が2つの候補よりも良いことを示すことができました。逆が真実ではない理由を見てみましょう。 \code{fst} と \code{snd} を \code{p} と\code{q} から再構成するための何らかの \code{m'} を見つけることができますか？
 
 \src{snippet16}
-In our first example, \code{q} always returned \code{True} and we
-know that there are pairs whose second component is \code{False}. We
-can't reconstruct \code{snd} from \code{q}.
+最初の例では、\code{q} は常に \code{True} を返し、私たちはペアの第二コンポーネントが \code{False} であるものがあることを知っています。\code{q} から \code{snd} を再構成することはできません。
 
-The second example is different: we retain enough information after
-running either \code{p} or \code{q}, but there is more than one way
-to factorize \code{fst} and \code{snd}. Because both \code{p} and
-\code{q} ignore the second component of the triple, our \code{m'}
-can put anything in it. We can have:
+第二の例は異なります: 私たちは \code{p} または \code{q} を実行した後でも十分な情報を保持していますが、\code{fst} と \code{snd} を因数分解する方法は複数あります。というのも、\code{p} と \code{q} の両方が三つ組の第二コンポーネントを無視するため、\code{m'} はそれに何を入れても構いません。以下のようにすることができます: 
 
 \src{snippet17}
 
-or
+または
 \src{snippet18}
-and so on.
+などがあります。
 
-Putting it all together, given any type \code{c} with two projections
-\code{p} and \code{q}, there is a unique \code{m} from \code{c}
-to the Cartesian product \code{(a, b)} that factorizes them. In fact,
-it just combines \code{p} and \code{q} into a pair.
+すべてをまとめると、任意の型 \code{c} と2つの射影 \code{p} と \code{q} が与えられると、\code{c} からデカルト積 \code{(a, b)} への一意の \code{m} が存在し、それらを因数分解します。実際、それは単に \code{p} と \code{q} をペアに組み合わせるだけです。
 
 \src{snippet19}
-That makes the Cartesian product \code{(a, b)} our best match, which
-means that this universal construction works in the category of sets. It
-picks the product of any two sets.
+これにより、デカルト積 \code{(a, b)} が最適な一致となり、これは集合の圏におけるこの普遍構成が機能していることを意味します。任意の2つの集合の積を選びます。
 
-Now let's forget about sets and define a product of two objects in any
-category using the same universal construction. Such a product doesn't
-always exist, but when it does, it is unique up to a unique isomorphism.
+今、集合について忘れて、同じ普遍構成を使用して任意の圏で2つの対象の積を定義しましょう。そのような積が常に存在するわけではありませんが、存在するときは、一意の同型まで一意です。
 
 \begin{quote}
-  A \textbf{product} of two objects $a$ and $b$ is the object
-  $c$ equipped with two projections such that for any other object
-  $c'$ equipped with two projections there is a unique morphism
-  $m$ from $c'$ to $c$ that factorizes those projections.
+  2つの対象 $a$ と $b$ の\textbf{積}は、2つの射影を備えた対象 $c$ であり、他の任意の対象 $c'$ が2つの射影を備えている場合、それらの射影を因数分解する一意の射 $m$ が $c'$ から $c$ へ存在します。
 \end{quote}
 
 \noindent
-A (higher order) function that produces the factorizing function
-\code{m} from two candidates is sometimes called the
-\newterm{factorizer}. In our case, it would be the function:
+因数分解する関数を生成する (高次の) 関数は、時々\newterm{因数分解器}と呼ばれます。私たちの場合、それは以下の関数です: 
 
 \src{snippet20}
 
-\section{Coproduct}
+\section{余積}
 
-Like every construction in category theory, the product has a dual,
-which is called the coproduct. When we reverse the arrows in the product
-pattern, we end up with an object $c$ equipped with two
-\emph{injections}, \code{i} and \code{j}: morphisms from $a$
-and $b$ to $c$.
+圏論のすべての構成のように、積にも双対があり、余積と呼ばれます。積のパターンで射を逆転させると、2つの\emph{入射 (injection)}、\code{i} と \code{j} を備えた対象 $c$ に終わります。これらは $a$ と $b$ から $c$ への射です。
 
 \src{snippet21}
 
@@ -404,10 +208,7 @@ and $b$ to $c$.
 \end{figure}
 
 \noindent
-The ranking is also inverted: object $c$ is ``better'' than object
-$c'$ that is equipped with the injections $i'$ and $j'$
-if there is a morphism $m$ from $c$ to $c'$ that
-factorizes the injections:
+ランキングも逆転します: 対象 $c$ が入射 $i'$ と $j'$ を備えた対象 $c'$ よりも「良い」場合、$c$ から $c'$ への射 $m$ が存在し、その入射を因数分解します: 
 
 \src{snippet22}
 
@@ -417,32 +218,16 @@ factorizes the injections:
 \end{figure}
 
 \noindent
-The ``best'' such object, one with a unique morphism connecting it to
-any other pattern, is called a coproduct and, if it exists, is unique up
-to unique isomorphism.
+そのような対象の「最良」のもの、つまり他のどのパターンにも一意の射で結びつけるものは、余積と呼ばれ、存在する場合、一意の同型まで一意です。
 
 \begin{quote}
-  A \textbf{coproduct} of two objects $a$ and $b$ is the object
-  $c$ equipped with two injections such that for any other object
-  $c'$ equipped with two injections there is a unique morphism
-  $m$ from $c$ to $c'$ that factorizes those injections.
+  2つの対象 $a$ と $b$ の\textbf{余積}は、2つの入射を備えた対象 $c$ であり、他の任意の対象 $c'$ が2つの入射を備えている場合、それらの入射を因数分解する一意の射 $m$ が $c$ から $c'$ へ存在します。
 \end{quote}
 
 \noindent
-In the category of sets, the coproduct is the \emph{disjoint union} of
-two sets. An element of the disjoint union of $a$ and $b$ is
-either an element of $a$ or an element of $b$. If the two sets
-overlap, the disjoint union contains two copies of the common part. You
-can think of an element of a disjoint union as being tagged with an
-identifier that specifies its origin.
+集合の圏では、余積は2つの集合の\emph{非交和 (disjoint union)}です。$a$ と $b$ の非交和の要素は、$a$ の要素か $b$ の要素のいずれかです。2つの集合が重なる場合、非交和には共通部分の2つのコピーが含まれます。非交和の要素を、その起源を指定する識別子でタグ付けされていると考えることができます。
 
-For a programmer, it's easier to understand a coproduct in terms of
-types: it's a tagged union of two types. C++ supports unions, but they
-are not tagged. It means that in your program you have to somehow keep
-track which member of the union is valid. To create a tagged union, you
-have to define a tag --- an enumeration --- and combine it with the
-union. For instance, a tagged union of an \code{int} and a
-\code{char const *} could be implemented as:
+プログラマにとって、型の観点から余積を理解する方が簡単です。それは2つの型のタグ付きユニオンです。C++はユニオンをサポートしていますが、それらはタグ付けされていません。つまり、プログラムではどのユニオンメンバーが有効かどうかを何らかの方法で追跡する必要があります。タグ付きユニオンを作成するには、タグとしての列挙体を定義し、それをユニオンと組み合わせる必要があります。たとえば、\code{int} と \code{char const *} のタグ付きユニオンは、次のように実装することができます:
 
 \begin{snip}{cpp}
 struct Contact {
@@ -450,9 +235,7 @@ struct Contact {
     union { int phoneNum; char const * emailAddr; };
 };
 \end{snip}
-The two injections can either be implemented as constructors or as
-functions. For instance, here's the first injection as a function
-\code{PhoneNum}:
+2つの入射は、コンストラクタまたは関数として実装することができます。例えば、こちらは最初の入射としての関数 \code{PhoneNum} です:
 
 \begin{snip}{cpp}
 Contact PhoneNum(int n) {
@@ -462,165 +245,84 @@ Contact PhoneNum(int n) {
     return c;
 }
 \end{snip}
-It injects an integer into \code{Contact}.
+これにより、整数が \code{Contact} に注入されます。
 
-A tagged union is also called a \newterm{variant}, and there is a very
-general implementation of a variant in the boost library,
-\code{boost::variant}.
+タグ付きユニオンは、\newterm{バリアント}とも呼ばれます。そして、boost ライブラリには、\code{boost::variant} として非常に一般的なバリアントの実装があります。
 
-In Haskell, you can combine any data types into a tagged union by
-separating data constructors with a vertical bar. The \code{Contact}
-example translates into the declaration:
+Haskellでは、任意のデータ型を縦棒で区切ったデータコンストラクタを使用してタグ付きユニオンに組み合わせることができます。\code{Contact} の例は、宣言に次のように翻訳されます:
 
 \src{snippet23}
-Here, \code{PhoneNum} and \code{EmailAddr} serve both as
-constructors (injections), and as tags for pattern matching (more about
-this later). For instance, this is how you would construct a contact
-using a phone number:
+ここで、\code{PhoneNum} と \code{EmailAddr} は、コンストラクタ (入射) としても機能し、パターンマッチングのためのタグとしても機能します (後で詳しく説明します) 。たとえば、これは電話番号を使用してコンタクトを作成する方法です:
 
 \src{snippet24}
-Unlike the canonical implementation of the product that is built into
-Haskell as the primitive pair, the canonical implementation of the
-coproduct is a data type called \code{Either}, which is defined in the
-standard Prelude as:
+プリミティブペアとして Haskell に組み込まれている積の標準的な実装とは異なり、余積の標準的な実装は \code{Either} というデータ型で、標準 Prelude で次のように定義されています:
 
 \src{snippet25}
-It is parameterized by two types, \code{a} and \code{b} and has two
-constructors: \code{Left} that takes a value of type \code{a}, and
-\code{Right} that takes a value of type \code{b}.
+これは2つの型、\code{a} と \code{b} にパラメータ化されており、2つのコンストラクタがあります: \code{a} 型の値を取る \code{Left} と、\code{b} 型の値を取る \code{Right} です。
 
-Just as we've defined the factorizer for a product, we can define one
-for the coproduct. Given a candidate type \code{c} and two candidate
-injections \code{i} and \code{j}, the factorizer for \code{Either}
-produces the factoring function:
+積のために因数分解器を定義したように、余積のためにも定義することができます。候補の型 \code{c} と2つの候補の入射 \code{i} と \code{j} が与えられた場合、\code{Either} の因数分解器は因数分解関数を生成します:
 
 \src{snippet26}
 
-\section{Asymmetry}
+\section{非対称性}
 
-We've seen two sets of dual definitions: The definition of a terminal
-object can be obtained from the definition of the initial object by
-reversing the direction of arrows; in a similar way, the definition of
-the coproduct can be obtained from that of the product. Yet in the
-category of sets the initial object is very different from the final
-object, and coproduct is very different from product. We'll see later
-that product behaves like multiplication, with the terminal object
-playing the role of one; whereas coproduct behaves more like the sum,
-with the initial object playing the role of zero. In particular, for
-finite sets, the size of the product is the product of the sizes of
-individual sets, and the size of the coproduct is the sum of the sizes.
+私たちは2つの双対な定義セットを見てきました: 始対象の定義は射の方向を逆転させることによって終対象の定義から得られ、同様に、余積の定義は積の定義から得られます。それでも、集合の圏では始対象は終対象とは非常に異なり、余積は積と非常に異なります。後で見るように、積は乗法のように振る舞い、終対象は1の役割を果たし、一方で余積は和のように振る舞い、始対象は0の役割を果たします。特に有限集合の場合、積のサイズは個々の集合のサイズの積であり、余積のサイズはサイズの和です。
 
-This shows that the category of sets is not symmetric with respect to
-the inversion of arrows.
+これは、射の反転に関して集合の圏が対称ではないことを示しています。
 
-Notice that while the empty set has a unique morphism to any set (the
-\code{absurd} function), it has no morphisms coming back. The
-singleton set has a unique morphism coming to it from any set, but it
-\emph{also} has outgoing morphisms to every set (except for the empty
-one). As we've seen before, these outgoing morphisms from the terminal
-object play a very important role of picking elements of other sets (the
-empty set has no elements, so there's nothing to pick).
+空集合は任意の集合に一意の射 (\code{absurd} 関数) を持っていますが、それに戻ってくる射はありません。一方、単集合は任意の集合から一意の射を持っていますが、それは (空集合を除いて) すべての集合に出ていく射も持っています。前に見たように、終対象からのこれらの出ていく射は、他の集合から要素を選ぶための非常に重要な役割を果たします (空集合には要素がないので、何も選ぶことはできません) 。
 
-It's the relationship of the singleton set to the product that sets it
-apart from the coproduct. Consider using the singleton set, represented
-by the unit type \code{()}, as yet another --- vastly inferior ---
-candidate for the product pattern. Equip it with two projections
-\code{p} and \code{q}: functions from the singleton to each of the
-constituent sets. Each selects a concrete element from either set.
-Because the product is universal, there is also a (unique) morphism
-\code{m} from our candidate, the singleton, to the product. This
-morphism selects an element from the product set --- it selects a
-concrete pair. It also factorizes the two projections:
+単集合をUnit型 \code{()} として表し、さらに別の候補として積のパターンに使用することで、それを他のものとは区別します。それに2つの射影 \code{p} と \code{q} を装備します。それぞれが単集合から構成要素の集合のそれぞれに向かう関数です。積が普遍的であるため、単集合から積への (一意の) 射 \code{m} もまたあります。この射は積集合から具体的なペアを選び
+
+出し、また2つの射影を因数分解します: 
 
 \src{snippet27}
-When acting on the singleton value \code{()}, the only element of the
-singleton set, these two equations become:
+単集合の唯一の要素 \code{()} に作用するとき、これら2つの等式はなります: 
 
 \src{snippet28}
-Since \code{m ()} is the element of the product picked by \code{m},
-these equations tell us that the element picked by \code{p} from the
-first set, \code{p ()}, is the first component of the pair picked by
-\code{m}. Similarly, \code{q ()} is equal to the second component.
-This is in total agreement with our understanding that elements of the
-product are pairs of elements from the constituent sets.
+\code{m ()} が \code{m} によって選ばれた積の要素であるので、これらの等式は \code{p} によって最初の集合から選ばれた要素、\code{p ()} がペアによって \code{m} によって選ばれたものの第一コンポーネントであることを教えてくれます。同様に、\code{q ()} は第二コンポーネントに等しいです。これは、積の要素が構成要素の集合の要素のペアであるという私たちの理解と完全に一致しています。
 
-There is no such simple interpretation of the coproduct. We could try
-the singleton set as a candidate for a coproduct, in an attempt to
-extract the elements from it, but there we would have two injections
-going into it rather than two projections coming out of it. They'd tell
-us nothing about their sources (in fact, we've seen that they ignore the
-input parameter). Neither would the unique morphism from the coproduct
-to our singleton. The category of sets just looks very different when
-seen from the direction of the initial object than it does when seen
-from the terminal end.
+余積に対しては、そう単純な解釈はありません。単集合を余積の候補として試してみて、それから要素を抽出しようとするかもしれませんが、そこでは2つの入射がそれに入るのであって、2つの射影がそれから出てくるのではありません。彼らは彼らの源について何も教えてくれません (実際、私たちはそれらが入力パラメータを無視することを見ました) 。同様に、余積から私たちの単集合への一意の射もそうです。集合の圏は、始対象から見たときと終対象から見たときとで非常に異なるように見えます。
 
-This is not an intrinsic property of sets, it's a property of functions,
-which we use as morphisms in $\Set$. Functions are, in general,
-asymmetric. Let me explain.
+これは集合の本質的な性質ではなく、$\Set$ において射として使用される関数の性質です。一般に、関数は非対称です。させてください説明します。
 
-A function must be defined for every element of its domain set (in
-programming, we call it a \newterm{total} function), but it doesn't have to
-cover the whole codomain. We've seen some extreme cases of it: functions
-from a singleton set --- functions that select just a single element in
-the codomain. (Actually, functions from an empty set are the real
-extremes.) When the size of the domain is much smaller than the size of
-the codomain, we often think of such functions as embedding the domain
-in the codomain. For instance, we can think of a function from a
-singleton set as embedding its single element in the codomain. I call
-them \newterm{embedding} functions, but mathematicians prefer to give a
-name to the opposite: functions that tightly fill their codomains are
-called \newterm{surjective} or \newterm{onto}.
+関数は、その始域のすべての要素に対して定義されなければなりません (プログラミングでは、これを\newterm{全関数}と呼びます) が、その全域をカバーする必要はありません。私たちは、始域から単集合への関数---単集合の中でただ1つの要素を選ぶ関数---などの極端なケースを見てきました。 (実際には、空集合からの関数が真の極端です。) 始域のサイズが終域のサイズよりもはるかに小さい場合、私たちはしばしばそのような関数を、始域を終域に埋め込むと考えます。たとえば、単集合からの関数を使用して、その単一の要素を終域に埋め込むと考えることができます。私はそれらを\newterm{埋め込み}関数と呼びますが、数学者は反対を名付けることを好みます: その全域をしっかりと埋める関数は\newterm{全射}または\newterm{上への}と呼ばれます。
 
-The other source of asymmetry is that functions are allowed to map many
-elements of the domain set into one element of the codomain. They can
-collapse them. The extreme case are functions that map whole sets into a
-singleton. You've seen the polymorphic \code{unit} function that does
-just that. The collapsing can only be compounded by composition. A
-composition of two collapsing functions is even more collapsing than the
-individual functions. Mathematicians have a name for non-collapsing
-functions: they call them \newterm{injective} or \newterm{one-to-one}.
+もう一つの非対称性の源は、関数が始域の多くの要素を終域の1つの要素にマッピングできるということです。それらはそれらを崩壊させることができます。極端なケースは、全集合を単集合にマッピングする関数です。あなたはそのような多相的な \code{unit} 関数を見ました。崩壊は合成によってのみ複合されることができます。2つの崩壊関数の合成は、個々の関数よりもさらに崩壊しています。数学者は非崩壊関数に名前を付けています: それらは\newterm{単射}または\newterm{一対一}と呼ばれます。
 
-Of course there are some functions that are neither embedding nor
-collapsing. They are called \newterm{bijections} and they are truly
-symmetric, because they are invertible. In the category of sets, an
-isomorphism is the same as a bijection.
+もちろん、埋め込みでも崩壊でもないいくつかの関数があります。それらは\newterm{全単射}と呼ばれ、それらは本当に対称的です。なぜなら、それらは可逆だからです。集合の圏では、同型は全単射と同じです。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Show that the terminal object is unique up to unique isomorphism.
+        終対象が一意の同型まで一意であることを示してください。
   \item
-        What is a product of two objects in a poset? Hint: Use the universal
-        construction.
+        poset における2つの対象の積とは何ですか？ ヒント: 普遍構成を使ってください。
   \item
-        What is a coproduct of two objects in a poset?
+        poset における2つの対象の余積とは何ですか？
   \item
-        Implement the equivalent of Haskell \code{Either} as a generic type
-        in your favorite language (other than Haskell).
+        お気に入りの言語 (Haskell以外) で Haskell の \code{Either} に相当する汎用型を実装してください。
   \item
-        Show that \code{Either} is a ``better'' coproduct than \code{int}
-        equipped with two injections:
+        \code{Either} が次の2つの入射を備えた \code{int} よりも「良い」余積であることを示してください: 
 
         \begin{snip}{cpp}
 int i(int n) { return n; }
 int j(bool b) { return b ? 0: 1; }
 \end{snip}
 
-        Hint: Define a function
+        ヒント: 関数
 
         \begin{snip}{cpp}
 int m(Either const & e);
 \end{snip}
 
-        that factorizes \code{i} and \code{j}.
+        を定義して、\code{i} と \code{j} を因数分解してください。
   \item
-        Continuing the previous problem: How would you argue that \code{int}
-        with the two injections \code{i} and \code{j} cannot be ``better''
-        than \code{Either}?
+        前の問題を引き続き: どうやって \code{int} が2つの入射 \code{i} と \code{j} を備えていても \code{Either} より「良い」余積にはなり得ないと主張しますか？
   \item
-        Still continuing: What about these injections?
+        まだ続けて: 以下の入射についてはどうでしょう？
 
         \begin{snip}{cpp}
 int i(int n) {
@@ -631,12 +333,10 @@ int i(int n) {
 int j(bool b) { return b ? 0: 1; }
 \end{snip}
   \item
-        Come up with an inferior candidate for a coproduct of \code{int} and
-        \code{bool} that cannot be better than \code{Either} because it
-        allows multiple acceptable morphisms from it to \code{Either}.
+        \code{int} と \code{bool} の余積の劣った候補を考えてみてください。それが \code{Either} への複数の受け入れ可能な射を許容するため、それが \code{Either} より優れていることはありません。
 \end{enumerate}
 
-\section{Bibliography}
+\section{参考文献}
 
 \begin{enumerate}
   \tightlist
@@ -645,3 +345,5 @@ int j(bool b) { return b ? 0: 1; }
         \urlref{https://www.youtube.com/watch?v=upCSDIO9pjc}{Products and
           Coproducts} video.
 \end{enumerate}
+
+

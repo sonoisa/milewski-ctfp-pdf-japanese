@@ -1,80 +1,32 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{T}{here are many intuitions} that we may attach to morphisms in a category,
-but we can all agree that if there is a morphism from the object
-$a$ to the object $b$ than the two objects are in some way
-``related.'' A morphism is, in a sense, the proof of this relation. This
-is clearly visible in any poset category, where a morphism \emph{is} a
-relation. In general, there may be many ``proofs'' of the same relation
-between two objects. These proofs form a set that we call the hom-set.
-When we vary the objects, we get a mapping from pairs of objects to sets
-of ``proofs.'' This mapping is functorial --- contravariant in the first
-argument and covariant in the second. We can look at it as establishing
-a global relationship between objects in the category. This relationship
-is described by the hom-functor:
+\lettrine[lhang=0.17]{圏}{における}射に対して様々な直観を持つことができますが、対象$a$から対象$b$への射がある場合、両対象は何らかの方法で「関連している」ということについては全員が同意するでしょう。射は、この関係の証明であるという意味で、任意の半順序集合の圏では、射が関係そのものです。一般的に、二つの対象間の同じ関係の「証明」は多数存在することがあります。これらの証明は、ホム集合と呼ばれる集合を形成します。対象が変わると、対象のペアから「証明」の集合へのマッピングが得られます。このマッピングは関手的であり、第一引数に反変で第二引数に共変です。これを圏の対象間の大局的な関係を確立していると見なすことができます。この関係はホム関手によって記述されます: 
 \[\cat{C}(-, =) \Colon \cat{C}^\mathit{op}\times{}\cat{C} \to \Set\]
-In general, any functor like this may be interpreted as establishing a
-relation between objects in a category. A relation may also involve two
-different categories $\cat{C}$ and $\cat{D}$. A functor, which describes
-such a relation, has the following signature and is called a profunctor:
+一般に、このような関手は、圏の対象間の関係を確立すると解釈することができます。関係は、異なる二つの圏$\cat{C}$と$\cat{D}$を巻き込むこともあります。このような関係を記述する関手は、次のシグネチャを持ち、プロ関手と呼ばれます: 
 \[p \Colon \cat{D}^\mathit{op}\times{}\cat{C} \to \Set\]
-Mathematicians say that it's a profunctor from $\cat{C}$ to $\cat{D}$
-(notice the inversion), and use a slashed arrow as a symbol for it:
+数学者は、これを$\cat{C}$から$\cat{D}$へのプロ関手 (注目してください、反転しています) と言い、そのシンボルとして斜線が付いた矢印を使います: 
 \[\cat{C} \nrightarrow \cat{D}\]
-You may think of a profunctor as a \newterm{proof-relevant relation}
-between objects of $\cat{C}$ and objects of $\cat{D}$, where the elements
-of the set symbolize proofs of the relation. Whenever $p\ a\ b$
-is empty, there is no relation between $a$ and $b$. Keep
-in mind that relations don't have to be symmetric.
+プロ関手は、$\cat{C}$の対象と$\cat{D}$の対象の間の\newterm{証明関連関係}と考えることができます。ここで、集合の要素は関係の証明を象徴しています。いつ$p\ a\ b$が空であるならば、$a$と$b$の間には関係がありません。関係は対称的である必要はないことに注意してください。
 
-Another useful intuition is the generalization of the idea that an
-endofunctor is a container. A profunctor value of the type
-$p\ a\ b$ could then be considered a container of $b$s
-that are keyed by elements of type $a$. In particular, an element
-of the hom-profunctor is a function from $a$ to $b$.
+もう一つの有用な直観は、自己関手がコンテナであるという考えの一般化です。プロ関手の値$p\ a\ b$は、型$a$の要素によってキー付けされた$b$のコンテナと見なすことができます。特に、ホムプロ関手の要素は$a$から$b$への関数です。
 
-In Haskell, a profunctor is defined as a two-argument type constructor
-\code{p} equipped with the method called \code{dimap}, which lifts a
-pair of functions, the first going in the ``wrong'' direction:
+Haskellでは、プロ関手は二引数の型コンストラクタ\code{p}と、ペアの関数を持ち上げると呼ばれるメソッド\code{dimap}で定義されます。最初の関数は「間違った方向」に行きます: 
 
 \src{snippet01}
-The functoriality of the profunctor tells us that if we have a proof
-that \code{a} is related to \code{b}, then we get the proof that
-\code{c} is related to \code{d}, as long as there is a morphism from
-\code{c} to \code{a} and another from \code{b} to \code{d}. Or,
-we can think of the first function as translating new keys to the old
-keys, and the second function as modifying the contents of the
-container.
+プロ関手の関手性は、もし\code{a}が\code{b}に関連している証明があれば、\code{c}が\code{d}に関連している証明を得ることができると教えてくれます。ただし、\code{c}から\code{a}への射と、\code{b}から\code{d}への別の射がある場合です。あるいは、最初の関数を新しいキーを古いキーに翻訳するものとし、二つ目の関数をコンテナの内容を変更するものとして考えることもできます。
 
-For profunctors acting within one category, we can extract quite a lot
-of information from diagonal elements of the type $p\ a\ a$. We
-can prove that $b$ is related to $c$ as long as we have a
-pair of morphisms $b \to a$ and
-$a \to c$. Even better, we can use a single morphism to
-reach off-diagonal values. For instance, if we have a morphism
-$f \Colon a \to b$, we can lift the pair
-$\langle f, \idarrow[b] \rangle$ to go from $p\ b\ b$ to
-$p\ a\ b$:
+一つの圏内で作用するプロ関手については、型$p\ a\ a$の対角要素からかなりの情報を抽出することができます。射のペア$b \to a$と$a \to c$がある限り、$b$が$c$に関連していることを証明することができます。さらに良いことに、単一の射を使って対角線の値に達することができます。例えば、射$f \Colon a \to b$がある場合、ペア$\langle f, \idarrow[b] \rangle$を持ち上げて$p\ b\ b$から$p\ a\ b$へ行くことができます: 
 
 \src{snippet02}
-Or we can lift the pair $\langle \idarrow[a], f \rangle$ to go
-from $p\ a\ a$ to $p\ a\ b$:
+または、ペア$\langle \idarrow[a], f \rangle$を持ち上げて$p\ a\ a$から$p\ a\ b$へ行くことができます: 
 
 \src{snippet03}
 
-\section{Dinatural Transformations}
+\section{双自然変換}
 
-Since profunctors are functors, we can define natural transformations
-between them in the standard way. In many cases, though, it's enough to
-define the mapping between diagonal elements of two profunctors. Such a
-transformation is called a dinatural transformation, provided it
-satisfies the commuting conditions that reflect the two ways we can
-connect diagonal elements to non-diagonal ones. A dinatural
-transformation between two profunctors $p$ and $q$, which
-are members of the functor category ${[}\cat{C}^\mathit{op}\times{}\cat{C}, \Set{]}$, is a
-family of morphisms:
+プロ関手は関手なので、標準的な方法でそれらの間の自然変換を定義することができます。多くの場合、二つのプロ関手の対角要素の間のマッピングを定義するだけで十分です。このような変換は、対角要素を非対角要素に接続する二つの方法を反映した可換性条件を満たす場合、双自然変換と呼ばれます。プロ関手$p$と$q$の間の双自然変換は、関手圏${[}\cat{C}^\mathit{op}\times{}\cat{C}, \Set{]}$のメンバーである変換の形態族です: 
 \[\alpha_a \Colon p\ a\ a \to q\ a\ a\]
-for which the following diagram commutes, for any $f \Colon a \to b$:
+以下の図の通り、任意の射$f \Colon a \to b$に対して以下の図が可換であること: 
 
 \begin{figure}[H]
   \centering
@@ -82,11 +34,7 @@ for which the following diagram commutes, for any $f \Colon a \to b$:
 \end{figure}
 
 \noindent
-Notice that this is strictly weaker than the naturality condition. If
-$\alpha$ were a natural transformation in
-${[}\cat{C}^\mathit{op}\times{}\cat{C}, \Set{]}$, the above diagram could be constructed
-from two naturality squares and one functoriality condition (profunctor
-$q$ preserving composition):
+この条件は自然性条件よりも明らかに弱いです。もし$\alpha$が${[}\cat{C}^\mathit{op}\times{}\cat{C}, \Set{]}$における自然変換であれば、上記の図は二つの自然性の四角形と一つの関手性条件 (プロ関手$q$が合成を保存する) から構成されます: 
 
 \begin{figure}[H]
   \centering
@@ -94,36 +42,15 @@ $q$ preserving composition):
 \end{figure}
 
 \noindent
-Notice that a component of a natural transformation $\alpha$ in
-${[}\cat{C}^\mathit{op}\times{}\cat{C}, \Set{]}$ is indexed by a pair of objects
-$\alpha_{a b}$. A dinatural transformation, on the other hand, is
-indexed by one object, since it only maps diagonal elements of the
-respective profunctors.
+${[}\cat{C}^\mathit{op}\times{}\cat{C}, \Set{]}$における自然変換$\alpha$のコンポーネントは対象のペアによってインデックス付けされます$\alpha_{a b}$。一方、双自然変換は、それが対応するプロ関手の対角要素のみをマッピングするので、一つの対象によってインデックス付けされます。
 
-\section{Ends}
+\section{エンド}
 
-We are now ready to advance from ``algebra'' to what could be considered
-the ``calculus'' of category theory. The calculus of ends (and coends)
-borrows ideas and even some notation from traditional calculus. In
-particular, the coend may be understood as an infinite sum or an
-integral, whereas the end is similar to an infinite product. There is
-even something that resembles the Dirac delta function.
+「代数」から「微積分」に進む準備ができました。エンド (および余エンド) の微積分は、伝統的な微積分からアイデアといくつかの表記を借りています。特に、余エンドは無限和または積分として理解されるかもしれませんが、エンドは無限積に似ています。Diracのデルタ関数のようなものさえあります。
 
-An end is a generalization of a limit, with the functor replaced by a
-profunctor. Instead of a cone, we have a wedge. The base of a wedge is
-formed by diagonal elements of a profunctor $p$. The apex of the
-wedge is an object (here, a set, since we are considering
-$\Set$-valued profunctors), and the sides are a family of
-functions mapping the apex to the sets in the base. You may think of
-this family as one polymorphic function --- a function that's
-polymorphic in its return type:
+エンドは極限の一般化であり、関手に代わってプロ関手があります。錐体に代わって、私たちはくさびを持っています。くさびの底はプロ関手$p$の対角要素によって形成されます。くさびの頂点は対象 (ここでは、$\Set$値のプロ関手を考慮しているので、集合) であり、側面は頂点から底部の集合への関数の族です。この族を一つの多相的関数と考えることができます --- その戻り型が多相的な関数です: 
 \[\alpha \Colon \forall a\ .\ \mathit{apex} \to p\ a\ a\]
-Unlike in cones, within a wedge we don't have any functions that would
-connect vertices of the base. However, as we've seen earlier, given any
-morphism $f \Colon a \to b$ in $\cat{C}$, we can connect both
-$p\ a\ a$ and $p\ b\ b$ to the common set
-$p\ a\ b$. We therefore insist that the following diagram
-commute:
+錐体とは異なり、くさび内には基部の頂点を接続する関数はありません。しかし、私たちが以前見たように、$\cat{C}$の中の任意の射$f \Colon a \to b$を与えられると、私たちは$p\ a\ a$と$p\ b\ b$の両方を共通の集合$p\ a\ b$に接続することができます。したがって、次の図が可換であることを主張します: 
 
 \begin{figure}[H]
   \centering
@@ -131,16 +58,12 @@ commute:
 \end{figure}
 
 \noindent
-This is called the \newterm{wedge condition}. It can be written as:
+これは\newterm{くさび条件}と呼ばれます。これは次のように書くことができます: 
 \[p\ \idarrow[a]\ f \circ \alpha_a = p\ f\ \idarrow[b] \circ \alpha_b\]
-Or, using Haskell notation:
+あるいは、Haskell表記を使って: 
 
 \src{snippet04}
-We can now proceed with the universal construction and define the end of
-$p$ as the universal wedge --- a set $e$ together with a
-family of functions $\pi$ such that for any other wedge with the
-apex $a$ and a family $\alpha$ there is a unique function
-$h \Colon a \to e$ that makes all triangles commute:
+これで私たちは、普遍構成を用いて、$p$のエンドを普遍くさびとして定義することができます --- 一つの集合$e$と一つの関数の族$\pi$を持つもので、任意の他のくさびが頂点$a$と一つの族$\alpha$を持つ場合、全ての三角形を可換にする一意な関数$h \Colon a \to e$が存在します: 
 \[\pi_a \circ h = \alpha_a\]
 
 \begin{figure}[H]
@@ -149,100 +72,61 @@ $h \Colon a \to e$ that makes all triangles commute:
 \end{figure}
 
 \noindent
-The symbol for the end is the integral sign, with the ``integration
-variable'' in the subscript position:
+エンドのシンボルは積分符号であり、「積分変数」は添字位置にあります: 
 \[\int_c p\ c\ c\]
-Components of $\pi$ are called projection maps for the end:
+$\pi$のコンポーネントはエンドのための射影マップと呼ばれます: 
 \[\pi_a \Colon \int_c p\ c\ c \to p\ a\ a\]
-Note that if $\cat{C}$ is a discrete category (no morphisms other than
-the identities) the end is just a global product of all diagonal entries
-of $p$ across the whole category $\cat{C}$. Later I'll show you
-that, in the more general case, there is a relationship between the end
-and this product through an equalizer.
+$\cat{C}$が離散圏 (恒等射以外の射がない) である場合、エンドは$p$の全ての対角要素の全体的な積です。後で、もう少し一般的なケースでは、エンドとこの積との間にイコライザを通じて関係があることを示します。
 
-In Haskell, the end formula translates directly to the universal
-quantifier:
+Haskellでは、エンドの式は全称量化子に直接翻訳されます: 
 
 \src{snippet05}
-Strictly speaking, this is just a product of all diagonal elements of
-$p$, but the wedge condition is satisfied automatically due to
-\urlref{https://bartoszmilewski.com/2017/04/11/profunctor-parametricity/}{parametricity}. For any function
-$f \Colon a \to b$, the wedge condition reads:
+厳密に言えば、これは$p$の全ての対角要素のただの積ですが、くさび条件は\urlref{https://bartoszmilewski.com/2017/04/11/profunctor-parametricity/}{パラメトリシティ}により自動的に満たされます。任意の関数$f \Colon a \to b$に対して、くさび条件は以下のようになります: 
 
 \src{snippet06}
-or, with type annotations:
+または、型注釈付きで: 
 
 \begin{snipv}
 dimap f id\textsubscript{b} . pi\textsubscript{b} = dimap id\textsubscript{a} f . pi\textsubscript{a}
 \end{snipv}
-where both sides of the equation have the type:
+ここで、方程式の両側は型: 
 
 \src{snippet07}
-and \code{pi} is the polymorphic projection:
+を持ち、\code{pi}は多相的射影です: 
 
 \src{snippet08}
-Here, type inference automatically picks the right component of
-\code{e}.
+ここで、型推論は自動的に\code{e}の正しいコンポーネントを選択します。
 
-Just as we were able to express the whole set of commutation conditions
-for a cone as one natural transformation, likewise we can group all the
-wedge conditions into one dinatural transformation. For that we need the
-generalization of the constant functor $\Delta_c$ to a constant
-profunctor that maps all pairs of objects to a single object $c$,
-and all pairs of morphisms to the identity morphism for this object. A
-wedge is a dinatural transformation from that functor to the profunctor
-$p$. Indeed, the dinaturality hexagon shrinks down to the wedge
-diamond when we realize that $\Delta_c$ lifts all morphisms to one
-identity function.
+錐体のための全ての可換性条件を一つの自然変換として表現することができたのと同様に、くさび条件を一つの双自然変換にまとめることができます。そのためには、全ての対象のペアを単一の対象$c$にマッピングし、全ての射のペアをこの対象の恒等射にマッピングする定数関手$\Delta_c$への定数プロ関手の一般化が必要です。くさびはその関手からプロ関手$p$への双自然変換です。実際には、双自然変換の六角形は、$\Delta_c$が全ての射を一つの恒等関数に持ち上げるときにくさびダイアモンドに縮小します。
 
-Ends can also be defined for target categories other than $\Set$,
-but here we'll only consider $\Set$-valued profunctors and their
-ends.
+エンドは$\Set$以外のターゲット圏に対しても定義することができますが、ここでは$\Set$-値のプロ関手とそのエンドのみを考慮します。
 
-\section{Ends as Equalizers}
+\section{エンドとイコライザとして}
 
-The commutation condition in the definition of the end can be written
-using an equalizer. First, let's define two functions (I'm using Haskell
-notation, because mathematical notation seems to be less user-friendly
-in this case). These functions correspond to the two converging branches
-of the wedge condition:
+エンドの定義における可換性条件はイコライザを使って書くことができます。まず、Haskellの表記を使用して (数学的な表記はこの場合ユーザーフレンドリーでないようです) 、くさび条件の二つの収束する枝に対応する二つの関数を定義しましょう: 
 
 \src{snippet09}[b]
-Both functions map diagonal elements of the profunctor \code{p} to
-polymorphic functions of the type:
+両方の関数はプロ関手\code{p}の対角要素を型: 
 
 \src{snippet10}
-These functions have different types. However, we can unify their types,
-if we form one big product type, gathering together all diagonal
-elements of \code{p}:
+の多相的関数にマップします。
+
+これらの関数は異なる型を持っています。しかし、\code{p}の全ての対角要素を集める一つの大きな積型を形成することにより、その型を統一することができます: 
 
 \src{snippet11}
-The functions \code{lambda} and \code{rho} induce two mappings from
-this product type:
+関数\code{lambda}と\code{rho}はこの積型から二つのマッピングを誘導します: 
 
 \src{snippet12}
-The end of \code{p} is the equalizer of these two functions. Remember
-that the equalizer picks the largest subset on which two functions are
-equal. In this case it picks the subset of the product of all diagonal
-elements for which the wedge diagrams commute.
+\code{p}のエンドはこれら二つの関数のイコライザです。イコライザは二つの関数が等しい最大の部分集合を選び出します。この場合、それはくさびダイアグラムが可換になるための\code{p}の全ての対角要素の積の部分集合を選び出します。
 
-\section{Natural Transformations as Ends}
+\section{自然変換としてのエンド}
 
-The most important example of an end is the set of natural
-transformations. A natural transformation between two functors
-$F$ and $G$ is a family of morphisms picked from hom-sets
-of the form $\cat{C}(F a, G a)$. If it weren't for the naturality
-condition, the set of natural transformations would be just the product
-of all these hom-sets. In fact, in Haskell, it is:
+エンドの最も重要な例は、自然変換の集合です。二つの関手$F$と$G$の間の自然変換は、形式$\cat{C}(F a, G a)$のホム集合から選ばれる射の族です。自然性条件がなければ、自然変換の集合はこれらのホム集合の全ての積に過ぎません。実際、Haskellではそれがそうです: 
 
 \src{snippet13}
-The reason it works in Haskell is because naturality follows from
-parametricity. Outside of Haskell, though, not all diagonal sections
-across such hom-sets will yield natural transformations. But notice that
-the mapping:
+Haskellでうまくいく理由は、自然性がパラメトリシティによって従うからです。しかし、Haskellの外では、そのようなホム集合を横断する全ての対角セクションが自然変換を生み出すわけではありません。しかし、注意してください: 
 \[\langle a, b \rangle \to \cat{C}(F a, G b)\]
-is a profunctor, so it makes sense to study its end. This is the wedge
-condition:
+はプロ関手なので、そのエンドを研究することは意味があります。これがくさび条件です: 
 
 \begin{figure}[H]
   \centering
@@ -250,210 +134,109 @@ condition:
 \end{figure}
 
 \noindent
-Let's just pick one element from the set $\int_c \cat{C}(F c, G c)$.
-The two projections will map this element to two components of a
-particular transformation, let's call them:
+集合$\int_c \cat{C}(F c, G c)$から一つの要素を選び出しましょう。二つの射影はこの要素を特定の変換の二つのコンポーネントにマップします。それらを呼びましょう: 
 \begin{align*}
   \tau_a & \Colon F a \to G a \\
   \tau_b & \Colon F b \to G b
 \end{align*}
-In the left branch, we lift a pair of morphisms
-$\langle \idarrow[a], G f \rangle$ using the hom-functor. You
-may recall that such lifting is implemented as simultaneous pre- and
-post-composition. When acting on $\tau_a$ the lifted pair gives us:
+左の枝では、ペアの射$\langle \idarrow[a], G f \rangle$をホム関手で持ち上げます。そのような持ち上げは同時に前置きと後置きの合成として実装されることを思い出してください。$\tau_a$に作用する持ち上げられたペアは次のようになります: 
 \[G f \circ \tau_a \circ \idarrow[a]\]
-The other branch of the diagram gives us:
+図の他の枝は次のようになります: 
 \[\idarrow[b] \circ \tau_b \circ F f\]
-Their equality, demanded by the wedge condition, is nothing but the
-naturality condition for $\tau$.
+くさび条件によって要求される彼らの等式は、$\tau$の自然性条件に他なりません。
 
-\section{Coends}
-As expected, the dual to an end is called a coend. It is constructed
-from a dual to a wedge called a cowedge (pronounced co-wedge, not
-cow-edge).
+\section{余エンド}
+予想通り、エンドの双対は余エンドと呼ばれます。これは余くさび (cowedge、コウェッジと発音されます、カウエッジではありません) と呼ばれるくさびの双対から構成されます。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.25\textwidth]{images/end-31.jpg}
-  \caption{An edgy cow?}
+  \caption{エッジの効いた牛？}
 \end{figure}
 
 \noindent
-The symbol for a coend is the integral sign with the ``integration
-variable'' in the superscript position:
+余エンドのシンボルは積分符号で、「積分変数」は上付き文字の位置にあります: 
 \[\int^c p\ c\ c\]
-Just like the end is related to a product, the coend is related to a
-coproduct, or a sum (in this respect, it resembles an integral, which is
-a limit of a sum). Rather than having projections, we have injections
-going from the diagonal elements of the profunctor down to the coend. If
-it weren't for the cowedge conditions, we could say that the coend of
-the profunctor $p$ is either $p\ a\ a$, or
-$p\ b\ b$, or $p\ c\ c$, and so on. Or we could say that
-there exists such an $a$ for which the coend is just the set
-$p\ a\ a$. The universal quantifier that we used in the
-definition of the end turns into an existential quantifier for the
-coend.
+エンドが積に関連しているように、余エンドは余積、つまり和 (この点で、それは積分に似ています、それは和の極限です) に関連しています。射影の代わりに、私たちはプロ関手の対角要素から余エンドへの入射を持っています。もしくさび条件がなければ、プロ関手$p$の余エンドは$p\ a\ a$、または$p\ b\ b$、または$p\ c\ c$などのいずれかであり、またはそのような$a$が存在し、余エンドは単に集合$p\ a\ a$であると言うことができます。エンドの定義に使用された全称量化子は余エンドに対しては存在量化子になります。
 
-This is why, in pseudo-Haskell, we would define the coend as:
+このため、擬似Haskellでは、余エンドを次のように定義します: 
 
 \begin{snip}{text}
 exists a. p a a
 \end{snip}
-The standard way of encoding existential quantifiers in Haskell is to
-use universally quantified data constructors. We can thus define:
+存在量化子をHaskellでエンコードする標準的な方法は、全称量化されたデータコンストラクタを使用することです。したがって、定義することができます: 
 
 \src{snippet14}
-The logic behind this is that it should be possible to construct a coend
-using a value of any of the family of types $p\ a\ a$, no matter
-what $a$ we chose.
+これの背後にある論理は、任意の族の型$p\ a\ a$の値を使用して余エンドを構成できるはずです、私たちが選んだどんな$a$に関係なく。
 
-Just like an end can be defined using an equalizer, a coend can be
-described using a \newterm{coequalizer}. All the cowedge conditions can be
-summarized by taking one gigantic coproduct of $p\ a\ b$ for all
-possible functions $b \to a$. In Haskell, that would be
-expressed as an existential type:
+エンドがイコライザを使って定義できるように、余エンドも\newterm{余イコライザ}を使って記述できます。全てのくさび条件は、$p\ a\ b$の全ての可能な関数$b \to a$に対する一つの巨大な余積を取ることで要約できます。Haskellでは、それは実存型として表現されます: 
 
 \src{snippet15}
-There are two ways of evaluating this sum type, by lifting the function
-using \code{dimap} and applying it to the profunctor $p$:
+この和型は、\code{dimap}を使用して関数を持ち上げ、それをプロ関手$p$に適用することで二つの方法で評価できます: 
 
 \src{snippet16}
-where \code{DiagSum} is the sum of diagonal elements of $p$:
+ここで\code{DiagSum}は$p$の対角要素の和です: 
 
 \src{snippet17}
-The coequalizer of these two functions is the coend. A coequalizer is
-obtained from \code{DiagSum p} by identifying values that are
-obtained by applying \code{lambda} or \code{rho} to the same
-argument. Here, the argument is a pair consisting of a function
-$b \to a$ and an element of $p\ a\ b$. The
-application of \code{lambda} and \code{rho} produces two potentially
-different values of the type \code{DiagSum p}. In the coend, these
-two values are identified, making the cowedge condition automatically
-satisfied.
+これら二つの関数の余イコライザは余エンドです。余イコライザは\code{DiagSum p}から、\code{lambda}または\code{rho}を同じ引数に適用することで得られる値を識別することによって得られます。引数は関数$b \to a$と要素$p\ a\ b$のペアです。\code{lambda}と\code{rho}の適用は、型\code{DiagSum p}の二つの潜在的に異なる値を生成します。余エンドでは、これら二つの値は識別され、くさび条件が自動的に満たされます。
 
-The process of identification of related elements in a set is formally
-known as taking a quotient. To define a quotient we need an
-\newterm{equivalence relation} $\sim$, a relation that
-is reflexive, symmetric, and transitive:
+関連する要素を集合で識別するプロセスは、形式的には商を取ることとして知られています。商を定義するためには、\newterm{同値関係} $\sim$が必要です。関係は反射的、対称的、推移的でなければなりません: 
 \begin{align*}
    & a \sim a                                                         \\
-   & \text{if}\ a \sim b\ \text{then}\ b \sim a                       \\
-   & \text{if}\ a \sim b\ \text{and}\ b \sim c\ \text{then}\ a \sim c
+   & \text{もし}\ a \sim b\ \text{ならば}\ b \sim a                       \\
+   & \text{もし}\ a \sim b\ \text{かつ}\ b \sim c\ \text{ならば}\ a \sim c
 \end{align*}
-Such a relation splits the set into equivalence classes. Each class
-consists of elements that are related to each other. We form a quotient
-set by picking one representative from each class. A classic example is
-the definition of rational numbers as pairs of whole numbers with the
-following equivalence relation:
+このような関係は、集合を同値クラスに分割します。各クラスは互いに関連する要素で構成されます。我々は、各クラスから代表を選んで商集合を形成します。典型的な例は、以下の同値関係を持つ整数のペアの定義による有理数の定義です: 
 \[(a, b) \sim (c, d)\ \text{iff}\ a * d = b * c\]
-It's easy to check that this is an equivalence relation. A pair
-$(a, b)$ is interpreted as a fraction $\frac{a}{b}$, and
-fractions whose numerator and denominator have a common divisor are identified. A rational number
-is an equivalence class of such fractions.
+これが同値関係であることは簡単に確認できます。ペア$(a, b)$は分数$\frac{a}{b}$として解釈され、分子と分母に共通の除数がある分数は識別されます。有理数はそのような分数の同値クラスです。
 
-You might recall from our earlier discussion of limits and colimits that
-the hom-functor is continuous, that is, it preserves limits. Dually, the
-contravariant hom-functor turns colimits into limits. These properties
-can be generalized to ends and coends, which are a generalization of
-limits and colimits, respectively. In particular, we get a very useful
-identity for converting coends to ends:
+我々は以前の極限と余極限の議論から、ホム関手が連続である、つまり極限を保存することを思い出してください。双対的に、反変ホム関手は余極限を極限に変換します。これらの性質はエンドと余エンドに一般化されます。エンドと余エンドはそれぞれ極限と余極限の一般化です。特に、次のような非常に便利な恒等式が得られます: 
 \[\Set(\int^x p\ x\ x, c) \cong \int_x \Set(p\ x\ x, c)\]
-Let's have a look at it in pseudo-Haskell:
+これを擬似Haskellで見てみましょう: 
 
 \begin{snipv}
 (exists x. p x x) -> c \ensuremath{\cong} forall x. p x x -> c
 \end{snipv}
-It tells us that a function that takes an existential type is equivalent
-to a polymorphic function. This makes perfect sense, because such a
-function must be prepared to handle any one of the types that may be
-encoded in the existential type. It's the same principle that tells us
-that a function that accepts a sum type must be implemented as a case
-statement, with a tuple of handlers, one for every type present in the
-sum. Here, the sum type is replaced by a coend, and a family of handlers
-becomes an end, or a polymorphic function.
+これは、実存型を取る関数が多相的関数と等価であることを教えてくれます。そのような関数は、実存型にエンコードされている可能性のある任意の型を処理する準備ができていなければなりません。これは、和型を受け入れる関数がケース文として実装されなければならず、和に存在する各型に対するハンドラのタプルを持つという同じ原理です。ここでは、和型が余エンドに置き換えられ、ハンドラの族はエンド、または多相的関数になります。
 
-\section{Ninja Yoneda Lemma}
+\section{忍者米田の補題}
 
-The set of natural transformations that appears in the Yoneda lemma may
-be encoded using an end, resulting in the following formulation:
+米田の補題に出てくる自然変換の集合は、エンドを使用して次のようにエンコードできます: 
 \[\int_z \Set(\cat{C}(a, z), F z) \cong F a\]
-There is also a dual formula:
+また、双対の式もあります: 
 \[\int^z \cat{C}(z, a)\times{}F z \cong F a\]
-This identity is strongly reminiscent of the formula for the Dirac delta
-function (a function $\delta(a - z)$, or rather a distribution, that
-has an infinite peak at $a = z$). Here, the hom-functor plays
-the role of the delta function.
+この恒等式は、Diracのデルタ関数 ($a = z$で無限大のピークを持つ関数$\delta(a - z)$、またはむしろ超関数) の式を強く思い起こさせます。ここでは、ホム関手がデルタ関数の役割を果たします。
 
-Together these two identities are sometimes called the Ninja Yoneda
-lemma.
+これら二つの恒等式は、時々忍者米田の補題と呼ばれます。
 
-To prove the second formula, we will use the consequence of the Yoneda
-embedding, which states that two objects are isomorphic if and only if
-their hom-functors are isomorphic. In other words $a \cong b$ if
-and only if there is a natural transformation of the type:
-\[[\cat{C}, \Set](\cat{C}(a, -), \cat{C}(b, =))\]
-that is an isomorphism.
-
-We start by inserting the left-hand side of the identity we want to
-prove inside a hom-functor that's going to some arbitrary object
-$c$:
+第二の式を証明するために、任意の対象$c$へ行くホム関手の中に証明したい恒等式の左側を挿入します: 
 \[\Set(\int^z \cat{C}(z, a)\times{}F z, c)\]
-Using the continuity argument, we can replace the coend with the end:
+連続性の議論を使用して、余エンドをエンドに置き換えることができます: 
 \[\int_z \Set(\cat{C}(z, a)\times{}F z, c)\]
-We can now take advantage of the adjunction between the product and the
-exponential:
+これで、積と指数関数の間の随伴を利用することができます: 
 \[\int_z \Set(\cat{C}(z, a), c^{(F z)})\]
-We can ``perform the integration'' by using the Yoneda lemma to get:
+今、積分を「実行」することができます。米田の補題を使用して次のように得られます: 
 \[c^{(F a)}\]
-(Notice that we used the contravariant version of the Yoneda lemma,
-since the functor $c^{(F z)}$ is contravariant in $z$.)
-This exponential object is isomorphic to the hom-set:
+ (ここでは、関手$c^{(F z)}$が$z$において反変であるため、米田の補題の反変版を使用しました。) 
+この指数関数対象はホム集合に同型です: 
 \[\Set(F a, c)\]
-Finally, we take advantage of the Yoneda embedding to arrive at the
-isomorphism:
+最後に、米田の埋め込みを利用して、次の同型に到達します: 
 \[\int^z \cat{C}(z, a)\times{}F z \cong F a\]
 
-\section{Profunctor Composition}
+\section{プロ関手の合成}
 
-Let's explore further the idea that a profunctor describes a relation
---- more precisely, a proof-relevant relation, meaning that the set
-$p\ a\ b$ represents the set of proofs that $a$ is related
-to $b$. If we have two relations $p$ and $q$ we can
-try to compose them. We'll say that $a$ is related to $b$
-through the composition of $q$ after $p$ if there exist an
-intermediary object $c$ such that both $q\ b\ c$ and
-$p\ c\ a$ are non-empty. The proofs of this new relation are all
-pairs of proofs of individual relations. Therefore, with the
-understanding that the existential quantifier corresponds to a coend,
-and the Cartesian product of two sets corresponds to ``pairs of
-proofs,'' we can define composition of profunctors using the following
-formula:
+プロ関手が関係を記述する、より正確には証明関連関係を記述するというアイデアをさらに探求しましょう。集合$p\ a\ b$は$a$が$b$に関連している証明の集合を表します。もし私たちが二つの関係$p$と$q$を持っているなら、それらを合成してみることができます。$a$が$q$の後に$p$を介して$b$に関連していると言います。もし中間対象$c$が存在し、両方の$q\ b\ c$と$p\ c\ a$が空でない場合です。この新しい関係の証明は個々の関係の証明のペアです。したがって、存在量化子が余エンドに対応し、二つの集合のデカルト積が「証明のペア」に対応することを理解すると、次の式を使用してプロ関手の合成を定義できます: 
 \[(q \circ p)\ a\ b = \int^c p\ c\ a\times{}q\ b\ c\]
-Here's the equivalent Haskell definition from
-\code{Data.Profunctor.Composition}, after some renaming:
+これが\code{Data.Profunctor.Composition}からの同等のHaskell定義です、いくつかの名前を変更した後: 
 
 \src{snippet18}
-This is using generalized algebraic data type, or \acronym{GADT} syntax, in which
-a free type variable (here \code{c}) is automatically existentially
-quantified. The (uncurried) data constructor \code{Procompose} is
-thus equivalent to:
+これは、一般化代数データ型、または\acronym{GADT}構文を使用しています。ここで自由な型変数 (ここでは\code{c}) は自動的に存在量化されます。したがって、 (非Curry化された) データコンストラクタ\code{Procompose}は次に等価です: 
 
 \begin{snip}{text}
 exists c. (q a c, p c b)
 \end{snip}
-The unit of so defined composition is the hom-functor --- this
-immediately follows from the Ninja Yoneda lemma. It makes sense,
-therefore, to ask the question if there is a category in which
-profunctors serve as morphisms. The answer is positive, with the caveat
-that both associativity and identity laws for profunctor composition
-hold only up to natural isomorphism. Such a category, where laws are
-valid up to isomorphism, is called a bicategory (which is more general
-than a $\cat{2}$-category). So we have a bicategory $\cat{Prof}$, in which
-objects are categories, morphisms are profunctors, and morphisms between
-morphisms (a.k.a., two-cells) are natural transformations. In fact, one
-can go even further, because beside profunctors, we also have regular
-functors as morphisms between categories. A category which has two types
-of morphisms is called a double category.
+定義された合成の単位はホム関手です。これは忍者米田の補題から直ちに従います。したがって、プロ関手が射として機能する圏があるかどうかを尋ねることは理にかなっています。答えは肯定的ですが、プロ関手の合成の結合性と恒等性の規則は自然同型に関してのみ成り立つという注意が必要です。このような規則が同型によってのみ成り立つ圏は、双圏 (それは$\cat{2}$-圏よりも一般的です) と呼ばれます。したがって、双圏$\cat{Prof}$があります。ここで、対象は圏であり、射はプロ関手であり、射間の射 (二セルとも呼ばれます) は自然変換です。実際、さらに進んで、通常の関手と共にプロ関手も圏間の射として持つことができます。二つの射のタイプを持つ圏は二重圏と呼ばれます。
 
-Profunctors play an important role in the Haskell lens library and in
-the arrow library.
+プロ関手は、Haskellのlensライブラリやarrowライブラリで重要な役割を果たします。
+
+

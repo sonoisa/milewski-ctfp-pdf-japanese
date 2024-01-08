@@ -1,121 +1,44 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{T}{here is no good place} to end a book on category theory. There's always
-more to learn. Category theory is a vast subject. At the same time, it's
-obvious that the same themes, concepts, and patterns keep showing up
-over and over again. There is a saying that all concepts are Kan
-extensions and, indeed, you can use Kan extensions to derive limits,
-colimits, adjunctions, monads, the Yoneda lemma, and much more. The
-notion of a category itself arises at all levels of abstraction, and so
-does the concept of a monoid and a monad. Which one is the most basic?
-As it turns out they are all interrelated, one leading to another in a
-never-ending cycle of abstractions. I decided that showing these
-interconnections might be a good way to end this book.
+\lettrine[lhang=0.17]{圏}{論}に関する本を終わらせる最適な場所はありません。学ぶべきことは常にあります。圏論は広大な主題です。同時に、同じテーマ、概念、パターンが何度も何度も現れることが明らかです。すべての概念がKan拡張であるという言葉があります。実際、Kan拡張を使用して極限、余極限、随伴、モナド、米田の補題などを導き出すことができます。圏の概念自体は、あらゆる抽象化レベルで現れ、モノイドやモナドの概念も同様です。どれが最も基本的かというと、実はすべてが相互関連しており、一つが次へとつながる終わりのない抽象化のサイクルになっています。これらの相互接続を示すことが、この本を終わらせる良い方法かもしれません。
 
-\section{Bicategories}
+\section{双圏}
 
-One of the most difficult aspects of category theory is the constant
-switching of perspectives. Take the category of sets, for instance. We
-are used to defining sets in terms of elements. An empty set has no
-elements. A singleton set has one element. A Cartesian product of two
-sets is a set of pairs, and so on. But when talking about the category
-$\Set$ I asked you to forget about the contents of sets and
-instead concentrate on morphisms (arrows) between them. You were
-allowed, from time to time, to peek under the covers to see what a
-particular universal construction in $\Set$ described in terms of
-elements. The terminal object turned out to be a set with one element,
-and so on. But these were just sanity checks.
+圏論の最も難しい側面の一つは、視点の絶え間ない切り替えです。たとえば、集合の圏を考えてみましょう。私たちは、要素の観点から集合を定義することに慣れています。空集合には要素がありません。単集合には要素が一つあります。二つの集合の直積は、ペアの集合です、等々。しかし、集合の圏$\Set$について話すとき、集合の内容を忘れて、その間の射 (矢印) に集中するように求めました。たまには、特定の普遍構成が$\Set$の要素の観点から何を記述しているのかを覗き見ることが許されていました。終対象は一つの要素を持つ集合であることがわかります、等々。しかし、これらは単なる健全性チェックでした。
 
-A functor is defined as a mapping of categories. It's natural to
-consider a mapping as a morphism in a category. A functor turned out to
-be a morphism in the category of categories (small categories, if we
-want to avoid questions about size). By treating a functor as an arrow,
-we forfeit the information about its action on the internals of a
-category (its objects and morphisms), just like we forfeit the
-information about the action of a function on elements of a set when we
-treat it as an arrow in $\Set$. But functors between any two
-categories also form a category. This time you are asked to consider
-something that was an arrow in one category to be an object in another.
-In a functor category functors are objects and natural transformations
-are morphisms. We have discovered that the same thing can be an arrow in
-one category and an object in another. The naive view of objects as
-nouns and arrows as verbs doesn't hold.
+関手は圏の写像として定義されます。写像を圏の射として考えるのは自然なことです。関手は圏の圏 (小さな圏であれば、サイズに関する質問を避けることができます) の射としてわかりました。関手を射として扱うことにより、圏の内部 (その対象と射) に対するその作用の情報を放棄することになります。これは、集合の要素に対する関数の作用の情報を放棄するのと同じです、それを$\Set$の射として扱うときです。しかし、任意の二つの圏間の関手もまた圏を形成します。今度は、一つの圏の射だったものを、別の圏の対象として考えるように求められます。関手圏では、関手は対象であり、自然変換は射です。同じものが、一つの圏では射であり、別の圏では対象であることがわかりました。対象を名詞、射を動詞とする素朴な視点は成り立ちません。
 
-Instead of switching between two views, we can try to merge them into
-one. This is how we get the concept of a $\cat{2}$-category, in which objects
-are called $0$-cells, morphisms are $1$-cells, and morphisms between
-morphisms are $2$-cells.
+二つの視点を切り替える代わりに、一つに統合しようとすることができます。こうして$\cat{2}$-圏の概念が得られます。ここでは、対象を$0$-セル、射を$1$-セル、射間の射を$2$-セルと呼びます。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.35\textwidth]{images/twocat.png}
-  \caption{$0$-cells $a, b$; $1$-cells $f, g$; and a $2$-cell $\alpha$.}
+  \caption{$0$-セル $a, b$；$1$-セル $f, g$；そして$2$-セル $\alpha$.}
 \end{figure}
 
 \noindent
-The category of categories $\Cat$ is an immediate example. We have
-categories as $0$-cells, functors as $1$-cells, and natural transformations
-as $2$-cells. The laws of a $\cat{2}$-category tell us that $1$-cells between any
-two $0$-cells form a category (in other words, $\cat{C}(a, b)$ is a
-hom-category rather than a hom-set). This fits nicely with our earlier
-assertion that functors between any two categories form a functor
-category.
+圏の圏$\Cat$はすぐに思いつく例です。ここでは、圏が$0$-セル、関手が$1$-セル、自然変換が$2$-セルです。$\cat{2}$-圏の規則は、任意の二つの$0$-セル間の$1$-セルが圏を形成することを教えてくれます (言い換えると、$\cat{C}(a, b)$はホム集合ではなくホム圏です) 。これは、任意の二つの圏間の関手が関手圏を形成するという以前の主張とよく合います。
 
-In particular, $1$-cells from any $0$-cell back to itself also form a
-category, the hom-category $\cat{C}(a, a)$; but that category has even
-more structure. Members of $\cat{C}(a, a)$ can be viewed as arrows in
-$\cat{C}$ or as objects in $\cat{C}(a, a)$. As arrows, they can be
-composed with each other. But when we look at them as objects, the
-composition becomes a mapping from a pair of objects to an object. In
-fact it looks very much like a product --- a tensor product to be
-precise. This tensor product has a unit: the identity $1$-cell. It turns
-out that, in any $\cat{2}$-category, a hom-category $\cat{C}(a, a)$ is
-automatically a monoidal category with the tensor product defined as
-composition of $1$-cells. Associativity and unit laws simply fall out from
-the corresponding category laws.
+特に、任意の$0$-セルからそれ自身への$1$-セルも圏、ホム圏$\cat{C}(a, a)$を形成します。しかし、この圏はさらに多くの構造を持っています。$\cat{C}(a, a)$のメンバーは、$\cat{C}$の射として、または$\cat{C}(a, a)$の対象として見ることができます。射として、それらは互いに合成することができます。しかし、対象として見たとき、合成は対象のペアから対象への写像となります。実際、それは積―正確にはテンソル積―と非常に似ています。このテンソル積には単位があります: 恒等$1$-セルです。実際には、任意の$\cat{2}$-圏のホム圏$\cat{C}(a, a)$は、$1$-セルの合成として定義されたテンソル積を持つモノイダル圏と自動的になります。結合則と単位則は、対応する圏の規則から単純に導かれます。
 
-Let's see what this means in our canonical example of a $\cat{2}$-category
-$\Cat$. The hom-category $\Cat(a, a)$ is the category of
-endofunctors on $a$. Endofunctor composition plays the role of a
-tensor product in it. The identity functor is the unit with respect to
-this product. We've seen before that endofunctors form a monoidal
-category (we used this fact in the definition of a monad), but now we
-see that this is a more general phenomenon: endo-$1$-cells in any
-$\cat{2}$-category form a monoidal category. We'll come back to it later when we
-generalize monads.
+さて、このことが我々の標準的な$\cat{2}$-圏$\Cat$の例で何を意味するのかを見てみましょう。ホム圏$\Cat(a, a)$は、$a$の上の自己関手の圏です。自己関手の合成は、テンソル積の役割を果たします。恒等関手は、この積に対する単位です。以前、自己関手がモノイダル圏を形成することを見ました (これはモナドの定義に使用されましたが) 、しかし今、これがより一般的な現象であることがわかります: 任意の$\cat{2}$-圏の自己$1$-セルはモノイダル圏を形成します。後で、モナドを一般化するときに、これに戻ってきます。
 
-You might recall that, in a general monoidal category, we did not insist
-on the monoid laws being satisfied on the nose. It was often enough for
-the unit laws and the associativity laws to be satisfied up to
-isomorphism. In a $\cat{2}$-category, monoidal laws in $\cat{C}(a, a)$ follow
-from composition laws for $1$-cells. These laws are strict, so we will
-always get a strict monoidal category. It is, however, possible to relax
-these laws as well. We can say, for instance, that a composition of the
-identity $1$-cell $\idarrow[a]$ with another $1$-cell,
-$f \Colon a \to b$, is isomorphic, rather than equal,
-to $f$. Isomorphism of $1$-cells is defined using $2$-cells. In other
-words, there is a $2$-cell:
+一般的なモノイダル圏では、モノイド則が厳密に満たされる必要はないことを覚えているかもしれません。単位則と結合則が同型まで満たされれば十分でした。$\cat{2}$-圏では、$\cat{C}(a, a)$のモノイダル則は$1$-セルの合成則から導かれます。これらの規則は厳密なので、常に厳密なモノイダル圏を得ます。ただし、これらの規則を緩和することも可能です。たとえば、恒等$1$-セル$\idarrow[a]$と別の$1$-セル、$f \Colon a \to b$の合成が、$f$と等しいという代わりに、$f$と同型であると言うことができます。$1$-セルの同型は$2$-セルを使用して定義されます。言い換えると、以下のような$2$-セルがあります。
 \[\rho \Colon f \circ \idarrow[a] \to f\]
-that has an inverse.
+それは逆を持っています。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.35\textwidth]{images/bicat.png}
-  \caption{Identity law in a bicategory holds up to isomorphism (an invertible
-    $2$-cell $\rho$).}
+  \caption{双圏の恒等性は同型 (可逆な$2$-セル $\rho$) まで成立します。}
 \end{figure}
 
 \noindent
-We can do the same for the left identity and associativity laws. This
-kind of relaxed $\cat{2}$-category is called a bicategory (there are some
-additional coherency laws, which I will omit here).
+左恒等性と結合則についても同じことができます。このような緩和された$\cat{2}$-圏は双圏と呼ばれます (ここでは省略しますが、いくつかの追加の整合性規則があります) 。
 
-As expected, endo-$1$-cells in a bicategory form a general monoidal
-category with non-strict laws.
+予想通り、双圏の自己$1$-セルは非厳密な規則を持つ一般的なモノイダル圏を形成します。
 
-An interesting example of a bicategory is the category of spans. A span
-between two objects $a$ and $b$ is an object $x$
-and a pair of morphisms:
+双圏の興味深い例は、スパンの圏です。二つの対象$a$と$b$の間のスパンは、対象$x$と一対の射のペアです: 
 \begin{gather*}
   f \Colon x \to a \\
   g \Colon x \to b
@@ -127,10 +50,7 @@ and a pair of morphisms:
 \end{figure}
 
 \noindent
-You might recall that we used spans in the definition of a categorical
-product. Here, we want to look at spans as $1$-cells in a bicategory. The
-first step is to define a composition of spans. Suppose that we have an
-adjoining span:
+圏論的な積の定義にスパンを使用したことを思い出すかもしれません。ここでは、双圏の$1$-セルとしてスパンを見てみたいと思います。スパンの合成を定義する最初のステップはです。隣接するスパンを持っていると仮定します: 
 \begin{gather*}
   f' \Colon y \to b \\
   g' \Colon y \to c
@@ -142,17 +62,14 @@ adjoining span:
 \end{figure}
 
 \noindent
-The composition would be a third span, with some apex $z$. The
-most natural choice for it is the pullback of $g$ along
-$f'$. Remember that a pullback is the object $z$
-together with two morphisms:
+合成は第三のスパンであり、その頂点は何らかの$z$です。それに対する最も自然な選択は、$g$と$f'$の引き戻しです。引き戻しとは、$z$と二つの射のペアです: 
 \begin{align*}
   h  & \Colon z \to x \\
   h' & \Colon z \to y
 \end{align*}
-such that:
+そのような: 
 \[g \circ h = f' \circ h'\]
-which is universal among all such objects.
+これは、すべてのそのような対象の中で普遍的なものです。
 
 \begin{figure}[H]
   \centering
@@ -160,49 +77,26 @@ which is universal among all such objects.
 \end{figure}
 
 \noindent
-For now, let's concentrate on spans over the category of sets. In that
-case, the pullback is just a set of pairs $(p, q)$ from the
-Cartesian product $x \times y$ such that:
+今のところ、集合の圏におけるスパンに集中しましょう。この場合、引き戻しは単にペア$(p, q)$の集合です$x \times y$からで、次のようになります: 
 \[g\ p = f'\ q\]
-A morphism between two spans that share the same endpoints is defined as
-a morphism $h$ between their apices, such that the appropriate
-triangles commute.
+二つのスパンが同じ終点を共有している場合のスパン間の射は、それらの頂点間の射$h$として定義され、適切な三角形が可換であることが求められます。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{images/morphspan.png}
-  \caption{A $2$-cell in $\cat{Span}$.}
+  \caption{スパン内の$2$-セル $\cat{Span}$.}
 \end{figure}
 
 \noindent
-To summarize, in the bicategory $\cat{Span}$: $0$-cells are sets, $1$-cells
-are spans, $2$-cells are span morphisms. An identity $1$-cell is a
-degenerate span in which all three objects are the same, and the two
-morphisms are identities.
+要約すると、双圏$\cat{Span}$では: $0$-セルは集合、$1$-セルはスパン、$2$-セルはスパン射です。恒等$1$-セルは、すべての三つの対象が同じで、二つの射が恒等である退化したスパンです。
 
-We've seen another example of a bicategory before: the bicategory
-$\cat{Prof}$ of
-\hyperref[ends-and-coends]{profunctors},
-where 0-cells are categories, 1-cells are profunctors, and 2-cells are
-natural transformations. The composition of profunctors was given by a
-coend.
+以前にも双圏の例を見ました: プロ関手の双圏$\cat{Prof}$では、0-セルは圏、1-セルはプロ関手、2-セルは自然変換です。プロ関手の合成は余エンドによって与えられました。
 
-\section{Monads}
+\section{モナド}
 
-By now you should be pretty familiar with the definition of a monad as a
-monoid in the category of endofunctors. Let's revisit this definition
-with the new understanding that the category of endofunctors is just one
-small hom-category of endo-$1$-cells in the bicategory $\Cat$. We
-know it's a monoidal category: the tensor product comes from the
-composition of endofunctors. A monoid is defined as an object in a
-monoidal category --- here it will be an endofunctor $T$ ---
-together with two morphisms. Morphisms between endofunctors are natural
-transformations. One morphism maps the monoidal unit --- the identity
-endofunctor --- to $T$:
+この時点で、モナドが自己関手の圏のモノイドとしての定義にかなり慣れているはずです。双圏$\Cat$の小さいホム圏の自己$1$-セルのみならず、モナドの新しい理解を持ってこの定義を再訪しましょう。自己関手の圏はモノイダル圏です: テンソル積は自己関手の合成から来ます。モノイドは、ここでは終関手$T$を持つモノイダル圏の対象として定義されます—二つの射と共に。射は自己関手間の射です、すなわち自然変換です。一つの射はモノイダル単位—恒等自己関手—を$T$に写します: 
 \[\eta \Colon I \to T\]
-The second morphism maps the tensor product of $T \otimes T$ to
-$T$. The tensor product is given by endofunctor composition, so
-we get:
+二つ目の射は$T \otimes T$のテンソル積を$T$に写します。テンソル積は自己関手の合成によって与えられるので、私たちは得ます: 
 \[\mu \Colon T \circ T \to T\]
 
 \begin{figure}[H]
@@ -211,20 +105,14 @@ we get:
 \end{figure}
 
 \noindent
-We recognize these as the two operations defining a monad (they are
-called \code{return} and \code{join} in Haskell), and we know that
-monoid laws turn to monad laws.
+これらはモナドを定義する二つの操作として認識します (Haskellでは\code{return}と\code{join}と呼ばれます) 、そしてモノイド則はモナド則になります。
 
-Now let's remove all mention of endofunctors from this definition. We
-start with a bicategory $\cat{C}$ and pick a $0$-cell $a$ in it.
-As we've seen earlier, the hom-category $\cat{C}(a, a)$ is a monoidal
-category. We can therefore define a monoid in $\cat{C}(a, a)$ by
-picking a $1$-cell, $T$, and two $2$-cells:
+さて、この定義から自己関手の言及をすべて取り除きましょう。双圏$\cat{C}$を始めにして、それにおける$0$-セル$a$を選びます。以前に見たように、ホム圏$\cat{C}(a, a)$はモノイダル圏です。したがって、$\cat{C}(a, a)$におけるモノイドを定義することができます。$1$-セル、$T$を選び、そして二つの$2$-セルを選びます: 
 \begin{align*}
   \eta & \Colon I \to T         \\
   \mu  & \Colon T \circ T \to T
 \end{align*}
-satisfying the monoid laws. We call \emph{this} a monad.
+モノイド則を満たすようにします。これをモナドと呼びます。
 
 \begin{figure}[H]
   \centering
@@ -232,16 +120,9 @@ satisfying the monoid laws. We call \emph{this} a monad.
 \end{figure}
 
 \noindent
-That's a much more general definition of a monad using only $0$-cells,
-$1$-cells, and $2$-cells. It reduces to the usual monad when applied to the
-bicategory $\Cat$. But let's see what happens in other
-bicategories.
+これは、$0$-セル、$1$-セル、そして$2$-セルを使ってのモナドのはるかに一般的な定義です。それは双圏$\Cat$に適用されるとき通常のモナドに簡約されます。しかし、他の双圏で何が起こるかを見てみましょう。
 
-Let's construct a monad in $\cat{Span}$. We pick a $0$-cell, which is a
-set that, for reasons that will become clear soon, I will call
-$\mathit{Ob}$. Next, we pick an endo-$1$-cell: a span from $\mathit{Ob}$ back
-to $\mathit{Ob}$. It has a set at the apex, which I will call $\mathit{Ar}$,
-equipped with two functions:
+双圏$\cat{Span}$におけるモナドを構成しましょう。$0$-セルを選びます。これは、すぐに明らかになる理由から、私が$\mathit{Ob}$と呼ぶことにする集合です。次に、自己$1$-セルを選びます: $\mathit{Ob}$から$\mathit{Ob}$へのスパンです。頂点にある集合を$\mathit{Ar}$と呼びます。二つの関数で装備されています: 
 \begin{align*}
   \mathit{dom} & \Colon \mathit{Ar} \to \mathit{Ob} \\
   \mathit{cod} & \Colon \mathit{Ar} \to \mathit{Ob}
@@ -253,18 +134,9 @@ equipped with two functions:
 \end{figure}
 
 \noindent
-Let's call the elements of the set $\mathit{Ar}$ ``arrows.'' If I also
-tell you to call the elements of $\mathit{Ob}$ ``objects,'' you might get
-a hint where this is leading to. The two functions $\mathit{dom}$ and
-$\mathit{cod}$ assign the domain and the codomain to an ``arrow.''
+集合$\mathit{Ar}$の要素を「射」と呼びましょう。また、$\mathit{Ob}$の要素を「対象」と呼ぶことにすれば、どこに行くのかヒントが得られるかもしれません。二つの関数$\mathit{dom}$と$\mathit{cod}$は、「射」に始域と終域を割り当てます。
 
-To make our span into a monad, we need two $2$-cells, $\eta$ and
-$\mu$. The monoidal unit, in this case, is the trivial span from
-$\mathit{Ob}$ to $\mathit{Ob}$ with the apex at $\mathit{Ob}$ and two identity
-functions. The $2$-cell $\eta$ is a function between the apices
-$\mathit{Ob}$ and $\mathit{Ar}$. In other words, $\eta$ assigns an
-``arrow'' to every ``object.'' A $2$-cell in $\cat{Span}$ must satisfy
-commutation conditions --- in this case:
+私たちのスパンをモナドにするためには、二つの$2$-セル、$\eta$と$\mu$が必要です。この場合のモノイダル単位は、頂点が$\mathit{Ob}$にある$\mathit{Ob}$から$\mathit{Ob}$への自明なスパンです、そして二つの恒等関数です。$2$-セル$\eta$は、頂点$\mathit{Ob}$と$\mathit{Ar}$の間の関数です。言い換えると、$\eta$は「対象」ごとに「射」を割り当てます。$\cat{Span}$内の$2$-セルは、可換性条件を満たさなければなりません―この場合は: 
 \begin{align*}
   \mathit{dom} & \circ \eta = \id \\
   \mathit{cod} & \circ \eta = \id
@@ -276,20 +148,13 @@ commutation conditions --- in this case:
 \end{figure}
 
 \noindent
-In components, this becomes:
+コンポーネントで表すと、これは以下のようになります: 
 \[\mathit{dom}\ (\eta\ \mathit{ob}) = \mathit{ob} = \mathit{cod}\ (\eta\ \mathit{ob})\]
-where $\mathit{ob}$ is an ``object'' in $\mathit{Ob}$. In other words,
-$\eta$ assigns to every ``object'' and ``arrow'' whose domain and
-codomain are that ``object.'' We'll call this special ``arrow'' the
-``identity arrow.''
+ここで、$\mathit{ob}$は$\mathit{Ob}$の「対象」です。言い換えると、$\eta$は始域と終域がその「対象」である「射」をすべての「対象」に割り当てます。この特別な「射」を「恒等射」と呼びましょう。
 
-The second $2$-cell $\mu$ acts on the composition of the span
-$\mathit{Ar}$ with itself. The composition is defined as a pullback, so
-its elements are pairs of elements from $\mathit{Ar}$ --- pairs of
-``arrows'' $(a_1, a_2)$. The pullback condition is:
+二つ目の$2$-セル$\mu$は、スパン$\mathit{Ar}$の自己合成に作用します。合成は引き戻しとして定義されるので、その要素は$\mathit{Ar}$の要素のペア --- 「射」のペア$(a_1, a_2)$です。引き戻し条件は次のようになります: 
 \[\mathit{cod}\ a_1 = \mathit{dom}\ a_2\]
-We say that $a_1$ and $a_2$ are ``composable,'' because the
-domain of one is the codomain of the other.
+私たちは$a_1$と$a_2$が「合成可能」であると言います。なぜなら、一方の始域が他方の終域です。
 
 \begin{figure}[H]
   \centering
@@ -297,44 +162,32 @@ domain of one is the codomain of the other.
 \end{figure}
 
 \noindent
-The $2$-cell $\mu$ is a function that maps a pair of composable
-arrows $(a_1, a_2)$ to a single arrow $a_3$ from
-$\mathit{Ar}$. In other words $\mu$ defines composition of arrows.
+$2$-セル$\mu$は、合成可能な射のペア$(a_1, a_2)$を集合$\mathit{Ar}$の単一の射$a_3$に写します。言い換えると$\mu$は射の合成を定義します。
 
-It's easy to check that monad laws correspond to identity and
-associativity laws for arrows. We have just defined a category (a small
-category, mind you, in which objects and arrows form sets).
+モナド則が射の恒等性と結合性の規則に対応することを確認するのは簡単です。私たちはちょうど圏 (小さな圏です、対象と射が集合を形成します) を定義しました。
 
-So, all told, a category is just a monad in the bicategory of spans.
+つまり、圏はただの双圏のスパンにおけるモナドです。
 
-What is amazing about this result is that it puts categories on the same
-footing as other algebraic structures like monads and monoids. There is
-nothing special about being a category. It's just two sets and four
-functions. In fact we don't even need a separate set for objects,
-because objects can be identified with identity arrows (they are in
-one-to-one correspondence). So it's really just a set and a few
-functions. Considering the pivotal role that category theory plays in
-all of mathematics, this is a very humbling realization.
+この結果の驚くべき点は、それが圏をモナドやモノイドなどの他の代数的構造と同じ立場に置くことです。圏であることには何も特別なことはありません。それは単に二つの集合と四つの関数です。実際、対象のために別の集合が必要とされるわけではなく、対象は恒等射 (一対一の対応関係にあります) と同一視することができます。ですから、それは実際にはただの集合といくつかの関数です。数学のあらゆる分野で圏論が果たす中心的な役割を考えると、これは非常に謙虚な実現です。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Derive unit and associativity laws for the tensor product defined as
-        composition of endo-$1$-cells in a bicategory.
+        双圏における自己$1$-セルの合成として定義されるテンソル積の単位則と結合則を導出してください。
   \item
-        Check that monad laws for a monad in $\cat{Span}$ correspond to
-        identity and associativity laws in the resulting category.
+        $\cat{Span}$内のモナドのモナド則が、結果の圏における恒等性と結合性の規則に対応することを確認してください。
   \item
-        Show that a monad in $\cat{Prof}$ is an identity-on-objects functor.
+        $\cat{Prof}$内のモナドが対象上同一の関手であることを示してください。
   \item
-        What's a monad algebra for a monad in $\cat{Span}$?
+        $\cat{Span}$内のモナドのモナド代数とは何か？
 \end{enumerate}
 
-\section{Bibliography}
+\section{参考文献}
 \begin{enumerate}
   \tightlist
   \item
-        \urlref{https://graphicallinearalgebra.net/2017/04/16/a-monoid-is-a-category-a-category-is-a-monad-a-monad-is-a-monoid/}{Paweł Sobociński’s blog}.
+        \urlref{https://graphicallinearalgebra.net/2017/04/16/a-monoid-is-a-category-a-category-is-a-monad-a-monad-is-a-monoid/}{Paweł Sobocińskiのブログ}。
 \end{enumerate}
+

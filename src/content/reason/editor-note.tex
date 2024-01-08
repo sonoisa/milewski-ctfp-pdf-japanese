@@ -1,25 +1,17 @@
 % !TEX root = ctfp-print.tex
 
-\lettrine[lhang=0.17]{T}{his is the} ReasonML edition of \emph{Category Theory for Programmers}.
-It's been a tremendous success, making Bartosz Milewski's blog post series available as a nicely-
-typeset \acronym{PDF}, as well as a hardcover book. There have been numerous contributions made
-to improve the book, by fixing typos and errors, as well as translating the code snippets into
-other programming languages.
+\lettrine[lhang=0.17]{こ}{れは}、\emph{プログラマのための圏論}のReasonML版です。Bartosz Milewski氏のブログ記事シリーズを、美しく
+組版された\acronym{PDF}、そしてハードカバーの書籍として利用できるようになり、大変な成功を収めました。多くの貢献があり、
+タイプミスや誤りの修正、コードスニペットを他のプログラミング言語に翻訳する作業が行われました。
 
-I am thrilled to present this edition of the book, containing the original Haskell code, followed by
-its ReasonML counterpart. The ReasonML code snippets were converted from the OCaml snippets which were
-generously provided by \urlref{https://github.com/ArulselvanMadhavan/ocaml-ctfp}{ocaml-ctfp} contributors,
-and slightly modified to suit the format of this book.
+この本のこの版を紹介できることにわくわくしています。元のHaskellコードに続いて、そのReasonMLでの対応版を含んでいます。
+ReasonMLコードスニペットは、ocaml-ctfpの貢献者によって提供されたOCamlスニペットから変換され、この本の形式に合わせてわずかに修正されました。
 
-To support code snippets in multiple languages, I am using a \LaTeX{} macro to load the code snippets
-from external files. This allows easily extending the book with other languages, while leaving the
-original text intact. Which is why you should mentally append the words ``and ReasonML'' whenever you see
-``in Haskell'' in the text.
+複数の言語のコードスニペットをサポートするために、外部ファイルからコードスニペットを読み込む\LaTeX{}マクロを使用しています。
+これにより、元のテキストをそのままにしつつ、他の言語での本を簡単に拡張できます。そのため、テキスト内で「Haskellで」という言葉を見るたびに、心の中で「そしてReasonMLで」と言葉を足すべきです。
 
-The code is laid out in the following manner: the original Haskell code, followed by ReasonML code.
-To distinguish between them, the code snippets are braced from the left with a vertical bar, in the primary
-color of the language's logo, \raisebox{-.2mm}{\includegraphics[height=.3cm]{fig/icons/haskell.png}},
-and \raisebox{-.2mm}{\includegraphics[height=.3cm]{fig/icons/reason.png}} respectively, e.g.:
+コードは以下のようにレイアウトされています: 元のHaskellコードに続いて、ReasonMLコードがあります。これらを区別するために、
+コードスニペットはそれぞれの言語のロゴ \raisebox{-.2mm}{\includegraphics[height=.3cm]{fig/icons/haskell.png}} と \raisebox{-.2mm}{\includegraphics[height=.3cm]{fig/icons/reason.png}} の主要色を使用した縦棒で左側が囲まれています。例えば: 
 
 \srcsnippet{content/1.1/code/haskell/snippet03.hs}{blue}{haskell}
 \unskip

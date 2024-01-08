@@ -1,69 +1,34 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{N}{owadays you can't} talk about functional programming without mentioning
-monads. But there is an alternative universe in which, by chance,
-Eugenio Moggi turned his attention to Lawvere theories rather than
-monads. Let's explore that universe.
+\lettrine[lhang=0.17]{最}{近}では、モナドに言及せずに関数型プログラミングについて語ることはできません。しかし、偶然にも、Eugenio MoggiがモナドではなくLawvere理論に注目した別の宇宙が存在します。その宇宙を探検しましょう。
 
-\section{Universal Algebra}
+\section{普遍代数}
 
-There are many ways of describing algebras at various levels of
-abstraction. We try to find a general language to describe things like
-monoids, groups, or rings. At the simplest level, all these
-constructions define \emph{operations} on elements of a set, plus some
-\emph{laws} that must be satisfied by these operations. For instance, a
-monoid can be defined in terms of a binary operation that is
-associative. We also have a unit element and unit laws. But with a
-little bit of imagination we can turn the unit element to a nullary
-operation --- an operation that takes no arguments and returns a special
-element of the set. If we want to talk about groups, we add a unary
-operator that takes an element and returns its inverse. There are
-corresponding left and right inverse laws to go with it. A ring defines
-two binary operators plus some more laws. And so on.
+代数を説明する方法は、抽象度の異なる様々な方法があります。私たちは、モノイド、群、環などのような構造を説明する一般的な言語を見つけようとしています。最も単純なレベルでは、これらの構造はすべて、集合の要素に対する\emph{操作}と、これらの操作によって満たされなければならないいくつかの\emph{規則}を定義します。例えば、結合的な二項演算によってモノイドを定義することができます。また、単位要素と単位則があります。しかし、少し想像力を働かせれば、単位要素を引数を取らない零項演算 --- 特定の集合の要素を返す演算に変えることができます。群について話す場合は、要素を取り、その逆要素を返す単項演算子を追加します。それに伴う左右の逆規則があります。環は2つの二項演算子といくつかの追加の規則を定義します。等々です。
 
-The big picture is that an algebra is defined by a set of $n$-ary
-operations for various values of $n$, and a set of equational identities.
-These identities are all universally quantified. The associativity
-equation must be satisfied for all possible combinations of three
-elements, and so on.
+大まかなところでは、代数は様々な$n$の値に対する$n$項演算の集合と、恒等式の集合によって定義されます。これらの恒等式はすべて全称量化されています。結合性に関する式は3つの要素のすべての可能な組み合わせに対して満たされなければならない、等々です。
 
-Incidentally, this eliminates fields from consideration, for the simple
-reason that zero (unit with respect to addition) has no inverse with
-respect to multiplication. The inverse law for a field can't be
-universally quantified.
+偶然にも、これは0 (加法に関する単位要素) が乗法に関して逆を持たないという単純な理由で、体を考慮外にします。体の可逆則を全称量化することはできません。
 
-This definition of a universal algebra can be extended to categories
-other than $\Set$, if we replace operations (functions) with
-morphisms. Instead of a set, we select an object $a$ (called a
-generic object). A unary operation is just an endomorphism of
-$a$. But what about other arities (\newterm{arity} is the number of
-arguments for a given operation)? A binary operation (arity 2) can be
-defined as a morphism from the product $a\times{}a$ back to $a$.
-A general $n$-ary operation is a morphism from the $n^\text{th}$ power of
-$a$ to $a$:
+この普遍代数の定義は、操作 (関数) を射に置き換えることにより、$\Set$以外の圏に拡張することができます。集合の代わりに、私たちは一般的な対象$a$ (一般対象 (generic object) と呼ばれます) を選択します。単項演算は$a$の自己同型です。しかし、他のアリティ (\newterm{アリティ}は与えられた演算の引数の数です) についてはどうでしょうか？二項演算 (アリティ2) は、積$a\times{}a$から$a$への射として定義することができます。一般的な$n$項演算は、$a$の$n$乗から$a$への射です: 
 \[\alpha_n \Colon a^n \to a\]
-A nullary operation is a morphism from the terminal object (the zeroth
-power of $a$). So all we need in order to define any algebra is a
-category whose objects are powers of one special object $a$. The
-specific algebra is encoded in the hom-sets of this category. This is a
-Lawvere theory in a nutshell.
+零項演算は終対象 ($a$の0乗) からの射です。したがって、任意の代数を定義するために必要なのは、一つの特別な対象$a$のべき乗である対象を持つ圏だけです。特定の代数はこの圏のホム集合にエンコードされています。これがLawvere理論の要点です。
 
-The derivation of Lawvere theories goes through many steps, so here's
-the roadmap:
+Lawvere理論の導出は多くのステップを経ますので、ここにロードマップを示します: 
 
 \begin{enumerate}
   \tightlist
   \item
-        Category of finite sets $\cat{FinSet}$.
+        有限集合の圏$\cat{FinSet}$
   \item
-        Its skeleton $\cat{F}$.
+        そのスケルトン$\cat{F}$
   \item
-        Its opposite $\Fop$.
+        その逆$\Fop$
   \item
-        Lawvere theory $\cat{L}$: an object in the category $\cat{Law}$.
+        Lawvere理論$\cat{L}$: 圏$\cat{Law}$の対象
   \item
-        Model $M$ of a Lawvere category: an object in the category\\
-        $\cat{Mod}(\cat{Law}, \Set)$.
+        Lawvere圏のモデル$M$: 圏\\
+        $\cat{Mod}(\cat{Law}, \Set)$の対象
 \end{enumerate}
 
 \begin{figure}[H]
@@ -71,395 +36,162 @@ the roadmap:
   \includegraphics[width=0.8\textwidth]{images/lawvere1.png}
 \end{figure}
 
-\section{Lawvere Theories}
+\section{Lawvere理論}
 
-All Lawvere theories share a common backbone. All objects in a Lawvere
-theory are generated from just one object using products (really, just
-powers). But how do we define these products in a general category? It
-turns out that we can define products using a mapping from a simpler
-category. In fact this simpler category may define coproducts instead of
-products, and we'll use a \emph{contravariant} functor to embed them in
-our target category. A contravariant functor turns coproducts into
-products and injections to projections.
+すべてのLawvere理論は共通の背骨を共有しています。Lawvere理論のすべての対象は、単に積 (実際には、ただのべき乗) を使用してただ一つの対象から生成されます。しかし、一般的な圏でこれらの積をどのように定義しますか？積を定義するために、より単純な圏からのマッピングを使用することができることが判明しました。実際、このより単純な圏は積の代わりに余積を定義するかもしれませんが、私たちはそれらを目標の圏に埋め込むために\emph{反変}関手を使用します。反変関手は余積を積に変え、単射を射影に変えます。
 
-The natural choice for the backbone of a Lawvere category is the
-category of finite sets, $\cat{FinSet}$. It contains the empty set
-$\varnothing$, a singleton set $1$, a two-element set $2$,
-and so on. All objects in this category can be generated from the
-singleton set using coproducts (treating the empty set as a special case
-of a nullary coproduct). For instance, a two-element set is a sum of two
-singletons, $2 = 1 + 1$, as expressed in Haskell:
+Lawvere圏の背骨に自然な選択肢は、有限集合の圏、$\cat{FinSet}$です。これには空集合$\varnothing$、一つの要素を持つ集合$1$、2つの要素を持つ集合$2$、などが含まれます。この圏のすべての対象は、余積 (空集合を特殊な場合の零項余積として扱う) を使用して単一の要素集合から生成することができます。例えば、2つの要素を持つ集合は2つの単一要素の合計で、$2 = 1 + 1$として表現されます。これはHaskellで表現されます: 
 
 \src{snippet01}
-However, even though it's natural to think that there's only one empty
-set, there may be many distinct singleton sets. In particular, the set
-$1 + \varnothing$ is different from the set $\varnothing + 1$, and
-different from $1$ --- even though they are all isomorphic. The
-coproduct in the category of sets is not associative. We can remedy that
-situation by building a category that identifies all isomorphic sets.
-Such a category is called a \newterm{skeleton}. In other words, the
-backbone of any Lawvere theory is the skeleton $\cat{F}$ of
-$\cat{FinSet}$. The objects in this category can be identified with
-natural numbers (including zero) that correspond to the element count in
-$\cat{FinSet}$. Coproduct plays the role of addition. Morphisms in
-$\cat{F}$ correspond to functions between finite sets. For instance,
-there is a unique morphism from $\varnothing$ to $n$ (empty set
-being the initial object), no morphisms from $n$ to $\varnothing$
-(except $\varnothing \to \varnothing$), $n$ morphisms from $1$ to
-$n$ (the injections), one morphism from $n$ to $1$,
-and so on. Here, $n$ denotes an object in $\cat{F}$
-corresponding to all $n$-element sets in $\cat{FinSet}$ that have been
-identified through isomorphisms.
+しかし、空集合がただ一つだと自然に思えるにもかかわらず、多くの異なる単集合が存在するかもしれません。特に、集合$1 + \varnothing$は集合$\varnothing + 1$とは異なり、$1$とも異なります --- それらはすべて同型です。集合の圏における余積は結合的ではありません。この状況を解決するために、すべての同型集合を識別する圏を構成することができます。このような圏は\newterm{スケルトン}と呼ばれます。言い換えれば、任意のLawvere理論の背骨は$\cat{FinSet}$のスケルトン$\cat{F}$です。この圏の対象は、$\cat{FinSet}$における要素カウントに対応する自然数 (ゼロを含む) として識別することができます。余積は加算の役割を果たします。$\cat{F}$の射は、有限集合間の関数に対応します。例えば、$\varnothing$から$n$への一意な射があります (空集合が始対象である) 、$n$から$\varnothing$への射はありません ($\varnothing \to \varnothing$を除く) 、$1$から$n$への$n$の射があります (単射) 、$n$から$1$への一つの射、などです。ここで、$n$は$\cat{F}$内のすべての$n$要素集合を$\cat{FinSet}$で同型を通じて識別される対応する対象です。
 
-Using the category $\cat{F}$ we can formally define a \newterm{Lawvere
-  theory} as a category $\cat{L}$ equipped with a special functor:
+$\cat{F}$を使用して、\newterm{Lawvere理論}を特別な関手と装備された圏$\cat{L}$として形式的に定義することができます: 
 \[I_{\cat{L}} \Colon \Fop \to \cat{L}\]
-This functor must be a bijection on objects and it must preserve finite
-products (products in $\Fop$ are the same as
-coproducts in $\cat{F}$):
+この関手は対象上での単射でなければならず、有限積を保持しなければなりません ($\Fop$内の積は$\cat{F}$内の余積と同じです) : 
 \[I_{\cat{L}} (m\times{}n) = I_{\cat{L}} m\times{}I_{\cat{L}} n\]
-You may sometimes see this functor characterized as identity-on-objects,
-which means that the objects in $\cat{F}$ and $\cat{L}$ are the same.
-We will therefore use the same names for them --- we'll denote them by
-natural numbers. Keep in mind though that objects in $\cat{F}$ are not
-the same as sets (they are classes of isomorphic sets).
+時々、この関手は対象上での恒等関手として特徴づけられることがあります。これは、$\cat{F}$と$\cat{L}$の対象が同じであることを意味します。したがって、私たちはそれらに同じ名前を使用します --- 自然数で表します。ただし、$\cat{F}$の対象が集合と同じではないことを念頭に置いてください (それらは同型集合のクラスです) 。
 
-The hom-sets in $\cat{L}$ are, in general, richer than those in
-$\Fop$. They may contain morphisms other than
-the ones corresponding to functions in $\cat{FinSet}$ (the latter are
-sometimes called \newterm{basic product operations}). Equational laws of a
-Lawvere theory are encoded in those morphisms.
+$\cat{L}$のホム集合は、一般的に$\Fop$のそれよりも豊かです。それらは、$\cat{FinSet}$の関数に対応するもの以外の射を含む場合があります (後者は時々\newterm{基本積演算}と呼ばれます) 。Lawvere理論の恒等則は、これらの射にエンコードされています。
 
-The key observation is that the singleton set $1$ in $\cat{F}$
-is mapped to some object that we also call $1$ in $\cat{L}$, and
-all the other objects in $\cat{L}$ are automatically powers of this
-object. For instance, the two-element set $2$ in $\cat{F}$ is
-the coproduct $1 + 1$, so it must be mapped to a product
-$1 \times 1$ (or $1^2$) in $\cat{L}$. In this sense, the category
-$\cat{F}$ behaves like the logarithm of $\cat{L}$.
+重要な観察は、$\cat{F}$内の単集合$1$が$\cat{L}$内の何らかの対象$1$にマップされ、$\cat{L}$内の他のすべての対象が自動的にこの対象のべき乗になるということです。例えば、$\cat{F}$内の2つの要素集合$2$は余積$1 + 1$であるため、$\cat{L}$内で積$1 \times 1$ (または$1^2$) にマップされなければなりません。この意味では、圏$\cat{F}$は$\cat{L}$の対数のように振る舞います。
 
-Among morphisms in $\cat{L}$ we have those transferred by the functor
-$I_{\cat{L}}$ from $\cat{F}$. They play a structural role in $\cat{L}$. In
-particular coproduct injections $i_k$ become product projections
-$p_k$. A useful intuition is to imagine the projection:
+$\cat{L}$の射の中には、関手$I_{\cat{L}}$によって$\cat{F}$から転送されたものがあります。それらは$\cat{L}$内で構造的な役割を果たします。特に、余積の単射$i_k$は積の射影$p_k$になります。射影を想像する便利な直感は、次のように考えることです: 
 \[p_k \Colon 1^n \to 1\]
-as the prototype for a function of $n$ variables that ignores all but the
-$k^\text{th}$ variable. Conversely, constant morphisms $n \to 1$
-in $\cat{F}$ become diagonal morphisms $1 \to 1^n$ in
-$\cat{L}$. They correspond to duplication of variables.
+これは$n$変数の関数の原型であり、$k^\text{th}$変数以外のすべてを無視します。逆に、$\cat{F}$内の定数射$n \to 1$は、$\cat{L}$内で対角射$1 \to 1^n$になります。これは変数の複製に対応します。
 
-The interesting morphisms in $\cat{L}$ are the ones that define $n$-ary
-operations other than projections. It's those morphisms that distinguish
-one Lawvere theory from another. These are the multiplications, the
-additions, the selections of unit elements, and so on, that define the
-algebra. But to make $\cat{L}$ a full category, we also need compound
-operations $n \to m$ (or, equivalently,
-$1^n \to 1^m$). Because of the simple structure of
-the category, they turn out to be products of simpler morphisms of the
-type $n \to 1$. This is a generalization of the
-statement that a function that returns a product is a product of
-functions (or, as we've seen earlier, that the hom-functor is
-continuous).
+$\cat{L}$内の興味深い射は、射影以外の$n$項演算を定義するものです。これらの射が一つのLawvere理論を別のものと区別します。これらは代数を定義する乗算、加算、単位要素の選択などです。しかし、$\cat{L}$を完全な圏にするためには、$n \to m$ (または同等に、$1^n \to 1^m$) の複合演算も必要です。圏の単純な構造のために、それらは$n \to 1$のタイプのより単純な射の積であることがわかります。これは、積を返す関数が関数の積であるという言明の一般化です (または、以前に見たように、ホム関手は連続です) 。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.8\textwidth]{images/lawvere1.png}
-  \caption{Lawvere theory $\cat{L}$ is based on $\Fop$, from which
-    it inherits the ``boring'' morphisms that define the products. It adds
-    the ``interesting'' morphisms that describe the $n$-ary operations (dotted
-    arrows).}
+  \caption{Lawvere理論$\cat{L}$は$\Fop$に基づいており、それから積を定義する「退屈な」射を継承します。それは$n$項演算 (点線の矢印) を記述する「興味深い」射を追加します。}
 \end{figure}
 
-Lawvere theories form a category $\cat{Law}$, in which morphisms are
-functors that preserve finite products and commute with the functors
-$I$. Given two such theories, $(\cat{L}, I_{\cat{L}})$ and
-$(\cat{L'}, I'_{\cat{L'}})$, a morphism between them is a
-functor $F \Colon \cat{L} \to \cat{L'}$ such that:
+Lawvere理論は圏$\cat{Law}$を形成し、その射は有限積を保持し、関手$I$と交換する関手です。このような理論が2つある場合、$(\cat{L}, I_{\cat{L}})$と$(\cat{L'}, I'_{\cat{L'}})$、それらの間の射は、次のような関手$F \Colon \cat{L} \to \cat{L'}$です: 
 \begin{gather*}
   F (m \times n) = F m \times F n \\
   F \circ I_{\cat{L}} = I'_{\cat{L'}}
 \end{gather*}
-Morphisms between Lawvere theories encapsulate the idea of the
-interpretation of one theory inside another. For instance, group
-multiplication may be interpreted as monoid multiplication if we ignore
-inverses.
+Lawvere理論間の射は、一つの理論を別の理論内での解釈のアイデアを捉えます。例えば、群の乗法は逆を無視することでモノイドの乗法として解釈することができます。
 
-The simplest trivial example of a Lawvere category is
-$\Fop$ itself (corresponding to the choice of
-the identity functor for $I_{\cat{L}}$). This Lawvere theory that has no
-operations or laws happens to be the initial object in $\cat{Law}$.
+Lawvere圏の最も単純な自明な例は、$\Fop$自体です ($I_{\cat{L}}$に対する恒等関手の選択に対応します) 。このLawvere理論には操作や規則がないため、$\cat{Law}$内の始対象になります。
 
-At this point it would be very helpful to present a non-trivial example
-of a Lawvere theory, but it would be hard to explain it without first
-understanding what models are.
+この時点で非自明な例を提示するのが非常に役立ちますが、まずモデルが何であるかを理解することなく説明するのは難しいでしょう。
 
-\section{Models of Lawvere Theories}
+\section{Lawvere理論のモデル}
 
-The key to understand Lawvere theories is to realize that one such
-theory generalizes a lot of individual algebras that share the same
-structure. For instance, the Lawvere theory of monoids describes the
-essence of being a monoid. It must be valid for all monoids. A
-particular monoid becomes a model of such a theory. A model is defined
-as a functor from the Lawvere theory $\cat{L}$ to the category of sets
-$\Set$. (There are generalizations of Lawvere theories that use
-other categories for models but here I'll just concentrate on
-$\Set$.) Since the structure of $\cat{L}$ depends heavily on
-products, we require that such a functor preserve finite products. A
-model of $\cat{L}$, also called the algebra over the Lawvere theory
-$\cat{L}$, is therefore defined by a functor:
+Lawvere理論を理解する鍵は、そのような理論が同じ構造を共有する多くの個々の代数を一般化することを認識することです。例えば、モノイドのLawvere理論は、モノイドであることの本質を記述します。それはすべてのモノイドに対して有効でなければなりません。特定のモノイドは、そのような理論のモデルになります。モデルは、Lawvere理論$\cat{L}$から集合の圏$\Set$への関手として定義されます。 (他の圏を使用してLawvere理論を一般化することがありますが、ここでは$\Set$に集中しましょう。) $\cat{L}$の構造は積に大きく依存しているため、そのような関手は有限積を保持する必要があります。したがって、$\cat{L}$のモデル、またはLawvere理論$\cat{L}$上の代数は、次のように関手で定義されます: 
 \begin{gather*}
   M \Colon \cat{L} \to \Set \\
   M (a \times b) \cong M a \times M b
 \end{gather*}
-Notice that we require the preservation of products only \emph{up to
-  isomorphism}. This is very important, because strict preservation of
-products would eliminate most interesting theories.
+積の保存は\emph{同型までの}ということに注意してください。これは非常に重要です。積の厳格な保存は、ほとんどの興味深い理論を排除します。
 
-The preservation of products by models means that the image of
-$M$ in $\Set$ is a sequence of sets generated by powers of
-the set $M 1$ --- the image of the object $1$ from
-$\cat{L}$. Let's call this set $a$. (This set is sometimes
-called a \emph{sort}, and such an algebra is called \newterm{single-sorted}. There
-exist generalizations of Lawvere theories to multi-sorted algebras.) In
-particular, binary operations from $\cat{L}$ are mapped to functions:
+モデルによる積の保存は、$\Set$内の$M$のイメージが、集合$M 1$のべき乗によって生成される一連の集合であることを意味します --- 対象$1$からの集合$M 1$のイメージを呼びましょう。この集合を$a$とします。 (この集合は時々\emph{ソート}と呼ばれ、そのような代数は\newterm{単一ソート}と呼ばれます。Lawvere理論を多ソート代数に一般化することもあります。) 特に、$\cat{L}$からの二項演算は関数としてマップされます: 
 \[a \times a \to a\]
-As with any functor, it's possible that multiple morphisms in $\cat{L}$
-are collapsed to the same function in $\Set$.
+任意の関手と同様に、$\cat{L}$内の複数の射が$\Set$内で同じ関数に折り畳まれる可能性があります。
 
-Incidentally, the fact that all laws are universally quantified
-equalities means that every Lawvere theory has a trivial model: a
-constant functor mapping all objects to the singleton set, and all morphisms
-to the identity function on it.
+偶然にも、すべての規則が全称量化された等式であるという事実は、すべてのLawvere理論が自明なモデルを持つことを意味します: すべての対象を単集合にマップし、すべての射をそれに対する恒等関数にマップする定数関手です。
 
-A general morphism in $\cat{L}$ of the form
-$m \to n$ is mapped to a function:
+一般的な射$m \to n$は、関数としてマップされます: 
 \[a^m \to a^n\]
-If we have two different models, $M$ and $N$, a natural
-transformation between them is a family of functions indexed by
-$n$:
+もし異なる2つのモデル、$M$と$N$があれば、それらの間の自然変換は$n$によって索引付けられた関数の族です: 
 \[\mu_n \Colon M n \to N n\]
-or, equivalently:
+または同等に: 
 \[\mu_n \Colon a^n \to b^n\]
-where $b = N 1$.
+ここで$b = N 1$です。
 
-Notice that the naturality condition guarantees the preservation of
-$n$-ary operations:
+自然性条件は$n$項演算の保存を保証します: 
 \[N f \circ \mu_n = \mu_1 \circ M f\]
-where $f \Colon n \to 1$ is an $n$-ary operation in
-$\cat{L}$.
+ここで$f \Colon n \to 1$は$\cat{L}$内の$n$項演算です。
 
-The functors that define models form a category of models,
-$\cat{Mod}(\cat{L}, \Set)$, with natural transformations as morphisms.
+モデルを定義する関手は、モデルの圏$\cat{Mod}(\cat{L}, \Set)$を形成し、自然変換を射とします。
 
-Consider a model for the trivial Lawvere category
-$\Fop$. Such a model is completely determined by
-its value at $1$, $M 1$. Since $M 1$ can be any
-set, there are as many of these models as there are sets in
-$\Set$. Moreover, every morphism in $\cat{Mod}(\Fop, \Set)$ (a
-natural transformation between functors $M$ and $N$) is
-uniquely determined by its component at $M 1$. Conversely, every
-function $M 1 \to N 1$ induces a natural
-transformation between the two models $M$ and $N$.
-Therefore $\cat{Mod}(\Fop, \Set)$ is equivalent to $\Set$.
+自明なLawvere圏$\Fop$のモデルを考えてみましょう。そのようなモデルは、$1$でのその値$M 1$によって完全に決定されます。$M 1$が任意の集合である場合、$\Set$内の集合の数だけこれらのモデルがあります。さらに、$\cat{Mod}(\Fop, \Set)$内のすべての射 (関手$M$と$N$間の自然変換) は、$M 1$でのそのコンポーネントによって一意に決定されます。逆に、$M 1 \to N 1$の任意の関数は、2つのモデル$M$と$N$の間の自然変換を誘導します。したがって$\cat{Mod}(\Fop, \Set)$は$\Set$と同値です。
 
-\section{The Theory of Monoids}
+\section{モノイドの理論}
 
-The simplest nontrivial example of a Lawvere theory describes the
-structure of monoids. It is a single theory that distills the structure
-of all possible monoids, in the sense that the models of this theory
-span the whole category $\cat{Mon}$ of monoids. We've already seen a
-\hyperref[free-monoids]{universal
-  construction}, which showed that every monoid can be obtained from an
-appropriate free monoid by identifying a subset of morphisms. So a
-single free monoid already generalizes a whole lot of monoids. There
-are, however, infinitely many free monoids. The Lawvere theory for
-monoids $\cat{L}_{\cat{Mon}}$ combines all of them in one
-elegant construction.
+最も単純な非自明な例としてモノイドのLawvere理論があります。これは、この理論のモデルがモノイドの全圏$\cat{Mon}$をスパンするすべての可能なモノイドの構造を蒸留する単一の理論です。私たちはすでに\hyperref[free-monoids]{普遍構成}を見てきました。これは、任意のモノイドが適切な自由モノイドから一部の射を識別することによって得られることを示しました。したがって、単一の自由モノイドはすでに多くのモノイドを一般化しています。しかしながら、無限に多くの自由モノイドがあります。モノイドのLawvere理論$\cat{L}_{\cat{Mon}}$は、それらを一つのエレガントな構造に組み合わせます。
 
-Every monoid must have a unit, so we have to have a special morphism
-$\eta$ in $\cat{L}_{\cat{Mon}}$ that goes from $0$ to
-$1$. Notice that there can be no corresponding morphism in
-$\cat{F}$. Such a morphism would go in the opposite direction, from
-$1$ to $0$ which, in $\cat{FinSet}$, would be a function
-from the singleton set to the empty set. No such function exists.
+すべてのモノイドには単位が必要なので、$\cat{L}_{\cat{Mon}}$内には$0$から$1$への特別な射$\eta$がなければなりません。$\cat{F}$内に対応する射は存在しないことに注意してください。そのような射は反対の方向、つまり$\cat{FinSet}$内で単集合から空集合への関数になります。そのような関数は存在しません。
 
-Next, consider morphisms $2 \to 1$, members of
-$\cat{L}_{\cat{Mon}}(2, 1)$, which must contain prototypes of all binary
-operations. When constructing models in $\cat{Mod}(\cat{L}_{\cat{Mon}}, \Set)$, these
-morphisms will be mapped to functions from the Cartesian product
-$M 1 \times M 1$ to $M 1$. In other words, functions of
-two arguments.
+次に、$2 \to 1$への射を考えます。これらは$\cat{L}_{\cat{Mon}}(2, 1)$のメンバーであり、すべての二項演算の原型を含まなければなりません。$\cat{Mod}(\cat{L}_{\cat{Mon}}, \Set)$内でモデルを構成するとき、これらの射はデカルト積$M 1 \times M 1$から$M 1$への関数にマップされます。言い換えれば、2つの引数を持つ関数です。
 
-The question is: how many functions of two arguments can one implement
-using only the monoidal operator. Let's call the two arguments
-$a$ and $b$. There is one function that ignores both
-arguments and returns the monoidal unit. Then there are two projections
-that return $a$ and $b$, respectively. They are followed
-by functions that return $ab$, $ba$, $aa$,
-$bb$, $aab$, and so on\ldots{} In fact there are as many
-such functions of two arguments as there are elements in the free monoid
-with generators $a$ and $b$. Notice that
-$\cat{L}_{\cat{Mon}}(2, 1)$ must contain all those morphisms because one of the
-models is the free monoid. In a free monoid they correspond to distinct
-functions. Other models may collapse multiple morphisms in
-$\cat{L}_{\cat{Mon}}(2, 1)$ down to a single function, but not the free monoid.
+問題は、モノイド演算子を使用して実装できる2引数の関数がどれだけあるかです。2つの引数を$a$と$b$としましょう。両方の引数を無視してモノイド単位を返す関数が1つあります。次に、それぞれ$a$と$b$を返す2つの射影があります。それに続いて、$ab$、$ba$、$aa$、$bb$、$aab$などを返す関数があります\ldots{} 実際には、$a$と$b$のジェネレーターを持つ自由モノイドの要素と同じ数の2引数関数があります。$\cat{L}_{\cat{Mon}}(2, 1)$は、そのようなすべての射を含まなければなりません。なぜなら、そのモデルの1つは自由モノイドだからです。自由モノイドでは、それらは異なる関数に対応します。他のモデルは、$\cat{L}_{\cat{Mon}}(2, 1)$内の複数の射を単一の関数に折り畳むかもしれませんが、自由モノイドではそうではありません。
 
-If we denote the free monoid with $n$ generators $n^*$, we may
-identify the hom-set $\cat{L}(2, 1)$ with the hom-set
-$\cat{Mon}(1^*, 2^*)$ in $\cat{Mon}$, the category of monoids. In
-general, we pick $\cat{L}_{\cat{Mon}}(m, n)$ to be $\cat{Mon}(n^*, m^*)$. In
-other words, the category $\cat{L}_{\cat{Mon}}$ is the opposite of the category
-of free monoids.
+$n$ジェネレーターを持つ自由モノイドを$n^*$と表記すると、ホム集合$\cat{L}(2, 1)$をモノイドの圏$\cat{Mon}$内のホム集合$\cat{Mon}(1^*, 2^*)$と同一視することができます。一般に、$\cat{L}_{\cat{Mon}}(m, n)$を$\cat{Mon}(n^*, m^*)$とします。言い換えれば、圏$\cat{L}_{\cat{Mon}}$は自由モノイドの圏の逆です。
 
-The category of \emph{models} of the Lawvere theory for monoids,\\
-$\cat{Mod}(\cat{L}_{\cat{Mon}}, \Set)$, is equivalent to the category of all monoids,
-$\cat{Mon}$.
+モノイドのLawvere理論の\emph{モデル}の圏、\\
+$\cat{Mod}(\cat{L}_{\cat{Mon}}, \Set)$は、すべてのモノイドの圏、$\cat{Mon}$と同値です。
 
-\section{Lawvere Theories and Monads}
+\section{Lawvere理論とモナド}
 
-As you may remember, algebraic theories can be described using monads
---- in particular
-\hyperref[algebras-for-monads]{algebras
-  for monads}. It should be no surprise then that there is a connection
-between Lawvere theories and monads.
+覚えているかもしれませんが、代数理論はモナドを使用して記述することができます --- 特に
+\hyperref[algebras-for-monads]{モナドに関する代数}。それでは、Lawvere理論とモナドの間には接続があることに驚くことはありません。
 
-First, let's see how a Lawvere theory induces a monad. It does it
-through an
-\hyperref[free-forgetful-adjunctions]{adjunction}
-between a forgetful functor and a free functor. The forgetful functor
-$U$ assigns a set to each model. This set is given by evaluating
-the functor $M$ from $\cat{Mod}(\cat{L}, \Set)$ at the object $1$ in
-$\cat{L}$.
+まず、Lawvere理論がモナドをどのように誘導するかを見てみましょう。それは、忘却関手と自由関手の間の
+\hyperref[free-forgetful-adjunctions]{随伴関係}
+を通じて行われます。忘却関手$U$は、各モデルに集合を割り当てます。この集合は、$\cat{Mod}(\cat{L}, \Set)$からの関手$M$を$\cat{L}$の対象$1$で評価することによって与えられます。
 
-Another way of deriving $U$ is by exploiting the fact that
-$\Fop$ is the initial object in $\cat{Law}$. It
-means that, for any Lawvere theory $\cat{L}$, there is a unique
-functor $\Fop \to \cat{L}$. This functor induces the
-opposite functor on models (since models are functors \emph{from}
-theories to sets):
+$U$を導出する別の方法は、$\Fop$が$\cat{Law}$内の始対象であるという事実を利用することです。つまり、任意のLawvere理論$\cat{L}$に対して、一意の関手$\Fop \to \cat{L}$があります。この関手は、モデルに対する逆関手を誘導します (モデルは理論\emph{から}集合への関手です) : 
 \[\cat{Mod}(\cat{L}, \Set) \to \cat{Mod}(\Fop, \Set)\]
-But, as we discussed, the category of models of
-$\Fop$ is equivalent to $\Set$, so we get
-the forgetful functor:
+しかし、私たちが議論したように、$\Fop$のモデルの圏は$\Set$と同値なので、忘却関手を取得します: 
 \[U \Colon \cat{Mod}(\cat{L}, \Set) \to \Set\]
-It can be shown that so defined $U$ always has a left adjoint,
-the free functor $F$.
+このように定義された$U$は常に左随伴、自由関手$F$を持つことが示されます。
 
-This is easily seen for finite sets. The free functor $F$
-produces free algebras. A free algebra is a particular model in
-$\cat{Mod}(\cat{L}, \Set)$ that is generated from a finite set of generators
-$n$. We can implement $F$ as the representable functor:
+これは有限集合に対して容易に見ることができます。自由関手$F$は自由代数を生成します。自由代数は、$\cat{Mod}(\cat{L}, \Set)$内の特定のモデルであり、生成器の有限集合$n$から生成されます。$F$は表現可能関手として実装することができます: 
 \[\cat{L}(n, -) \Colon \cat{L} \to \Set\]
-To show that it's indeed free, all we have to do is to prove that it's a
-left adjoint to the forgetful functor:
+それが実際に自由であることを示すためには、それが忘却関手の左随伴であることを証明するだけです: 
 \[\cat{Mod}(\cat{L}(n, -), M) \cong \Set(n, U(M))\]
-Let's simplify the right hand side:
+右側を単純化しましょう: 
 \[\Set(n, U(M)) \cong \Set(n, M 1) \cong (M 1)^n \cong M n\]
-(I used the fact that a set of morphisms is isomorphic to the
-exponential which, in this case, is just the iterated product.) The
-adjunction is the result of the Yoneda lemma:
+ (集合の射の集合が指数と同型であるという事実を使用しました。この場合、それは単に反復された積です。) 随伴は米田の補題の結果です: 
 \[[\cat{L}, \Set](\cat{L}(n, -), M) \cong M n\]
-Together, the forgetful and the free functor define a
-\hyperref[monads-categorically]{monad}
-$T = U \circ F$ on $\Set$. Thus every Lawvere theory generates
-a monad.
+一緒に、忘却と自由関手は$\Set$上の
+\hyperref[monads-categorically]{モナド}
+$T = U \circ F$を定義します。したがって、すべてのLawvere理論はモナドを生成します。
 
-It turns out that the category of
-\hyperref[algebras-for-monads]{algebras
-  for this monad} is equivalent to the category of models.
+実は、このモナドの
+\hyperref[algebras-for-monads]{代数の圏}は、モデルの圏に同値です。
 
-You may recall that monad algebras define ways to evaluate expressions
-that are formed using monads. A Lawvere theory defines n-ary operations
-that can be used to generate expressions. Models provide means to
-evaluate these expressions.
+モナドに関する代数は、モナドを使用して形成された式を評価する方法を定義します。Lawvere理論は$n$項演算を使用して式を生成する方法を定義します。モデルは、これらの式を評価する手段を提供します。
 
-The connection between monads and Lawvere theories doesn't go both ways,
-though. Only finitary monads lead to Lawvere theories. A finitary monad
-is based on a finitary functor. A finitary functor on $\Set$ is
-fully determined by its action on finite sets. Its action on an
-arbitrary set $a$ can be evaluated using the following coend:
+ただし、モナドとLawvere理論の接続は双方向ではありません。限定的なモナドのみがLawvere理論につながります。限定的なモナドは限定的な関手に基づいています。限定的な関手は$\Set$上でその有限集合への作用によって完全に決定されます。任意の集合$a$へのその作用は、次の余を使用して評価できます: 
 \[F a = \int^n a^n \times (F n)\]
-Since the coend generalizes a coproduct, or a sum, this formula is a
-generalization of a power series expansion. Or we can use the intuition
-that a functor is a generalized container. In that case a finitary
-container of $a$s can be described as a sum of shapes and
-contents. Here, $F n$ is a set of shapes for storing $n$ elements,
-and the contents is an $n$-tuple of elements, itself an element of
-$a^n$. For instance, a list (as a functor) is finitary, with one
-shape for every arity. A tree has more shapes per arity, and so on.
+余は余積、または合計を一般化しますので、この式は冪級数展開の一般化です。または、関手が一般化されたコンテナであるという直感を使用することができます。その場合、$a$の限定的なコンテナは、形と内容の合計として記述できます。ここで、$F n$は$n$要素を格納するための形の集合であり、内容は$a^n$の要素の$n$組自体です。たとえば、リスト (関手として) は限定的であり、各アリティに1つの形を持ちます。ツリーにはアリティごとにより多くの形があります、などです。
 
-First off, all monads that are generated from Lawvere theories are
-finitary and they can be expressed as coends:
+まず、Lawvere理論から生成されるすべてのモナドは限定的であり、余エンドとして表現できます: 
 \[T_{\cat{L}} a = \int^n a^n \times \cat{L}(n, 1)\]
-Conversely, given any finitary monad $T$ on $\Set$, we can
-construct a Lawvere theory. We start by constructing a Kleisli category
-for $T$. As you may remember, a morphism in a Kleisli category
-from $a$ to $b$ is given by a morphism in the underlying
-category:
+逆に、$\Set$上の任意の限定的なモナド$T$が与えられた場合、Lawvere理論を構成することができます。$T$のKleisli圏を構成することから始めます。思い出してください、Kleisli圏の射は、基礎となる圏内の射によって与えられます: 
 \[a \to T b\]
-When restricted to finite sets, this becomes:
+有限集合に制限された場合、これは次になります: 
 \[m \to T n\]
-The category opposite to this Kleisli category,
-$\cat{Kl}^\mathit{op}_{T}$, restricted to finite
-sets, is the Lawvere theory in question. In particular, the hom-set
-$\cat{L}(n, 1)$ that describes n-ary operations in $\cat{L}$ is given
-by the hom-set $\cat{Kl}_{T}(1, n)$.
+このKleisli圏の逆圏、$\cat{Kl}^\mathit{op}_{T}$を有限集合に制限すると、問題のLawvere理論になります。特に、$\cat{L}$内で$n$項演算を記述するホム集合$\cat{L}(n, 1)$は、$\cat{Kl}_{T}(1, n)$のホム集合によって与えられます。
 
-It turns out that most monads that we encounter in programming are
-finitary, with the notable exception of the continuation monad. It is
-possible to extend the notion of Lawvere theory beyond finitary
-operations.
+実際、プログラミングで遭遇するほとんどのモナドは限定的ですが、継続モナドが注目に値する例外です。限定的な操作を超えてLawvere理論の概念を拡張することは可能です。
 
-\section{Monads as Coends}
+\section{余エンドとしてのモナド}
 
-Let's explore the coend formula in more detail.
+余エンドの式をもう少し詳しく探ってみましょう。
 \[T_{\cat{L}} a = \int^n a^n \times \cat{L}(n, 1)\]
-To begin with, this coend is taken over a profunctor $P$ in
-$\cat{F}$ defined as:
+始めに、この余エンドは$\cat{F}$内のプロ関手$P$に対して取られます: 
 \[P n m = a^n \times \cat{L}(m, 1)\]
-This profunctor is contravariant in the first argument, $n$.
-Consider how it lifts morphisms. A morphism in $\cat{FinSet}$ is a
-mapping of finite sets $f \Colon m \to n$. Such a
-mapping describes a selection of $m$ elements from an $n$-element set
-(repetitions are allowed). It can be lifted to the mapping of powers of
-$a$, namely (notice the direction):
+このプロ関手は、最初の引数$n$で反変です。それが射をどのように持ち上げるかを考えましょう。$\cat{FinSet}$内の射は有限集合のマッピング$f \Colon m \to n$です。このマッピングは$n$要素集合から$m$要素を選択することを説明します (繰り返しが許可されます) 。それは$a$のべき乗へのマッピングに持ち上げられます、つまり (方向に注意してください) : 
 \[a^n \to a^m\]
-The lifting simply selects $m$ elements from a tuple of $n$ elements\\
-$(a_1, a_2,...a_n)$ (possibly with repetitions).
+持ち上げは単純に$n$組の要素から$m$要素を選択します (繰り返しを伴って) $(a_1, a_2,...a_n)$。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{images/liftpower.png}
 \end{figure}
 
-\noindent
-For instance, let's take $f_k \Colon 1 \to n$ --- a
-selection of the $k^\text{th}$ element from an $n$-element set. It lifts to
-a function that takes a $n$-tuple of elements of $a$ and returns
-the $k^\text{th}$ one.
+たとえば、$f_k \Colon 1 \to n$を取ります。これは$n$要素集合から$k^\text{th}$要素を選択することを説明します。それは、$a$の$n$組から$k^\text{th}$要素を返す関数に持ち上げられます。
 
-Or let's take $f \Colon m \to 1$ --- a constant
-function that maps all $m$ elements to one. Its lifting is a function that
-takes a single element of $a$ and duplicates it $m$ times:
+または、$f \Colon m \to 1$を取ります。これはすべての$m$要素を一つにマッピングする定数関数です。その持ち上げは、$a$の単一要素を取り、それを$m$回複製する関数です: 
 \[\lambda{}x \to (\underbrace{x, x,\ ...\ , x}_{m})\]
-You might notice that it's not immediately obvious that the profunctor
-in question is covariant in the second argument. The hom-functor
-$\cat{L}(m, 1)$ is actually contravariant in $m$. However, we
-are taking the coend not in the category $\cat{L}$ but in the category
-$\cat{F}$. The coend variable $n$ goes over finite sets (or the
-skeletons of such). The category $\cat{L}$ contains the opposite of
-$\cat{F}$, so a morphism $m \to n$ in $\cat{F}$
-is a member of $\cat{L}(n, m)$ in $\cat{L}$ (the embedding is given
-by the functor $I_{\cat{L}}$).
+このプロ関手が第二引数において共変であることは直ちに明らかではありません。ホム関手$\cat{L}(m, 1)$は実際には$m$において反変です。しかしながら、余エンドは$\cat{L}$の圏ではなく$\cat{F}$の圏で取られます。余エンド変数$n$は有限集合 (またはそのようなもののスケルトン) を渡ります。圏$\cat{L}$には$\cat{F}$の逆が含まれているので、$\cat{F}$の射$m \to n$は$\cat{L}$の$\cat{L}(n, m)$のメンバーです (埋め込みは関手$I_{\cat{L}}$によって与えられます) 。
 
-Let's check the functoriality of $\cat{L}(m, 1)$ as a functor from
-$\cat{F}$ to $\Set$. We want to lift a function
-$f \Colon m \to n$, so our goal is to implement a
-function from $\cat{L}(m, 1)$ to $\cat{L}(n, 1)$. Corresponding to
-the function $f$ there is a morphism in $\cat{L}$ from
-$n$ to $m$ (notice the direction). Precomposing this
-morphism with $\cat{L}(m, 1)$ gives us a subset of
-$\cat{L}(n, 1)$.
+$\cat{F}$から$\Set$への関手として$\cat{L}(m, 1)$の関手性を確認しましょう。関数$f \Colon m \to n$を持ち上げることを目指していますので、$\cat{L}(m, 1)$から$\cat{L}(n, 1)$への関数を実装することが目標です。関数$f$に対応する$\cat{L}$内の射は$n$から$m$へです (方向に注意してください) 。この射を$\cat{L}(m, 1)$と事前合成することで、$\cat{L}(n, 1)$の部分集合を得ます。
 
 \begin{figure}[H]
   \centering
@@ -469,27 +201,11 @@ $\cat{L}(n, 1)$.
   \end{tikzcd}
 \end{figure}
 
-\noindent
-Notice that, by lifting a function $1 \to n$ we can go
-from $\cat{L}(1, 1)$ to $\cat{L}(n, 1)$. We'll use this fact later
-on.
+$1 \to n$の関数を持ち上げることにより、$\cat{L}(1, 1)$から$\cat{L}(n, 1)$へ行くことができます。後でこの事実を使用します。
 
-The product of a contravariant functor $a^n$ and a covariant
-functor $\cat{L}(m, 1)$ is a profunctor
-$\Fop \times \cat{F} \to \Set$. Remember that a coend can be defined
-as a coproduct (disjoint sum) of all the diagonal members of a
-profunctor, in which some elements are identified. The identifications
-correspond to cowedge conditions.
+プロ関手$a^n$と共変関手$\cat{L}(m, 1)$の積は、$\Fop \times \cat{F} \to \Set$へのプロ関手です。余エンドは、プロ関手のすべての対角コンポーネントの非交和 (disjoint sum) として定義され、いくつかの要素が特定されます。これらの識別は、余くさび条件に対応します。
 
-Here, the coend starts as the disjoint sum of sets
-$a^n \times \cat{L}(n, 1)$ over all $n$s. The identifications can
-be generated by expressing the
-\hyperref[ends-and-coends]{coend as
-  a coequalizer}. We start with an off-diagonal term
-$a^n \times \cat{L}(m, 1)$. To get to the diagonal, we can apply a
-morphism $f \Colon m \to n$ either to the first or
-the second component of the product. The two results are then
-identified.
+ここでは、余エンドはすべての$n$にわたる集合$a^n \times \cat{L}(n, 1)$の非交和として始まります。識別は、プロ関手の非対角項$a^n \times \cat{L}(m, 1)$から出発して、対角線に到達するために、積の最初のコンポーネントまたは二番目のコンポーネントに射$f \Colon m \to n$を適用することによって生成されます。2つの結果はその後識別されます。
 
 \begin{figure}[H]
   \centering
@@ -505,74 +221,34 @@ identified.
   \end{tikzcd}
 \end{figure}
 
-\noindent
-I have shown before that the lifting of
-$f \Colon 1 \to n$ results in these two
-transformations:
+以前に示したように、$f \Colon 1 \to n$を持ち上げることにより、次の2つの変換が得られます: 
 \[a^n \to a\]
-and:
+そして: 
 \[\cat{L}(1, 1) \to \cat{L}(n, 1)\]
-Therefore, starting from $a^n \times \cat{L}(1, 1)$ we can reach both:
+したがって、$a^n \times \cat{L}(1, 1)$から始めて、次の両方に到達できます: 
 \[a \times \cat{L}(1, 1)\]
-when we lift $\langle f, \id \rangle$ and:
+$\langle f, \id \rangle$を持ち上げるときと、
 \[a^n \times \cat{L}(n, 1)\]
-when we lift $\langle \id, f \rangle$. This doesn't
-mean, however, that all elements of $a^n \times \cat{L}(n, 1)$ can be
-identified with $a \times \cat{L}(1, 1)$. That's because not all elements
-of $\cat{L}(n, 1)$ can be reached from $\cat{L}(1, 1)$. Remember
-that we can only lift morphisms from $\cat{F}$. A non-trivial $n$-ary
-operation in $\cat{L}$ cannot be constructed by lifting a morphism
-$f \Colon 1 \to n$.
+$\langle \id, f \rangle$を持ち上げるときです。これは、$a^n \times \cat{L}(n, 1)$のすべての要素が$a \times \cat{L}(1, 1)$と識別されるわけではないことを意味します。$\cat{L}(n, 1)$のすべての要素が$\cat{L}(1, 1)$から基本射を適用することで到達できるわけではないからです。$\cat{F}$からの射を持ち上げることによってのみ構成できる非自明な$n$項演算は$\cat{L}$にあります。
 
-In other words, we can only identify all addends in the coend formula
-for which $\cat{L}(n, 1)$ can be reached from $\cat{L}(1, 1)$
-through the application of basic morphisms. They are all equivalent to
-$a \times \cat{L}(1, 1)$. Basic morphisms are the ones that are images of
-morphisms in $\cat{F}$.
+言い換えると、余エンドの式に含まれるすべての加数を識別することができます。これは、$\cat{L}(n, 1)$が基本射を適用することによって$\cat{L}(1, 1)$から到達できる場合に限ります。それらはすべて$a \times \cat{L}(1, 1)$に等価です。基本射は、$\cat{F}$の射のイメージです。
 
-Let's see how this works in the simplest case of the Lawvere theory, the
-$\Fop$ itself. In such a theory, every
-$\cat{L}(n, 1)$ can be reached from $\cat{L}(1, 1)$. This is because
-$\cat{L}(1, 1)$ is a singleton containing just the identity morphism,
-and $\cat{L}(n, 1)$ only contains morphisms corresponding to
-injections $1 \to n$ in $\cat{F}$, which \emph{are}
-basic morphisms. Therefore all the addends in the coproduct are
-equivalent and we get:
+$\Fop$自体のLawvere理論の最も単純な場合を見てみましょう。この理論では、すべての$\cat{L}(n, 1)$が$\cat{L}(1, 1)$から到達できます。これは$\cat{L}(1, 1)$がただの恒等射だけを含む一つの集合であり、$\cat{L}(n, 1)$が$\cat{F}$内の単射$1 \to n$に対応する射だけを含むからです。これらは\emph{基本}射です。したがって、余エンドのすべての加数は同等であり、結果は次のようになります: 
 \[T a = a \times \cat{L}(1, 1) = a\]
-which is the identity monad.
+これは恒等モナドです。
 
-\section{Lawvere Theory of Side Effects}
+\section{副作用のLawvere理論}
 
-Since there is such a strong connection between monads and Lawvere
-theories, it's natural to ask the question if Lawvere theories could be
-used in programming as an alternative to monads. The major problem with
-monads is that they don't compose nicely. There is no generic recipe for
-building monad transformers. Lawvere theories have an advantage in this
-area: they can be composed using coproducts and tensor products. On the
-other hand, only finitary monads can be easily converted to Lawvere
-theories. The outlier here is the continuation monad. There is ongoing
-research in this area (see bibliography).
+モナドとLawvere理論の間に強い関連があるので、Lawvere理論がモナドの代わりにプログラミングで使用されるかどうかという疑問が自然に浮かびます。モナドの主な問題点は、それらがうまく構成されないことです。モナドトランスフォーマーを構成するための一般的なレシピがありません。この分野ではLawvere理論が優位性を持ちます: それらは余積やテンソル積を使用して構成することができます。一方、限定的なモナドのみが容易にLawvere理論に変換できます。ここでの例外は継続モナドです。この分野では現在も研究が進行中です。
 
-To give you a taste of how a Lawvere theory can be used to describe side
-effects, I'll discuss the simple case of exceptions that are
-traditionally implemented using the \code{Maybe} monad.
+副作用を記述するためにLawvere理論をどのように使用できるかの例を示すために、通常は\code{Maybe}モナドを使用して実装される例外の単純なケースを議論します。
 
-The \code{Maybe} monad is generated by the Lawvere theory with a
-single nullary operation $0 \to 1$. A model of this
-theory is a functor that maps $1$ to some set $a$, and
-maps the nullary operation to a function:
+\code{Maybe}モナドは、単一の零項演算$0 \to 1$を持つLawvere理論によって生成されます。この理論のモデルは、$1$をいくつかの集合$a$にマップし、零項演算を関数にマップする関手です: 
 
 \src{snippet02}
-We can recover the \code{Maybe} monad using the coend formula. Let's
-consider what the addition of the nullary operation does to the hom-sets
-$\cat{L}(n, 1)$. Besides creating a new $\cat{L}(0, 1)$ (which is
-absent from $\Fop$), it also adds new morphisms
-to $\cat{L}(n, 1)$. These are the results of composing morphism of the
-type $n \to 0$ with our $0 \to 1$.
-Such contributions are all identified with $a^0 \times \cat{L}(0, 1)$ in
-the coend formula, because they can be obtained from:
+余エンドの式を使用して\code{Maybe}モナドを回復することができます。零項演算の追加がホム集合$\cat{L}(n, 1)$にどのように影響するかを考えてみましょう。新しい$\cat{L}(0, 1)$を作成するだけでなく ($\Fop$には存在しない) 、$\cat{L}(n, 1)$に新しい射を追加します。これらは、タイプ$n \to 0$の射と$0 \to 1$の私たちの射を合成することによって得られます。このような寄与は、余エンドの式の中で$a^0 \times \cat{L}(0, 1)$と識別されます。それらは、次から取得できます: 
 \[a^n \times \cat{L}(0, 1)\]
-by lifting $0 \to n$ in two different ways.
+$0 \to n$を2つの異なる方法で持ち上げることにより。
 
 \begin{figure}[H]
   \centering
@@ -588,40 +264,31 @@ by lifting $0 \to n$ in two different ways.
   \end{tikzcd}
 \end{figure}
 
-\noindent
-The coend reduces to:
+余エンドは次のように簡約化されます: 
 \[T_{\cat{L}} a = a^0 + a^1\]
-or, using Haskell notation:
+または、Haskellの表記法を使用して: 
 
 \src{snippet03}
-which is equivalent to:
+これは次と同等です: 
 
 \src{snippet04}
-Notice that this Lawvere theory only supports the raising of exceptions,
-not their handling.
+このLawvere理論は例外の発生のみをサポートしており、その処理はサポートしていません。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Enumerate all morphisms between $2$ and $3$ in $\cat{F}$ (the skeleton of
-        $\cat{FinSet}$).
+        $\cat{F}$ ($\cat{FinSet}$のスケルトン) 内で$2$と$3$の間のすべての射を列挙してください。
   \item
-        Show that the category of models for the Lawvere theory of monoids is
-        equivalent to the category of monad algebras for the list monad.
+        モノイドのLawvere理論のモデルの圏が、リストモナドのモナド代数の圏に同値であることを示してください。
   \item
-        The Lawvere theory of monoids generates the list monad. Show that its
-        binary operations can be generated using the corresponding Kleisli
-        arrows.
+        モノイドのLawvere理論はリストモナドを生成します。対応するKleisli射を使用してその二項演算を生成できることを示してください。
   \item
-        \textbf{FinSet} is a subcategory of $\Set$ and there is a
-        functor that embeds it in $\Set$. Any functor on $\Set$
-        can be restricted to $\cat{FinSet}$. Show that a finitary functor is
-        the left Kan extension of its own restriction.
+        \textbf{FinSet}は$\Set$の部分圏であり、それを$\Set$に埋め込む関手があります。$\Set$上の任意の関手は$\cat{FinSet}$に制限することができます。限定的な関手がその制限の左Kan拡張であることを示してください。
 \end{enumerate}
 
-\section{Further Reading}
+\section{参考文献}
 \begin{enumerate}
   \tightlist
   \item
@@ -629,3 +296,8 @@ not their handling.
   \item
         \urlref{http://homepages.inf.ed.ac.uk/gdp/publications/Comp_Eff_Monads.pdf}{Notions of computation determine monads}, Gordon Plotkin and John Power
 \end{enumerate}
+
+
+
+
+

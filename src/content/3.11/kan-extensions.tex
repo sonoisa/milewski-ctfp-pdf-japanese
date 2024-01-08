@@ -1,19 +1,10 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{S}{o far we've been} mostly working with a single category or a pair of
-categories. In some cases that was a little too constraining.
+\lettrine[lhang=0.17]{こ}{れまで}のところ、私たちは主に単一の圏や一組の圏と一緒に作業をしてきました。場合によっては、これが少し制約となることもありました。
 
-For instance, when defining a limit in a category $\cat{C}$, we introduced an
-index category $\cat{I}$ as the template for the pattern that would
-form the basis for our cones. It would have made sense to introduce
-another category, a trivial one, to serve as a template for the apex of
-the cone. Instead we used the constant functor $\Delta_c$ from
-$\cat{I}$ to $\cat{C}$.
+例えば、圏 $\cat{C}$ で極限を定義する際には、私たちはその錐の形成の基礎となるパターンのテンプレートとして索引圏 $\cat{I}$ を導入しました。錐の頂点のテンプレートとして別の圏、たとえば単純なものを導入することも理にかなっていました。代わりに、私たちは $\cat{I}$ から $\cat{C}$ への定数関手 $\Delta_c$ を使いました。
 
-It's time to fix this awkwardness. Let's define a limit using three
-categories. Let's start with the functor $D$ from the index
-category $\cat{I}$ to $\cat{C}$. This is the functor that selects the base
-of the cone --- the diagram functor.
+この不格好さを修正する時が来ました。3つの圏を使って極限を定義しましょう。まず、索引圏 $\cat{I}$ から圏 $\cat{C}$ への関手 $D$ から始めます。これは錐の基盤となる図式を選ぶ関手、つまり図式関手です。
 
 \begin{figure}[H]
   \centering
@@ -21,12 +12,7 @@ of the cone --- the diagram functor.
 \end{figure}
 
 \noindent
-The new addition is the category $\cat{1}$ that contains a single
-object (and a single identity morphism). There is only one possible
-functor $K$ from $\cat{I}$ to this category. It maps all objects
-to the only object in $\cat{1}$, and all morphisms to the identity
-morphism. Any functor $F$ from $\cat{1}$ to $\cat{C}$ picks a
-potential apex for our cone.
+新しい追加は、単一の対象 (そして単一の恒等射) を含む圏 $\cat{1}$ です。$\cat{I}$ からこの圏への可能な関手 $K$ は一つだけです。それはすべての対象を $\cat{1}$ の唯一の対象にマッピングし、すべての射を恒等射にマッピングします。任意の関手 $F$ から $\cat{1}$ への $\cat{C}$ は私たちの錐のための潜在的な頂点を選びます。
 
 \begin{figure}[H]
   \centering
@@ -34,10 +20,7 @@ potential apex for our cone.
 \end{figure}
 
 \noindent
-A cone is a natural transformation $\varepsilon$ from $F \circ K$ to
-$D$. Notice that $F \circ K$ does exactly the same thing as
-our original $\Delta_c$. The following diagram shows this
-transformation.
+錐は、$F \circ K$ から $D$ への自然変換 $\varepsilon$ です。$F \circ K$ は私たちの元の $\Delta_c$ と全く同じことをします。次の図はこの変換を示しています。
 
 \begin{figure}[H]
   \centering
@@ -45,18 +28,9 @@ transformation.
 \end{figure}
 
 \noindent
-We can now define a universal property that picks the ``best'' such
-functor $F$. This $F$ will map $\cat{1}$ to the object
-that is the limit of $D$ in $\cat{C}$, and the natural
-transformation $\varepsilon$ from $F \circ K$ to $D$ will
-provide the corresponding projections. This universal functor is called
-the right Kan extension of $D$ along $K$ and is denoted by
-$\Ran_{K}D$.
+今、私たちは「最良」な関手 $F$ を選ぶ普遍的な性質を定義できます。この $F$ は $\cat{1}$ を $D$ の極限である対象にマッピングし、$F \circ K$ から $D$ への自然変換 $\varepsilon$ は対応する射影を提供します。この普遍的な関手は、$D$ に沿った $K$ の右Kan拡張と呼ばれ、$\Ran_{K}D$ と表記されます。
 
-Let's formulate the universal property. Suppose we have another cone ---
-that is another functor $F'$ together with a natural
-transformation $\varepsilon'$ from $F' \circ K$ to
-$D$.
+普遍的な性質を定式化しましょう。別の錐、つまり別の関手 $F'$ と、$F' \circ K$ から $D$ への自然変換 $\varepsilon'$ を持っていると仮定します。
 
 \begin{figure}[H]
   \centering
@@ -64,14 +38,9 @@ $D$.
 \end{figure}
 
 \noindent
-If the Kan extension $F = Ran_{K}D$ exists, there must be a unique
-natural transformation $\sigma$ from $F'$ to it, such
-that $\varepsilon'$ factorizes through $\varepsilon$, that is:
+もしKan拡張 $F = \Ran_{K}D$ が存在するならば、$F'$ からそれに向けての唯一の自然変換 $\sigma$ が存在し、$\varepsilon'$ は $\varepsilon$ を通じて因数分解されることが求められます。つまり:
 \[\varepsilon' = \varepsilon\ .\ (\sigma \circ K)\]
-Here, $\sigma \circ K$ is the horizontal composition of two natural
-transformations (one of them being the identity natural transformation
-on $K$). This transformation is then vertically composed with
-$\varepsilon$.
+ここで、$\sigma \circ K$ は2つの自然変換 (そのうちの1つは $K$ 上の恒等自然変換) の水平合成です。この変換はその後 $\varepsilon$ と垂直に合成されます。
 
 \begin{figure}[H]
   \centering
@@ -79,33 +48,24 @@ $\varepsilon$.
 \end{figure}
 
 \noindent
-In components, when acting on an object $i$ in $\cat{I}$, we get:
+コンポーネントでは、$\cat{I}$ の対象 $i$ に作用するとき、私たちは次の式を得ます:
 \[\varepsilon'_i = \varepsilon_i \circ \sigma_{K i}\]
-In our case, $\sigma$ has only one component corresponding to the
-single object of $\cat{1}$. So, indeed, this is the unique morphism
-from the apex of the cone defined by $F'$ to the apex of
-the universal cone defined by $\Ran_{K}D$. The commuting conditions
-are exactly the ones required by the definition of a limit.
+私たちの場合、$\sigma$ は $\cat{1}$ の単一の対象に対応する唯一のコンポーネントを持っています。だから、これは実際には $F'$ によって定義された錐の頂点から $\Ran_{K}D$ によって定義された普遍錐の頂点への唯一の射です。交換条件は極限の定義によって要求されるものです。
 
-But, importantly, we are free to replace the trivial category $\cat{1}$
-with an arbitrary category $\cat{A}$, and the definition of the right Kan
-extension remains valid.
+しかし、重要なのは、私たちは単純な圏 $\cat{1}$ を任意の圏 $\cat{A}$ に置き換える自由があり、右Kan拡張の定義は有効のままであるということです。
 
-\section{Right Kan Extension}
+\section{右Kan拡張}
 
-The right Kan extension of the functor $D \Colon \cat{I} \to \cat{C}$
-along the functor $K \Colon \cat{I} \to \cat{A}$ is a functor
-$F \Colon \cat{A} \to \cat{C}$ (denoted $\Ran_{K}D$) together with a
-natural transformation
+索引圏 $\cat{I}$ から圏 $\cat{C}$ への関手 $D \Colon \cat{I} \to \cat{C}$ に沿った関手 $K \Colon \cat{I} \to \cat{A}$ の右Kan拡張は、関手 $F \Colon \cat{A} \to \cat{C}$  ($\Ran_{K}D$ と表記されます) と自然変換
 \[\varepsilon \Colon F \circ K \to D\]
-such that for any other functor $F' \Colon \cat{A} \to \cat{C}$ and
-a natural transformation
+の組み合わせです。その他の任意の関手 $F' \Colon \cat{A} \to \cat{C}$ と
+自然変換
 \[\varepsilon' \Colon F' \circ K \to D\]
-there is a unique natural transformation
+が与えられた場合には、$\varepsilon'$ を因数分解する唯一の自然変換
 \[\sigma \Colon F' \to F\]
-that factorizes $\varepsilon'$:
+が存在します:
 \[\varepsilon' = \varepsilon\ .\ (\sigma \circ K)\]
-This is quite a mouthful, but it can be visualized in this nice diagram:
+これはかなり難解ですが、次の素敵な図で視覚化できます:
 
 \begin{figure}[H]
   \centering
@@ -113,24 +73,9 @@ This is quite a mouthful, but it can be visualized in this nice diagram:
 \end{figure}
 
 \noindent
-An interesting way of looking at this is to notice that, in a sense, the
-Kan extension acts like the inverse of ``functor multiplication.'' Some
-authors go as far as use the notation $D/K$ for $\Ran_{K}D$.
-Indeed, in this notation, the definition of $\varepsilon$, which is also
-called the counit of the right Kan extension, looks like simple
-cancellation:
+これを見ると、ある意味で、Kan拡張は「関手の乗算の逆」として作用することに気づけます。一部の著者は、$\Ran_{K}D$ のために $D/K$ という表記を使います。確かに、この表記では、$\varepsilon$ の定義も、右Kan拡張の余単位とも呼ばれるものも、単純な相殺のように見えます:
 \[\varepsilon \Colon D/K \circ K \to D\]
-There is another interpretation of Kan extensions. Consider that the
-functor $K$ embeds the category $\cat{I}$ inside $\cat{A}$. In the
-simplest case $\cat{I}$ could just be a subcategory of $\cat{A}$. We have
-a functor $D$ that maps $\cat{I}$ to $\cat{C}$. Can we extend
-$D$ to a functor $F$ that is defined on the whole of
-$\cat{A}$? Ideally, such an extension would make the composition
-$F \circ K$ be isomorphic to $D$. In other words, $F$
-would be extending the domain of $D$ to $\cat{A}$. But a
-full-blown isomorphism is usually too much to ask, and we can do with
-just half of it, namely a one-way natural transformation $\varepsilon$ from
-$F \circ K$ to $D$. (The left Kan extension picks the other direction.)
+Kan拡張のもう一つの解釈は、関手 $K$ が圏 $\cat{I}$ を $\cat{A}$ の内部に埋め込むことを考慮するものです。最も単純なケースでは、$\cat{I}$ は $\cat{A}$ の部分圏かもしれません。私たちは $\cat{I}$ を $\cat{C}$ にマッピングする関手 $D$ を持っています。$D$ を $\cat{A}$ 全体に定義された関手 $F$ に拡張できますか？理想的には、そのような拡張は $F \circ K$ を $D$ と同型にするでしょう。言い換えれば、$F$ は $D$ の始域を $\cat{A}$ に拡張するでしょう。しかし、完全な同型は通常求められるものとしては多すぎるので、私たちはただその半分、つまり $F \circ K$ から $D$ への片方向の自然変換 $\varepsilon$ で満足できます。 (左Kan拡張は別の方向を選びます。) 
 
 \begin{figure}[H]
   \centering
@@ -138,24 +83,13 @@ $F \circ K$ to $D$. (The left Kan extension picks the other direction.)
 \end{figure}
 
 \noindent
-Of course, the embedding picture breaks down when the functor $K$
-is not injective on objects or not faithful on hom-sets, as in the
-example of the limit. In that case, the Kan extension tries its best to
-extrapolate the lost information.
+もちろん、関手 $K$ が対象に単射でない場合や射集合に忠実でない場合は、埋め込みの絵が崩れます。その場合、Kan拡張は失われた情報を最善を尽くして外挿しようとします。
 
-\section{Kan Extension as Adjunction}
+\section{Kan拡張と随伴}
 
-Now suppose that the right Kan extension exists for any $D$ (and
-a fixed $K$). In that case $\Ran_{K}-$ (with the dash
-replacing $D$) is a functor from the functor category
-${[}\cat{I}, \cat{C}{]}$ to the functor category ${[}\cat{A}, \cat{C}{]}$. It
-turns out that this functor is the right adjoint to the precomposition
-functor $- \circ K$. The latter maps functors in ${[}\cat{A}, \cat{C}{]}$
-to functors in ${[}\cat{I}, \cat{C}{]}$. The adjunction is:
+今、任意の $D$  (固定された $K$ と共に) に対して右Kan拡張が存在すると仮定します。その場合、$\Ran_{K}-$ (ダッシュが $D$ を置き換える) は、関手圏 ${[}\cat{I}, \cat{C}{]}$ から関手圏 ${[}\cat{A}, \cat{C}{]}$ への関手です。実は、この関手は前合成関手 $- \circ K$ の右随伴です。後者は ${[}\cat{A}, \cat{C}{]}$ の関手を ${[}\cat{I}, \cat{C}{]}$ の関手にマッピングします。随伴は以下のようになります:
 \[[\cat{I}, \cat{C}](F' \circ K, D) \cong [\cat{A}, \cat{C}](F', \Ran_{K}D)\]
-It is just a restatement of the fact that to every natural
-transformation we called $\varepsilon'$ corresponds a unique natural
-transformation we called $\sigma$.
+これは私たちが $\varepsilon'$ と呼んだすべての自然変換に対応する唯一の自然変換が $\sigma$ であるという事実の単なる再表現です。
 
 \begin{figure}[H]
   \centering
@@ -163,46 +97,25 @@ transformation we called $\sigma$.
 \end{figure}
 
 \noindent
-Furthermore, if we chose the category $\cat{I}$ to be the same as
-$\cat{C}$, we can substitute the identity functor $I_{\cat{C}}$ for
-$D$. We get the following identity:
+さらに、私たちが圏 $\cat{I}$ を $\cat{C}$ と同じものと選んだ場合、$D$ の代わりに恒等関手 $I_{\cat{C}}$ を置き換えることができます。そうすると、次の等式が得られます:
 \[[\cat{C}, \cat{C}](F' \circ K, I_{\cat{C}}) \cong [\cat{A}, \cat{C}](F', \Ran_{K}I_{\cat{C}})\]
-We can now chose $F'$ to be the same as $\Ran_{K}I_{\cat{C}}$. In
-that case the right hand side contains the identity natural
-transformation and, corresponding to it, the left hand side gives us the
-following natural transformation:
+今度は、$F'$ を $\Ran_{K}I_{\cat{C}}$ と同じものとして選べば、右側に恒等自然変換が含まれ、それに対応して左側には次の自然変換が得られます:
 \[\varepsilon \Colon \Ran_{K}I_{\cat{C}} \circ K \to I_{\cat{C}}\]
-This looks very much like the counit of an adjunction:
+これは随伴の余単位とよく似ています:
 \[\Ran_{K}I_{\cat{C}} \dashv K\]
-Indeed, the right Kan extension of the identity functor along a functor
-$K$ can be used to calculate the left adjoint of $K$. For
-that, one more condition is necessary: the right Kan extension must be
-preserved by the functor $K$. The preservation of the extension
-means that, if we calculate the Kan extension of the functor precomposed
-with $K$, we should get the same result as precomposing the
-original Kan extension with $K$. In our case, this condition
-simplifies to:
+実際に、関手 $K$ に沿って恒等関手の右Kan拡張を使用すると、$K$ の左随伴を計算するために使用できます。そのためには、もう一つの条件が必要です: 右Kan拡張は関手 $K$ によって保存されなければなりません。拡張の保存とは、$K$ で事前合成された関手のKan拡張を計算した場合、それが $K$ で事前合成された元のKan拡張と同じ結果になることを意味します。私たちの場合、この条件は次のように単純化されます:
 \[K \circ \Ran_{K}I_{\cat{C}} \cong \Ran_{K}K\]
-Notice that, using the division-by-$K$ notation, the adjunction can be
-written as:
+注意すべきは、$K$ による除算の表記を使用すると、随伴は次のように書けるということです:
 \[I/K \dashv K\]
-which confirms our intuition that an adjunction describes some kind of
-an inverse. The preservation condition becomes:
+これは、随伴が何らかの逆を記述することを確認してくれます。保存条件は次のようになります:
 \[K \circ I/K \cong K/K\]
-The right Kan extension of a functor along itself, $K/K$, is
-called a codensity monad.
+関手に沿った関手自体の右Kan拡張、$K/K$、は密度モナドと呼ばれます。
 
-The adjunction formula is an important result because, as we'll see
-soon, we can calculate Kan extensions using ends (coends), thus giving
-us practical means of finding right (and left) adjoints.
+随伴の公式は重要な結果であり、私たちはすぐに見るように、エンド (余エンド) を使用してKan拡張を計算できるため、実用的な方法を提供してくれます。
 
-\section{Left Kan Extension}
+\section{左Kan拡張}
 
-There is a dual construction that gives us the left Kan extension. To
-build some intuition, we'll can start with the definition of a colimit
-and restructure it to use the singleton category $\cat{1}$. We build a
-cocone by using the functor $D \Colon \cat{I} \to \cat{C}$ to form its
-base, and the functor $F \Colon \cat{1} \to \cat{C}$ to select its apex.
+左Kan拡張は、右Kan拡張の双対構造です。いくつかの直感を得るために、まず単一の圏 $\cat{1}$ を使用して余極限の定義を構造化してみましょう。私たちは、関手 $D \Colon \cat{I} \to \cat{C}$ を使用してその基盤を形成し、関手 $F \Colon \cat{1} \to \cat{C}$ を使用してその頂点を選択します。
 
 \begin{figure}[H]
   \centering
@@ -210,8 +123,7 @@ base, and the functor $F \Colon \cat{1} \to \cat{C}$ to select its apex.
 \end{figure}
 
 \noindent
-The sides of the cocone, the injections, are components of a natural
-transformation $\eta$ from $D$ to $F \circ K$.
+余錐の側面、つまり射入れは、$D$ から $F \circ K$ への自然変換 $\eta$ のコンポーネントです。
 
 \begin{figure}[H]
   \centering
@@ -219,8 +131,7 @@ transformation $\eta$ from $D$ to $F \circ K$.
 \end{figure}
 
 \noindent
-The colimit is the universal cocone. So for any other functor
-$F'$ and a natural transformation
+余極限は普遍余錐です。つまり、他の任意の関手 $F'$ と自然変換
 \[\eta' \Colon D \to F' \circ K\]
 
 \begin{figure}[H]
@@ -229,7 +140,7 @@ $F'$ and a natural transformation
 \end{figure}
 
 \noindent
-there is a unique natural transformation $\sigma$ from $F$ to $F'$
+に対して、$F$ から $F'$ への唯一の自然変換 $\sigma$ が存在します。
 
 \begin{figure}[H]
   \centering
@@ -237,9 +148,7 @@ there is a unique natural transformation $\sigma$ from $F$ to $F'$
 \end{figure}
 
 \noindent
-such that:
-\[\eta' = (\sigma \circ K)\ .\ \eta\]
-This is illustrated in the following diagram:
+そのようにして、次の図で示されるようになります:
 
 \begin{figure}[H]
   \centering
@@ -247,9 +156,7 @@ This is illustrated in the following diagram:
 \end{figure}
 
 \noindent
-Replacing the singleton category $\cat{1}$ with $\cat{A}$, this
-definition naturally generalized to the definition of the left Kan
-extension, denoted by $\Lan_{K}D$.
+単一の圏 $\cat{1}$ を $\cat{A}$ に置き換えると、この定義は自然に左Kan拡張の定義に一般化されます。これは $\Lan_{K}D$ と表記されます。
 
 \begin{figure}[H]
   \centering
@@ -257,46 +164,24 @@ extension, denoted by $\Lan_{K}D$.
 \end{figure}
 
 \noindent
-The natural transformation:
+自然変換:
 \[\eta \Colon D \to \Lan_{K}D \circ K\]
-is called the unit of the left Kan extension.
+は左Kan拡張の単位と呼ばれます。
 
-As before, we can recast the one-to-one correspondence between natural
-transformations:
-\[\eta' = (\sigma \circ K)\ .\ \eta\]
-in terms of the adjunction:
+以前のように、自然変換間の一対一の対応を随伴の観点から述べ直すことができます:
 \[[\cat{A}, \cat{C}](\Lan_{K}D, F') \cong [\cat{I}, \cat{C}](D, F' \circ K)\]
-In other words, the left Kan extension is the left adjoint, and the
-right Kan extension is the right adjoint of the precomposition with
-$K$.
+言い換えると、左Kan拡張は前合成と $K$ の左随伴であり、右Kan拡張は右随伴です。
 
-Just like the right Kan extension of the identity functor could be used
-to calculate the left adjoint of $K$, the left Kan extension of
-the identity functor turns out to be the right adjoint of $K$
-(with $\eta$ being the unit of the adjunction):
+恒等関手の右Kan拡張を使用して $K$ の左随伴を計算できるのと同様に、恒等関手の左Kan拡張は $K$ の右随伴になります ($\eta$ は随伴の単位です) :
 \[K \dashv \Lan_{K}I_{\cat{C}}\]
-Combining the two results, we get:
+この二つの結果を組み合わせると、次が得られます:
 \[\Ran_{K}I_{\cat{C}} \dashv K \dashv \Lan_{K}I_{\cat{C}}\]
 
-\section{Kan Extensions as Ends}
+\section{エンドとしてのKan拡張}
 
-The real power of Kan extensions comes from the fact that they can be
-calculated using ends (and coends). For simplicity, we'll restrict our
-attention to the case where the target category $\cat{C}$ is
-$\Set$, but the formulas can be extended to any category.
+Kan拡張の真の力は、エンドと余エンドを使用して計算できるという事実から来ています。単純化のために、私たちはターゲットの圏 $\cat{C}$ を $\Set$ として考えますが、公式は任意の圏に拡張することができます。
 
-Let's revisit the idea that a Kan extension can be used to extend the
-action of a functor outside of its original domain. Suppose that
-$K$ embeds $\cat{I}$ inside $\cat{A}$. Functor $D$ maps
-$\cat{I}$ to $\Set$. We could just say that for any object
-$a$ in the image of $K$, that is $a = K i$, the
-extended functor maps $a$ to $D i$. The problem is, what
-to do with those objects in $\cat{A}$ that are outside of the image of
-$K$? The idea is that every such object is potentially connected
-through lots of morphisms to every object in the image of $K$. A
-functor must preserve these morphisms. The totality of morphisms from an
-object $a$ to the image of $K$ is characterized by the
-hom-functor:
+Kan拡張を使用して関手の作用をその元の始域の外側に拡張するというアイデアを再考してみましょう。$K$ が $\cat{I}$ を $\cat{A}$ の内部に埋め込むと仮定します。関手 $D$ は $\cat{I}$ を $\Set$ にマッピングします。$K$ の像内の任意の対象 $a$ 、つまり $a = K i$ に対して、拡張された関手は $a$ を $D i$ にマッピングすると単に言えばよいでしょう。しかし、$K$ の像の外側にある $\cat{A}$ の対象はどうでしょうか？各対象は潜在的に$K$の像のすべての対象に多くの射を介して接続されています。関手はこれらの射を保存しなければなりません。対象 $a$ から $K$ の像への射の全体は、ホム関手によって特徴づけられます:
 \[\cat{A}(a, K -)\]
 
 \begin{figure}[H]
@@ -305,175 +190,110 @@ hom-functor:
 \end{figure}
 
 \noindent
-Notice that this hom-functor is a composition of two functors:
+このホム関手は2つの関手の合成です:
 \[\cat{A}(a, K -) = \cat{A}(a, -) \circ K\]
-The right Kan extension is the right adjoint of functor composition:
+右Kan拡張は関手合成の右随伴です:
 \[[\cat{I}, \Set](F' \circ K, D) \cong [\cat{A}, \Set](F', \Ran_{K}D)\]
-Let's see what happens when we replace $F'$ with the hom
-functor:
+ホム関手を $F'$ に置き換えるとどうなるか見てみましょう:
 \[[\cat{I}, \Set](\cat{A}(a, -) \circ K, D) \cong [\cat{A}, \Set](\cat{A}(a, -), \Ran_{K}D)\]
-and then inline the composition:
+そして、合成をインライン展開します:
 \[[\cat{I}, \Set](\cat{A}(a, K -), D) \cong [\cat{A}, \Set](\cat{A}(a, -), \Ran_{K}D)\]
-The right hand side can be reduced using the Yoneda lemma:
+右側は米田の補題を使用して簡略化できます:
 \[[\cat{I}, \Set](\cat{A}(a, K -), D) \cong \Ran_{K}D a\]
-We can now rewrite the set of natural transformations as the end to get
-this very convenient formula for the right Kan extension:
+これで、右Kan拡張の非常に便利な式を自然変換の集合としてエンドを書き換えることができます:
 \[\Ran_{K}D a \cong \int_i \Set(\cat{A}(a, K i), D i)\]
-There is an analogous formula for the left Kan extension in terms of a
-coend:
+左Kan拡張に対しても、余エンドを用いた類似の公式があります:
 \[\Lan_{K}D a = \int^i \cat{A}(K i, a)\times{}D i\]
-To see that this is the case, we'll show that this is indeed the left
-adjoint to functor composition:
+これが実際に関手合成の左随伴であることを示すために、左側の式を代入して見ましょう:
 \[[\cat{A}, \Set](\Lan_{K}D, F') \cong [\cat{I}, \Set](D, F' \circ K)\]
-Let's substitute our formula in the left hand side:
+左側を置換して:
 \[[\cat{A}, \Set](\int^i \cat{A}(K i, -)\times{}D i, F')\]
-This is a set of natural transformations, so it can be rewritten as an
-end:
+これは自然変換の集合なので、エンドとして書き直せます:
 \[\int_a \Set(\int^i \cat{A}(K i, a)\times{}D i, F' a)\]
-Using the continuity of the hom-functor, we can replace the coend with
-the end:
+ホム関手の連続性を使用して、余エンドをエンドと置き換えます:
 \[\int_a \int_i \Set(\cat{A}(K i, a)\times{}D i, F' a)\]
-We can use the product-exponential adjunction:
+積-指数随伴を使用します:
 \[\int_a \int_i \Set(\cat{A}(K i, a),\ (F' a)^{D i})\]
-The exponential is isomorphic to the corresponding hom-set:
+指数は対応するホム集合と同型です:
 \[\int_a \int_i \Set(\cat{A}(K i, a),\ \cat{A}(D i, F' a))\]
-There is a theorem called the Fubini theorem that allows us to swap the
-two ends:
-\[\int_i \int_a \Set(\cat{A}(K i, a),\ A(D i, F' a))\]
-The inner end represents the set of natural transformations between two
-functors, so we can use the Yoneda lemma:
+Fubiniの定理を使用して、2つのエンドを交換できます:
+\[\int_i \int_a \Set(\cat{A}(K i, a),\ \cat{A}(D i, F' a))\]
+内側のエンドは2つの関手間の自然変換の集合を表しているので、米田の補題を使用できます:
 \[\int_i \cat{A}(D i, F' (K i))\]
-This is indeed the set of natural transformations that forms the right
-hand side of the adjunction we set out to prove:
+これは、随伴の証明をしようとした右側の自然変換の集合です:
 \[[\cat{I}, \Set](D, F' \circ K)\]
-These kinds of calculations using ends, coends, and the Yoneda lemma are
-pretty typical for the ``calculus'' of ends.
+エンド、余エンド、米田の補題を使用するこの種の計算は、「エンドの計算」の典型的なものです。
 
-\section{Kan Extensions in Haskell}
+\section{HaskellでのKan拡張}
 
-The end/coend formulas for Kan extensions can be easily translated to
-Haskell. Let's start with the right extension:
+Kan拡張のエンド/余エンドの式は、Haskellに簡単に翻訳できます。右拡張から始めましょう:
 \[\Ran_{K}D a \cong \int_i \Set(\cat{A}(a, K i), D i)\]
-We replace the end with the universal quantifier, and hom-sets with
-function types:
-
-\src{snippet01}
-Looking at this definition, it's clear that \code{Ran} must contain a
-value of type \code{a} to which the function can be applied, and a
-natural transformation between the two functors \code{k} and
-\code{d}. For instance, suppose that \code{k} is the tree functor,
-and \code{d} is the list functor, and you were given a
-\code{Ran Tree {[}{]} String}. If you pass it a function:
+この定義を見ると、\code{Ran}は関数が適用される型 \code{a} の値を含むべきであり、関手 \code{k} と \code{d} の間の自然変換も必要です。例えば、\code{k} が木関手で、\code{d} がリスト関手であるとし、\code{Ran Tree {[}{]} String} を与えられた場合、関数を渡すと:
 
 \src{snippet02}
-you'll get back a list of \code{Int}, and so on. The right Kan
-extension will use your function to produce a tree and then repackage it
-into a list. For instance, you may pass it a parser that generates a
-parsing tree from a string, and you'll get a list that corresponds to
-the depth-first traversal of this tree.
+\code{Int} のリストが返されます。右Kan拡張はあなたの関数を使って木を生成し、それをリストに再梱包します。例えば、文字列からパース木を生成するパーサーを渡すと、その木の深さ優先探索に対応するリストが得られます。
 
-The right Kan extension can be used to calculate the left adjoint of a
-given functor by replacing the functor \code{d} with the identity
-functor. This leads to the left adjoint of a functor \code{k} being
-represented by the set of polymorphic functions of the type:
+右Kan拡張は、\code{d} を恒等関手に置き換えることで、与えられた関手の左随伴を計算するために使用することができます。これにより、関手 \code{k} の左随伴が、次の型の多相関数の集合で表されます:
 
 \src{snippet03}
-Suppose that \code{k} is the forgetful functor from the category of
-monoids. The universal quantifier then goes over all monoids. Of course,
-in Haskell we cannot express monoidal laws, but the following is a
-decent approximation of the resulting free functor (the forgetful
-functor \code{k} is an identity on objects):
+例えば、\code{k} がモノイドの圏から忘却関手であると仮定します。すると、全称量化子はすべてのモノイドを渡ります。もちろん、Haskellではモノイド則を表現することはできませんが、以下は結果として得られる自由関手 (忘却関手 \code{k} は対象に対して恒等的です) のまともな近似です:
 
 \src{snippet04}
-As expected, it generates free monoids, or Haskell lists:
+予想通り、これは自由モノイド、つまりHaskellのリストを生成します:
 
 \src{snippet05}
-The left Kan extension is a coend:
+左Kan拡張は余エンドです:
 \[\Lan_{K}D a = \int^i \cat{A}(K i, a)\times{}D i\]
-so it translates to an existential quantifier. Symbolically:
+したがって、存在量化子として表されます。記号的には:
 
 \begin{snip}{haskell}
 Lan k d a = exists i. (k i -> a, d i)
 \end{snip}
-This can be encoded in Haskell using \acronym{GADT}s, or using a universally
-quantified data constructor:
+これは、\acronym{GADT}を使用するか、または全称量化子を持つデータコンストラクタを使用して、Haskellでエンコードできます:
 
 \src{snippet06}
-The interpretation of this data structure is that it contains a function
-that takes a container of some unspecified \code{i}s and produces an
-\code{a}. It also has a container of those \code{i}s. Since you have
-no idea what \code{i}s are, the only thing you can do with this data
-structure is to retrieve the container of \code{i}s, repack it into
-the container defined by the functor \code{k} using a natural
-transformation, and call the function to obtain the \code{a}. For
-instance, if \code{d} is a tree, and \code{k} is a list, you can
-serialize the tree, call the function with the resulting list, and
-obtain an \code{a}.
+このデータ構造の解釈は、それが未指定の \code{i} のコンテナを取り、\code{a} を生成する関数を含んでいるというものです。また、それらの \code{i} のコンテナも持っています。どのような \code{i} であるかわからないので、このデータ構造でできる唯一のことは、\code{i} のコンテナを取り出し、自然変換を使用して関手 \code{k} で定義されたコンテナに再梱包し、関数を呼び出して \code{a} を得ることです。例えば、\code{d} が木であり、\code{k} がリストであれば、木をシリアライズし、結果のリストで関数を呼び出し、\code{a} を得ることができます。
 
-The left Kan extension can be used to calculate the right adjoint of a
-functor. We know that the right adjoint of the product functor is the
-exponential, so let's try to implement it using the Kan extension:
+左Kan拡張は、関手の右随伴を計算するために使用することができます。積関手の右随伴が指数関数であることがわかっているので、Kan拡張を使用して実装してみましょう:
 
 \src{snippet07}
-This is indeed isomorphic to the function type, as witnessed by the
-following pair of functions:
+これは関数型と同型であることが、以下の一対の関数によって証明されます:
 
 \src{snippet08}
-Notice that, as described earlier in the general case, we performed the
-following steps:
+以前に一般的なケースで説明したように、私たちは次のステップを実行しました:
 
 \begin{enumerate}
   \tightlist
   \item
-        Retrieved the container of \code{x} (here, it's
-        just a trivial identity container), and the function \code{f}.
+        \code{x} のコンテナを取り出し (ここでは、単なる自明な恒等コンテナ) 、関数 \code{f} を取り出しました。
   \item
-        Repackaged the container using the natural transformation between the
-        identity functor and the pair functor.
+        自然変換を使用してコンテナを恒等関手からペア関手へと再梱包しました。
   \item
-        Called the function \code{f}.
+        関数 \code{f} を呼び出しました。
 \end{enumerate}
 
-\section{Free Functor}
+\section{自由関手}
 
-An interesting application of Kan extensions is the construction of a
-free functor. It's the solution to the following practical problem:
-suppose you have a type constructor --- that is a mapping of objects. Is
-it possible to define a functor based on this type constructor? In other
-words, can we define a mapping of morphisms that would extend this type
-constructor to a full-blown endofunctor?
+Kan拡張の興味深い応用の一つは自由関手の構成です。これは、次のような実用的な問題の解決策です: 型コンストラクタ、つまり対象のマッピングを持っている場合、この型コンストラクタに基づいて関手を定義することは可能でしょうか？言い換えれば、この型コンストラクタを完全な自己関手に拡張するための射のマッピングを定義できますか？
 
-The key observation is that a type constructor can be described as a
-functor whose domain is a discrete category. A discrete category has no
-morphisms other than the identity morphisms. Given a category $\cat{C}$,
-we can always construct a discrete category $\cat{|C|}$
-by simply discarding all non-identity morphisms. A functor $F$
-from $\cat{|C|}$ to $\cat{C}$ is then a simple mapping
-of objects, or what we call a type constructor in Haskell. There is also
-a canonical functor $J$ that injects $\cat{|C|}$
-into $\cat{C}$: it's an identity on objects (and on identity morphisms).
-The left Kan extension of $F$ along $J$, if it exists, is
-then a functor for $\cat{C}$ to $\cat{C}$:
+重要な観察は、型コンストラクタが離散圏の関手として記述できるということです。離散圏は恒等射以外の射を持たない圏です。与えられた圏 $\cat{C}$ に対して、私たちはすべての非恒等射を単純に捨てることによって離散圏 $\cat{|C|}$ を常に構成できます。$\cat{|C|}$ から $\cat{C}$ への関手 $F$ は、その後、対象の単純なマッピング、つまりHaskellで言うところの型コンストラクタです。また、$\cat{|C|}$ を $\cat{C}$ に注入する標準的な関手 $J$ もあります。それは対象に対して (そして恒等射に対しても) 恒等的です。$F$ の $J$ に沿った左Kan拡張が存在する場合、それは $\cat{C}$ から $\cat{C}$ への関手です:
 \[\Lan_{J}F a = \int^i \cat{C}(J i, a)\times{}F i\]
-It's called a free functor based on $F$.
+これは、$F$ に基づく自由関手と呼ばれます。
 
-In Haskell, we would write it as:
+Haskellでは、それを次のように書くでしょう:
 
 \src{snippet09}
-Indeed, for any type constructor \code{f}, \code{FreeF f} is a
-functor:
+実際には、任意の型コンストラクタ \code{f} に対して、\code{FreeF f} は関手です:
 
 \src{snippet10}
-As you can see, the free functor fakes the lifting of a function by
-recording both the function and its argument. It accumulates the lifted
-functions by recording their composition. Functor rules are
-automatically satisfied. This construction was used in a paper
-\urlref{http://okmij.org/ftp/Haskell/extensible/more.pdf}{Freer Monads,
-  More Extensible Effects}.
+ご覧のとおり、自由関手は関数の持ち上げを、その関数とその引数の両方を記録することによって偽装します。それは関数の合成を記録することによって持ち上げられた関数を蓄積します。関手の規則は自動的に満たされます。この構成は、論文 \urlref{http://okmij.org/ftp/Haskell/extensible/more.pdf}{Freer Monads, More Extensible Effects} で使用されました。
 
-Alternatively, we can use the right Kan extension for the same purpose:
+代わりに、同じ目的のために右Kan拡張を使用することもできます:
 
 \src{snippet11}
-It's easy to check that this is indeed a functor:
+これが実際に関手であることは簡単に確認できます:
 
 \src{snippet12}
+
+
+

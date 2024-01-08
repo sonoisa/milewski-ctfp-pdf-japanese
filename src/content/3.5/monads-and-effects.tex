@@ -1,496 +1,251 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{N}{ow that we know} what the monad is for --- it lets us compose
-embellished functions --- the really interesting question is why
-embellished functions are so important in functional programming. We've
-already seen one example, the \code{Writer} monad, where embellishment
-let us create and accumulate a log across multiple function calls. A
-problem that would otherwise be solved using impure functions (e.g., by
-accessing and modifying some global state) was solved with pure
-functions.
+\lettrine[lhang=0.17]{モ}{ナド}が何のためにあるかを理解した今 --- それは飾り付けられた関数を合成するため --- 本当に興味深い問題は、なぜそのような関数が関数型プログラミングで重要なのかです。既に\code{Writer}モナドの例を見ましたが、飾り付けによって複数の関数呼び出しを通じてログを作成・蓄積することができました。これは通常、非純粋関数 (例えば、グローバル状態へのアクセスや変更) を使って解決される問題でしたが、純粋関数を用いて解決されました。
 
-\section{The Problem}
+\section{問題点}
 
-Here is a short list of similar problems, copied from
-\urlref{https://core.ac.uk/download/pdf/21173011.pdf}{Eugenio Moggi's
-  seminal paper}, all of which are traditionally solved by abandoning the
-purity of functions.
+以下は、伝統的に関数の純粋性を放棄することで解決されてきた類似の問題の短いリストです。これは
+\urlref{https://core.ac.uk/download/pdf/21173011.pdf}{Eugenio Moggiの画期的な論文}からの引用です。
 
 \begin{itemize}
   \tightlist
   \item
-        Partiality: Computations that may not terminate
+        部分性: 終了しない可能性がある計算
   \item
-        Nondeterminism: Computations that may return many results
+        非決定性: 多くの結果を返す可能性がある計算
   \item
-        Side effects: Computations that access/modify state
+        副作用: 状態にアクセス／変更する計算
 
         \begin{itemize}
           \tightlist
           \item
-                Read-only state, or the environment
+                読み取り専用状態、または環境
           \item
-                Write-only state, or a log
+                書き込み専用状態、またはログ
           \item
-                Read/write state
+                読み書き状態
         \end{itemize}
   \item
-        Exceptions: Partial functions that may fail
+        例外: 失敗する可能性がある部分関数
   \item
-        Continuations: Ability to save state of the program and then restore
-        it on demand
+        継続: プログラムの状態を保存し、要求に応じてそれを復元する能力
   \item
-        Interactive Input
+        対話型入力
   \item
-        Interactive Output
+        対話型出力
 \end{itemize}
 
-What really is mind blowing is that all these problems may be solved
-using the same clever trick: turning to embellished functions. Of
-course, the embellishment will be totally different in each case.
+これらの問題が同じ巧妙な技、すなわち飾り付けられた関数に頼ることで解決されるというのは本当に驚くべきことです。もちろん、各ケースでの飾り付けは全く異なります。
 
-You have to realize that, at this stage, there is no requirement that
-the embellishment be monadic. It's only when we insist on composition
---- being able to decompose a single embellished function into smaller
-embellished functions --- that we need a monad. Again, since each of the
-embellishments is different, monadic composition will be implemented
-differently, but the overall pattern is the same. It's a very simple
-pattern: composition that is associative and equipped with identity.
+この段階で、飾り付けがモナド的である必要はありません。それは、私たちが合成を主張する --- 単一の飾り付けられた関数をより小さな飾り付けられた関数に分解することができる --- 時にのみ必要になります。再び、各装飾が異なるため、モナド的な合成は異なる方法で実装されますが、全体的なパターンは同じです。それは、恒等性を備えた結合的な合成の非常に単純なパターンです。
 
-The next section is heavy on Haskell examples. Feel free to skim or even
-skip it if you're eager to get back to category theory or if you're
-already familiar with Haskell's implementation of monads.
+次のセクションはHaskellの例に重点を置いています。もしあなたが圏論に戻ることを切望しているか、またはHaskellのモナドの実装に既に精通しているならば、適宜読み飛ばすか完全にスキップしてください。
 
-\section{The Solution}
+\section{解決策}
 
-First, let's analyze the way we used the \code{Writer} monad. We
-started with a pure function that performed a certain task --- given
-arguments, it produced a certain output. We replaced this function with
-another function that embellished the original output by pairing it with
-a string. That was our solution to the logging problem.
+まず、\code{Writer}モナドを使用した方法を分析しましょう。私たちは特定のタスクを実行する純粋関数から始めました --- 引数が与えられたら、それは特定の出力を生成します。私たちはこの関数を、元の出力と文字列をペアにすることで飾り付けた別の関数に置き換えました。これがログ問題の解決策でした。
 
-We couldn't stop there because, in general, we don't want to deal with
-monolithic solutions. We needed to be able to decompose one
-log-producing function into smaller log-producing functions. It's the
-composition of those smaller functions that led us to the concept of a
-monad.
+しかし、一般的には、私たちは単一の解決策で満足することはできません。一つのログ生成関数をより小さなログ生成関数に分解できるようにする必要がありました。これらの小さな関数の合成が私たちをモナドの概念へと導きました。
 
-What's really amazing is that the same pattern of embellishing the
-function return types works for a large variety of problems that
-normally would require abandoning purity. Let's go through our list and
-identify the embellishment that applies to each problem in turn.
+飾り付けられた関数の戻り値型を変更するというのは、通常純粋性を放棄する必要がある多くの問題に対する効果的な解決策であることが驚くべきです。リストを通して、それぞれの問題に適用される飾り付けを特定してみましょう。
 
-\subsection{Partiality}
+\subsection{部分性}
 
-We modify the return type of every function that may not terminate by
-turning it into a ``lifted'' type --- a type that contains all values of
-the original type plus the special ``bottom'' value $\bot$. For
-instance, the \code{Bool} type, as a set, would contain two elements:
-\code{True} and \code{False}. The lifted \code{Bool} contains
-three elements. Functions that return the lifted \code{Bool} may
-produce \code{True} or \code{False}, or execute forever.
+終了しない可能性があるすべての関数の戻り値型を変更し、「持ち上げられた」型 --- 元の型のすべての値に特別な「ボトム」値 $\bot$ を加えた型にします。例えば、\code{Bool}型は、集合として二つの要素: \code{True}と\code{False}を含みます。持ち上げられた\code{Bool}には三つの要素が含まれます。持ち上げられた\code{Bool}を返す関数は\code{True}または\code{False}を生成するか、永遠に実行されるかもしれません。
 
-The funny thing is that, in a lazy language like Haskell, a never-ending
-function may actually return a value, and this value may be passed to
-the next function. We call this special value the bottom. As long as
-this value is not explicitly needed (for instance, to be pattern
-matched, or produced as output), it may be passed around without
-stalling the execution of the program. Because every Haskell function
-may be potentially non-terminating, all types in Haskell are assumed to
-be lifted. This is why we often talk about the category $\Hask$ of
-Haskell (lifted) types and functions rather than the simpler
-$\Set$. It is not clear, though, that $\Hask$ is a real
-category (see this
+面白いことに、Haskellのような怠惰な言語では、決して終わらない関数が実際には値を返すことがあり、この値は次の関数に渡されることがあります。私たちはこの特別な値をボトムと呼びます。この値が明示的に必要でない限り (例えば、パターンマッチングするため、または出力として生成するため) 、それはプログラムの実行を停止させることなく渡されるかもしれません。Haskellのすべての関数が潜在的に非終了であるため、Haskellのすべての型は持ち上げられたものと見なされます。これが、私たちがしばしばHaskell (持ち上げられた) 型と関数の圏$\Hask$について話す理由ですが、$\Hask$が実際には本当の圏であるかどうかははっきりしていません (この
 \urlref{http://math.andrej.com/2016/08/06/hask-is-not-a-category/}{Andrej
-  Bauer post}).
+  Bauerの投稿}を参照) 。
 
-\subsection{Nondeterminism}
+\subsection{非決定性}
 
-If a function can return many different results, it may as well return
-them all at once. Semantically, a non-deterministic function is
-equivalent to a function that returns a list of results. This makes a
-lot of sense in a lazy garbage-collected language. For instance, if all
-you need is one value, you can just take the head of the list, and the
-tail will never be evaluated. If you need a random value, use a random
-number generator to pick the n-th element of the list. Laziness even
-allows you to return an infinite list of results.
+多くの異なる結果を返す可能性がある関数は、一度にそれらをすべて返すこともできます。意味的には、非決定的な関数は結果のリストを返す関数と同等です。これは怠惰なガベージコレクション言語で非常に理にかなっています。例えば、1つの値だけが必要な場合、リストの先頭を取り出すことができますし、リストの後尾は評価されることはありません。ランダムな値が必要な場合は、乱数生成器を使用してリストのn番目の要素を選ぶことができます。怠惰さは無限の結果のリストを返すことさえ可能にします。
 
-In the list monad --- Haskell's implementation of nondeterministic
-computations --- \code{join} is implemented as \code{concat}.
-Remember that \code{join} is supposed to flatten a container of
-containers --- \code{concat} concatenates a list of lists into a
-single list. \code{return} creates a singleton list:
+リストモナド --- Haskellにおける非決定的計算の実装 --- で\code{join}は\code{concat}として実装されます。覚えておいてください、\code{join}はコンテナのコンテナを平らにすることを意図しています --- \code{concat}はリストのリストを1つのリストに連結します。そして\code{return}は単一要素のリストを作成します: 
 
 \src{snippet01}
-The bind operator for the list monad is given by the general formula:
-\code{fmap} followed by \code{join} which, in this case gives:
+リストモナドのためのbind演算子は、一般的な公式によって与えられます: 
+\code{fmap}の後に\code{join}が続きます。この場合は以下のようになります: 
 
 \src{snippet02}
-Here, the function \code{k}, which itself produces a list, is applied
-to every element of the list \code{as}. The result is a list of lists,
-which is flattened using \code{concat}.
+ここで、関数\code{k}自体がリストを生成するものとして、リスト\code{as}の各要素に適用されます。結果はリストのリストであり、それは\code{concat}を使って平らにされます。
 
-From the programmer's point of view, working with a list is easier than,
-for instance, calling a non-deterministic function in a loop, or
-implementing a function that returns an iterator (although,
-\urlref{http://ericniebler.com/2014/04/27/range-comprehensions/}{in modern
-  C++}, returning a lazy range would be almost equivalent to returning a
-list in Haskell).
+プログラマの視点からは、例えば非決定的な関数をループで呼び出したり、反復子を返す関数を実装するよりも、リストを扱う方が簡単です。
 
-A good example of using non-determinism creatively is in game
-programming. For instance, when a computer plays chess against a human,
-it can't predict the opponent's next move. It can, however, generate a
-list of all possible moves and analyze them one by one. Similarly, a
-non-deterministic parser may generate a list of all possible parses for
-a given expression.
+ゲームプログラミングにおいて非決定性を創造的に使用するのは良い例です。例えば、コンピュータが人間に対してチェスをする場合、相手の次の動きを予測することはできません。しかし、それはすべての可能な動きのリストを生成し、それらを1つずつ分析することができます。同様に、非決定的なパーサーは与えられた式のすべての可能な解析のリストを生成することができます。
 
-Even though we may interpret functions returning lists as
-non-deterministic, the applications of the list monad are much wider.
-That's because stitching together computations that produce lists is a
-perfect functional substitute for iterative constructs --- loops ---
-that are used in imperative programming. A single loop can be often
-rewritten using \code{fmap} that applies the body of the loop to each
-element of the list. The \code{do} notation in the list monad can be
-used to replace complex nested loops.
+関数がリストを返すことは非決定的として解釈することができますが、リストモナドの適用ははるかに広範です。それは、命令型プログラミングで使われる反復的な構造 --- ループ --- の完璧な関数型代替です。1つのループはしばしば、リストの各要素にループの本体を適用する\code{fmap}を使用して書き直すことができます。リストモナドにおける\code{do}表記は、複雑な入れ子のループを置き換えるために使用することができます。
 
-My favorite example is the program that generates Pythagorean triples
---- triples of positive integers that can form sides of right triangles.
+私のお気に入りの例は、ピタゴラスの三つ組 --- 正しい三角形の辺を形成することができる正の整数の三つ組 --- を生成するプログラムです。
 
 \src{snippet03}
-The first line tells us that \code{z} gets an element from an infinite
-list of positive numbers \code{{[}1..{]}}. Then \code{x} gets an
-element from the (finite) list \code{{[}1..z{]}} of numbers between 1
-and \code{z}. Finally \code{y} gets an element from the list of
-numbers between \code{x} and \code{z}. We have three numbers
-$1 \leqslant x \leqslant y \leqslant z$ at our
-disposal. The function \code{guard} takes a \code{Bool} expression
-and returns a list of units:
+最初の行は、\code{z}が無限の正の数のリスト\code{{[}1..{]}}から要素を取ることを教えています。その後、\code{x}は (有限の) リスト\code{{[}1..z{]}}から要素を取ります。このリストには1から\code{z}までの数が含まれています。最後に、\code{y}は\code{x}と\code{z}の間の数値のリストから要素を取ります。この時点で、$1 \leqslant x \leqslant x \leqslant y \leqslant z$ の3つの数を使用できます。関数 \code{guard} は \code{Bool} 式を取り、Unitのリストを返します: 
 
 \src{snippet04}
-This function (which is a member of a larger class called
-\code{MonadPlus}) is used here to filter out non-Pythagorean triples.
-Indeed, if you look at the implementation of bind (or the related
-operator \code{>>}), you'll notice that,
-when given an empty list, it produces an empty list. On the other hand,
-when given a non-empty list (here, the singleton list containing unit
-\code{{[}(){]}}), bind will call the continuation, here
-\code{return (x, y, z)}, which produces a singleton list with a
-verified Pythagorean triple. All those singleton lists will be
-concatenated by the enclosing binds to produce the final (infinite)
-result. Of course, the caller of \code{triples} will never be able to
-consume the whole list, but that doesn't matter, because Haskell is
-lazy.
+この関数 (より大きなクラスである \code{MonadPlus} のメンバー) は、ここでは非ピタゴラス三つ組をフィルタリングするために使用されています。実際、bind (または関連する演算子 \code{>>}) の実装を見ると、空のリストが与えられた場合、それは空のリストを生成することがわかります。一方、空でないリスト (ここでは、Unitを含む単一要素のリスト \code{{[}(){]}}) が与えられた場合、bind は続行を呼び出し、ここでは \code{return (x, y, z)} で、検証済みのピタゴラス三つ組を含む単一要素のリストを生成します。これらの単一要素のリストは、結果的な (無限の) 結果を生成するために、囲んでいるbindによって連結されます。もちろん、\code{triples}の呼び出し側は決してリスト全体を消費することはできませんが、それは問題ではありません、なぜならHaskellは怠惰だからです。
 
-The problem that normally would require a set of three nested loops has
-been dramatically simplified with the help of the list monad and the
-\code{do} notation. As if that weren't enough, Haskell let's you
-simplify this code even further using list comprehension:
+通常、3つのネストしたループを必要とする問題が、リストモナドと \code{do} 表記の助けを借りて劇的に簡素化されました。それだけでなく、Haskellはこのコードをさらに簡素化することを可能にしています。それはリスト内包表記を使用することです: 
 
 \src{snippet05}
-This is just further syntactic sugar for the list monad (strictly
-speaking, \code{MonadPlus}).
+これはリストモナドのためのさらなるシンタックスシュガーに過ぎません (厳密に言うと、\code{MonadPlus}) 。
 
-You might see similar constructs in other functional or imperative
-languages under the guise of generators and coroutines.
+他の関数型または命令型言語でジェネレーターやコルーチンの様相の下で類似の構造を見るかもしれません。
 
-\subsection{Read-Only State}
+\subsection{読み取り専用状態}
 
-A function that has read-only access to some external state, or
-environment, can be always replaced by a function that takes that
-environment as an additional argument. A pure function
-\code{(a, e) -> b} (where \code{e} is the type of
-the environment) doesn't look, at first sight, like a Kleisli arrow. But
-as soon as we curry it to
-\code{a -> (e -> b)} we recognize the
-embellishment as our old friend the reader functor:
+何らかの外部状態、または環境に読み取り専用アクセスを持つ関数は、その環境を追加引数として取る関数に常に置き換えることができます。純粋関数 \code{(a, e) -> b} (ここで \code{e} は環境の型) は、最初の見た目にはKleisli射のようではありません。しかし、私たちがそれを
+\code{a -> (e -> b)} にCurry化するとすぐに、飾り付けを私たちの古い友人であるReader関手として認識します: 
 
 \src{snippet06}
-You may interpret a function returning a \code{Reader} as producing a
-mini-executable: an action that given an environment produces the
-desired result. There is a helper function \code{runReader} to execute
-such an action:
+\code{Reader} を返す関数を、環境を与えられた結果を生成するアクション、すなわちミニ実行可能ファイルとして解釈することができます。そのようなアクションを実行するためのヘルパー関数 \code{runReader} があります: 
 
 \src{snippet07}
-It may produce different results for different values of the
-environment.
+それは環境の異なる値に対して異なる結果を生成するかもしれません。
 
-Notice that both the function returning a \code{Reader}, and the
-\code{Reader} action itself are pure.
+\code{Reader} を返す関数も、\code{Reader} アクション自体も純粋です。
 
-To implement bind for the \code{Reader} monad, first notice that you
-have to produce a function that takes the environment \code{e} and
-produces a \code{b}:
+\code{Reader} モナドのためのbindを実装するために、まず環境 \code{e} を取り、\code{b} を生成する関数を作成する必要があります: 
 
 \src{snippet08}
-Inside the lambda, we can execute the action \code{ra} to produce an
-\code{a}:
+ラムダの中で、私たちはアクション \code{ra} を実行して \code{a} を生成することができます: 
 
 \src{snippet09}
-We can then pass the \code{a} to the continuation \code{k} to get a
-new action \code{rb}:
+それから、\code{a} を続行 \code{k} に渡して新しいアクション \code{rb} を得ることができます: 
 
 \src{snippet10}
-Finally, we can run the action \code{rb} with the environment
-\code{e}:
+最後に、環境 \code{e} と共にアクション \code{rb} を実行することができます: 
 
 \src{snippet11}
-To implement \code{return} we create an action that ignores the
-environment and returns the unchanged value.
+\code{return} を実装するために、私たちは環境を無視して変更されていない値を返すアクションを作成します。
 
-Putting it all together, after a few simplifications, we get the
-following definition:
+それをすべてまとめると、いくつかの単純化の後に、次の定義が得られます: 
 
 \src{snippet12}
 
-\subsection{Write-Only State}
+\subsection{書き込み専用状態}
 
-This is just our initial logging example. The embellishment is given by
-the \code{Writer} functor:
+これは私たちの初期のロギングの例に過ぎません。飾り付けは \code{Writer} 関手によって与えられます: 
 
 \src{snippet13}
-For completeness, there's also a trivial helper \code{runWriter} that
-unpacks the data constructor:
+完全性のために、データコンストラクタをアンパックするための些細なヘルパー \code{runWriter} もあります: 
 
 \src{snippet14}
-As we've seen before, in order to make \code{Writer} composable,
-\code{w} has to be a monoid. Here's the monad instance for
-\code{Writer} written in terms of the bind operator:
+私たちが以前に見たように、\code{Writer} を合成可能にするためには、\code{w} がモノイドでなければなりません。ここにbind演算子に関して\code{Writer}のモナドインスタンスが書かれています: 
 
 \src{snippet15}
 
-\subsection{State}
+\subsection{状態}
 
-Functions that have read/write access to state combine the
-embellishments of the \code{Reader} and the \code{Writer}. You may
-think of them as pure functions that take the state as an extra argument
-and produce a pair value/state as a result:
-\code{(a, s) -> (b, s)}. After currying, we get them
-into the form of Kleisli arrows
-\code{a -> (s -> (b, s))}, with the
-embellishment abstracted in the \code{State} functor:
+読み書きアクセスを持つ状態関数は、\code{Reader} と \code{Writer} の飾り付けを結合します。それらは純粋関数と考えることができます。それは追加の引数として状態を取り、結果として値／状態のペアを生成します: 
+\code{(a, s) -> (b, s)}。Curry化後、私たちはそれらをKleisli射の形式にしています
+\code{a -> (s -> (b, s))}、飾り付けは \code{State} 関手で抽象化されています: 
 
 \src{snippet16}
-Again, we can look at a Kleisli arrow as returning an action, which can
-be executed using the helper function:
+再び、私たちはKleisli射がアクションを返すと見なすことができます。それはヘルパー関数を使用して実行することができます: 
 
 \src{snippet17}
-Different initial states may not only produce different results, but
-also different final states.
+異なる初期状態は、異なる結果だけでなく、異なる最終状態も生成するかもしれません。
 
-The implementation of bind for the \code{State} monad is very similar
-to that of the \code{Reader} monad, except that care has to be taken
-to pass the correct state at each step:
+\code{State} モナドのためのbindの実装は、\code{Reader} モナドのそれと非常に似ていますが、各ステップで正しい状態を渡すための注意が必要です: 
 
 \src{snippet18}
-Here's the full instance:
+ここに完全なインスタンスがあります: 
 
 \src{snippet19}
-There are also two helper Kleisli arrows that may be used to manipulate
-the state. One of them retrieves the state for inspection:
+状態を操作するために使用することができる2つのヘルパーKleisli射もあります。そのうちの一つは検査のために状態を取得します: 
 
 \src{snippet20}
-and the other replaces it with a completely new state:
+そして、もう一つはそれを完全に新しい状態で置き換えます: 
 
 \src{snippet21}
 
-\subsection{Exceptions}
+\subsection{例外}
 
-An imperative function that throws an exception is really a partial
-function --- it's a function that's not defined for some values of its
-arguments. The simplest implementation of exceptions in terms of pure
-total functions uses the \code{Maybe} functor. A partial function is
-extended to a total function that returns \code{Just a} whenever it
-makes sense, and \code{Nothing} when it doesn't. If we want to also
-return some information about the cause of the failure, we can use the
-\code{Either} functor instead (with the first type fixed, for
-instance, to \code{String}).
+例外をスローする命令型の関数は、本当は部分関数です --- それはその引数のいくつかの値に対して定義されていない関数です。純粋な全関数に関して例外を実装する最も単純な方法は \code{Maybe} 関手を使用することです。部分関数は、それが意味をなすときはいつでも \code{Just a} を返し、そうでないときは \code{Nothing} を返すように拡張された全関数になります。私たちが失敗の原因に関する情報も返したい場合、代わりに \code{Either} 関手を使用することができます (最初の型は例えば \code{String} に固定されます) 。
 
-Here's the \code{Monad} instance for \code{Maybe}:
+ここに \code{Maybe} のための \code{Monad} インスタンスがあります: 
 
 \src{snippet22}
-Notice that monadic composition for \code{Maybe} correctly
-short-circuits the computation (the continuation \code{k} is never
-called) when an error is detected. That's the behavior we expect from
-exceptions.
+\code{Maybe} のためのモナド的な合成が正しく計算をショートサーキットすることに注意してください (続行 \code{k} は決して呼ばれません) 。それは私たちが例外から期待する振る舞いです。
 
-\subsection{Continuations}
+\subsection{継続}
 
-It's the ``Don't call us, we'll call you!'' situation you may experience
-after a job interview. Instead of getting a direct answer, you are
-supposed to provide a handler, a function to be called with the result.
-This style of programming is especially useful when the result is not
-known at the time of the call because, for instance, it's being
-evaluated by another thread or delivered from a remote web site. A
-Kleisli arrow in this case returns a function that accepts a handler,
-which represents ``the rest of the computation'':
+これは「私たちがあなたを呼ぶので、あなたは私たちを呼ばないでください！」という状況です。あなたが仕事の面接の後に経験するかもしれません。直接の答えを得る代わりに、結果で呼ばれるべきハンドラ、つまり関数を提供することになります。このスタイルのプログラミングは、特に結果が呼び出しの時点で知られていない場合に有用です。例えば、それが別のスレッドで評価されたり、リモートのウェブサイトから配信される場合です。この場合のKleisli射は、ハンドラを受け入れる関数を返します。これは「計算の残りの部分」を表します: 
 
 \src{snippet23}
-The handler \code{a -> r}, when it's eventually called,
-produces the result of type \code{r}, and this result is returned at
-the end. A continuation is parameterized by the result type. (In
-practice, this is often some kind of status indicator.)
+最終的に呼ばれるハンドラ \code{a -> r} は、最終結果型 \code{r} の結果を生成し、この結果は最後に返されます。継続は結果型によってパラメータ化されます。 (実際には、これはしばしば何らかの種類の状態指標です。) 
 
-There is also a helper function for executing the action returned by the
-Kleisli arrow. It takes the handler and passes it to the continuation:
+Kleisli射が返すアクションを実行するためのヘルパー関数もあります。それはハンドラを取り、継続に渡します: 
 
 \src{snippet24}
-The composition of continuations is notoriously difficult, so its
-handling through a monad and, in particular, the \code{do} notation,
-is of extreme advantage.
+継続の合成は名高く難しいので、モナドを通じた、そして特に \code{do} 表記を通じた処理は極めて有利です。
 
-Let's figure out the implementation of bind. First let's look at the
-stripped down signature:
+bindの実装を理解しましょう。まずはシンプルなシグネチャを見てみましょう: 
 
 \src{snippet25}
-Our goal is to create a function that takes the handler
-\code{(b -> r)} and produces the result \code{r}. So
-that's our starting point:
+私たちの目標は、ハンドラ \code{(b -> r)} を取り、結果 \code{r} を生成する関数を作成することです。だからそれが私たちの出発点です: 
 
 \src{snippet26}
-Inside the lambda, we want to call the function \code{ka} with the
-appropriate handler that represents the rest of the computation. We'll
-implement this handler as a lambda:
+ラムダの中で、私たちは適切なハンドラを持つ関数 \code{ka} を呼び出すことを望んでいます。このハンドラはラムダとして実装されます: 
 
 \src{snippet27}
-In this case, the rest of the computation involves first calling
-\code{kab} with \code{a}, and then passing \code{hb} to the
-resulting action \code{kb}:
+この場合、残りの計算にはまず \code{kab} で \code{a} を呼び出し、次に得られたアクション \code{kb} に \code{hb} を渡すことが含まれます: 
 
 \src{snippet28}
-As you can see, continuations are composed inside out. The final handler
-\code{hb} is called from the innermost layer of the computation.
-Here's the full instance:
+ご覧のとおり、継続は内側から外側に合成されます。最終的なハンドラ \code{hb} は計算の最も内側の層から呼び出されます。こちらが完全なインスタンスです: 
 
 \src{snippet29}
 
-\subsection{Interactive Input}
+\subsection{対話型入力}
 
-This is the trickiest problem and a source of a lot of confusion.
-Clearly, a function like \code{getChar}, if it were to return a
-character typed at the keyboard, couldn't be pure. But what if it
-returned the character inside a container? As long as there was no way
-of extracting the character from this container, we could claim that the
-function is pure. Every time you call \code{getChar} it would return
-exactly the same container. Conceptually, this container would contain
-the superposition of all possible characters.
+これは最も厄介な問題で、多くの混乱の原因となっています。明らかに、\code{getChar} のような関数がキーボードで入力された文字を返す場合、それは純粋ではあり得ません。しかし、それが文字をコンテナの中で返す場合はどうでしょうか？このコンテナから文字を抽出する方法がない限り、私たちはその関数が純粋だと主張することができます。あなたが \code{getChar} を呼び出すたびに、それは正確に同じコンテナを返します。概念的には、このコンテナはすべての可能な文字の重ね合わせを含んでいます。
 
-If you're familiar with quantum mechanics, you should have no problem
-understanding this analogy. It's just like the box with the
-Schrödinger's cat inside --- except that there is no way to open or peek
-inside the box. The box is defined using the special built-in
-\code{IO} functor. In our example, \code{getChar} could be declared
-as a Kleisli arrow:
+もし量子力学に精通していれば、この類推を理解するのは問題ありません。それは、中を覗くことができないシュレーディンガーの猫が入っている箱のようなものです。箱は特別な組み込みの \code{IO} 関手を使用して定義されます。私たちの例では、\code{getChar} はKleisli射として宣言されることができます: 
 
 \src{snippet30}
-(Actually, since a function from the unit type is equivalent to picking
-a value of the return type, the declaration of \code{getChar} is
-simplified to \code{getChar :: IO Char}.)
+ (実際には、Unit型からの関数は、戻り型の値を選ぶことと等価であるため、\code{getChar} の宣言は \code{getChar :: IO Char} に簡略化されます。) 
 
-Being a functor, \code{IO} lets you manipulate its contents using
-\code{fmap}. And, as a functor, it can store the contents of any type,
-not just a character. The real utility of this approach comes to light
-when you consider that, in Haskell, \code{IO} is a monad. It means
-that you are able to compose Kleisli arrows that produce \code{IO}
-objects.
+関手である \code{IO} は、\code{fmap} を使用してその内容を操作することを可能にします。そして、関手として、それは文字だけでなく、任意の型の内容を格納することができます。このアプローチの真の有用性は、Haskellで \code{IO} がモナドであると考えたときに明らかになります。それは、\code{IO} オブジェクトを生成するKleisli射を合成することができることを意味します。
 
-You might think that Kleisli composition would allow you to peek at the
-contents of the \code{IO} object (thus ``collapsing the wave
-function,'' if we were to continue the quantum analogy). Indeed, you
-could compose \code{getChar} with another Kleisli arrow that takes a
-character and, say, converts it to an integer. The catch is that this
-second Kleisli arrow could only return this integer as an
-\code{(IO\ Int)}. Again, you'll end up with a superposition of all
-possible integers. And so on. The Schrödinger's cat is never out of the
-bag. Once you are inside the \code{IO} monad, there is no way out of
-it. There is no equivalent of \code{runState} or \code{runReader}
-for the \code{IO} monad. There is no \code{runIO}!
+Kleisli合成が \code{IO} オブジェクトの内容をのぞき見することを可能にすると思うかもしれません (量子論のアナロジーを続けるならば、「波動関数の崩壊」) 。確かに、\code{getChar} を別のKleisli射、例えば文字を整数に変換するものと合成することができます。しかし、この第二のKleisli射は、この整数を \code{(IO\ Int)} として返すことしかできません。再び、あなたはすべての可能な整数の重ね合わせで終わるでしょう。そして、以下に続きます。シュレーディンガーの猫は決して袋から出ません。一度 \code{IO} モナドの中にいると、それから抜け出す方法はありません。 \code{runState} や \code{runReader} に相当するものは、\code{IO} モナドにはありません。\code{runIO} はありません！
 
-So what can you do with the result of a Kleisli arrow, the \code{IO}
-object, other than compose it with another Kleisli arrow? Well, you can
-return it from \code{main}. In Haskell, \code{main} has the
-signature:
+では、もう一つのKleisli射でそれを合成する以外に、Kleisli射の結果、\code{IO} オブジェクトで何ができるでしょうか？まあ、それを \code{main} から返すことができます。Haskellでは、\code{main} は次のシグネチャを持っています: 
 
 \src{snippet31}
-and you are free to think of it as a Kleisli arrow:
+そして、それをKleisli射として考える自由があります: 
 
 \src{snippet32}
-From that perspective, a Haskell program is just one big Kleisli arrow
-in the \code{IO} monad. You can compose it from smaller Kleisli arrows
-using monadic composition. It's up to the runtime system to do something
-with the resulting \code{IO} object (also called \code{IO} action).
+その観点から、Haskellプログラムは単に \code{IO} モナドでの1つの大きなKleisli射です。あなたはそれを小さなKleisli射からモナド的な合成を使用して構成することができます。それを何かするのはランタイムシステムに任されています (また、\code{IO} アクションと呼ばれます) 。
 
-Notice that the arrow itself is a pure function --- it's pure functions
-all the way down. The dirty work is relegated to the system. When it
-finally executes the \code{IO} action returned from \code{main}, it
-does all kinds of nasty things like reading user input, modifying files,
-printing obnoxious messages, formatting a disk, and so on. The Haskell
-program never dirties its hands (well, except when it calls
-\code{unsafePerformIO}, but that's a different story).
+射自体が純粋関数であることに注意してください --- それは純粋関数が一番下まで続いています。汚れた仕事はシステムに委ねられます。それが \code{main} から返された \code{IO} アクションを最終的に実行するとき、それはあらゆる種類のいやらしいことをします。例えば、ユーザー入力の読み取り、ファイルの変更、不快なメッセージの印刷、ディスクのフォーマットなどです。Haskellプログラムは決して自分の手を汚しません (まあ、それが \code{unsafePerformIO} を呼び出さない限りですが、それは別の話です) 。
 
-Of course, because Haskell is lazy, \code{main} returns almost
-immediately, and the dirty work begins right away. It's during the
-execution of the \code{IO} action that the results of pure
-computations are requested and evaluated on demand. So, in reality, the
-execution of a program is an interleaving of pure (Haskell) and dirty
-(system) code.
+もちろん、Haskellが怠惰であるため、\code{main} はほぼ即座に戻り、汚れた仕事がすぐに始まります。純粋な計算の結果が要求され、必要に応じて評価されるのは、\code{IO} アクションの実行中です。したがって、実際には、プログラムの実行は純粋な (Haskell) コードと汚れた (システム) コードの相互作用です。
 
-There is an alternative interpretation of the \code{IO} monad that is
-even more bizarre but makes perfect sense as a mathematical model. It
-treats the whole Universe as an object in a program. Notice that,
-conceptually, the imperative model treats the Universe as an external
-global object, so procedures that perform I/O have side effects by
-virtue of interacting with that object. They can both read and modify
-the state of the Universe.
+\code{IO} モナドのもう一つの解釈は、さらに奇妙ですが、数学的モデルとして完全に理にかなっています。それはプログラム内のオブジェクトとして宇宙全体を扱うことです。概念的には、命令型モデルは宇宙を外部のグローバルオブジェクトとして扱うので、I/Oを実行する手続きはそのオブジェクトとの相互作用によって副作用を持っています。彼らは宇宙の状態を読み取り、変更することができます。
 
-We already know how to deal with state in functional programming --- we
-use the state monad. Unlike simple state, however, the state of the
-Universe cannot be easily described using standard data structures. But
-we don't have to, as long as we never directly interact with it. It's
-enough that we assume that there exists a type \code{RealWorld} and,
-by some miracle of cosmic engineering, the runtime is able to provide an
-object of this type. An \code{IO} action is just a function:
+私たちは既に、関数型プログラミングで状態をどのように扱うかを知っています --- 私たちは状態モナドを使用します。しかし、宇宙の状態は単純な状態とは異なり、標準的なデータ構造を使用して簡単に記述することはできません。しかし、私たちがそれと直接的に相互作用しない限り、私たちはそれをしなくても済みます。存在すると仮定するだけで十分です、型 \code{RealWorld} があり、宇宙工学の何らかの奇跡によって、ランタイムがこの型のオブジェクトを提供することができると。 \code{IO} アクションは単なる関数です: 
 
 \src{snippet33}
-Or, in terms of the \code{State} monad:
+または \code{State} モナドの用語で: 
 
 \src{snippet34}
-However, \code{>=>} and \code{return} for
-the \code{IO} monad have to be built into the language.
+ただし、\code{IO} モナドの \code{>=>} と \code{return} は言語に組み込まれていなければなりません。
 
-\subsection{Interactive Output}
+\subsection{対話型出力}
 
-The same \code{IO} monad is used to encapsulate interactive output.
-\code{RealWorld} is supposed to contain all output devices. You might
-wonder why we can't just call output functions from Haskell and pretend
-that they do nothing. For instance, why do we have:
+同じ \code{IO} モナドは、対話型出力をカプセル化するために使用されます。 \code{RealWorld} はすべての出力デバイスを含むとされています。なぜ私たちは単にHaskellから出力関数を呼び出し、それらが何もしないふりをすることができないのか疑問に思うかもしれません。例えば、なぜ私たちは: 
 
 \src{snippet35}
-rather than the simpler:
+を持つのではなく、より単純な: 
 
 \src{snippet36}
-Two reasons: Haskell is lazy, so it would never call a function whose
-output --- here, the unit object --- is not used for anything. And, even
-if it weren't lazy, it could still freely change the order of such calls
-and thus garble the output. The only way to force sequential execution
-of two functions in Haskell is through data dependency. The input of one
-function must depend on the output of another. Having \code{RealWorld}
-passed between \code{IO} actions enforces sequencing.
+を持たないのでしょうか。二つの理由があります: Haskellは怠惰なので、使用されない出力 --- ここでは単位オブジェクト --- を持つ関数を決して呼び出しません。そして、怠惰でなかったとしても、それはまだそのような呼び出しの順序を自由に変更し、出力をめちゃくちゃにすることができます。Haskellで二つの関数の順次実行を強制する唯一の方法は、データ依存関係を通じてです。一方の関数の入力は、他方の関数の出力に依存する必要があります。\code{RealWorld} を \code{IO} アクション間で渡すことによって、シーケンシングが強制されます。
 
-Conceptually, in this program:
+概念的には、このプログラムでは: 
 
 \src{snippet37}
-the action that prints ``World!'' receives, as input, the Universe in
-which ``Hello '' is already on the screen. It outputs a new Universe,
-with ``Hello World!'' on the screen.
+「World!」を印刷するアクションは、「Hello」がすでに画面にある宇宙を入力として受け取ります。それは画面に「Hello World!」がある新しい宇宙を出力として出力します。
 
-\section{Conclusion}
+\section{結論}
 
-Of course I have just scratched the surface of monadic programming.
-Monads not only accomplish, with pure functions, what normally is done
-with side effects in imperative programming, but they also do it with a
-high degree of control and type safety. They are not without drawbacks,
-though. The major complaint about monads is that they don't easily
-compose with each other. Granted, you can combine most of the basic
-monads using the monad transformer library. It's relatively easy to
-create a monad stack that combines, say, state with exceptions, but
-there is no formula for stacking arbitrary monads together.
+もちろん、私はモナド的プログラミングの表面をかすめただけです。モナドは、命令型プログラミングで通常副作用を使用して行われることを純粋関数で達成するだけでなく、高度な制御と型安全性を提供します。しかし、それらには欠点もあります。モナドに関する主な不満の一つは、それらが互いに容易に合成されないことです。確かに、モナド変換ライブラリを使用して、基本的なモナドのほとんどを組み合わせることができます。たとえば、状態と例外を組み合わせたモナドスタックを作成するのは比較的簡単ですが、任意のモナドを一緒に積み重ねるための公式はありません。

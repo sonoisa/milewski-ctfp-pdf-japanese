@@ -1,102 +1,43 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{I}{n the first part} of the book I argued that both category theory and
-programming are about composability. In programming, you keep
-decomposing a problem until you reach the level of detail that you can
-deal with, solve each subproblem in turn, and re-compose the solutions
-bottom-up. There are, roughly speaking, two ways of doing it: by telling
-the computer what to do, or by telling it how to do it. One is called
-declarative and the other imperative.
+\lettrine[lhang=0.17]{こ}{の本}の最初の部分で、圏論とプログラミングが共に合成可能性についてであると主張しました。プログラミングでは、問題を処理可能なレベルになるまで分解し、それぞれの部分問題を順番に解決し、解決策をボトムアップで再合成します。大まかに言えば、これには二つの方法があります: コンピュータに何をするかを伝える方法と、どのようにそれをするかを伝える方法です。前者は宣言的プログラミングと呼ばれ、後者は命令的です。
 
-You can see this even at the most basic level. Composition itself may be
-defined declaratively; as in, \code{h} is a composite of \code{g}
-after \code{f}:
+これは最も基本的なレベルでも見ることができます。合成自体は、宣言的に定義される場合があります。つまり、\code{h} は \code{f} の後に \code{g} の合成です: 
 
 \src{snippet01}
-or imperatively; as in, call \code{f} first, remember the result of
-that call, then call \code{g} with the result:
+または命令的に；つまり、最初に \code{f} を呼び出し、その呼び出しの結果を記憶し、その結果を使って \code{g} を呼び出します: 
 
 \src{snippet02}
-The imperative version of a program is usually described as a sequence
-of actions ordered in time. In particular, the call to \code{g} cannot
-happen before the execution of \code{f} completes. At least, that's
-the conceptual picture --- in a lazy language, with \emph{call-by-need}
-argument passing, the actual execution may proceed differently.
+プログラムの命令的バージョンは通常、時間順序で並べられた一連のアクションとして記述されます。特に、\code{f} の実行が完了する前に \code{g} を呼び出すことはできません。少なくとも、それが概念的な絵です --- 遅延言語では、\emph{必要に応じて呼び出し}引数渡しで、実際の実行は異なる方法で進行するかもしれません。
 
-In fact, depending on the cleverness of the compiler, there may be
-little or no difference between how declarative and imperative code is
-executed. But the two methodologies differ, sometimes drastically, in
-the way we approach problem solving and in the maintainability and
-testability of the resulting code.
+実際には、コンパイラの賢さに応じて、宣言的コードと命令的コードの実行方法にはあまり違いがないかもしれません。しかし、問題解決へのアプローチ方法と、結果としてのコードの保守性およびテスト可能性の点で、二つの方法論は時に劇的に異なります。
 
-The main question is: when faced with a problem, do we always have the
-choice between a declarative and imperative approaches to solving it?
-And, if there is a declarative solution, can it always be translated
-into computer code? The answer to this question is far from obvious and,
-if we could find it, we would probably revolutionize our understanding
-of the universe.
+主な問題は、問題に直面したとき、常に宣言的か命令的なアプローチの選択肢があるかということです。そして、宣言的な解決策がある場合、それを常にコンピュータコードに翻訳できるかということです。この質問への答えは決して明白ではなく、見つけることができれば、おそらく宇宙の理解を革命的に変えるでしょう。
 
 \begin{wrapfigure}{R}{0pt}
   \includegraphics[width=0.5\textwidth]{images/asteroids.png}
 \end{wrapfigure}
 
-Let me elaborate. There is a similar duality in physics, which either
-points at some deep underlying principle, or tells us something about
-how our minds work. Richard Feynman mentions this duality as an
-inspiration in his own work on quantum electrodynamics.
+説明しましょう。物理学には同様の双対性があり、それは何か深い台となる原則を指し示しているか、または私たちの心の働きについて何かを語っています。Richard Feynmanは、彼の量子電磁力学に関する独自の研究でこの双対性に触発されたと述べています。
 
-There are two forms of expressing most laws of physics. One uses local,
-or infinitesimal, considerations. We look at the state of a system
-around a small neighborhood, and predict how it will evolve within the
-next instant of time. This is usually expressed using differential
-equations that have to be integrated, or summed up, over a period of
-time.
+物理学のほとんどの法則を表現するには二つの形式があります。一つは局所的、または微小な考慮を使います。システムの状態を小さな近傍で見て、次の瞬間にどのように進化するかを予測します。これは通常、一定期間積分する必要のある微分方程式を使用して表現されます。
 
-Notice how this approach resembles imperative thinking: we reach the
-final solution by following a sequence of small steps, each depending on
-the result of the previous one. In fact, computer simulations of
-physical systems are routinely implemented by turning differential
-equations into difference equations and iterating them. This is how
-spaceships are animated in the asteroids game. At each time step, the
-position of a spaceship is changed by adding a small increment, which is
-calculated by multiplying its velocity by the time delta. The velocity,
-in turn, is changed by a small increment proportional to acceleration,
-which is given by force divided by mass.
+このアプローチが命令的思考に似ていることに注意してください: 最終解を、それぞれが前のものの結果に依存する一連の小さなステップに従って到達します。実際、物理システムのコンピュータシミュレーションは、微分方程式を差分方程式に変換し、反復することによって定期的に実装されます。これは、アステロイドゲームで宇宙船がアニメーションされる方法です。各時間ステップで、宇宙船の位置は、速度を時間デルタで乗算して計算される小さな増分を加えて変更されます。速度は、力を質量で割った加速度に比例する小さな増分によって変更されます。
 
-These are the direct encodings of the differential equations
-corresponding to Newton's laws of motion:
+これらはNewtonの運動法則に対応する微分方程式の直接のエンコーディングです: 
 \begin{align*}
   F & = m \frac{dv}{dt} \\
   v & = \frac{dx}{dt}
 \end{align*}
-Similar methods may be applied to more complex problems, like the
-propagation of electromagnetic fields using Maxwell's equations, or even
-the behavior of quarks and gluons inside a proton using lattice \acronym{QCD}
-(quantum chromodynamics).
+Maxwell方程式を使用した電磁場の伝播や、格子\acronym{QCD} (量子色力学) を使用した陽子内部のクォークとグルーオンの振る舞いなど、より複雑な問題にも同様の方法が適用されるかもしれません。
 
-This local thinking combined with discretization of space and time that
-is encouraged by the use of digital computers found its extreme
-expression in the heroic attempt by Stephen Wolfram to reduce the
-complexity of the whole universe to a system of cellular automata.
+この局所的思考と、デジタルコンピュータの使用によって促される空間と時間の離散化は、Stephen Wolframによる宇宙の複雑さをセルラーオートマトンのシステムに還元しようとする英雄的な試みでその極限表現を見つけました。
 
-The other approach is global. We look at the initial and the final state
-of the system, and calculate a trajectory that connects them by
-minimizing a certain functional. The simplest example is the Fermat's
-principle of least time. It states that light rays propagate along paths
-that minimize their flight time. In particular, in the absence of
-reflecting or refracting objects, a light ray from point $A$ to point $B$
-will take the shortest path, which is a straight line. But light
-propagates slower in dense (transparent) materials, like water or glass.
-So if you pick the starting point in the air, and the ending point under
-water, it's more advantageous for light to travel longer in the air and
-then take a shortcut through water. The path of minimum time makes the
-ray refract at the boundary of air and water, resulting in Snell's law
-of refraction:
+もう一つのアプローチは大局的思考です。私たちはシステムの初期状態と最終状態を見て、ある機能を最小化することによってそれらを接続する軌道を計算します。最も単純な例はFermatの最小時間の原理です。それは、光線が飛行時間を最小限にする経路を伝播すると述べています。特に、反射または屈折物体がない場合、点$A$から点$B$への光線は最短経路を取ります。これは直線です。しかし、光は密な (透明な) 物質、例えば水やガラスでは遅く伝播します。ですから、始点を空気中に、終点を水中に置いた場合、空気中でより長く旅行し、水を通ってショートカットを取る方が光にとって有利です。最小時間の経路は、光線が空気と水の境界で屈折し、結果としてSnellの屈折法則が生じます: 
 \begin{equation*}
   \frac{sin(\theta_1)}{sin(\theta_2)} = \frac{v_1}{v_2}
 \end{equation*}
-where $v_1$ is the speed of light in the air and $v_2$ is
-the speed of light in the water.
+ここで $v_1$ は空気中の光速、$v_2$ は水中の光速です。
 
 \begin{figure}[H]
   \centering
@@ -104,16 +45,7 @@ the speed of light in the water.
 \end{figure}
 
 \noindent
-All of classical mechanics can be derived from the principle of least
-action. The action can be calculated for any trajectory by integrating
-the Lagrangian, which is the difference between kinetic and potential
-energy (notice: it's the difference, not the sum --- the sum would be
-the total energy). When you fire a mortar to hit a given target, the
-projectile will first go up, where the potential energy due to gravity
-is higher, and spend some time there racking up negative contribution to
-the action. It will also slow down at the top of the parabola, to
-minimize kinetic energy. Then it will speed up to go quickly through the
-area of low potential energy.
+古典力学の全ては最小作用の原理から導出することができます。運動エネルギーと位置エネルギーの差 (注意: 和ではなく差です --- 和は全エネルギーになります) であるLagrangianを積分することによって任意の軌道の作用を計算することができます。目標地点に向けて迫撃砲を発射する場合、弾丸はまず上に行き、重力による位置エネルギーが高いところでいくらかの時間を過ごし、作用に対して負の寄与を積み上げます。また、放物線の頂点で減速し、運動エネルギーを最小化します。その後、低い位置エネルギーの領域を素早く通過するために加速します。
 
 \begin{figure}[H]
   \centering
@@ -121,11 +53,7 @@ area of low potential energy.
 \end{figure}
 
 \noindent
-Feynman's greatest contribution was to realize that the principle of
-least action can be generalized to quantum mechanics. There, again, the
-problem is formulated in terms of initial state and final state. The
-Feynman path integral between those states is used to calculate the
-probability of transition.
+Feynmanの最大の貢献は、最小作用の原理が量子力学に一般化できることを認識したことでした。そこでも、問題は初期状態と最終状態の観点から定式化されます。それらの状態間のFeynman経路積分を使用して遷移の確率を計算します。
 
 \begin{figure}[H]
   \centering
@@ -133,51 +61,15 @@ probability of transition.
 \end{figure}
 
 \noindent
-The point is that there is a curious unexplained duality in the way we
-can describe the laws of physics. We can use the local picture, in which
-things happen sequentially and in small increments. Or we can use the
-global picture, where we declare the initial and final conditions, and
-everything in between just follows.
+ポイントは、物理法則を記述する方法には不思議な双対性があり、それは局所的な絵で、物事は連続的に小さな増分で起こります。または、私たちは初期状態と最終状態を宣言し、その間のすべてはただ従うという大局的な絵を使うことができます。
 
-The global approach can be also used in programming, for instance when
-implementing ray tracing. We declare the position of the eye and the
-positions of light sources, and figure out the paths that the light rays
-may take to connect them. We don't explicitly minimize the time of
-flight for each ray, but we do use Snell's law and the geometry of
-reflection to the same effect.
+大局的なアプローチはプログラミングでも使用することができます。例えば、レイトレーシングを実装する場合に使用します。目の位置と光源の位置を宣言し、光線がそれらを接続するために取り得る経路を計算します。私たちは各光線の飛行時間を明示的に最小化しませんが、Snellの法則と反射の幾何学を同じ効果で使用します。
 
-The biggest difference between the local and the global approach is in
-their treatment of space and, more importantly, time. The local approach
-embraces the immediate gratification of here and now, whereas the global
-approach takes a long-term static view, as if the future had been
-preordained, and we were only analyzing the properties of some eternal
-universe.
+局所的アプローチと大局的アプローチの最大の違いは、空間の扱いと、より重要なことに、時間の扱いにあります。局所的アプローチは、ここと今の即時の満足を受け入れますが、大局的なアプローチは長期的な静的な観点を取ります。未来が予め定められており、私たちは永遠の宇宙のいくつかの特性を分析しているかのようです。
 
-Nowhere is it better illustrated than in the Functional Reactive
-Programming (\acronym{FRP}) approach to user interaction. Instead of writing separate
-handlers for every possible user action, all having access to some
-shared mutable state, \acronym{FRP} treats external events as an infinite list,
-and applies a series of transformations to it. Conceptually, the list of
-all our future actions is there, available as the input data to our
-program. From a program's perspective there's no difference between the
-list of digits of $\pi$, a list of pseudo-random numbers, or a list of mouse
-positions coming through computer hardware. In each case, if you want to
-get the $n^\text{th}$ item, you have to first go through the first $n-1$ items. When
-applied to temporal events, we call this property \emph{causality}.
+このことは、ユーザーインタラクションへの関数型リアクティブプログラミング (\acronym{FRP}) アプローチでよく例示されます。すべての可能なユーザーアクションに対して個別のハンドラーを書く代わりに、共有された変更可能な状態にアクセスするすべてのハンドラーが、外部イベントを無限リストとして扱い、それに一連の変換を適用します。概念的には、私たちの未来のすべてのアクションのリストがそこにあり、プログラムの入力データとして利用可能です。プログラムの観点からは、$\pi$の桁のリスト、疑似ランダム数のリスト、またはコンピュータハードウェアを通じてくるマウスの位置のリストの間に違いはありません。それぞれの場合に$n^\text{th}$アイテムを取得したい場合、最初の$n-1$アイテムを通過する必要があります。時間的イベントに適用されるとき、私たちはこの特性を\emph{因果性}と呼びます。
 
-So what does it have to do with category theory? I will argue that
-category theory encourages a global approach and therefore supports
-declarative programming. First of all, unlike calculus, it has no
-built-in notion of distance, or neighborhood, or time. All we have is
-abstract objects and abstract connections between them. If you can get
-from $A$ to $B$ through a series of steps, you can also get there in one
-leap. Moreover, the major tool of category theory is the universal
-construction, which is the epitome of a global approach. We've seen it
-in action, for instance, in the definition of the categorical product.
-It was done by specifying its properties --- a very declarative
-approach. It's an object equipped with two projections, and it's the
-best such object --- it optimizes a certain property: the property of
-factorizing the projections of other such objects.
+では、これが圏論とどのような関係があるのでしょうか？ 私は圏論が大局的なアプローチを奨励し、したがって宣言的プログラミングを支持すると主張します。まず第一に、微積分とは異なり、圏論には距離や近傍、時間の組み込みの概念がありません。私たちが持っているのは抽象的な対象とそれらの間の抽象的な接続だけです。ある対象$A$から$B$へ一連のステップを通じて到達できるなら、一つの跳躍でもそこに到達できます。さらに、圏論の主要なツールは普遍構成であり、それは大局的アプローチの極みです。例えば、圏論的積の定義においてそれが活用されているのを見ました。それはその特性によって指定されていました --- 非常に宣言的なアプローチです。それは2つの射影を備えた対象であり、他のそのような対象の射影の因数分解を最適化する特性を持つ最良のそのような対象です。
 
 \begin{figure}[H]
   \centering
@@ -185,25 +77,12 @@ factorizing the projections of other such objects.
 \end{figure}
 
 \noindent
-Compare this with Fermat's principle of minimum time, or the principle
-of least action.
+これをFermatの最小時間の原理や最小作用の原理と比較してください。
 
-Conversely, contrast this with the traditional definition of a Cartesian
-product, which is much more imperative. You describe how to create an
-element of the product by picking one element from one set and another
-element from another set. It's a recipe for creating a pair. And there's
-another for disassembling a pair.
+逆に、デカルト積の伝統的な定義と比較してみてください。それははるかに命令的です。一方の集合から一つの要素を選び、もう一方の集合から別の要素を選んで、ペアを作る方法を説明します。それはペアを作るためのレシピです。そして、ペアを分解するための別のレシピがあります。
 
-In almost every programming language, including functional languages
-like Haskell, product types, coproduct types, and function types are
-built in, rather than being defined by universal constructions; although
-there have been attempts at creating categorical programming languages
-(see, e.g.,
-\urlref{http://web.sfc.keio.ac.jp/~hagino/thesis.pdf}{Tatsuya
-  Hagino's thesis}).
+ほとんどすべてのプログラミング言語、Haskellのような関数型言語を含むが、積型、余積型、関数型は普遍構成によって定義されるのではなく、組み込まれています。ただし、圏論的プログラミング言語を作る試みもあります (例えば、\urlref{http://web.sfc.keio.ac.jp/~hagino/thesis.pdf}{Tatsuya
+  Haginoの論文}を参照) 。
 
-Whether used directly or not, categorical definitions justify
-pre-existing programming constructs, and give rise to new ones. Most
-importantly, category theory provides a meta-language for reasoning
-about computer programs at a declarative level. It also encourages
-reasoning about problem specification before it is cast into code.
+直接使用されるかどうかにかかわらず、圏論的定義は既存のプログラミング構造を正当化し、新しいものを生み出します。最も重要なことは、圏論がコンピュータプログラムについて宣言的レベルで推論するためのメタ言語を提供することです。また、問題の仕様についてコードに落とし込む前に推論することを促します。
+

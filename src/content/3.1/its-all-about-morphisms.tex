@@ -1,41 +1,18 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{I}{f I haven't} convinced you yet that category theory is all about
-morphisms then I haven't done my job properly. Since the next topic is
-adjunctions, which are defined in terms of isomorphisms of hom-sets, it
-makes sense to review our intuitions about the building blocks of
-hom-sets. Also, you'll see that adjunctions provide a more general
-language to describe a lot of constructions we've studied before, so it
-might help to review them too.
+\lettrine[lhang=0.17]{も}{し}まだ圏論が射についてであると納得していないならば、私の仕事は不十分です。次の話題は随伴で、これはホム集合の同型の観点から定義されますから、ホム集合の構成要素についての私たちの直感を見直すのは理にかなっています。また、随伴は我々が以前に学んだ多くの構成法を記述するための一般的な言語を提供しますから、それらを見直すのも役立つでしょう。
 
-\section{Functors}
+\section{関手}
 
-To begin with, you should really think of functors as mappings of
-morphisms --- the view that's emphasized in the Haskell definition of
-the \code{Functor} typeclass, which revolves around \code{fmap}. Of
-course, functors also map objects --- the endpoints of morphisms ---
-otherwise we wouldn't be able to talk about preserving composition.
-Objects tell us which pairs of morphisms are composable. The target of
-one morphism must be equal to the source of the other --- if they are to
-be composed. So if we want the composition of morphisms to be mapped to
-the composition of \newterm{lifted} morphisms, the mapping of their
-endpoints is pretty much determined.
+まず、関手を射の写像として考えるべきです --- Haskellの\code{Functor}型クラスの定義で強調されている視点です、これは\code{fmap}を中心に展開されます。もちろん、関手は対象 --- 射の端点 --- も写像します。さもなければ合成を保つことについて話すことができません。対象はどの射のペアが合成可能かを教えてくれます。一つの射の目標が他の射の源と等しくなければならない --- もし彼らが合成されるならば。ですから、射の合成が\newterm{持ち上げられた}射の合成に写像されることを望むならば、その端点の写像はほとんど決定されています。
 
-\section{Commuting Diagrams}
+\section{可換図式}
 
-A lot of properties of morphisms are expressed in terms of commuting
-diagrams. If a particular morphism can be described as a composition of
-other morphisms in more than one way, then we have a commuting diagram.
+射の多くの性質は可換図式の観点から表現されます。特定の射が他の射の合成として複数の方法で記述される場合、可換図式を持っています。
 
-In particular, commuting diagrams form the basis of almost all universal
-constructions (with the notable exceptions of the initial and terminal
-objects). We've seen this in the definitions of products, coproducts,
-various other (co-)limits, exponential objects, free monoids, etc.
+特に、可換図式はほぼ全ての普遍構成の基礎を形成します (始対象と終対象の顕著な例外を除いて) 。積、余積、様々な他の (余) 極限、指数対象、自由モノイドなどの定義でこれを見てきました。
 
-The product is a simple example of a universal construction. We pick two
-objects $a$ and $b$ and see if there exists an object
-$c$, together with a pair of morphisms $p$ and $q$,
-that has the universal property of being their product.
+積は普遍構成の簡単な例です。我々は二つの対象 $a$ と $b$ を選び、それらの積である普遍性を持つ対象 $c$ が存在するかどうかと、一対の射 $p$ と $q$ を見ます。
 
 \begin{figure}[H]
   \centering
@@ -43,20 +20,11 @@ that has the universal property of being their product.
 \end{figure}
 
 \noindent
-A product is a special case of a limit. A limit is defined in terms of
-cones. A general cone is built from commuting diagrams. Commutativity of
-those diagrams may be replaced with a suitable naturality condition for
-the mapping of functors. This way commutativity is reduced to the role
-of the assembly language for the higher level language of natural
-transformations.
+積は極限の特別なケースです。極限は錐の観点から定義されます。一般的な錐は可換図式から構成されます。これらの図式の可換性は、関手の写像に適切な自然性条件に置き換えられることがあります。この方法で可換性は自然変換の高水準言語の組み立て言語の役割に還元されます。
 
-\section{Natural Transformations}
+\section{自然変換}
 
-In general, natural transformations are very convenient whenever we need
-a mapping from morphisms to commuting squares. Two opposing sides of a
-naturality square are the mappings of some morphism $f$ under two
-functors $F$ and $G$. The other sides are the components
-of the natural transformation (which are also morphisms).
+一般的に、射から可換な四角形への写像が必要な場合に、自然変換は非常に便利です。自然性四角形の二つの対立する側面は、二つの関手 $F$ と $G$ の下でのいくつかの射 $f$ の写像です。他の側面は自然変換のコンポーネントです (これもまた射です) 。
 
 \begin{figure}[H]
   \centering
@@ -64,17 +32,7 @@ of the natural transformation (which are also morphisms).
 \end{figure}
 
 \noindent
-Naturality means that when you move to the ``neighboring'' component (by
-neighboring I mean connected by a morphism), you're not going against
-the structure of either the category or the functors. It doesn't matter
-whether you first use a component of the natural transformation to
-bridge the gap between objects, and then jump to its neighbor using the
-functor; or the other way around. The two directions are orthogonal. A
-natural transformation moves you left and right, and the functors move
-you up and down or back and forth --- so to speak. You can visualize the
-\emph{image} of a functor as a sheet in the target category. A natural
-transformation maps one such sheet corresponding to F, to another,
-corresponding to G.
+自然性は、あなたが「隣接する」コンポーネントに移動するとき (隣接するとは、射によって接続されていることを意味します) 、圏や関手の構造に反することがないことを意味します。自然変換のコンポーネントを使用して対象間の隙間を橋渡ししてから、関手を使用してその隣人にジャンプするのか、またはその逆かは問題ではありません。二つの方向は直交しています。自然変換はあなたを左右に移動させ、関手はあなたを上下または前後に移動させます。目標圏内の関手の\emph{像}をシートとして視覚化することができます。自然変換は、Fに対応するシートから、Gに対応する別のシートへと写像します。
 
 \begin{figure}[H]
   \centering
@@ -82,137 +40,60 @@ corresponding to G.
 \end{figure}
 
 \noindent
-We've seen examples of this orthogonality in Haskell. There the action
-of a functor modifies the content of a container without changing its
-shape, while a natural transformation repackages the untouched contents
-into a different container. The order of these operations doesn't
-matter.
+Haskellでこの直交性の例を見てきました。そこでは、関手の作用は容器の内容を変更せずに形を変えずに、自然変換は触れられていない内容を異なる容器に再梱包します。これらの操作の順序は問題ではありません。
 
-We've seen the cones in the definition of a limit replaced by natural
-transformations. Naturality ensures that the sides of every cone
-commute. Still, a limit is defined in terms of mappings \emph{between}
-cones. These mappings must also satisfy commutativity conditions. (For
-instance, the triangles in the definition of the product must commute.)
+極限の定義における錐は自然変換に置き換えられています。自然
 
-These conditions, too, may be replaced by naturality. You may recall
-that the \emph{universal} cone, or the limit, is defined as a natural
-transformation between the (contravariant) hom-functor:
+性は、すべての錐の側面が交通することを保証します。それでも、錐\emph{間}の写像として極限は定義されています。これらの写像もまた交通条件を満たさなければなりません。 (例えば、積の定義における三角形は交通しなければなりません。) 
+
+これらの条件もまた自然性に置き換えられるかもしれません。あなたはおそらく、\emph{普遍的}な錐、または極限が (反変) ホム関手との間の自然変換として定義されることを思い出すでしょう: 
 \[F \Colon c \to \cat{C}(c, \Lim[D])\]
-and the (also contravariant) functor that maps objects in \emph{C} to
-cones, which themselves are natural transformations:
+および、 (また反変的な) \emph{C}内の対象を自然変換である錐に写像する関手: 
 \[G \Colon c \to \cat{Nat}(\Delta_c, D)\]
-Here, $\Delta_c$ is the constant functor, and $D$ is the functor
-that defines the diagram in $\cat{C}$. Both functors $F$ and
-$G$ have well defined actions on morphisms in $\cat{C}$. It so
-happens that this particular natural transformation between $F$
-and $G$ is an \emph{isomorphism}.
+ここで、$\Delta_c$ は定数関手であり、$D$ は $\cat{C}$ 内の図式を定義する関手です。両方の関手 $F$ と $G$ は、$\cat{C}$ 内の射に対して明確に定義された動作を持っています。この特定の自然変換は、$F$ と $G$ の間の\emph{同型}です。
 
-\section{Natural Isomorphisms}
+\section{自然同型}
 
-A natural isomorphism --- which is a natural transformation whose every
-component is reversible --- is category theory's way of saying that
-``two things are the same.'' A component of such a transformation must
-be an isomorphism between objects --- a morphism that has the inverse.
-If you visualize functor images as sheets, a natural isomorphism is a
-one-to-one invertible mapping between those sheets.
+自然同型 --- すべてのコンポーネントが可逆な自然変換 --- は圏論が「二つのものが同じである」と言う方法です。このような変換のコンポーネントは、対象間の同型 --- 逆を持つ射 --- でなければなりません。関手の像をシートとして視覚化する場合、自然同型はこれらのシート間の一対一の可逆写像です。
 
-\section{Hom-Sets}
+\section{ホム集合}
 
-But what are morphisms? They do have more structure than objects: unlike
-objects, morphisms have two ends. But if you fix the source and the
-target objects, the morphisms between the two form a boring set (at
-least for locally small categories). We can give elements of this set
-names like $f$ or $g$, to distinguish one from another ---
-but what is it, really, that makes them different?
+しかし、射とは何ですか？射は対象よりも多くの構造を持っています: 対象とは異なり、射には二つの端があります。しかし、源と目標対象を固定すると、二つの間の射は退屈な集合を形成します (少なくとも局所的に小さい圏について) 。私たちはこの集合の要素に$f$や$g$のような名前を付けて、一つを別のものと区別することができます --- しかし、それは実際にそれらを異なるものにしているのは何でしょうか？
 
-The essential difference between morphisms in a given hom-set lies in
-the way they compose with other morphisms (from abutting hom-sets). If
-there is a morphism $h$ whose composition (either pre- or post-)
-with $f$ is different than that with $g$, for instance:
+与えられたホム集合内の射の本質的な違いは、他の射との合成方法にあります (隣接するホム集合から) 。射$h$が存在して、$f$との合成 (前または後) が$g$と異なる場合、例えば: 
 \[h \circ f \neq h \circ g\]
-then we can directly ``observe'' the difference between $f$ and
-$g$. But even if the difference is not directly observable, we
-might use functors to zoom in on the hom-set. A functor $F$ may
-map the two morphisms to distinct morphisms:
+その場合、私たちは直接$f$と$g$の違いを「観察」することができます。しかし、違いが直接観察できない場合でも、関手を使ってホム集合にズームインすることができるかもしれません。関手$F$は二つの射を異なる射に写像するかもしれません: 
 \[F f \neq F g\]
-in a richer category, where the abutting hom-sets provide more
-resolution, e.g.,
+より豊かな圏で、隣接するホム集合がより多くの解像度を提供するところで、例えば、
 \[h' \circ F f \neq h' \circ F g\]
-where $h'$ is not in the image of $F$.
+ここで$h'$は$F$の像の中にないです。
 
-\section{Hom-Set Isomorphisms}
+\section{ホム集合同型}
 
-A lot of categorical constructions rely on isomorphisms between
-hom-sets. But since hom-sets are just sets, a plain isomorphism between
-them doesn't tell you much. For finite sets, an isomorphism just says
-that they have the same number of elements. If the sets are infinite,
-their cardinality must be the same. But any meaningful isomorphism of
-hom-sets must take into account composition. And composition involves
-more than one hom-set. We need to define isomorphisms that span whole
-collections of hom-sets, and we need to impose some compatibility
-conditions that interoperate with composition. And a \newterm{natural}
-isomorphism fits the bill exactly.
+多くの圏論的構成はホム集合間の同型に依存しています。しかし、ホム集合は単なる集合なので、それらの間の単なる同型はあまり多くを語りません。有限集合に対しては、同型はそれらが同じ数の要素を持っていることを言います。集合が無限の場合、その濃度が同じでなければなりません。しかし、ホム集合の意味のある同型は合成を考慮に入れなければなりません。そして、合成は一つ以上のホム集合を関与させます。我々は、合成との互換性条件を課すことで、全てのホム集合の集合をまたがる同型を定義する必要があります。そして、\newterm{自然}同型がまさにその要求に合っています。
 
-But what's a natural isomorphism of hom-sets? Naturality is a property
-of mappings between functors, not sets. So we are really talking about a
-natural isomorphism between hom-set-valued functors. These functors are
-more than just set-valued functors. Their action on morphisms is induced
-by the appropriate hom-functors. Morphisms are canonically mapped by
-hom-functors using either pre- or post-composition (depending on the
-covariance of the functor).
+しかし、ホム集合の自然同型とは何でしょうか？自然性は、関手間の写像の性質であり、集合の性質ではありません。だから、私たちは実際にはホム集合に価値のある関手間の自然同型について話しています。これらの関手は、単なる集合価値の関手以上のものです。射の動作は、適切なホム関手によって誘導されます。射は、ホム関手によって前または後の合成 (関手の共変性に応じて) を使って典型的に写像されます。
 
-The Yoneda embedding is one example of such an isomorphism. It maps
-hom-sets in $\cat{C}$ to hom-sets in the functor category; and it's
-natural. One functor in the Yoneda embedding is the hom-functor in
-$\cat{C}$ and the other maps objects to sets of natural transformations
-between hom-sets.
+米田埋め込みは、このような同型の一例です。それは$\cat{C}$内のホム集合を関手圏内のホム集合に写像し、それは自然です。米田埋め込みの一つの関手は$\cat{C}$内のホム関手であり、もう一つは対象をホム集合間の自然変換の集合に写像します。
 
-The definition of a limit is also a natural isomorphism between hom-sets
-(the second one, again, in the functor category):
+極限の定義もまたホム集合間の自然同型です (2番目もまた関手圏内で) : 
 \[\cat{C}(c, \Lim[D]) \simeq \cat{Nat}(\Delta_c, D)\]
-It turns out that our construction of an exponential object, or that of
-a free monoid, can also be rewritten as a natural isomorphism between
-hom-sets.
+実は、指数対象の構成や自由モノイドの構成も、ホム集合間の自然同型として書き直すことができます。
 
-This is no coincidence --- we'll see next that these are just different
-examples of adjunctions, which are defined as natural isomorphisms of
-hom-sets.
+これは偶然の一致ではありません --- 次に見るように、これらは随伴の異なる例にすぎません。随伴はホム集合の自然同型として定義されます。
 
-\section{Asymmetry of Hom-Sets}
+\section{ホム集合の非対称性}
 
-There is one more observation that will help us understand adjunctions.
-Hom-sets are, in general, not symmetric. A hom-set $\cat{C}(a, b)$ is
-often very different from the hom-set $\cat{C}(b, a)$. The ultimate
-demonstration of this asymmetry is a partial order viewed as a category.
-In a partial order, a morphism from $a$ to $b$ exists if
-and only if $a$ is less than or equal to $b$. If
-$a$ and $b$ are different, then there can be no morphism
-going the other way, from $b$ to $a$. So if the hom-set
-$\cat{C}(a, b)$ is non-empty, which in this case means it's a
-singleton set, then $\cat{C}(b, a)$ must be empty, unless
-$a = b$. The arrows in this category have a definite flow in
-one direction.
+随伴を理解する上でさらに一つの観察が役立ちます。ホム集合は一般に非対称です。ホム集合$\cat{C}(a, b)$はしばしばホム集合$\cat{C}(b, a)$と非常に異なります。この非対称性の究極の実証は半順序としての圏です。半順序では、$a$が$b$以下である場合にのみ、$a$から$b$への射が存在します。$a$と$b$が異なる場合、逆方向、つまり$b$から$a$への射は存在しません。従って、ホム集合$\cat{C}(a, b)$が空でない場合、つまり単集合である場合、$a = b$でない限り$\cat{C}(b, a)$は空でなければなりません。この圏では射には明確な一方向の流れがあります。
 
-A preorder, which is based on a relation that's not necessarily
-antisymmetric, is also ``mostly'' directional, except for occasional
-cycles. It's convenient to think of an arbitrary category as a
-generalization of a preorder.
+前順序は、必ずしも反対称ではない関係に基づいていますが、「主に」方向性があります、ただし、時折サイクルが発生します。任意の圏を前順序の一般化として考えると便利です。
 
-A preorder is a thin category --- all hom-sets are either singletons or
-empty. We can visualize a general category as a ``thick'' preorder.
+前順序は薄い圏です --- すべてのホム集合は単集合または空です。一般的な圏を「厚い」前順序として視覚化することができます。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Consider some degenerate cases of a naturality condition and draw the
-        appropriate diagrams. For instance, what happens if either functor
-        $F$ or $G$ map both objects $a$ and $b$
-        (the ends of $f \Colon a \to b$) to the same
-        object, e.g., $F a = F b$ or $G a = G b$?
-        (Notice that you get a cone or a co-cone this way.) Then consider
-        cases where either $F a = G a$ or $F b = G b$.
-        Finally, what if you start with a morphism that loops on itself ---
-        $f \Colon a \to a$?
+        自然性条件のいくつかの変形例を考え、適切な図式を描いてください。例えば、関手$F$または$G$が$f \Colon a \to b$の端点である対象$a$と$b$の両方を同じ対象に写像する場合、例えば$F a = F b$または$G a = G b$の場合はどうなりますか？ (この方法で錐または余錐が得られます。) 次に、$F a = G a$または$F b = G b$の場合を考えてください。最後に、自身にループする射、つまり$f \Colon a \to a$から始める場合はどうなりますか？
 \end{enumerate}

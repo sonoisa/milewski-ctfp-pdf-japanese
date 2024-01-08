@@ -1,285 +1,164 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{S}{o far} I've been glossing over the meaning of function types. A function
-type is different from other types.
+\lettrine[lhang=0.17]{こ}{れまで}私は関数型の意味を大まかに説明してきました。関数型は他の型とは異なります。
 
-Take \code{Integer}, for instance: It's just a set of integers.
-\code{Bool} is a two element set. But a function type
-$a\to b$ is more than that: it's a set of morphisms
-between objects $a$ and $b$. A set of morphisms between
-two objects in any category is called a hom-set. It just so happens that
-in the category $\Set$ every hom-set is itself an object in the
-same category ---because it is, after all, a \emph{set}.
+例えば\code{Integer}を考えてみましょう。これは単に整数の集合です。
+\code{Bool}は二要素集合です。しかし、関数型 $a\to b$ はそれ以上のものです。それは、対象 $a$ と $b$ の間の射の集合です。任意の圏の二つの対象間の射の集合はホム集合と呼ばれます。圏 $\Set$ では、すべてのホム集合が自身が属する同じ圏の対象であることがよくあります  --- 結局のところ、それは\emph{集合}ですから。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.35\textwidth]{images/set-hom-set.jpg}
-  \caption{Hom-set in Set is just a set}
+  \caption{Set内のホム集合はただの集合です}
 \end{figure}
 
 \noindent
-The same is not true of other categories where hom-sets are external to
-a category. They are even called \emph{external} hom-sets.
+他の圏ではホム集合は圏外部のものです。それらは\emph{外部}ホム集合とさえ呼ばれます。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.35\textwidth]{images/hom-set.jpg}
-  \caption{Hom-set in category C is an external set}
+  \caption{圏C内のホム集合は外部集合です}
 \end{figure}
 
 \noindent
-It's the self-referential nature of the category $\Set$ that makes
-function types special. But there is a way, at least in some categories,
-to construct objects that represent hom-sets. Such objects are called
-\newterm{internal} hom-sets.
+関数型を特別なものにしているのは、$\Set$ 圏の自己参照的な性質です。しかし、少なくともいくつかの圏では、ホム集合を表す対象を構成する方法があります。そのような対象は\newterm{内部}ホム集合と呼ばれます。
 
-\section{Universal Construction}
+\section{普遍構成}
 
-Let's forget for a moment that function types are sets and try to
-construct a function type, or more generally, an internal hom-set, from
-scratch. As usual, we'll take our cues from the $\Set$ category,
-but carefully avoid using any properties of sets, so that the
-construction will automatically work for other categories.
+一時的に関数型が集合であるということを忘れて、関数型、または一般的に内部ホム集合を最初から構成してみましょう。通常のように、$\Set$圏から手がかりを得ますが、集合の特性を避けるように注意して、構成が他の圏にも自動的に適用されるようにします。
 
-A function type may be considered a composite type because of its
-relationship to the argument type and the result type. We've already
-seen the constructions of composite types --- those that involved
-relationships between objects. We used universal constructions to define
-a \hyperref[products-and-coproducts]{product
-  and coproduct types}. We can use the same trick to define a
-function type. We will need a pattern that involves three objects: the
-function type that we are constructing, the argument type, and the
-result type.
+関数型は、引数型と結果型との関係のために、複合型と見なされるかもしれません。私たちはすでに対象間の関係を含む複合型の構成を見てきました。普遍構成を使って\hyperref[products-and-coproducts]{積型と余積型}を定義しました。同じトリックを使って関数型を定義することができます。我々は、構成している関数型、引数型、および結果型の3つの対象を含むパターンが必要です。
 
-The obvious pattern that connects these three types is called
-\newterm{function application} or \newterm{evaluation}. Given a candidate for
-a function type, let's call it $z$ (notice that, if we are not in
-the category $\Set$, this is just an object like any other
-object), and the argument type $a$ (an object), the application
-maps this pair to the result type $b$ (an object). We have three
-objects, two of them fixed (the ones representing the argument type and
-the result type).
+これらの3つの型を接続する明白なパターンは、\newterm{関数適用}または\newterm{評価}と呼ばれます。関数型の候補としましょう $z$ (圏$\Set$ にいない場合、これは他のどの対象とも同様に単なる対象です) と引数型 $a$ (対象) 、適用はこのペアを結果型 $b$ (対象) にマッピングします。我々は3つの対象、そのうち2つは固定されています (引数型と結果型を表すもの) 。
 
-We also have the application, which is a mapping. How do we incorporate
-this mapping into our pattern? If we were allowed to look inside
-objects, we could pair a function $f$ (an element of $z$)
-with an argument $x$ (an element of $a$) and map it to
-$f x$ (the application of $f$ to $x$, which is an
-element of $b$).
+また、我々は適用というマッピングを持っています。対象の内部を見ることができれば、$z$の関数 $f$ (要素) を$a$の引数$x$ (要素) とペアにし、それを$f x$ ($f$による$x$の適用、$b$の要素) にマッピングすることができます。
 
 \begin{figure}[H]
   \centering\includegraphics[width=0.35\textwidth]{images/functionset.jpg}
-  \caption{In Set we can pick a function $f$ from a set of functions $z$ and we can
-    pick an argument $x$ from the set (type) $a$. We get an element $f x$ in the
-    set (type) $b$.}
+  \caption{Setでは関数の集合 $z$ から関数 $f$ を選び、集合 (型) $a$ から引数 $x$ を選ぶことができます。集合 (型) $b$ における要素 $f x$ を得ます。}
 \end{figure}
 
 \noindent
-But instead of dealing with individual pairs $(f, x)$, we can as
-well talk about the whole \emph{product} of the function type $z$
-and the argument type $a$. The product $z\times{}a$ is an object,
-and we can pick, as our application morphism, an arrow $g$ from
-that object to $b$. In $\Set$, $g$ would be the
-function that maps every pair $(f, x)$ to $f x$.
+しかし、個々のペア $(f, x)$ を扱う代わりに、関数型 $z$ と引数型 $a$ の全\emph{積}について話すこともできます。積 $z\times{}a$ は対象であり、$b$ への適用射として、$g$ という射を選ぶことができます。$\Set$ では、$g$ はすべてのペア $(f, x)$ を $f x$ にマッピングする関数です。
 
-So that's the pattern: a product of two objects $z$ and
-$a$ connected to another object $b$ by a morphism $g$.
+パターンは次のようになります: 2つの対象 $z$ と$a$ の積が、$g$ という射によって別の対象 $b$ に接続されています。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{images/functionpattern.jpg}
-  \caption{A pattern of objects and morphisms that is the starting point of the
-    universal construction}
+  \caption{普遍構成の出発点となる対象と射のパターン}
 \end{figure}
 
 \noindent
-Is this pattern specific enough to single out the function type using a
-universal construction? Not in every category. But in the categories of
-interest to us it is. And another question: Would it be possible to
-define a function object without first defining a product? There are
-categories in which there is no product, or there isn't a product for
-all pairs of objects. The answer is no: there is no function type, if
-there is no product type. We'll come back to this later when we talk
-about exponentials.
+このパターンは、普遍構成を使って関数型を特定するのに十分具体的ですか？すべての圏ではありません。しかし私たちが興味を持っている圏ではそうです。別の質問として、まず積を定義せずに関数対象を定義することは可能でしょうか？すべての対象のペアに対して積が存在しない圏もあります。答えはいいえです: 積型がなければ、関数型は存在しません。指数について話すとき、これについて後で戻ってきます。
 
-Let's review the universal construction. We start with a pattern of
-objects and morphisms. That's our imprecise query, and it usually yields
-lots and lots of hits. In particular, in $\Set$, pretty much
-everything is connected to everything. We can take any object
-$z$, form its product with $a$, and there's going to be a
-function from it to $b$ (except when $b$ is an empty set).
+普遍構成を見直しましょう。我々は対象と射のパターンから始めます。それが我々の漠然としたクエリであり、通常はたくさんのヒットを生み出します。特に$\Set$では、ほぼすべてが何かに接続されています。任意の対象$z$を取り、$a$とその積を形成し、$b$への関数が存在します ($b$が空集合でない限り) 。
 
-That's when we apply our secret weapon: ranking. This is usually done by
-requiring that there be a unique mapping between candidate objects --- a
-mapping that somehow factorizes our construction. In our case, we'll
-decree that $z$ together with the morphism $g$ from
-$z \times a$ to $b$ is \emph{better} than some other
-$z'$ with its own application $g'$, if and
-only if there is a unique mapping $h$ from $z'$ to
-$z$ such that the application of $g'$ factors
-through the application of $g$. (Hint: Read this sentence while
-looking at the picture.)
+それが私たちが秘密兵器を適用するときです: ランキング。これは通常、候補の対象間に何らかの方法で因数分解する一意のマッピングがあることを要求することによって行われます。この場合、$z \times a$ から $b$ への射 $g$ を持つ$z$と、$g$を介して$g'$の適用が因数分解されるような方法で$z$へ一意にマップされる$z'$がある場合、$z$と$g$が他の$z'$とその独自の適用$g'$よりも\emph{優れている}と判断します。  (ヒント: 写真を見ながらこの文を読んでください。) 
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{images/functionranking.jpg}
-  \caption{Establishing a ranking between candidates for the function object}
+  \caption{関数対象の候補間のランキングを確立する}
 \end{figure}
 
 \noindent
-Now here's the tricky part, and the main reason I postponed this
-particular universal construction till now. Given the morphism
-$h \Colon z'\to z$, we want to close the diagram
-that has both $z'$ and $z$ crossed with $a$.
-What we really need, given the mapping $h$ from $z'$
-to $z$, is a mapping from $z' \times a$ to $z \times a$.
-And now, after discussing the \hyperref[functoriality]{functoriality
-  of the product}, we know how to do it. Because the product itself is a
-functor (more precisely an endo-bi-functor), it's possible to lift pairs
-of morphisms. In other words, we can define not only products of objects
-but also products of morphisms.
+ここでトリッキーな部分です、そしてこの特定の普遍構成を今まで延期した主な理由です。射 $h \Colon z'\to z$ を与えられた場合、$a$で交差する$z'$と$z$の両方を含む図を閉じたいと思います。$z'$から$z$へのマッピング$h$が与えられたとき、私たちは$z' \times a$から$z \times a$へのマッピングが必要です。そして今、\hyperref[functoriality]{積の関手性}を議論した後、それを行う方法を知っています。積自体が関手 (より正確にはエンド・バイ・関手) であるため、射のペアを持ち上げることが可能です。つまり、対象だけでなく射の積も定義できます。
 
-Since we are not touching the second component of the product
-$z' \times a$, we will lift the pair of morphisms
-$(h, \id)$, where $\id$ is an identity on $a$.
+積の第二コンポーネント$z' \times a$を触れずに、射のペア$(h, \id)$を持ち上げるつもりです。ここで$\id$は$a$上の恒等写像です。
 
-So, here's how we can factor one application, $g$, out of another
-application $g'$:
+したがって、$g$の適用を別の適用$g'$からどのように因数分解できるかが分かります。
 \[g' = g \circ (h \times \id)\]
-The key here is the action of the product on morphisms.
+ここでの鍵は射上の積の作用です。
 
-The third part of the universal construction is selecting the object
-that is universally the best. Let's call this object $a \Rightarrow b$ (think
-of this as a symbolic name for one object, not to be confused with a
-Haskell typeclass constraint --- I'll discuss different ways of naming
-it later). This object comes with its own application --- a morphism
-from $(a \Rightarrow b) \times a$ to $b$ --- which we will call
-$\mathit{eval}$. The object \code{$a \Rightarrow b$} is the best if any other
-candidate for a function object can be uniquely mapped to it in such a
-way that its application morphism $g$ factorizes through
-$\mathit{eval}$. This object is better than any other object according to
-our ranking.
+普遍構成の第三部分は、普遍的に最も優れた対象を選択することです。この対象を$a \Rightarrow b$と呼びましょう (これを一つの対象に対する象徴的な名前として考えてください、Haskellの型クラス制約と混同しないでください ---後でそれを名付けるさまざまな方法について話し合います) 。この対象は、$(a \Rightarrow b) \times a$から$b$への適用 ---$\mathit{eval}$と呼ばれる射---を持っています。対象\code{$a \Rightarrow b$}が最も優れている場合、その適用射$g$が$\mathit{eval}$を介して因数分解されるように、他のすべての候補の関数対象を一意にそれにマッピングすることができます。この対象は、私たちのランキングによると、他のどの対象よりも優れています。
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{images/universalfunctionobject.jpg}
-  \caption{The definition of the universal function object. This is the same
-    diagram as above, but now the object $a \Rightarrow b$ is \emph{universal}.}
+  \caption{普遍関数対象の定義。これは上の図と同じですが、今では対象 $a \Rightarrow b$ が\emph{普遍}です。}
 \end{figure}
 
 \noindent
-Formally:
+正式には:
 
 \begin{longtable}[]{@{}l@{}}
   \toprule
   \begin{minipage}[t]{0.97\columnwidth}\raggedright\strut
-    A \emph{function object} from $a$ to $b$ is an object
-    $a \Rightarrow b$ together with the morphism
+    $a$ から $b$ への\emph{関数対象}は、対象
+    $a \Rightarrow b$ と射
     \[\mathit{eval} \Colon ((a \Rightarrow b) \times a) \to b\]
-    such that for any other object $z$ with a morphism
+    であり、それによって他の任意の対象 $z$ には射
     \[g \Colon z \times a \to b\]
-    there is a unique morphism
+    が存在し、それを介して $\mathit{eval}$ を因数分解する唯一の射
     \[h \Colon z \to (a \Rightarrow b)\]
-    that factors $g$ through $\mathit{eval}$:
-    \[g = \mathit{eval} \circ (h \times \id)\]
+    が存在します。
   \end{minipage}\tabularnewline
   \bottomrule
 \end{longtable}
 
 \noindent
-Of course, there is no guarantee that such an object $a \Rightarrow b$ exists
-for any pair of objects $a$ and $b$ in a given category.
-But it always does in $\Set$. Moreover, in $\Set$, this
-object is isomorphic to the hom-set $\Set(a, b)$.
+もちろん、任意の圏の任意の対象のペア $a$ と $b$ に対して、そのような対象 $a \Rightarrow b$ が存在するとは限りません。
+しかし、$\Set$ では常に存在します。さらに、$\Set$では、この対象はホム集合 $\Set(a, b)$ と同型です。
 
-This is why, in Haskell, we interpret the function type
-\code{a -> b} as the categorical function object $a \Rightarrow b$.
+これが、Haskellでは関数型 \code{a -> b} を圏論的な関数対象 $a \Rightarrow b$ として解釈する理由です。
 
-\section{Currying}
+\section{Curry化}
 
-Let's have a second look at all the candidates for the function object.
-This time, however, let's think of the morphism $g$ as a function
-of two variables, $z$ and $a$.
+関数対象の候補をもう一度見てみましょう。しかし、今回は射 $g$ を2変数の関数として考えます。
 \[g \Colon z \times a \to b\]
-Being a morphism from a product comes as close as it gets to being a
-function of two variables. In particular, in $\Set$, $g$ is
-a function from pairs of values, one from the set $z$ and one
-from the set $a$.
+積からの射であることは、2変数の関数であることに非常に近いです。特に、$\Set$では、$g$ は$z$の集合と$a$の集合の値のペアからの関数です。
 
-On the other hand, the universal property tells us that for each such
-$g$ there is a unique morphism $h$ that maps $z$ to
-a function object $a \Rightarrow b$.
+一方、普遍的な性質は、そのような各 $g$ に対して、$z$ を関数対象 $a \Rightarrow b$ にマッピングする唯一の射 $h$ が存在することを私たちに教えてくれます。
 \[h \Colon z \to (a \Rightarrow b)\]
-In $\Set$, this just means that $h$ is a function that
-takes one variable of type $z$ and returns a function from
-$a$ to $b$. That makes $h$ a higher order function.
-Therefore the universal construction establishes a one-to-one
-correspondence between functions of two variables and functions of one
-variable returning functions. This correspondence is called
-\newterm{currying}, and $h$ is called the curried version of $g$.
+$\Set$では、これは単に $z$ の型の変数を取り、$a$ から $b$ への関数を返す関数であることを意味します。これにより、$h$ は高階関数です。
+したがって、普遍構成は2変数の関数と1変数で関数を返す関数の間の一対一の対応関係を確立します。この対応関係は\newterm{curry化}と呼ばれ、$h$ は $g$ のCurry化されたバージョンと呼ばれます。
 
-This correspondence is one-to-one, because given any $g$ there is
-a unique $h$, and given any $h$ you can always recreate
-the two-argument function $g$ using the formula:
+この対応関係は一対一です。なぜなら、任意の $g$ に対して一意の $h$ が存在し、任意の $h$ に対して次の式を使って2引数の関数 $g$ を常に再作成できるからです。
 \[g = \mathit{eval} \circ (h \times \id)\]
-The function $g$ can be called the \emph{uncurried} version of $h$.
+関数 $g$ は $h$ の\emph{非curry化}バージョンと呼ぶことができます。
 
-Currying is essentially built into the syntax of Haskell. A function
-returning a function:
+Curry化は本質的にHaskellの構文に組み込まれています。関数を返す関数: 
 
 \src{snippet01}
-is often thought of as a function of two variables. That's how we read
-the un-parenthesized signature:
+はしばしば2変数の関数として考えられます。それが括弧を使わないシグネチャの読み方です: 
 
 \src{snippet02}
-This interpretation is apparent in the way we define multi-argument
-functions. For instance:
+この解釈は、多引数関数を定義する方法で明らかです。例えば: 
 
 \src{snippet03}
-The same function can be written as a one-argument function returning a
-function --- a lambda:
+同じ関数は、関数を返す1引数の関数 --- ラムダとして書くこともできます: 
 
 \src{snippet04}
-These two definitions are equivalent, and either can be partially
-applied to just one argument, producing a one-argument function, as in:
+これらの2つの定義は同等であり、いずれも1つの引数だけを部分的に適用して、次のような1引数の関数を生成することができます: 
 
 \src{snippet05}
-Strictly speaking, a function of two variables is one that takes a pair
-(a product type):
+厳密に言えば、2変数の関数とは、ペア (積型) を取る関数です: 
 
 \src{snippet06}
-It's trivial to convert between the two representations, and the two
-(higher-order) functions that do it are called, unsurprisingly,
-\code{curry} and \code{uncurry}:
+2つの表現間の変換は簡単であり、それを行う2つの (高階) 関数は、驚くべきことに、\code{curry} と \code{uncurry} と呼ばれます: 
 
 \src{snippet07}
-and
+そして
 
 \src{snippet08}
-Notice that \code{curry} is the \emph{factorizer} for the universal
-construction of the function object. This is especially apparent if it's
-rewritten in this form:
+\code{curry} は、関数対象の普遍構成のための\emph{ファクトライザ}です。これは、次の形式で書き直された場合に特に明らかです: 
 
 \src{snippet09}
-(As a reminder: A factorizer produces the factorizing function from a
-candidate.)
+ (リマインダー: ファクトライザは候補から因数分解関数を生成します。) 
 
-In non-functional languages, like C++, currying is possible but
-nontrivial. You can think of multi-argument functions in C++ as
-corresponding to Haskell functions taking tuples (although, to confuse
-things even more, in C++ you can define functions that take an explicit
-\code{std::tuple}, as well as variadic functions, and functions taking
-initializer lists).
+C++のような非関数型言語では、Curry化は可能ですが非自明です。C++の多引数
 
-You can partially apply a C++ function using the template
-\code{std::bind}. For instance, given a function of two strings:
+関数をHaskellでタプルを取る関数に対応させることができます (ただし、C++では\code{std::tuple}を明示的に取る関数を定義できるだけでなく、可変引数関数や初期化リストを取る関数も定義できるため、さらに混乱する可能性があります) 。
+
+C++関数を部分的に適用するには、テンプレート\code{std::bind}を使用します。例えば、2つの文字列を取る関数があるとします: 
 
 \begin{snip}{cpp}
 std::string catstr(std::string s1, std::string s2) {
     return s1 + s2;
 }
 \end{snip}
-you can define a function of one string:
+1つの文字列を取る関数を定義できます: 
 
 \begin{snip}{cpp}
 using namespace std::placeholders;
@@ -287,320 +166,161 @@ using namespace std::placeholders;
 auto greet = std::bind(catstr, "Hello ", _1);
 std::cout << greet("Haskell Curry");
 \end{snip}
-Scala, which is more functional than C++ or Java, falls somewhere in
-between. If you anticipate that the function you're defining will be
-partially applied, you define it with multiple argument lists:
+ScalaはC++やJavaよりも機能的であり、関数を部分適用することが予想される場合には、複数の引数リストでそれを定義します: 
 
 \begin{snip}{cpp}
 def catstr(s1: String)(s2: String) = s1 + s2
 \end{snip}
-Of course that requires some amount of foresight or prescience on the
-part of a library writer.
+もちろん、それはライブラリ作者の先見の明または予知に何らかの量を必要とします。
 
-\section{Exponentials}
+\section{指数関数}
 
-In mathematical literature, the function object, or the internal
-hom-object between two objects $a$ and $b$, is often
-called the \newterm{exponential} and denoted by $b^{a}$. Notice that
-the argument type is in the exponent. This notation might seem strange
-at first, but it makes perfect sense if you think of the relationship
-between functions and products. We've already seen that we have to use
-the product in the universal construction of the internal hom-object,
-but the connection goes deeper than that.
+数学の文献では、関数対象、または2つの対象 $a$ と $b$ の間の内部ホム対象はしばしば\newterm{指数関数}と呼ばれ、$b^{a}$ と表記されます。引数型が指数になっていることに注意してください。この表記は最初は奇妙に思えるかもしれませんが、関数と積の関係を考えると完全に理にかなっています。私たちは、内部ホム対象の普遍構成を使用するために積を使用する必要がありますが、接続はそれ以上に深いものです。
 
-This is best seen when you consider functions between finite types ---
-types that have a finite number of values, like \code{Bool},
-\code{Char}, or even \code{Int} or \code{Double}. Such functions,
-at least in principle, can be fully memoized or turned into data
-structures to be looked up. And this is the essence of the equivalence
-between functions, which are morphisms, and function types, which are
-objects.
+これは特に有限型間の関数を考えるときに最もよく見られます --- \code{Bool}、\code{Char}、あるいは\code{Int}や\code{Double}のように値の数が有限な型です。そのような関数は、少なくとも原理的には完全にメモ化されたり、ルックアップ用のデータ構造に変換されたりすることができます。そしてこれが関数 (射) と関数型 (対象) の間の同等性の本質です。
 
-For instance a (pure) function from \code{Bool} is completely
-specified by a pair of values: one corresponding to \code{False}, and
-one corresponding to \code{True}. The set of all possible functions
-from \code{Bool} to, say, \code{Int} is the set of all pairs of
-\code{Int}s. This is the same as the product \code{Int} \times{} \code{Int} or,
-being a little creative with notation, \code{Int}\textsuperscript{2}.
+例えば、\code{Bool}からの (純粋な) 関数は完全に2つの値で指定されます。1つは\code{False}に対応し、もう1つは\code{True}に対応します。任意の\code{Int}への\code{Bool}からのすべての可能な関数の集合は、\code{Int}のペアの集合です。これは、少し創造力を働かせて、\code{Int}×\code{Int}または\code{Int}\textsuperscript{2}と同じです。
 
-For another example, let's look at the C++ type \code{char}, which
-contains 256 values (Haskell \code{Char} is larger, because Haskell
-uses Unicode). There are several functions in the part of the
-C++ Standard Library that are usually implemented using lookups.
-Functions like \code{isupper} or \code{isspace} are implemented
-using tables, which are equivalent to tuples of 256 Boolean values. A
-tuple is a product type, so we are dealing with products of 256
-Booleans: \code{bool \times{} bool \times{} bool \times{} ... \times{} bool}. We know from
-arithmetics that an iterated product defines a power. If you
-``multiply'' \code{bool} by itself 256 (or \code{char}) times, you
-get \code{bool} to the power of \code{char}, or \code{bool}\textsuperscript{\code{char}}.
+別の例として、256値を含むC++の型\code{char}を見てみましょう (Haskellの\code{Char}はより大きいです、なぜならHaskellはUnicodeを使用するからです) 。C++標準ライブラリの一部には、通常ルックアップを使用して実装される関数がいくつかあります。\code{isupper}や\code{isspace}のような関数は、256個のブール値のタプルに相当するテーブルを使用して実装されます。タプルは積型なので、256個のブール値の積に取り組んでいます: \code{bool × bool × bool × ... × bool}。算数から知っているように、繰り返される積はべき乗を定義します。256 (または\code{char}) 回「掛ける」と、\code{bool}の\code{char}乗、つまり\code{bool}\textsuperscript{\code{char}}を得ます。
 
-How many values are there in the type defined as 256-tuples of
-\code{bool}? Exactly $2^{256}$. This is also the number
-of different functions from \code{char} to \code{bool}, each
-function corresponding to a unique 256-tuple. You can similarly
-calculate that the number of functions from \code{bool} to
-\code{char} is $256^{2}$, and so on. The exponential
-notation for function types makes perfect sense in these cases.
+\code{bool}の256タプル型にはいくつの値がありますか？正確には $2^{256}$ 個です。これはまた、\code{char}から\code{bool}への異なる関数の数です。各関数は唯一の256タプルに対応します。同様に、\code{bool}から\code{char}への関数の数は $256^{2}$ であり、以下同様です。関数型の指数記法はこれらの場合に完全に意味を成します。
 
-We probably wouldn't want to fully memoize a function from \code{int}
-or \code{double}. But the equivalence between functions and data
-types, if not always practical, is there. There are also infinite types,
-for instance lists, strings, or trees. Eager memoization of functions
-from those types would require infinite storage. But Haskell is a lazy
-language, so the boundary between lazily evaluated (infinite) data
-structures and functions is fuzzy. This function vs. data duality
-explains the identification of Haskell's function type with the
-categorical exponential object --- which corresponds more to our idea of
-\emph{data}.
+我々は\code{int}や\code{double}からの関数を完全にメモ化したいとは思わないかもしれません。しかし、関数とデータ型の間の等価性は、常に実用的でない場合でも存在します。無限型もあります。例えばリスト、文字列、または木です。それらの型からの関数のイーガーなメモ化は、無限のストレージを必要とします。しかし、Haskellは遅延言語なので、遅延評価される (無限の) データ構造と関数の境界は曖昧です。この関数とデータの二重性は、Haskellの関数型が圏論的な指数対象に対応するという私たちの考え方---つまり\emph{データ}により近いもの---と同一視されていることを説明しています。
 
-\section{Cartesian Closed Categories}
+\section{デカルト閉圏}
 
-Although I will continue using the category of sets as a model for types
-and functions, it's worth mentioning that there is a larger family of
-categories that can be used for that purpose. These categories are
-called \newterm{Cartesian closed}, and $\Set$ is just one example of
-such a category.
+型と関数のモデルとして集合の圏を使用し続けるつもりですが、その目的に使用できる圏の大きな族が存在することに触れる価値があります。これらの圏は\newterm{デカルト閉圏}と呼ばれ、$\Set$ はそのような圏の一例に過ぎません。
 
-A Cartesian closed category must contain:
+デカルト閉圏には以下が含まれる必要があります: 
 
 \begin{enumerate}
   \tightlist
   \item
-        The terminal object,
+        終対象
   \item
-        A product of any pair of objects, and
+        任意の対象ペアの積
   \item
-        An exponential for any pair of objects.
+        任意の対象ペアの指数関数
 \end{enumerate}
-If you consider an exponential as an iterated product (possibly
-infinitely many times), then you can think of a Cartesian closed
-category as one supporting products of an arbitrary arity. In
-particular, the terminal object can be thought of as a product of zero
-objects --- or the zero-th power of an object.
+指数関数を (無限に多くの回) 繰り返し積と考えるならば、任意のアリティの積をサポートする圏としてデカルト閉圏を考えることができます。特に、終対象はゼロの対象の積、または対象のゼロ乗と考えることができます。
 
-What's interesting about Cartesian closed categories from the
-perspective of computer science is that they provide models for the
-simply typed lambda calculus, which forms the basis of all typed
-programming languages.
+コンピュータ科学の視点からデカルト閉圏について興味深いことは、それらが全ての型付けプログラミング言語の基礎を形成する単純型付きラムダ計算のモデルを提供することです。
 
-The terminal object and the product have their duals: the initial object
-and the coproduct. A Cartesian closed category that also supports those
-two, and in which product can be distributed over coproduct
+終対象と積はそれぞれ始対象と余積の双対を持ちます。積が余積上で分配可能である場合
 \begin{gather*}
   a \times (b + c) = a \times b + a \times c \\
   (b + c) \times a = b \times a + c \times a
 \end{gather*}
-is called a \newterm{bicartesian closed} category. We'll see in the next
-section that bicartesian closed categories, of which $\Set$ is a
-prime example, have some interesting properties.
+圏は\newterm{双デカルト閉圏}と呼ばれます。私たちは次のセクションで見るように、$\Set$のような双デカルト閉圏はいくつかの興味深い特性を持っています。
 
-\section{Exponentials and Algebraic Data Types}
+\section{指数関数と代数的データ型}
 
-The interpretation of function types as exponentials fits very well into
-the scheme of algebraic data types. It turns out that all the basic
-identities from high-school algebra relating numbers zero and one, sums,
-products, and exponentials hold pretty much unchanged in any bicartesian
-closed category for, respectively, initial and final objects,
-coproducts, products, and exponentials. We don't have the tools yet to
-prove them (such as adjunctions or the Yoneda lemma), but I'll list them
-here nevertheless as a source of valuable intuitions.
+関数型を指数関数と解釈することは代数的データ型のスキームに非常によく適合しています。高校の代数でゼロと一、和、積、指数関数に関連する基本的な恒等性は、それぞれ初期および終対象、余積、積、指数関数について、ほとんど変更されずに双デカルト閉圏の任意のもので成立します。私たちはそれらを証明するツールをまだ持っていません (随伴や米田の補題など) が、それでもここにそれらを列挙して、貴重な直感の源としています。
 
-\subsection{Zeroth Power}
+\subsection{ゼロ乗}
 
 \[a^{0} = 1\]
-In the categorical interpretation, we replace 0 with the initial object,
-1 with the final object, and equality with isomorphism. The exponential
-is the internal hom-object. This particular exponential represents the
-set of morphisms going from the initial object to an arbitrary object
-$a$. By the definition of the initial object, there is exactly
-one such morphism, so the hom-set $\cat{C}(0, a)$ is a singleton set. A
-singleton set is the terminal object in $\Set$, so this identity
-trivially works in $\Set$. What we are saying is that it works in
-any bicartesian closed category.
+圏的に解釈すると、0を始対象、1を終対象に置き換え、等価を同型に置き換えます。指数関数は内部ホム対象です。この特定の指数関数は、始対象から任意の対象 $a$ への射の集合を表します。始対象の定義により、そのような射は正確に1つだけ存在するので、ホム集合 $\cat{C}(0, a)$ は単集合です。単集合は $\Set$ で終対象なので、この恒等は $\Set$ で自明に機能します。つまり、それは任意の双デカルト閉圏で機能すると言えます。
 
-In Haskell, we replace 0 with \code{Void}; 1 with the unit type
-\code{()}; and the exponential with function type. The claim is that
-the set of functions from \code{Void} to any type \code{a} is
-equivalent to the unit type --- which is a singleton. In other words,
-there is only one function \code{Void -> a}. We've seen
-this function before: it's called \code{absurd}.
+Haskellでは、0を \code{Void} に、1をUnit型 \code{()} に、指数関数を関数型に置き換えます。主張は、\code{Void} から任意の型 \code{a} への関数の集合がUnit型と同等であるということです --- つまり、単一要素です。言い換えると、\code{Void -> a} のような関数は1つだけです。私たちはこの関数を以前に見たことがあります。それは \code{absurd} と呼ばれています。
 
-This is a little bit tricky, for two reasons. One is that in Haskell we
-don't really have uninhabited types --- every type contains the ``result
-of a never ending calculation,'' or the bottom. The second reason is
-that all implementations of \code{absurd} are equivalent because, no
-matter what they do, nobody can ever execute them. There is no value
-that can be passed to \code{absurd}. (And if you manage to pass it a
-never ending calculation, it will never return!)
+これは2つの理由で少し厄介です。1つは、Haskellには本当に無人の型がないということです --- すべての型には「終わることのない計算の結果」という底が含まれています。2つ目の理由は、\code{absurd} のすべての実装が同等であり、それらが何をしても、誰もそれらを実行することはできないからです。 \code{absurd} に渡すことができる値はありません。 (そして、終わることのない計算を渡すことができ
 
-\subsection{Powers of One}
+たとしても、それは決して返ってこないでしょう！) 
+
+\subsection{1のべき乗}
 
 \[1^{a} = 1\]
-This identity, when interpreted in $\Set$, restates the definition
-of the terminal object: There is a unique morphism from any object to
-the terminal object. In general, the internal hom-object from $a$
-to the terminal object is isomorphic to the terminal object itself.
+この恒等式は、$\Set$で終対象の定義を再述しています: 任意の対象から終対象への一意の射があります。一般的に、$a$から終対象への内部ホム対象は、終対象自体と同型です。
 
-In Haskell, there is only one function from any type \code{a} to unit.
-We've seen this function before --- it's called \code{unit}. You can
-also think of it as the function \code{const} partially applied to
-\code{()}.
+Haskellでは、任意の型 \code{a} からUnit型への関数は1つだけです。私たちはこの関数を以前に見たことがあります --- それは \code{unit} と呼ばれています。あるいは、\code{const} を \code{()} に部分適用した関数と考えることもできます。
 
-\subsection{First Power}
+\subsection{第1乗}
 
 \[a^{1} = a\]
-This is a restatement of the observation that morphisms from the
-terminal object can be used to pick ``elements'' of the object
-\code{a}. The set of such morphisms is isomorphic to the object
-itself. In $\Set$, and in Haskell, the isomorphism is between
-elements of the set \code{a} and functions that pick those elements,
-\code{() -> a}.
+これは、終対象からの射が対象 \code{a} の「要素」を選択するために使用できるという観察の再述です。そのような射の集合は、対象自体と同型です。$\Set$では、およびHaskellでは、同型は集合 \code{a} の要素とそれらの要素を選択する関数、\code{() -> a} の間のものです。
 
-\subsection{Exponentials of Sums}
+\subsection{和の指数関数}
 
 \[a^{b+c} = a^{b} \times a^{c}\]
-Categorically, this says that the exponential from a coproduct of two
-objects is isomorphic to a product of two exponentials. In Haskell, this
-algebraic identity has a very practical interpretation. It tells us
-that a function from a sum of two types is equivalent to a pair of
-functions from individual types. This is just the case analysis that we
-use when defining functions on sums. Instead of writing one function
-definition with a \code{case} statement, we usually split it into two
-(or more) functions dealing with each type constructor separately. For
-instance, take a function from the sum type
-\code{(Either Int Double)}:
+圏的には、2つの対象の余積からの指数関数が、2つの指数関数の積と同型であることを示しています。Haskellでは、この代数的恒等式は非常に実用的な解釈を持っています。それは、2つの型の和からの関数が、個々の型からの一対の関数と等価であることを教えてくれます。これは私たちが和で関数を定義するときに使用するケース分析です。1つの関数定義を \code{case} 文で書く代わりに、通常はそれを2つ (またはそれ以上) の関数に分割します。それぞれが型コンストラクタごとに個別に処理します。例えば、\code{(Either Int Double)} の和型からの関数を取ります: 
 
 \src{snippet10}
-It may be defined as a pair of functions from, respectively,
-\code{Int} and \code{Double}:
+それは、それぞれ \code{Int} と \code{Double} からの一対の関数として定義することができます: 
 
 \src{snippet11}
-Here, \code{n} is an \code{Int} and \code{x} is a \code{Double}.
+ここで、\code{n} は \code{Int} であり、\code{x} は \code{Double} です。
 
-\subsection{Exponentials of Exponentials}
+\subsection{指数関数の指数関数}
 
 \[(a^{b})^{c} = a^{b \times c}\]
-This is just a way of expressing currying purely in terms of exponential
-objects. A function returning a function is equivalent to a function
-from a product (a two-argument function).
+これは、純粋に指数対象の用語でCurry化を表現する方法です。関数を返す関数は、積 (2引数の関数) からの関数と同等です。
 
-\subsection{Exponentials over Products}
+\subsection{積の上の指数関数}
 
 \[(a \times b)^{c} = a^{c} \times b^{c}\]
-In Haskell: A function returning a pair is equivalent to a pair of
-functions, each producing one element of the pair.
+Haskellでは: ペアを返す関数は、ペアの各要素を生成する一対の関数と同等です。
 
-It's pretty incredible how those simple high-school algebraic identities
-can be lifted to category theory and have practical application in
-functional programming.
+これらの簡単な高校の代数的恒等式が圏論に持ち上げられ、関数型プログラミングの実践的な応用を持っているのはかなり信じられないことです。
 
-\section{Curry-Howard Isomorphism}
+\section{Curry-Howard同型}
 
-I have already mentioned the correspondence between logic and algebraic
-data types. The \code{Void} type and the unit type \code{()}
-correspond to false and true. Product types and sum types correspond to
-logical conjunction $\wedge$ (AND) and disjunction $\vee$ (OR). In this scheme, the
-function type we have just defined corresponds to logical implication $\Rightarrow$.
-In other words, the type \code{a -> b} can be read as ``if
-a then b.''
+私はすでに論理と代数的データ型の間の対応について言及しました。\code{Void} 型とUnit型 \code{()} は偽と真に対応します。積型と和型は、それぞれ論理的な接続 $\wedge$ (AND) と選言 $\vee$ (OR) に対応します。このスキームで、私たちが定義した関数型は論理的な含意 $\Rightarrow$ に対応します。言い換えると、型 \code{a -> b} は「aならばb」と読むことができます。
 
-According to the Curry-Howard isomorphism, every type can be interpreted
-as a proposition --- a statement or a judgment that may be true or
-false. Such a proposition is considered true if the type is inhabited
-and false if it isn't. In particular, a logical implication is true if
-the function type corresponding to it is inhabited, which means that
-there exists a function of that type. An implementation of a function is
-therefore a proof of a theorem. Writing programs is equivalent to
-proving theorems. Let's see a few examples.
+Curry-Howard同型によれば、すべての型は命題として解釈できます --- 真または偽かもしれない言明または判断です。そのような命題は、型が居住している場合は真と見なされ、そうでない場合は偽と見なされます。特に、論理的な含意は、それに対応する関数型が居住している場合に真であり、それはその型の関数が存在することを意味します。関数の実装はしたがって定理の証明です。プログラムを書くことは定理を証明することに等しいです。いくつかの例を見てみましょう。
 
-Let's take the function \code{eval} we have introduced in the
-definition of the function object. Its signature is:
+関数対象の定義で導入した関数 \code{eval} を取ります。そのシグネチャは: 
 
 \src{snippet12}
-It takes a pair consisting of a function and its argument and produces a
-result of the appropriate type. It's the Haskell implementation of the
-morphism:
+それは関数とその引数からなるペアを取り、適切な型の結果を生成します。それは射: 
 
 \[\mathit{eval} \Colon (a \Rightarrow b) \times a \to b\]
-which defines the function type $a \Rightarrow b$ (or the exponential object
-$b^{a}$). Let's translate this signature to a logical predicate
-using the Curry-Howard isomorphism:
+をHaskellで実装したものです。これは関数型 $a \Rightarrow b$ (または指数対象 $b^a$) を定義します。このシグネチャをCurry-Howard同型を使って論理的な述語に変換しましょう: 
 
 \[((a \Rightarrow b) \wedge a) \Rightarrow b\]
-Here's how you can read this statement: If it's true that $b$
-follows from $a$, and $a$ is true, then $b$ must be
-true. This makes perfect intuitive sense and has been known since
-antiquity as \newterm{modus ponens}. We can prove this theorem by
-implementing the function:
+この文は次のように読むことができます: $b$ が $a$ から導かれることが真であり、かつ $a$ が真であるならば、$b$ も真でなければなりません。これは直感的に非常に理にかなっており、古代から \newterm{modus ponens} として知られています。この定理を実装することで証明します: 
 
 \src{snippet13}
-If you give me a pair consisting of a function \code{f} taking
-\code{a} and returning \code{b}, and a concrete value \code{x} of
-type \code{a}, I can produce a concrete value of type \code{b} by
-simply applying the function \code{f} to \code{x}. By implementing
-this function I have just shown that the type
-\code{((a -> b), a) -> b} is inhabited.
-Therefore \newterm{modus ponens} is true in our logic.
+あなたが関数 \code{f} (\code{a} を取って \code{b} を返す) と、型 \code{a} の具体的な値 \code{x} からなるペアを私に与えれば、私は単に関数 \code{f} を \code{x} に適用することで、型 \code{b} の具体的な値を生成することができます。この関数を実装することで、\code{((a -> b), a) -> b} の型が居住されていることを示しました。したがって、\newterm{modus ponens} は私たちの論理で真です。
 
-How about a predicate that is blatantly false? For instance: if
-$a$ or $b$ is true then $a$ must be true.
+では、明らかに偽の述語はどうでしょうか？例えば: $a$ または $b$ が真であれば $a$ も真でなければなりません。
 
 \[a \vee b \Rightarrow a\]
-This is obviously wrong because you can choose an $a$ that is
-false and a $b$ that is true, and that's a counter-example.
+これは明らかに間違っています。なぜなら、偽の $a$ と真の $b$ を選ぶことができるからです。それは反例です。
 
-Mapping this predicate into a function signature using the Curry-Howard
-isomorphism, we get:
+Curry-Howard同型を使用してこの述語を関数シグネチャにマッピングすると、次のようになります: 
 
 \src{snippet14}
-Try as you may, you can't implement this function --- you can't produce
-a value of type \code{a} if you are called with the \code{Right}
-value. (Remember, we are talking about \emph{pure} functions.)
+いくら試みても、この関数を実装することはできません---\code{Right} 値で呼ばれた場合、\code{a} 型の値を生成することはできません。 (純粋関数について話していることを忘れないでください。) 
 
-Finally, we come to the meaning of the \code{absurd} function:
+最後に、\code{absurd} 関数の意味について考えてみましょう: 
 
 \src{snippet15}
-Considering that \code{Void} translates into false, we get:
+\code{Void} が偽に対応することを考えると、次のようになります: 
 
 \[\mathit{false} \Rightarrow a\]
-Anything follows from falsehood (\emph{ex falso quodlibet}). Here's one
-possible proof (implementation) of this statement (function) in Haskell:
+偽からは何でも導き出される (\emph{ex falso quodlibet}) 。以下は、Haskellでのこの文 (関数) の1つの可能な証明 (実装) です: 
 
 \begin{snip}{haskell}
 absurd (Void a) = absurd a
 \end{snip}
-where \code{Void} is defined as:
+ここで \code{Void} は次のように定義されています: 
 
 \begin{snip}{haskell}
 newtype Void = Void Void
 \end{snip}
-As always, the type \code{Void} is tricky. This definition makes it
-impossible to construct a value because in order to construct one, you
-would need to provide one. Therefore, the function \code{absurd} can
-never be called.
+常に、\code{Void} 型は厄介です。この定義により、値を構成することは不可能になります。なぜなら、1つを提供するためには、すでに1つを持っている必要があるからです。したがって、関数 \code{absurd} は決して呼び出すことができません。
 
-These are all interesting examples, but is there a practical side to
-Curry-Howard isomorphism? Probably not in everyday programming. But
-there are programming languages like Agda or Coq, which take advantage
-of the Curry-Howard isomorphism to prove theorems.
+これらはすべて興味深い例ですが、Curry-Howard同型には実用的な側面があるのでしょうか？おそらく日常のプログラミングではありません。しかし、AgdaやCoqのようなプログラミング言語はCurry-Howard同型を利用して定理を証明します。
 
-Computers are not only helping mathematicians do their work --- they are
-revolutionizing the very foundations of mathematics. The latest hot
-research topic in that area is called Homotopy Type Theory, and is an
-outgrowth of type theory. It's full of Booleans, integers, products and
-coproducts, function types, and so on. And, as if to dispel any doubts,
-the theory is being formulated in Coq and Agda. Computers are
-revolutionizing the world in more than one way.
+コンピューターは数学者が仕事をするのを助けるだけでなく、数学の非常に基礎を革命しています。その分野での最新の熱い研究トピックはホモトピー型理論と呼ばれ、型理論の成長です。それはBooleans、整数、積と余積、関数型などでいっぱいです。そして、疑問を払拭するかのように、この理論はCoqやAgdaで定式化されています。コンピュータは複数の方法で世界を革命しています。
 
-\section{Bibliography}
+\section{参考文献}
 
 \begin{enumerate}
   \tightlist
   \item
         Ralph Hinze, Daniel W. H. James,
         \urlref{http://www.cs.ox.ac.uk/ralf.hinze/publications/WGP10.pdf}{Reason
-          Isomorphically!}. This paper contains proofs of all those high-school
-        algebraic identities in category theory that I mentioned in this
-        chapter.
+          Isomorphically!}. この論文には、この章で私が言及した高校の代数的恒等式のすべての証明が含まれています。
 \end{enumerate}

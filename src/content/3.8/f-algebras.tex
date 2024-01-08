@@ -1,210 +1,120 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{W}{e've seen several formulations} of a monoid: as a set, as a
-single-object category, as an object in a monoidal category. How much
-more juice can we squeeze out of this simple concept?
+\lettrine[lhang=0.17]{私}{たち}はモノイドのいくつかの形式を見てきました: 集合として、単一対象圏として、モノイダル圏の対象として。このシンプルな概念から、どれだけ多くの知見を引き出すことができるでしょうか？
 
-Let's try. Take this definition of a monoid as a set $m$ with a
-pair of functions:
+試してみましょう。集合$m$と一対の関数を用いたモノイドの定義を考えます: 
 \begin{align*}
   \mu  & \Colon m\times{}m \to m \\
   \eta & \Colon 1 \to m
 \end{align*}
-Here, 1 is the terminal object in $\Set$ --- the singleton set.
-The first function defines multiplication (it takes a pair of elements
-and returns their product), the second selects the unit element from
-$m$. Not every choice of two functions with these signatures
-results in a monoid. For that we need to impose additional conditions:
-associativity and unit laws. But let's forget about that for a moment
-and just consider ``potential monoids.'' A pair of functions is an
-element of a Cartesian product of two sets of functions. We know that
-these sets may be represented as exponential objects:
+ここで、1は$\Set$内の終対象 --- つまり単集合です。
+最初の関数は乗算を定義しています (要素の対を取り、その積を返します) 、二番目の関数は$m$から単位要素を選びます。この二つの関数の任意の選択がモノイドになるわけではありません。それには追加の条件、結合則と単位則が必要です。しかし、今はそれを忘れて「潜在的なモノイド」だけを考えてみましょう。関数の対は、二つの関数集合のデカルト積の要素です。これらの集合は指数対象として表現できることが知られています: 
 \begin{align*}
   \mu  & \in m^{m\times{}m} \\
   \eta & \in m^1
 \end{align*}
-The Cartesian product of these two sets is:
+これら二つの集合のデカルト積は: 
 \[m^{m\times{}m}\times{}m^1\]
-Using some high-school algebra (which works in every Cartesian closed
-category), we can rewrite it as:
+高校の代数を使うと (これはデカルト閉圏でも機能します) 、次のように書き換えられます: 
 \[m^{m\times{}m + 1}\]
-The $+$ sign stands for the coproduct in $\Set$. We have just
-replaced a pair of functions with a single function --- an element of
-the set:
+$+$記号は$\Set$内の余積を示します。我々はただ関数の対を単一の関数に置き換えただけです --- 集合の要素: 
 \[m\times{}m + 1 \to m\]
-Any element of this set of functions is a potential monoid.
+この関数集合の任意の要素は潜在的なモノイドです。
 
-The beauty of this formulation is that it leads to interesting
-generalizations. For instance, how would we describe a group using this
-language? A group is a monoid with one additional function that assigns
-the inverse to every element. The latter is a function of the type
-$m \to m$. As an example, integers form a group with
-addition as a binary operation, zero as the unit, and negation as the
-inverse. To define a group we would start with a triple of functions:
+この定式化の美しさは、それが興味深い一般化につながることです。例えば、この言語を使って群をどのように記述しますか？群は各要素に逆要素を割り当てる追加の関数を持つモノイドです。後者は$m \to m$という型の関数です。例えば、整数は加算を二項演算とし、ゼロを単位要素とし、否定を逆要素として群を形成します。群を定義するためには、関数の三つ組から始めます: 
 \begin{align*}
   m\times{}m \to m \\
   m \to m          \\
   1 \to m
 \end{align*}
-As before, we can combine all these triples into one set of functions:
+以前と同様に、これらの三つ組を一つの関数集合に結合できます: 
 \[m\times{}m + m + 1 \to m\]
-We started with one binary operator (addition), one unary operator
-(negation), and one nullary operator (identity --- here zero). We
-combined them into one function. All functions with this signature
-define potential groups.
+私たちは一つの二項演算子 (加算) 、一つの単項演算子 (否定) 、一つの零項演算子 (恒等要素 --- ここではゼロ) で始めました。それらを一つの関数に結合しました。この署名を持つすべての関数は潜在的な群を定義します。
 
-We can go on like this. For instance, to define a ring, we would add one
-more binary operator and one nullary operator, and so on. Each time we
-end up with a function type whose left-hand side is a sum of powers
-(possibly including the zeroth power --- the terminal object), and the
-right-hand side being the set itself.
+我々はこのように続けることができます。例えば、環を定義するためには、もう一つの二項演算子と一つの零項演算子を加えます、等々。毎回、我々は左辺がべきの和 (零次べきを含む可能性がある --- 終対象) であり、右辺が集合自体である関数型に終わります。
 
-Now we can go crazy with generalizations. First of all, we can replace
-sets with objects and functions with morphisms. We can define n-ary
-operators as morphisms from n-ary products. It means that we need a
-category that supports finite products. For nullary operators we require
-the existence of the terminal object. So we need a Cartesian category.
-In order to combine these operators we need exponentials, so that's a
-Cartesian closed category. Finally, we need coproducts to complete our
-algebraic shenanigans.
+今、我々は一般化に狂うことができます。まず、集合を対象に置き換え、関数を射に置き換えることができます。我々はn項演算子をn項積からの射として定義できます。それは我々が有限積をサポートする圏を必要とすることを意味します。零項演算子については、終対象の存在を要求します。従って、我々はデカルト圏が必要です。これらの演算子を結合するためには、指数対象が必要です、それがデカルト閉圏です。最後に、我々の代数的ないたずらを完成させるために余積が必要です。
 
-Alternatively, we can just forget about the way we derived our formulas
-and concentrate on the final product. The sum of products on the left
-hand side of our morphism defines an endofunctor. What if we pick an
-arbitrary endofunctor $F$ instead? In that case we don't have to
-impose any constraints on our category. What we obtain is called an
-F-algebra.
+あるいは、我々は我々が導出した方法を忘れて、最後の積に集中することができます。射の左辺に関する積の和は自己関手を定義します。任意の自己関手$F$を選んだらどうでしょうか？その場合、我々は我々の圏に何の制約も課さなくてよいです。我々が得るものはF-代数と呼ばれます。
 
-An F-algebra is a triple consisting of an endofunctor $F$, an
-object $a$, and a morphism
+F-代数は自己関手$F$、対象$a$、そして射
 \[F a \to a\]
-The object is often called the carrier, an underlying object or, in the
-context of programming, the carrier \emph{type}. The morphism is often
-called the evaluation function or the structure map. Think of the
-functor $F$ as forming expressions and the morphism as evaluating
-them.
+からなる三つ組です。対象はしばしば台となる対象または、プログラミングの文脈では台となる\emph{型}と呼ばれます。射はしばしば評価関数または構造マップと呼ばれます。関手$F$は表現を形成し、射はそれらを評価すると考えてください。
 
-Here's the Haskell definition of an F-algebra:
+こちらがF-代数のHaskell定義です: 
 
 \src{snippet01}
-It identifies the algebra with its evaluation function.
+これは代数をその評価関数と同一視します。
 
-In the monoid example, the functor in question is:
+モノイドの例で、問題の関手は: 
 
 \src{snippet02}
-This is Haskell for $1 + a\times{}a$ (remember
-\hyperref[simple-algebraic-data-types]{algebraic
-  data structures}).
+これはHaskellで$1 + a\times{}a$です (
+\hyperref[simple-algebraic-data-types]{代数的データ構造}を思い出してください) 。
 
-A ring would be defined using the following functor:
+環は以下の関手を使用して定義されます: 
 
 \src{snippet03}
-which is Haskell for $1 + 1 + a\times{}a + a\times{}a + a$.
+これはHaskellで$1 + 1 + a\times{}a + a\times{}a + a$です。
 
-An example of a ring is the set of integers. We can choose
-\code{Integer} as the carrier type and define the evaluation function
-as:
+整数の集合の例は環です。我々は台となる型として\code{Integer}を選び、評価関数を定義することができます: 
 
 \src{snippet04}
-There are more F-algebras based on the same functor \code{RingF}. For
-instance, polynomials form a ring and so do square matrices.
+同じ関手\code{RingF}に基づくより多くのF-代数があります。例えば、多項式は環を形成し、正方行列もそうです。
 
-As you can see, the role of the functor is to generate expressions that
-can be evaluated using the evaluator of the algebra. So far we've only
-seen very simple expressions. We are often interested in more elaborate
-expressions that can be defined using recursion.
+関手の役割は、代数の評価者を使用して評価できる表現を生成することです。これまでに、我々は非常に単純な表現しか見ていません。我々はしばしば、再帰を使用して定義されるより複雑な表現に関心があります。
 
-\section{Recursion}
+\section{再帰}
 
-One way to generate arbitrary expression trees is to replace the
-variable \code{a} inside the functor definition with recursion. For
-instance, an arbitrary expression in a ring is generated by this
-tree-like data structure:
+任意の表現ツリーを生成する一つの方法は、関手定義内の変数\code{a}を再帰的に置き換えることです。例えば、環内の任意の表現はこのツリー様のデータ構造によって生成されます: 
 
 \src{snippet05}
-We can replace the original ring evaluator with its recursive version:
+我々は元の環評価者をその再帰バージョンで置き換えることができます: 
 
 \src{snippet06}
-This is still not very practical, since we are forced to represent all
-integers as sums of ones, but it will do in a pinch.
+これはまだ非常に実用的ではありません、なぜなら我々はすべての整数を一の和として表現する必要があるからです、しかし一つの方法としては機能します。
 
-But how can we describe expression trees using the language of
-F-algebras? We have to somehow formalize the process of replacing the
-free type variable in the definition of our functor, recursively, with
-the result of the replacement. Imagine doing this in steps. First,
-define a depth-one tree as:
+しかし、我々はF-代数を使用して表現ツリーをどのように記述することができますか？我々は、関手の定義における自由型変数を、置換の結果で再帰的に置き換えるプロセスを何らかの形で形式化する必要があります。このプロセスを段階的に想像してみてください。まず、次のような深さ1のツリーを定義します: 
 
 \src{snippet07}
-We are filling the holes in the definition of \code{RingF} with
-depth-zero trees generated by \code{RingF a}. Depth-2 trees are
-similarly obtained as:
+我々は\code{RingF a}によって生成される深さゼロのツリーで\code{RingF}の穴を埋めています。深さ2のツリーは同様に得られます: 
 
 \src{snippet08}
-which we can also write as:
+我々はまた次のように書くこともできます: 
 
 \src{snippet09}
-Continuing this process, we can write a symbolic equation:
+このプロセスを続けると、我々は次のような記号的な方程式を書くことができます: 
 
 \begin{snipv}
 type RingF\textsubscript{n+1} a = RingF (RingF\textsubscript{n} a)
 \end{snipv}
-Conceptually, after repeating this process infinitely many times, we end
-up with our \code{Expr}. Notice that \code{Expr} does not depend on
-\code{a}. The starting point of our journey doesn't matter, we always
-end up in the same place. This is not always true for an arbitrary
-endofunctor in an arbitrary category, but in the category $\Set$
-things are nice.
+概念的には、このプロセスを無限回繰り返すと、最終的には\code{Expr}にたどり着きます。注目すべきは、\code{Expr}は\code{a}に依存しないことです。我々の旅の出発点は何であれ、我々は常に同じ場所に終わります。これは任意の自己関手について任意の圏で常に真であるわけではありませんが、圏$\Set$ではうまくいきます。
 
-Of course, this is a hand-waving argument, and I'll make it more
-rigorous later.
+もちろん、これは手振りの議論ですが、後でそれをもっと厳密にするつもりです。
 
-Applying an endofunctor infinitely many times produces a \newterm{fixed
-  point}, an object defined as:
+自己関手を無限回適用すると、\newterm{不動点}が生成されます。これは次のように定義される対象です: 
 \[\mathit{Fix}\ f = f\ (\mathit{Fix}\ f)\]
-The intuition behind this definition is that, since we applied
-$f$ infinitely many times to get $\mathit{Fix}\ f$, applying it one
-more time doesn't change anything. In Haskell, the definition of a fixed
-point is:
+この定義の直観は、$\mathit{Fix}\ f$を得るために無限回$f$を適用したので、もう一度適用しても何も変わらないということです。Haskellでの不動点の定義は: 
 
 \src{snippet10}
-Arguably, this would be more readable if the constructor's name were
-different than the name of the type being defined, as in:
+おそらく、コンストラクタの名前が定義されている型の名前と異なる場合、より読みやすいでしょう、例えば: 
 
 \src{snippet11}
-but I'll stick with the accepted notation. The constructor \code{Fix}
-(or \code{In}, if you prefer) can be seen as a function:
+しかし、私は受け入れられた表記に固執します。コンストラクタ\code{Fix} (あるいは、好みであれば\code{In}) は関数と見なすことができます: 
 
 \src{snippet12}
-There is also a function that peels off one level of functor
-application:
+関数があり、一つのレベルの関手適用を剥がすこともあります: 
 
 \src{snippet13}
-The two functions are the inverse of each other. We'll use these
-functions later.
+これらの二つの関数は互いに逆です。後でこれらの関数を使用します。
 
-\section{Category of F-Algebras}
+\section{F-代数の圏}
 
-Here's the oldest trick in the book: Whenever you come up with a way of
-constructing some new objects, see if they form a category. Not
-surprisingly, algebras over a given endofunctor $F$ form a
-category. Objects in that category are algebras --- pairs consisting of
-a carrier object $a$ and a morphism
-$F a \to a$, both from the original category
-$\cat{C}$.
+ここには本の中で最も古いトリックがあります: 新しいオブジェクトの構成法を考えたら、それらが圏を形成するかどうかを見てください。驚くべきことではありませんが、与えられた自己関手$F$に対する代数は圏を形成します。その圏の対象は代数 --- 元の圏$\cat{C}$からの対象$a$と射$F a \to a$からなるペアです。
 
-To complete the picture, we have to define morphisms in the category of
-F-algebras. A morphism must map one algebra $(a, f)$ to another
-algebra $(b, g)$. We'll define it as a morphism $m$ that
-maps the carriers --- it goes from $a$ to $b$ in the
-original category. Not any morphism will do: we want it to be compatible
-with the two evaluators. (We call such a structure-preserving morphism a
-\newterm{homomorphism}.) Here's how you define a homomorphism of
-F-algebras. First, notice that we can lift $m$ to the mapping:
+この図を完成させるためには、F-代数の圏における射を定義する必要があります。射は一つの代数$(a, f)$から別の代数$(b, g)$へのマッピングでなければなりません。それを元の圏の対象から対象への射$m$として定義します。どんな射でも良いわけではありません: 我々はそれが二つの評価者と互換性を持つことを望みます。 (このような構造を保存する射を\newterm{準同型}と呼びます。) F-代数の準同型を定義する方法は次のとおりです。まず、$m$を次のマッピングにリフトすることができます: 
 \[F m \Colon F a \to F b\]
-we can then follow it with $g$ to get to $b$.
-Equivalently, we can use $f$ to go from $F a$ to
-$a$ and then follow it with $m$. We want the two paths to
-be equal:
+それに続いて$b$への$g$を使用します。または、$F a$から$a$への$f$を使用し、それに続いて$m$を適用することもできます。二つのパスを等しいものとしたいです: 
 \[g \circ F m = m \circ f\]
 
 \begin{figure}[H]
@@ -213,18 +123,9 @@ be equal:
 \end{figure}
 
 \noindent
-It's easy to convince yourself that this is indeed a category (hint:
-identity morphisms from $\cat{C}$ work just fine, and a composition of
-homomorphisms is a homomorphism).
+これが実際に圏であることを自分自身に確認するのは簡単です (ヒント: $\cat{C}$からの恒等射がうまく機能し、準同型の合成は準同型です) 。
 
-An initial object in the category of F-algebras, if it exists, is called
-the \newterm{initial algebra}. Let's call the carrier of this initial
-algebra $i$ and its evaluator $j \Colon F i \to i$. It turns out that $j$,
-the evaluator of the initial algebra, is an isomorphism. This result is
-known as Lambek's theorem. The proof relies on the definition of the
-initial object, which requires that there be a unique homomorphism
-$m$ from it to any other F-algebra. Since $m$ is a
-homomorphism, the following diagram must commute:
+F-代数の圏における始対象が存在する場合、それは\newterm{初期代数}と呼ばれます。この初期代数の台を$i$、その評価者を$j \Colon F i \to i$と呼びましょう。実は$j$、初期代数の評価者は同型です。これはLambekの定理として知られています。証明は始対象の定義に依存します。それは任意の他のF-代数への唯一の準同型$m$が存在することを要求します。$m$が準同型であるので、以下の図式が可換でなければなりません: 
 
 \begin{figure}[H]
   \centering
@@ -232,14 +133,9 @@ homomorphism, the following diagram must commute:
 \end{figure}
 
 \noindent
-Now let's construct an algebra whose carrier is $F i$. The
-evaluator of such an algebra must be a morphism from $F (F i)$
-to $F i$. We can easily construct such an evaluator simply by
-lifting $j$:
+次に、台が$F i$であるような代数を構成しましょう。そのような代数の評価者は$F (F i)$から$F i$への射でなければなりません。我々は簡単に$j$をリフトすることでそのような評価者を構成することができます: 
 \[F j \Colon F (F i) \to F i\]
-Because $(i, j)$ is the initial algebra, there must be a unique
-homomorphism $m$ from it to $(F i, F j)$. The following
-diagram must commute:
+$(i, j)$が初期代数であるので、$(F i, F j)$に対する唯一の準同型$m$が存在しなければなりません。以下の図式が可換でなければなりません: 
 
 \begin{figure}[H]
   \centering
@@ -247,8 +143,7 @@ diagram must commute:
 \end{figure}
 
 \noindent
-But we also have this trivially commuting diagram (both paths are the
-same!):
+しかし、我々はまたこの自明に可換な図式も持っています (両方のパスが同じです！) : 
 
 \begin{figure}[H]
   \centering
@@ -256,9 +151,7 @@ same!):
 \end{figure}
 
 \noindent
-which can be interpreted as showing that $j$ is a homomorphism of
-algebras, mapping $(F i, F j)$ to $(i, j)$. We can
-glue these two diagrams together to get:
+これを、$(F i, F j)$から$(i, j)$への代数の準同型として$j$をマッピングするものとして解釈することができます。我々はこれら二つの図式を一緒に接着して、次のように得ることができます: 
 
 \begin{figure}[H]
   \centering
@@ -266,56 +159,33 @@ glue these two diagrams together to get:
 \end{figure}
 
 \noindent
-This diagram may, in turn, be interpreted as showing that
-$j \circ m$ is a homomorphism of algebras. Only in this case the
-two algebras are the same. Moreover, because $(i, j)$ is
-initial, there can only be one homomorphism from it to itself, and
-that's the identity morphism $\id_i$ --- which we know is a
-homomorphism of algebras. Therefore $j \circ m = \id_i$. Using this
-fact and the commuting property of the left diagram we can prove that
-$m \circ j = \id_{Fi}$. This shows that $m$ is the inverse of
-$j$ and therefore $j$ is an isomorphism between
-$F i$ and $i$:
+この図式は、$j \circ m$が代数の準同型であることを示していると解釈することができます。この場合、二つの代数は同じです。さらに、$(i, j)$が初期であるので、それ自体に対しては唯一の準同型が存在し、それが恒等射$\id_i$です --- これは代数の準同型です。したがって$j \circ m = \id_i$です。この事実と左図の可換性を使用して、$m \circ j = \id_{Fi}$を証明することができます。これは$m$が$j$の逆であり、したがって$j$は$F i$と$i$の間の同型です: 
 \[F i \cong i\]
-But that is just saying that $i$ is a fixed point of $F$.
-That's the formal proof behind the original hand-waving argument.
+しかし、それはただ$i$が$F$の不動点であると言っているだけです。
+それが元の手振りの議論の背後にある公式的な証明です。
 
-Back to Haskell: We recognize $i$ as our \code{Fix f},
-$j$ as our constructor \code{Fix}, and its inverse as
-\code{unFix}. The isomorphism in Lambek's theorem tells us that, in
-order to get the initial algebra, we take the functor $f$ and
-replace its argument $a$ with \code{Fix f}. We also see why
-the fixed point does not depend on $a$.
+Haskellに戻ると: 我々は$i$を我々の\code{Fix f}、$j$を我々のコンストラクタ\code{Fix}、その逆を\code{unFix}と認識します。Lambekの定理の同型は、初期代数を得るためには関手$f$を取り、その引数$a$を\code{Fix f}に置き換えると教えてくれます。また、不動点が$a$に依存しない理由もわかります。
 
-\section{Natural Numbers}
+\section{自然数}
 
-Natural numbers can also be defined as an F-algebra. The starting point
-is the pair of morphisms:
+自然数もF-代数として定義できます。出発点は次の二つの射です: 
 \begin{align*}
   zero & \Colon 1 \to N \\
   succ & \Colon N \to N
 \end{align*}
-The first one picks the zero, and the second one maps all numbers to
-their successors. As before, we can combine the two into one:
+最初の射はゼロを選び、二番目の射は全ての数をその後者に写像します。以前と同様に、これら二つを一つに組み合わせることができます: 
 \[1 + N \to N\]
-The left hand side defines a functor which, in Haskell, can be written
-like this:
+左辺はHaskellで次のように書くことができる関手を定義します: 
 
 \src{snippet14}
-The fixed point of this functor (the initial algebra that it generates)
-can be encoded in Haskell as:
+この関手の不動点 (それが生成する初期代数) はHaskellで次のようにエンコードできます: 
 
 \src{snippet15}
-A natural number is either zero or a successor of another number. This
-is known as the Peano representation for natural numbers.
+自然数はゼロか他の数の後者のどちらかです。これは自然数のペアノ表現として知られています。
 
-\section{Catamorphisms}
+\section{カタモルフィズム}
 
-Let's rewrite the initiality condition using Haskell notation. We call
-the initial algebra \code{Fix f}. Its evaluator is the constructor
-\code{Fix}. There is a unique morphism \code{m} from the initial
-algebra to any other algebra over the same functor. Let's pick an
-algebra whose carrier is \code{a} and the evaluator is \code{alg}.
+初期性条件をHaskellの記法を使って書き直しましょう。初期代数を\code{Fix f}と呼び、その評価者をコンストラクタ\code{Fix}とします。初期代数から同じ関手上の任意の他の代数への唯一の射\code{m}が存在します。キャリアが\code{a}で評価者が\code{alg}である代数を選びましょう。
 
 \begin{figure}[H]
   \centering
@@ -323,13 +193,9 @@ algebra whose carrier is \code{a} and the evaluator is \code{alg}.
 \end{figure}
 
 \noindent
-By the way, notice what \code{m} is: It's an evaluator for the fixed
-point, an evaluator for the whole recursive expression tree. Let's find
-a general way of implementing it.
+ところで、\code{m}とは何かに注意してください: それは不動点の評価者、すなわち全体の再帰的表現ツリーの評価者です。それを実装する一般的な方法を見つけましょう。
 
-Lambek's theorem tells us that the constructor \code{Fix} is an
-isomorphism. We called its inverse \code{unFix}. We can therefore flip
-one arrow in this diagram to get:
+Lambekの定理は、コンストラクタ\code{Fix}が同型であることを教えてくれます。私たちはその逆を\code{unFix}と呼びました。したがって、この図の一つの射を反転させることができます: 
 
 \begin{figure}[H]
   \centering
@@ -337,98 +203,61 @@ one arrow in this diagram to get:
 \end{figure}
 
 \noindent
-Let's write down the commutation condition for this diagram:
+この図の交通条件を書き下しましょう: 
 
 \begin{snip}{haskell}
 m = alg . fmap m . unFix
 \end{snip}
-We can interpret this equation as a recursive definition of \code{m}.
-The recursion is bound to terminate for any finite tree created using
-the functor \code{f}. We can see that by noticing that
-\code{fmap m} operates underneath the top layer of the functor
-\code{f}. In other words, it works on the children of the original
-tree. The children are always one level shallower than the original
-tree.
+この方程式を\code{m}の再帰的定義として解釈することができます。この再帰は関手\code{f}を使用して構成された任意の有限ツリーに対して終了する必要があります。それは\code{fmap m}が関手\code{f}の最上層の下で動作することに気づくことでわかります。言い換えれば、それは元のツリーの子に作用します。子は常に元のツリーより一つレベルが浅いです。
 
-Here's what happens when we apply \code{m} to a tree constructed using
-\code{Fix\ f}. The action of \code{unFix} peels off the constructor,
-exposing the top level of the tree. We then apply \code{m} to all the
-children of the top node. This produces results of type \code{a}.
-Finally, we combine those results by applying the non-recursive
-evaluator \code{alg}. The key point is that our evaluator \code{alg}
-is a simple non-recursive function.
+\code{m}を\code{Fix f}を使用して構成されたツリーに適用すると、次のようなことが起こります。\code{unFix}の作用はコンストラクタを剥がし、ツリーの最上層を露出させます。それから、私たちはトップノードの全ての子に\code{m}を適用します。これは\code{a}型の結果を生成します。最後に、非再帰的評価者\code{alg}を適用することによってこれらの結果を結合します。重要な点は、私たちの評価者\code{alg}が単純な非再帰的関数であることです。
 
-Since we can do this for any algebra \code{alg}, it makes sense to
-define a higher order function that takes the algebra as a parameter and
-gives us the function we called \code{m}. This higher order function
-is called a catamorphism:
+任意の代数\code{alg}に対してこれを行うことができるので、代数をパラメータとして取り、私たちが\code{m}と呼んだ関数を与える高階関数を定義することは理にかなっています。この高階関数はカタモルフィズムと呼ばれます: 
 
 \src{snippet16}
-Let's see an example of that. Take the functor that defines natural
-numbers:
+それがどのように機能するかの例を見てみましょう。自然数を定義する関手を取ります: 
 
 \src{snippet17}
-Let's pick \code{(Int, Int)} as the carrier type and define our
-algebra as:
+キャリア型として\code{(Int, Int)}を選び、私たちの代数を次のように定義しましょう: 
 
 \src{snippet18}
-You can easily convince yourself that the catamorphism for this algebra,
-\code{cata fib}, calculates Fibonacci numbers.
+簡単に自分自身を納得させることができるでしょう、カタモルフィズム\code{cata fib}はフィボナッチ数を計算します。
 
-In general, an algebra for \code{NatF} defines a recurrence relation:
-the value of the current element in terms of the previous element. A
-catamorphism then evaluates the n-th element of that sequence.
+一般的に、\code{NatF}の代数は、現在の要素の値を前の要素の値の観点から定義する漸化式を定義します。カタモルフィズムはそのシーケンスのn番目の要素を評価します。
 
-\section{Folds}
+\section{畳み込み}
 
-A list of \code{e} is the initial algebra of the following functor:
+\code{e}のリストは以下の関手の初期代数です: 
 
 \src{snippet19}
-Indeed, replacing the variable \code{a} with the result of recursion,
-which we'll call \code{List e}, we get:
+実際、変数\code{a}を再帰の結果で置き換えると、次のようになります: 
 
 \src{snippet20}
-An algebra for a list functor picks a particular carrier type and
-defines a function that does pattern matching on the two constructors.
-Its value for \code{NilF} tells us how to evaluate an empty list, and
-its value for \code{ConsF} tells us how to combine the current element
-with the previously accumulated value.
+リスト関手の代数は、特定のキャリア型を選び、二つのコンストラクタに対するパターンマッチングを行う関数を定義します。その\code{NilF}の値は空リストを評価する方法を教えてくれ、その\code{ConsF}の値は現在の要素を以前に蓄積された値と組み合わせる方法を教えてくれます。
 
-For instance, here's an algebra that can be used to calculate the length
-of a list (the carrier type is \code{Int}):
+例えば、リストの長さを計算するために使用できる代数は次のとおりです (キャリア型は\code{Int}です) : 
 
 \src{snippet21}
-Indeed, the resulting catamorphism \code{cata lenAlg} calculates the
-length of a list. Notice that the evaluator is a combination of (1) a
-function that takes a list element and an accumulator and returns a new
-accumulator, and (2) a starting value, here zero. The type of the value
-and the type of the accumulator are given by the carrier type.
+実際、結果のカタモルフィズム\code{cata lenAlg}はリストの長さを計算します。評価者は (1) リスト要素と累積器を取り、新しい累積器を返す関数と (2) ここではゼロである開始値の組み合わせです。値の型と累積器の型はキャリア型によって与えられます。
 
-Compare this to the traditional Haskell definition:
+これを伝統的なHaskellの定義と比較してみてください: 
 
 \src{snippet22}
-The two arguments to \code{foldr} are exactly the two components of
-the algebra.
+\code{foldr}への二つの引数はまさに代数の二つのコンポーネントです。
 
-Let's try another example:
+別の例を試してみましょう: 
 
 \src{snippet23}
-Again, compare this with:
+再び、これを比較してください: 
 
 \src{snippet24}
-As you can see, \code{foldr} is just a convenient specialization of a
-catamorphism to lists.
+ご覧のとおり、\code{foldr}はリストに対するカタモルフィズムの便利な特殊化に過ぎません。
 
-\section{Coalgebras}
+\section{余代数}
 
-As usual, we have a dual construction of an F-coalgebra, where the
-direction of the morphism is reversed:
+通常どおり、我々はF-余代数の双対構造を持っています。ここでは射の方向が逆転します: 
 \[a \to F a\]
-Coalgebras for a given functor also form a category, with homomorphisms
-preserving the coalgebraic structure. The terminal object
-$(t, u)$ in that category is called the terminal (or final)
-coalgebra. For every other algebra $(a, f)$ there is a unique
-homomorphism $m$ that makes the following diagram commute:
+与えられた関手の余代数も圏を形成し、余代数構造を保つ準同型があります。その圏の終対象$(t, u)$は終 (または最終) 余代数と呼ばれます。他の代数$(a, f)$に対しては、次の図式を可換にする唯一の準同型$m$が存在します: 
 
 \begin{figure}[H]
   \centering
@@ -436,108 +265,69 @@ homomorphism $m$ that makes the following diagram commute:
 \end{figure}
 
 \noindent
-A terminal coalgebra is a fixed point of the functor, in the sense that
-the morphism $u \Colon t \to F t$ is an isomorphism
-(Lambek's theorem for coalgebras):
+終余代数は、射$u \Colon t \to F t$が同型であるという意味で関手の不動点です (余代数のためのLambekの定理) : 
 \[F t \cong t\]
-A terminal coalgebra is usually interpreted in programming as a recipe
-for generating (possibly infinite) data structures or transition
-systems.
+終余代数は通常、 (無限に) データ構造や遷移システムを生成するレシピとしてプログラミングで解釈されます。
 
-Just like a catamorphism can be used to evaluate an initial algebra, an
-anamorphism can be used to coevaluate a terminal coalgebra:
+カタモルフィズムが初期代数を評価するために使用されるように、アナモルフィズムは終余代数を共評価するために使用されます: 
 
 \src{snippet25}
-A canonical example of a coalgebra is based on a functor whose fixed
-point is an infinite stream of elements of type \code{e}. This is the
-functor:
+余代数の標準的な例は、その不動点が型\code{e}の要素の無限ストリームである関手に基づいています。これがその関手です: 
 
 \src{snippet26}
-and this is its fixed point:
+そして、これがその不動点です: 
 
 \src{snippet27}
-A coalgebra for \code{StreamF e} is a function that takes the seed of
-type \code{a} and produces a pair (\code{StreamF} is a fancy name
-for a pair) consisting of an element and the next seed.
+\code{StreamF e}の余代数は、型\code{a}の種を取り、要素と次の種からなるペア (\code{StreamF}はペアのファンシーな名前です) を生成する関数です。
 
-You can easily generate simple examples of coalgebras that produce
-infinite sequences, like the list of squares, or reciprocals.
+簡単な余代数の例は、平方数のリストや逆数のリストを生成するものを簡単に生成できます。
 
-A more interesting example is a coalgebra that produces a list of
-primes. The trick is to use an infinite list as a carrier. Our starting
-seed will be the list \code{{[}2..{]}}. The next seed will be the tail
-of this list with all multiples of 2 removed. It's a list of odd numbers
-starting with 3. In the next step, we'll take the tail of this list and
-remove all multiples of 3, and so on. You might recognize the makings of
-the sieve of Eratosthenes. This coalgebra is implemented by the
-following function:
+より興味深い例は、素数のリストを生成する余代数です。トリックは無限リストをキャリアとして使用することです。私たちの開始種はリスト\code{{[}2..{]}}です。次の種はこのリストの尾であり、すべての2の倍数が除去されます。それは3から始まる奇数のリストです。次のステップでは、このリストの尾を取り、すべての3の倍数を除去します、そして以下同様です。あなたはエラトステネスの篩の始まりを認識するかもしれません。この余代数は次の関数によって実装されます: 
 
 \src{snippet28}
-The anamorphism for this coalgebra generates the list of primes:
+この余代数のアナモルフィズムは素数のリストを生成します: 
 
 \src{snippet29}
-A stream is an infinite list, so it should be possible to convert it to
-a Haskell list. To do that, we can use the same functor \code{StreamF}
-to form an algebra, and we can run a catamorphism over it. For instance,
-this is a catamorphism that converts a stream to a list:
+ストリームは無限リストなので、それをHaskellリストに変換することが可能です。それを行うために、私たちは同じ関手\code{StreamF}を使用して代数を形成し、それにカタモルフィズムを走らせることができます。例えば、これはストリームをリストに変換するカタモルフィズムです: 
 
 \src{snippet30}
-Here, the same fixed point is simultaneously an initial algebra and a
-terminal coalgebra for the same endofunctor. It's not always like this,
-in an arbitrary category. In general, an endofunctor may have many (or
-no) fixed points. The initial algebra is the so called least fixed
-point, and the terminal coalgebra is the greatest fixed point. In
-Haskell, though, both are defined by the same formula, and they
-coincide.
+ここでは、同じ不動点が同じ自己関手の初期代数と終余代数の両方で同時に使用されています。任意の圏では必ずしもこのようになるわけではありません。一般に、自己関手は多くの (または無い) 不動点を持つことがあります。初期代数はいわゆる最小不動点であり、終余代数は最大不動点です。しかし、Haskellでは両方とも同じ式で定義されており、一致します。
 
-The anamorphism for lists is called unfold. To create finite lists, the
-functor is modified to produce a \code{Maybe} pair:
+リストのためのアナモルフィズムはunfoldと呼ばれます。有限リストを作成するためには、関手は\code{Maybe}ペアを生成するように変更されます: 
 
 \src{snippet31}
-The value of \code{Nothing} will terminate the generation of the list.
+\code{Nothing}の値はリストの生成を終了します。
 
-An interesting case of a coalgebra is related to lenses. A lens can be
-represented as a pair of a getter and a setter:
+レンズに関連する余代数の興味深いケースがあります。レンズは取得関数と設定関数のペアとして表されることがあります: 
 
 \src{snippet32}
-Here, \code{a} is usually some product data type with a field of type
-\code{s}. The getter retrieves the value of that field and the setter
-replaces this field with a new value. These two functions can be
-combined into one:
+ここで、\code{a}は通常、型\code{s}のフィールドを持ついくつかの積データ型です。取得関数はそのフィールドの値を取得し、設定関数はそのフィールドを新しい値で置き換えます。これら二つの関数は一つに結合することができます: 
 
 \src{snippet33}
-We can rewrite this function further as:
+この関数をさらに次のように書き換えることができます: 
 
 \src{snippet34}
-where we have defined a functor:
+ここで、関手を定義しました: 
 
 \src{snippet35}
-Notice that this is not a simple algebraic functor constructed from sums
-of products. It involves an exponential $a^s$.
+注意してください、これは積の和から構成される単純な代数的関手ではありません。それは指数$a^s$を含んでいます。
 
-A lens is a coalgebra for this functor with the carrier type \code{a}.
-We've seen before that \code{Store s} is also a comonad. It turns out
-that a well-behaved lens corresponds to a coalgebra that is compatible
-with the comonad structure. We'll talk about this in the next section.
+レンズはこの関手の余代数であり、キャリア型は\code{a}です。前に見たように、\code{Store s}はまた余モナドでもあります。うまく動作するレンズは、余モナド構造と互換性のある余代数に対応します。これについては次のセクションで話しましょう。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Implement the evaluation function for a ring of polynomials of one
-        variable. You can represent a polynomial as a list of coefficients in
-        front of powers of $x$. For instance, $4x^2-1$ would be
-        represented as (starting with the zero'th power)
-        \code{{[}-1, 0, 4{]}}.
+        一変数の多項式の環の評価関数を実装してください。例えば、$4x^2-1$は (ゼロ次のべきで始まる) \code{{[}-1, 0, 4{]}}として表されるような、$x$のべきの前の係数のリストとして多項式を表現できます。
   \item
-        Generalize the previous construction to polynomials of many
-        independent variables, like $x^2y-3y^3z$.
+        前の構造を多くの独立変数の多項式に一般化してください、例えば$x^2y-3y^3z$。
   \item
-        Implement the algebra for the ring of $2\times{}2$ matrices.
+        $2\times{}2$行列の環の代数を実装してください。
   \item
-        Define a coalgebra whose anamorphism produces a list of squares of
-        natural numbers.
+        自然数の平方のリストを生成する余代数の定義。
   \item
-        Use \code{unfoldr} to generate a list of the first $n$ primes.
+        \code{unfoldr}を使用して最初の$n$個の素数のリストを生成してください。
 \end{enumerate}
+
+

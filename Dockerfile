@@ -5,11 +5,13 @@ FROM ubuntu:20.04 AS nix-base
 
 RUN apt-get -y update && \
     apt-get -y install --no-install-recommends \
-      software-properties-common \
-      wget \
       curl \
+      git \
+      make \
+      software-properties-common \
       sudo \
       vim \
+      wget \
       xz-utils \
     && apt-get -y clean \
     && rm -rf /var/lib/apt/lists/*

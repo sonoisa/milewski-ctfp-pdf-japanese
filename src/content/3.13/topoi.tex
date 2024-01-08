@@ -1,65 +1,25 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{I}{ realize that we might} be getting away from programming and diving into
-hard-core math. But you never know what the next big revolution in
-programming might bring and what kind of math might be necessary to
-understand it. There are some very interesting ideas going around, like
-functional reactive programming with its continuous time, the extension
-of Haskell's type system with dependent types, or the exploration on
-homotopy type theory in programming.
+\lettrine[lhang=0.17]{私}{は}、私たちがプログラミングから離れて硬派な数学に深く潜っていることを認識しています。しかし、次の大きな革命がプログラミングにもたらすものや、それを理解するために必要な数学の種類は決してわかりません。連続時間を持つ関数型リアクティブプログラミングや、Haskellの型システムを依存型で拡張すること、またはプログラミングにおけるホモトピー型理論の探求など、非常に興味深いアイデアが巡っています。
 
-So far I've been casually identifying types with \emph{sets} of values.
-This is not strictly correct, because such an approach doesn't take into
-account the fact that, in programming, we \emph{compute} values, and the
-computation is a process that takes time and, in extreme cases, might
-not terminate. Divergent computations are part of every Turing-complete
-language.
+これまでのところ、私は型を値の\emph{集合}として気楽に同定してきました。これは厳密に正しいわけではなく、プログラミングでは値を\emph{計算}し、計算は時間がかかり、極端な場合は終了しないかもしれないという事実を考慮に入れていません。発散する計算は、全てのチューリング完全な言語の一部です。
 
-There are also foundational reasons why set theory might not be the best
-fit as the basis for computer science or even math itself. A good
-analogy is that of set theory being the assembly language that is tied
-to a particular architecture. If you want to run your math on different
-architectures, you have to use more general tools.
+また、集合論がコンピュータ科学や数学自体の基礎として最適ではないという根本的な理由もあります。良い類推は、集合論が特定のアーキテクチャに結びついたアセンブリ言語であるというものです。異なるアーキテクチャで数学を実行したい場合は、より一般的なツールを使用する必要があります。
 
-One possibility is to use spaces in place of sets. Spaces come with more
-structure, and may be defined without recourse to sets. One thing
-usually associated with spaces is topology, which is necessary to define
-things like continuity. And the conventional approach to topology is,
-you guessed it, through set theory. In particular, the notion of a
-subset is central to topology. Not surprisingly, category theorists
-generalized this idea to categories other than $\Set$. The type of
-category that has just the right properties to serve as a replacement
-for set theory is called a \newterm{topos} (plural: topoi), and it
-provides, among other things, a generalized notion of a subset.
+一つの可能性は、集合の代わりに空間を使用することです。空間はより多くの構造を持ち、集合に頼ることなく定義されるかもしれません。空間と通常関連付けられているものはトポロジーであり、連続性のようなものを定義するために必要です。そして、トポロジーへの従来のアプローチは、あなたが推測した通り、集合論を通じています。特に、部分集合の概念はトポロジーにとって中心的です。驚くことではありませんが、圏論者は\(\Set\)以外の圏にこのアイデアを一般化しました。集合論の代わりとしてちょうど良い特性を持つ圏のタイプは\newterm{トポス} (複数形: トポイ) と呼ばれ、部分集合の一般化された概念を提供します。
 
-\section{Subobject Classifier}
+\section{部分対象分類器}
 
-Let's start by trying to express the idea of a subset using functions
-rather than elements. Any function $f$ from some set $a$
-to $b$ defines a subset of $b$--that of the image of
-$a$ under $f$. But there are many functions that define
-the same subset. We need to be more specific. To begin with, we might
-focus on functions that are injective --- ones that don't smush multiple
-elements into one. Injective functions ``inject'' one set into another.
-For finite sets, you may visualize injective functions as parallel
-arrows connecting elements of one set to elements of another. Of course,
-the first set cannot be larger than the second set, or the arrows would
-necessarily converge. There is still some ambiguity left: there may be
-another set $a'$ and another injective function
-$f'$ from that set to $b$ that picks the same
-subset. But you can easily convince yourself that such a set would have
-to be isomorphic to $a$. We can use this fact to define a subset
-as a family of injective functions that are related by isomorphisms of
-their domains. More precisely, we say that two injective functions:
+まず、要素ではなく関数を使って部分集合のアイデアを表現しようとしてみましょう。ある集合\(a\)から\(b\)への任意の関数\(f\)は、\(a\)の像によって\(b\)の部分集合を定義します。しかし、同じ部分集合を定義する多くの関数があります。もっと具体的にする必要があります。始めるために、多くの要素を1つに押し込まない単射 --- つまり、一つの集合を別の集合に「注入する」単射関数に焦点を当てるかもしれません。有限集合の場合、単射関数を一方の集合の要素から別の集合の要素へと並行する矢印として視覚化することができます。もちろん、最初の集合は2番目の集合よりも大きくない限り、または矢印は必然的に収束するでしょう。まだいくつかの曖昧さが残っています: 別の集合\(a'\)と別の単射関数\(f'\)が\(b\)に同じ部分集合を選ぶかもしれません。しかし、そのような集合は\(a\)と同型であると自分自身に簡単に納得させることができます。この事実を利用して、部分集合をその始域による同型関係によって関連する単射関数の族として定義することができます。より正確には、2つの単射関数: 
 \begin{align*}
   f  & \Colon a \to b  \\
   f' & \Colon a' \to b
 \end{align*}
-are equivalent if there is an isomorphism:
+が同型関係であると言われています: 
 \[h \Colon a \to a'\]
-such that:
+そのため: 
 \[f = f'\ .\ h\]
-Such a family of equivalent injections defines a subset of $b$.
+このような同値な単射の族は\(b\)の部分集合を定義します。
 
 \begin{figure}[H]
   \centering
@@ -67,30 +27,20 @@ Such a family of equivalent injections defines a subset of $b$.
 \end{figure}
 
 \noindent
-This definition can be lifted to an arbitrary category if we replace
-injective functions with monomorphism. Just to remind you, a
-monomorphism $m$ from $a$ to $b$ is defined by its
-universal property. For any object $c$ and any pair of morphisms:
+この定義は、単射関数をモノ射と置き換えることで任意の圏に持ち上げることができます。あなたを思い出させるために、モノ射\(m\)はその普遍的な特性によって定義されます。任意の対象\(c\)と任意の射のペアに対して: 
 \begin{align*}
   g  & \Colon c \to a \\
   g' & \Colon c \to a
 \end{align*}
-such that:
+そのような: 
 \[m\ .\ g = m\ .\ g'\]
-it must be that $g = g'$.
-
-\begin{figure}[H]
+それは\(g = g'\)でなければなりません。\begin{figure}[H]
   \centering
   \includegraphics[width=0.4\textwidth]{images/monomorphism.jpg}
 \end{figure}
 
 \noindent
-On sets, this definition is easier to understand if we consider what it
-would mean for a function $m$ \emph{not} to be a monomorphism. It
-would map two different elements of $a$ to a single element of
-$b$. We could then find two functions $g$ and
-$g'$ that differ only at those two elements. The
-postcomposition with $m$ would then mask this difference.
+集合上では、この定義は、関数\(m\)がモノ射で\emph{ない}場合、それが何を意味するかを考慮することによって理解しやすいです。それは\(a\)の2つの異なる要素を\(b\)の単一要素にマッピングするでしょう。その後、2つの関数\(g\)と\(g'\)を見つけることができますが、これらの2つの要素だけが異なります。\(m\)との後方合成はその後、この違いをマスクします。
 
 \begin{figure}[H]
   \centering
@@ -98,17 +48,9 @@ postcomposition with $m$ would then mask this difference.
 \end{figure}
 
 \noindent
-There is another way of defining a subset: using a single function
-called the characteristic function. It's a function $\chi$ from the
-set $b$ to a two-element set $\Omega$. One element of this set
-is designated as ``true'' and the other as ``false.'' This function
-assigns ``true'' to those elements of $b$ that are members of the
-subset, and ``false'' to those that aren't.
+部分集合を定義する別の方法は、特性関数と呼ばれる単一の関数を使用することです。これは集合\(b\)から2要素集合\(\Omega\)への関数\(\chi\)です。この集合の1つの要素は「真」として指定され、もう1つは「偽」として指定されます。この関数は、部分集合のメンバーである\(b\)の要素に「真」を割り当て、そうでないものに「偽」を割り当てます。
 
-It remains to specify what it means to designate an element of
-$\Omega$ as ``true.'' We can use the standard trick: use a function
-from a singleton set to $\Omega$. We'll call this function
-$\mathit{true}$:
+\(\Omega\)の要素を「真」と指定することの意味を指定する必要が残っています。標準的なトリックを使うことができます: 単集合から\(\Omega\)への関数を使用します。この関数を\(\mathit{true}\)と呼びます: 
 \[\mathit{true} \Colon 1 \to \Omega\]
 
 \begin{figure}[H]
@@ -117,23 +59,9 @@ $\mathit{true}$:
 \end{figure}
 
 \noindent
-These definitions can be combined in such a way that they not only
-define what a subobject is, but also define the special object
-$\Omega$ without talking about elements. The idea is that we want the
-morphism $\mathit{true}$ to represent a ``generic'' subobject. In
-$\Set$, it picks a single-element subset from a two-element set
-$\Omega$. This is as generic as it gets. It's clearly a proper subset,
-because $\Omega$ has one more element that's \emph{not} in that
-subset.
+これらの定義は、部分対象が何であるかだけでなく、要素について話すことなく特別な対象\(\Omega\)を定義する方法として組み合わせることができます。アイデアは、「一般的な」部分対象を代表する射\(\mathit{true}\)を望むというものです。\(\Set\)では、2要素集合\(\Omega\)から単一要素の部分集合を選びます。これは可能な限り一般的です。それは明らかに適切な部分集合であり、\(\Omega\)にはその部分集合に含まれないもう1つの要素があります。
 
-In a more general setting, we define $\mathit{true}$ to be a monomorphism
-from the terminal object to the \emph{classifying object} $\Omega$.
-But we have to define the classifying object. We need a universal
-property that links this object to the characteristic function. It turns
-out that, in $\Set$, the pullback of $\mathit{true}$ along the
-characteristic function $\chi$ defines both the subset $a$
-and the injective function that embeds it in $b$. Here's the
-pullback diagram:
+より一般的な設定では、\(\mathit{true}\)を終対象から\emph{分類対象} \(\Omega\)へのモノ射として定義します。しかし、分類対象を定義する必要があります。この対象と特性関数をリンクする普遍的な特性を必要とします。実際には、\(\Set\)では、特性関数\(\chi\)に沿った\(\mathit{true}\)の引き戻しは、部分集合\(a\)とそれを\(b\)に埋め込む単射関数の両方を定義します。ここに引き戻し図があります: 
 
 \begin{figure}[H]
   \centering
@@ -141,118 +69,54 @@ pullback diagram:
 \end{figure}
 
 \noindent
-Let's analyze this diagram. The pullback equation is:
+この図を分析しましょう。引き戻し方程式は: 
 \[\mathit{true}\ .\ \mathit{unit} = \chi\ .\ f\]
-The function $\mathit{true}\ .\ \mathit{unit}$ maps every element of $a$ to
-``true.'' Therefore $f$ must map all elements of $a$ to
-those elements of $b$ for which $\chi$ is ``true.'' These
-are, by definition, the elements of the subset that is specified by the
-characteristic function $\chi$. So the image of $f$ is indeed
-the subset in question. The universality of the pullback guarantees that
-$f$ is injective.
+関数\(\mathit{true}\ .\ \mathit{unit}\)は\(a\)の各要素を「真」にマップします。したがって\(f\)は\(a\)の全ての要素を\(\chi\)が「真」であるところの\(b\)の要素にマップしなければなりません。これらは、特性関数\(\chi\)によって指定される部分集合の要素です。したがって、\(f\)の像は確かに問題の部分集合です。引き戻しの普遍性は\(f\)が単射であることを保証します。
 
-This pullback diagram can be used to define the classifying object in
-categories other than $\Set$. Such a category must have a terminal
-object, which will let us define the monomorphism $\mathit{true}$. It must
-also have pullbacks --- the actual requirement is that it must have all
-finite limits (a pullback is an example of a finite limit). Under those
-assumptions, we define the classifying object $\Omega$ by the property
-that, for every monomorphism $f$ there is a unique morphism
-$\chi$ that completes the pullback diagram.
+この引き戻し図は、\(\Set\)以外の圏で分類対象を定義するために使用することができます。そのような圏は終対象を持たなければならず、これによりモノ射\(\mathit{true}\)を定義することができます。それはまた、引き戻しを持たなければなりません --- 実際の要件は、それがすべての有限極限を持っていることです (引き戻しは有限極限の一例です) 。それらの前提の下で、私たちは分類対象\(\Omega\)をその特性によって定義します: すべてのモノ射\(f\)には、引き戻し図を完成させる一意的な射\(\chi\)があります。
 
-Let's analyze the last statement. When we construct a pullback, we are
-given three objects $\Omega$, $b$ and $1$; and two
-morphisms, $\mathit{true}$ and $\chi$. The existence of a pullback
-means that we can find the best such object $a$, equipped with
-two morphisms $f$ and $\mathit{unit}$ (the latter is uniquely
-determined by the definition of the terminal object), that make the
-diagram commute.
+最後の言明を分析しましょう。引き戻しを構成するとき、私たちは3つの対象\(\Omega\)、\(b\)、そして\(1\)と2つの射、\(\mathit{true}\)と\(\chi\)を与えられます。引き戻しの存在は、2つの射\(f\)と\(\mathit{unit}\) (後者は終対象の定義によって一意的に決定されます) を備えた最良の対象\(a\)を見つけることができることを意味します。これにより、図が交通するようにします。
 
-Here we are solving a different system of equations. We are solving for
-$\Omega$ and $\mathit{true}$ while varying both $a$ \emph{and}
-$b$. For a given $a$ and $b$ there may or may not
-be a monomorphism $f \Colon a \to b$. But if there is one, we
-want it to be a pullback of some $\chi$. Moreover, we want this
-$\chi$ to be uniquely determined by $f$.
+ここでは、異なる方程式系を解いています。\(\Omega\)と\(\mathit{true}\)を解きながら\(a\) \emph{と} \(b\)の両方を変化させます。与えられた\(a\)と\(b\)には、単射\(f \Colon a \to b\)があるかもしれませんし、ないかもしれません。しかし、そうである場合、私たちはそれがいくつかの\(\chi\)の引き戻しであることを望みます。さらに、私たちはこの\(\chi\)が\(f\)によって一意的に決定されることを望んでいます。
 
-We can't say that there is a one-to-one correspondence between
-monomorphisms $f$ and characteristic functions $\chi$,
-because a pullback is only unique up to isomorphism. But remember our
-earlier definition of a subset as a family of equivalent injections. We
-can generalize it by defining a subobject of $b$ as a family of
-equivalent monomorphisms to $b$. This family of monomorphisms is
-in one-to-one correspondence with the family of equivalent pullbacks of
-our diagram.
+単射\(f\)と特性関数\(\chi\)の間に一対一の対応関係があるとは言えません、なぜなら引き戻しは同型によってのみ一意であるからです。しかし、以前に部分集合を同値な単射の族として定義したことを思い出してください。私たちは、\(b\)への同値なモノ射の族として\(b\)の部分対象を定義することによってそれを一般化することができます。このモノ射の族は、図の引き戻しと同値な族と一対一の対応関係にあります。
 
-We can thus define a set of subobjects of $b$, $\mathit{Sub}(b)$,
-as a family of monomorphisms, and see that it is isomorphic to the set
-of morphisms from $b$ to $\Omega$:
+したがって、\(b\)の部分対象の集合、\(\mathit{Sub}(b)\)をモノ射の族として定義し、それが\(\Omega\)への\(b\)からの射の集合と同型であることを見ることができます: 
 \[\mathit{Sub}(b) \cong \cat{C}(b, \Omega)\]
-This happens to be a natural isomorphism of two functors. In other
-words, $\mathit{Sub}(-)$ is a representable (contravariant) functor whose
-representation is the object $\Omega$.
+これは2つの関手の自然な同型です。言い換えると、\(\mathit{Sub}(-)\)は\(\Omega\)という対象の表現可能な (反変) 関手です。
 
-\section{Topos}
+\section{トポス}
 
-A topos is a category that:
+トポスは以下の特性を持つ圏です: 
 
 \begin{enumerate}
   \tightlist
   \item
-        Is Cartesian closed: It has all products, the terminal object, and
-        exponentials (defined as right adjoints to products),
+        デカルト閉である: すべての積、終対象、および右随伴として定義される指数関数 (指数対象) を持っています。
   \item
-        Has limits for all finite diagrams,
+        すべての有限図表に対して極限を持っています。
   \item
-        Has a subobject classifier $\Omega$.
+        部分対象分類器\(\Omega\)を持っています。
 \end{enumerate}
 
-This set of properties makes a topos a shoe-in for $\Set$ in most
-applications. It also has additional properties that follow from its
-definition. For instance, a topos has all finite colimits, including the
-initial object.
+この属性の集合は、ほとんどのアプリケーションで\(\Set\)に代わるトポスをするのに十分です。それはまた、その定義から導かれる追加の属性を持っています。例えば、トポスは始対象を含むすべての有限余極限を持っています。
 
-It would be tempting to define the subobject classifier as a coproduct
-(sum) of two copies of the terminal object --that's what it is in
-$\Set$--- but we want to be more general than that. Topoi in which
-this is true are called Boolean.
+部分対象分類器を終対象の2つのコピーの余積 (和) として定義することは誘惑的です --- それが\(\Set\)で何であるかです --- しかし、私たちはそれよりも一般的でありたいです。これが真実であるトポスはブール型と呼ばれます。
 
-\section{Topoi and Logic}
+\section{トポスと論理}
 
-In set theory, a characteristic function may be interpreted as defining
-a property of the elements of a set --- a \newterm{predicate} that is true
-for some elements and false for others. The predicate $\mathit{isEven}$
-selects a subset of even numbers from the set of natural numbers. In a
-topos, we can generalize the idea of a predicate to be a morphism from
-object $a$ to $\Omega$. This is why $\Omega$ is sometimes
-called the truth object.
+集合論では、特性関数は集合の要素の性質 --- いくつかの要素に対して真であり、他の要素に対して偽である述語 --- を定義すると解釈されるかもしれません。\(\mathit{isEven}\)述語は自然数の集合から偶数の部分集合を選びます。トポスでは、述語のアイデアを\(\Omega\)への対象\(a\)からの射として一般化することができます。これが\(\Omega\)が時々真実対象と呼ばれる理由です。
 
-Predicates are the building blocks of logic. A topos contains all the
-necessary instrumentation to study logic. It has products that
-correspond to logical conjunctions (logical \emph{and}), coproducts for
-disjunctions (logical \emph{or}), and exponentials for implications. All
-standard axioms of logic hold in a topos except for the law of excluded
-middle (or, equivalently, double negation elimination). That's why the
-logic of a topos corresponds to constructive or intuitionistic logic.
+述語は論理の構成要素です。トポスには論理を研究するための必要な器具がすべて含まれています。それには論理積 (論理\emph{かつ}) に対応する積、論理和 (論理\emph{または}) に対応する余積、および含意に対応する指数関数が含まれます。論理のすべての標準的な公理は、排中律 (または同等に、二重否定の除去) を除いて、トポスで成り立ちます。それが、トポスの論理が構成的または直観主義論理に対応する理由です。
 
-Intuitionistic logic has been steadily gaining ground, finding
-unexpected support from computer science. The classical notion of
-excluded middle is based on the belief that there is absolute truth: Any
-statement is either true or false or, as Ancient Romans would say,
-\emph{tertium non datur} (there is no third option). But the only way we
-can know whether something is true or false is if we can prove or
-disprove it. A proof is a process, a computation --- and we know that
-computations take time and resources. In some cases, they may never
-terminate. It doesn't make sense to claim that a statement is true if we
-cannot prove it in finite amount of time. A topos with its more nuanced
-truth object provides a more general framework for modeling interesting
-logics.
+直観主義論理は着実に地位を築いており、コンピュータ科学から予期せぬ支持を得ています。排中律の古典的な概念は、任意の言明が真または偽であるという信念に基づいています。古代ローマ人は\emph{tertium non datur} (第三の選択肢はない) と言いました。しかし、何かが真または偽であるかを知る唯一の方法は、それを証明または反証することです。証明はプロセス、計算です --- そして私たちは計算には時間とリソースがかかることを知っています。場合によっては、それらは決して終了しないかもしれません。有限時間内にそれを証明できない場合、言明が真であると主張することは意味がありません。より微妙な真実対象を持つトポスは、興味深い論理をモデリングするためのより一般的なフレームワークを提供します。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Show that the function $f$ that is the pullback of
-        $\mathit{true}$ along the characteristic function must be injective.
+        特性関数に沿った\(\mathit{true}\)の引き戻しである関数\(f\)が単射でなければならないことを示してください。
 \end{enumerate}
+
+

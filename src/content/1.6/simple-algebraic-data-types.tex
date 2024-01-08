@@ -1,25 +1,12 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{W}{e've seen two basic} ways of combining types: using a product and a
-coproduct. It turns out that a lot of data structures in everyday
-programming can be built using just these two mechanisms. This fact has
-important practical consequences. Many properties of data structures are
-composable. For instance, if you know how to compare values of basic
-types for equality, and you know how to generalize these comparisons to
-product and coproduct types, you can automate the derivation of equality
-operators for composite types. In Haskell you can automatically derive
-equality, comparison, conversion to and from string, and more, for a
-large subset of composite types.
+\lettrine[lhang=0.17]{型}{を}組み合わせる基本的な方法として、積と余積を見てきました。日常的なプログラミングでの多くのデータ構造は、これら二つの仕組みを使って構成できることがわかります。これは重要な実践的な意味を持ちます。データ構造の多くの特性は合成可能です。例えば、基本型の値の等価性を比較する方法と、これを積型や余積型に一般化する方法を知っていれば、複合型の等価演算子の導出を自動化できます。Haskellでは等価性、比較、文字列への変換およびその逆変換などを、複合型の大部分に対して自動的に導出できます。
 
-Let's have a closer look at product and sum types as they appear in
-programming.
+プログラミングにおける積型と和型をもう少し詳しく見てみましょう。
 
-\section{Product Types}
+\section{積型}
 
-The canonical implementation of a product of two types in a programming
-language is a pair. In Haskell, a pair is a primitive type constructor;
-in C++ it's a relatively complex template defined in the Standard
-Library.
+プログラミング言語における二つの型の積の標準的な実装はペアです。Haskellではペアはプリミティブな型コンストラクタです; C++では標準ライブラリで定義された比較的複雑なテンプレートです。
 
 \begin{figure}[H]
   \centering
@@ -27,230 +14,132 @@ Library.
 \end{figure}
 
 \noindent
-Pairs are not strictly commutative: a pair \code{(Int, Bool)} cannot
-be substituted for a pair \code{(Bool, Int)}, even though they carry
-the same information. They are, however, commutative up to isomorphism
---- the isomorphism being given by the \code{swap} function (which is
-its own inverse):
+ペアは厳密には可換ではありません:  \code{(Int, Bool)} のペアは \code{(Bool, Int)} のペアに置き換えることはできませんが、同じ情報を持っています。しかし、同型性を考慮すれば可換です --- この同型性は \code{swap} 関数 (自身の逆関数である) によって与えられます: 
 
 \src{snippet01}
-You can think of the two pairs as simply using a different format for
-storing the same data. It's just like big endian vs. little endian.
+これらの二つのペアを、同じデータを異なる形式で格納していると考えることができます。これはビッグエンディアンとリトルエンディアンのようなものです。
 
-You can combine an arbitrary number of types into a product by nesting
-pairs inside pairs, but there is an easier way: nested pairs are
-equivalent to tuples. It's the consequence of the fact that different
-ways of nesting pairs are isomorphic. If you want to combine three types
-in a product, \code{a}, \code{b}, and \code{c}, in this order, you
-can do it in two ways:
+任意の数の型を積に組み合わせることができますが、ペアをペアの中に入れ子にする方法よりも簡単な方法があります: 入れ子になったペアはタプルと等価です。これは異なる方法でペアを入れ子にすることが同型であるという事実の帰結です。例えば、\code{a}、\code{b}、そして\code{c} という三つの型をこの順番で積に組み合わせたい場合、二つの方法でこれを行うことができます: 
 
 \src{snippet02}
 
-or
+または
 \src{snippet03}
-These types are different --- you can't pass one to a function that
-expects the other --- but their elements are in one-to-one
-correspondence. There is a function that maps one to another:
+これらの型は異なります --- 一方を他方が期待する関数に渡すことはできません --- しかし、その要素は一対一の対応を持ちます。一方を他方に写像する関数があります: 
 
 \src{snippet04}
-and this function is invertible:
+そして、この関数は可逆です: 
 
 \src{snippet05}
-so it's an isomorphism. These are just different ways of repackaging the
-same data.
+したがって、これは同型です。これらは単に同じデータを異なる方法で再パッケージングする異なる方法です。
 
-You can interpret the creation of a product type as a binary operation
-on types. From that perspective, the above isomorphism looks very much
-like the associativity law we've seen in monoids:
+型の積の生成を、型に対する二項演算として解釈することができます。その観点から、上記の同型はモノイドで見た結合則に非常に似ています: 
 \[(a * b) * c = a * (b * c)\]
-Except that, in the monoid case, the two ways of composing products were
-equal, whereas here they are only equal ``up to isomorphism.''
+ただし、モノイドの場合、二つの積の組み合わせ方は等価でしたが、ここでは「同型上で等しい」だけです。
 
-If we can live with isomorphisms, and don't insist on strict equality,
-we can go even further and show that the unit type, \code{()}, is the
-unit of the product the same way 1 is the unit of multiplication.
-Indeed, the pairing of a value of some type \code{a} with a unit
-doesn't add any information. The type:
+同型を受け入れることができ、厳密な等価性にこだわらない場合、さらに進んでUnit型 \code{()} を、1が乗算の単位要素であるのと同じ方法で積の単位として示すことができます。確かに、ある型 \code{a} の値と単位のペアリングは、いかなる情報も追加しません。型: 
 
 \src{snippet06}
-is isomorphic to \code{a}. Here's the isomorphism:
+は \code{a} と同型です。ここに同型があります: 
 
 \src{snippet07}
 
 \src{snippet08}
-These observations can be formalized by saying that $\Set$ (the
-category of sets) is a \newterm{monoidal category}. It's a category that's
-also a monoid, in the sense that you can multiply objects (here, take
-their Cartesian product). I'll talk more about monoidal categories, and
-give the full definition in the future.
+これらの観察は、集合の圏 $\Set$ が\newterm{モノイダル圏}であると言うことによって形式化できます。これは、対象 (ここではデカルト積を取る) を乗算できる意味で、圏でありながらもモノイドです。モノイダル圏について、そして完全な定義については後で詳しく説明します。
 
-There is a more general way of defining product types in Haskell ---
-especially, as we'll see soon, when they are combined with sum types. It
-uses named constructors with multiple arguments. A pair, for instance,
-can be defined alternatively as:
+特に、和型と組み合わせる場合、Haskellで積型を定義するより一般的な方法があります。これは複数の引数を持つ名前付きコンストラクタを使用します。例えば、ペアは次のように代替的に定義できます: 
 
 \src{snippet09}
-Here, \code{Pair a b} is the name of the type parameterized by two
-other types, \code{a} and \code{b}; and \code{P} is the name of
-the data constructor. You define a pair type by passing two types to the
-\code{Pair} type constructor. You construct a pair value by passing
-two values of appropriate types to the constructor \code{P}. For
-instance, let's define a value \code{stmt} as a pair of
-\code{String} and \code{Bool}:
+ここで、\code{Pair a b} は他の二つの型、\code{a} と \code{b} によってパラメータ化された型の名前であり、\code{P} はデータコンストラクタの名前です。二つの型を \code{Pair} 型コンストラクタに渡すことでペア型を定義します。適切な型の二つの値をコンストラクタ \code{P} に渡すことでペア値を構成します。例えば、\code{String} と \code{Bool} のペアとして \code{stmt} という値を定義しましょう: 
 
 \src{snippet10}
-The first line is the type declaration. It uses the type constructor
-\code{Pair}, with \code{String} and \code{Bool} replacing
-\code{a} and the \code{b} in the generic definition of
-\code{Pair}. The second line defines the actual value by passing a
-concrete string and a concrete Boolean to the data constructor
-\code{P}. Type constructors are used to construct types; data
-constructors, to construct values.
+最初の行は型宣言です。これは、\code{Pair} の型コンストラクタを使用し、\code{a} と \code{b} を \code{Pair} の汎用定義で置き換える \code{String} と \code{Bool} を使用します。二行目は、データコンストラクタ \code{P} に具体的な文字列と具体的なブール値を渡すことによって実際の値を定義します。型コンストラクタは型を構成するために使用され、データコンストラクタは値を構成するために使用されます。
 
-Since the name spaces for type and data constructors are separate in
-Haskell, you will often see the same name used for both, as in:
+型とデータコンストラクタの名前空間がHaskellで分かれているため、両方に同じ名前が使われることがよくあります、例えば: 
 
 \src{snippet11}
-And if you squint hard enough, you may even view the built-in pair type
-as a variation on this kind of declaration, where the name \code{Pair}
-is replaced with the binary operator \code{(,)}. In fact you can use
-\code{(,)} just like any other named constructor and create pairs
-using prefix notation:
+そして十分に目を細めると、組み込みのペア型もこの種の宣言の変形であると見なすことができます。ここでは名前 \code{Pair} が二項演算子 \code{(,)} に置き換えられています。実際には、\code{(,)} を他の名前付きコンストラクタのように使用し、接頭辞記法を使用してペアを作成することができます: 
 
 \src{snippet12}
-Similarly, you can use \code{(,,)} to create triples, and so on.
+同様に、\code{(,,)} を使用して三つ組を作成し、それ以降も同様です。
 
-Instead of using generic pairs or tuples, you can also define specific
-named product types, as in:
+汎用ペアやタプルの代わりに、特定の名前付き積型を定義することもできます、例えば: 
 
 \src{snippet13}
-which is just a product of \code{String} and \code{Bool}, but it's
-given its own name and constructor. The advantage of this style of
-declaration is that you may define many types that have the same content
-but different meaning and functionality, and which cannot be substituted
-for each other.
+これは単に \code{String} と \code{Bool} の積ですが、それ自体の名前とコンストラクタが与えられています。この宣言スタイルの利点は、同じ内容でも異なる意味と機能を持ち、互いに置換できない多くの型を定義できることです。
 
-Programming with tuples and multi-argument constructors can get messy
-and error prone --- keeping track of which component represents what.
-It's often preferable to give names to components. A product type with
-named fields is called a \newterm{record} in Haskell, and a \code{struct} in C.
+タプルや複数引数コンストラクタを使用したプログラミングは、どのコンポーネントが何を表しているかを追跡することが雑然としており、エラーが発生しやすいものです。コンポーネントに名前を付けることがしばしば望ましいです。名前付きフィールドを持つ積型は、Haskellで\newterm{レコード}と呼ばれ、Cで\code{struct}と呼ばれます。
 
-\section{Records}
+\section{レコード}
 
-Let's have a look at a simple example. We want to describe chemical
-elements by combining two strings, name and symbol; and an integer, the
-atomic number; into one data structure. We can use a tuple
-\code{(String, String, Int)} and remember which component represents
-what. We would extract components by pattern matching, as in this
-function that checks if the symbol of the element is the prefix of its
-name (as in \textbf{He} being the prefix of \textbf{Helium}):
+簡単な例を見てみましょう。私たちは、二つの文字列、名前と記号; そして整数、原子番号; を一つのデータ構造に結合することで化学元素を記述したいと思います。タプル \code{(String, String, Int)} を使用して、どのコンポーネントが何を表しているかを覚えておくことができます。コンポーネントはパターンマッチングによって抽出され、次のような関数で行われます。この関数は、元素の記号がその名前の接頭辞であるかどうかをチェックします (例えば、\textbf{He} が \textbf{Helium} の接頭辞であるように) : 
 
 \src{snippet14}
-This code is error prone, and is hard to read and maintain. It's much
-better to define a record:
+このコードはエラーが発生しやすく、読みにくく、メンテナンスが困難です。レコードを定義する方がずっと良いでしょう: 
 
 \src{snippet15}
-The two representations are isomorphic, as witnessed by these two
-conversion functions, which are the inverse of each other:
+二つの表現は、以下の二つの変換関数によって証明されるように、互いに同型です。これらはお互いの逆です: 
 
 \src{snippet16}
 
 \src{snippet17}
-Notice that the names of record fields also serve as functions to access
-these fields. For instance, \code{atomicNumber e} retrieves the
-\code{atomicNumber} field from \code{e}. We use
-\code{atomicNumber} as a function of the type:
+レコードフィールドの名前は、これらのフィールドにアクセスする関数としても機能します。たとえば、\code{atomicNumber e} は \code{e} から \code{atomicNumber} フィールドを取り出します。\code{atomicNumber} を関数として使用すると、型: 
 
 \src{snippet18}
-With the record syntax for \code{Element}, our function
-\code{startsWithSymbol} becomes more readable:
+\code{Element} のレコード構文を使うと、関数 \code{startsWithSymbol} はより読みやすくなります: 
 
 \src{snippet19}
-We could even use the Haskell trick of turning the function
-\code{isPrefixOf} into an infix operator by surrounding it with
-backquotes, and make it read almost like a sentence:
+Haskellのトリックを使って、関数 \code{isPrefixOf} を逆引用符で囲んで中置演算子に変え、ほとんど文のように読むことができるようにすることもできます: 
 
 \src{snippet20}
-The parentheses could be omitted in this case, because an infix operator
-has lower precedence than a function call.
+この場合、括弧は省略できます。なぜなら、中置演算子は関数呼び出しよりも優先順位が低いからです。
 
-\section{Sum Types}
+\section{和型}
 
-Just as the product in the category of sets gives rise to product types,
-the coproduct gives rise to sum types. The canonical implementation of a
-sum type in Haskell is:
+集合の圏における積が積型を生じるように、余積も和型を生じます。Haskellで和型の典型的な実装は次のようになります: 
 
 \src{snippet21}
-And like pairs, \code{Either}s are commutative (up to isomorphism),
-can be nested, and the nesting order is irrelevant (up to isomorphism).
-So we can, for instance, define a sum equivalent of a triple:
+そして、ペアと同様に、\code{Either}も可換です (同型性まで) し、入れ子にすることができ、入れ子の順序は関係ありません (同型性まで) 。例えば、三つ組の和の等価物を定義することができます: 
 
 \src{snippet22}
-and so on.
+等々。
 
-It turns out that $\Set$ is also a (symmetric) monoidal category
-with respect to coproduct. The role of the binary operation is played by
-the disjoint sum, and the role of the unit element is played by the
-initial object. In terms of types, we have \code{Either} as the
-monoidal operator and \code{Void}, the uninhabited type, as its
-neutral element. You can think of \code{Either} as plus, and
-\code{Void} as zero. Indeed, adding \code{Void} to a sum type
-doesn't change its content. For instance:
+実際、集合の圏 $\Set$ は余積に関しても (対称的な) モノイダル圏です。二項演算の役割は不連続和によって演じられ、単位要素の役割は始対象によって演じられます。型の観点では、\code{Either} がモノイダル演算子として、\code{Void}、すなわち住人のいない型がその中立要素として機能します。\code{Either} をプラスと考え、\code{Void} をゼロと考えることができます。実際に、\code{Void} を和型に加えてもその内容は変わりません。例えば: 
 
 \src{snippet23}
-is isomorphic to \code{a}. That's because there is no way to construct
-a \code{Right} version of this type --- there isn't a value of type
-\code{Void}. The only inhabitants of \code{Either a Void} are
-constructed using the \code{Left} constructors and they simply
-encapsulate a value of type \code{a}. So, symbolically, $a + 0 = a$.
+は \code{a} と同型です。それはこの型の \code{Right} バージョンを構成する方法がないためです --- \code{Void} の値は存在しません。 \code{Either a Void} の唯一の住人は \code{Left} コンストラクタを使って構成され、単に \code{a} 型の値をカプセル化しています。したがって、象徴的に $a + 0 = a$ です。
 
-Sum types are pretty common in Haskell, but their C++ equivalents,
-unions or variants, are much less common. There are several reasons for
-that.
+和型はHaskellではかなり一般的ですが、そのC++の等価物であるunionやvariantはあまり一般的ではありません。その理由はいくつかあります。
 
-First of all, the simplest sum types are just enumerations and are
-implemented using \code{enum} in C++. The equivalent of the Haskell
-sum type:
+まず、最も単純な和型は単なる列挙型であり、C++では \code{enum} を使って実装されます。Haskellの和型の等価物: 
 
 \src{snippet24}
-is the C++:
+のC++版は次のようになります: 
 
 \begin{snip}{cpp}
 enum { Red, Green, Blue };
 \end{snip}
-An even simpler sum type:
+さらに単純な和型: 
 
 \src{snippet25}
-is the primitive \code{bool} in C++.
+はC++のプリミティブな \code{bool} です。
 
-Simple sum types that encode the presence or absence of a value are
-variously implemented in C++ using special tricks and ``impossible''
-values, like empty strings, negative numbers, null pointers, etc. This
-kind of optionality, if deliberate, is expressed in Haskell using the
-\code{Maybe} type:
+値の存在または不在をエンコードする単純な和型は、空の文字列、負の数、nullポインタなどの特別なトリックや「不可能な」値を使ってC++でさまざまに実装されています。この種のオプショナリティは、意図的であれば、Haskellでは \code{Maybe} 型を使って表現されます: 
 
 \src{snippet26}
-The \code{Maybe} type is a sum of two types. You can see this if you
-separate the two constructors into individual types. The first one would
-look like this:
+\code{Maybe} 型は二つの型の和です。二つのコンストラクタを個別の型に分離すると、最初のものは次のようになります: 
 
 \src{snippet27}
-It's an enumeration with one value called \code{Nothing}. In other
-words, it's a singleton, which is equivalent to the unit type
-\code{()}. The second part:
+これは \code{Nothing} と呼ばれる値を一つ持つ列挙型です。言い換えると、それは単集合であり、Unit型 \code{()} と同等です。二番目の部分: 
 
 \src{snippet28}
-is just an encapsulation of the type \code{a}. We could have encoded
-\code{Maybe} as:
+は単に型 \code{a} をカプセル化しています。私たちは、\code{Maybe} を次のようにエンコードできたでしょう: 
 
 \src{snippet29}
-More complex sum types are often faked in C++ using pointers. A pointer
-can be either null, or point to a value of specific type. For instance,
-a Haskell list type, which can be defined as a (recursive) sum type:
+より複雑な和型は、しばしばC++でポインタを使用して偽装されます。ポインタはnullであるか、または特定の型の値を指しているかのどちらかです。例えば、(再帰的な)和型として定義できるHaskellのリスト型: 
 
 \src{snippet30}
-can be translated to C++ using the null pointer trick to implement the
-empty list:
+は、空リストを実装するためのnullポインタのトリックを使用してC++に翻訳することができます: 
 
 \begin{snip}{cpp}
 template<class A>
@@ -263,157 +152,78 @@ public:
     {}
 };
 \end{snip}
-Notice that the two Haskell constructors \code{Nil} and \code{Cons}
-are translated into two overloaded \code{List} constructors with
-analogous arguments (none, for \code{Nil}; and a value and a list for
-\code{Cons}). The \code{List} class doesn't need a tag to
-distinguish between the two components of the sum type. Instead it uses
-the special \code{nullptr} value for \code{\_head} to encode
-\code{Nil}.
+二つのHaskellコンストラクタ \code{Nil} と \code{Cons} は、同様の引数 (\code{Nil} にはなし、\code{Cons} には値とリスト) を持つ二つのオーバーロードされた \code{List} コンストラクタに翻訳されます。和型の二つのコンポーネントを区別するためにタグを必要としない代わりに、 \code{\_head} の特別な \code{nullptr} 値を使用して \code{Nil} をエンコードします。
 
-The main difference, though, between Haskell and C++ types is that
-Haskell data structures are immutable. If you create an object using one
-particular constructor, the object will forever remember which
-constructor was used and what arguments were passed to it. So a
-\code{Maybe} object that was created as \code{Just "energy"} will
-never turn into \code{Nothing}. Similarly, an empty list will forever
-be empty, and a list of three elements will always have the same three
-elements.
+しかし、HaskellとC++の型の主な違いは、Haskellのデータ構造が不変であることです。特定のコンストラクタを使ってオブジェクトを作成すると、そのオブジェクトは永遠にどのコンストラクタが使われたか、どの引数がそれに渡されたかを覚えています。したがって、 \code{Just "energy"} として作成された \code{Maybe} オブジェクトは決して \code{Nothing} にはなりません。同様に、空のリストは永遠に空であり、3つの要素を持つリストは常に同じ3つの要素を持ちます。
 
-It's this immutability that makes construction reversible. Given an
-object, you can always disassemble it down to parts that were used in
-its construction. This deconstruction is done with pattern matching and
-it reuses constructors as patterns. Constructor arguments, if any, are
-replaced with variables (or other patterns).
+この不変性が構成を可逆にします。オブジェクトが与えられたら、それを構成に使用されたパーツまで常に分解することができます。この分解はパターンマッチングで行われ、コンストラクタはパターンとして再利用されます。コンストラクタの引数、もしあれば、変数 (または他のパターン) に置き換えられます。
 
-The \code{List} data type has two constructors, so the deconstruction
-of an arbitrary \code{List} uses two patterns corresponding to those
-constructors. One matches the empty \code{Nil} list, and the other a
-\code{Cons}-constructed list. For instance, here's the definition of a
-simple function on \code{List}s:
+\code{List} データ型には二つのコンストラクタがあるため、任意の \code{List} の分解は、それらのコンストラクタに対応する二つのパターンを使います。一つは空の \code{Nil} リストにマッチし、もう一つは \code{Cons} で構成されたリストにマッチします。例えば、ここに \code{List} 上の単純な関数の定義があります: 
 
 \src{snippet31}
-The first part of the definition of \code{maybeTail} uses the
-\code{Nil} constructor as pattern and returns \code{Nothing}. The
-second part uses the \code{Cons} constructor as pattern. It replaces
-the first constructor argument with a wildcard, because we are not
-interested in it. The second argument to \code{Cons} is bound to the
-variable \code{t} (I will call these things variables even though,
-strictly speaking, they never vary: once bound to an expression, a
-variable never changes). The return value is \code{Just t}. Now,
-depending on how your \code{List} was created, it will match one of
-the clauses. If it was created using \code{Cons}, the two arguments
-that were passed to it will be retrieved (and the first discarded).
+\code{maybeTail} の定義の最初の部分は、パターンとして \code{Nil} コンストラクタを使用し、\code{Nothing} を返します。二番目の部分は、\code{Cons} コンストラクタをパターンとして使用します。最初のコンストラクタ引数をワイルドカードで置き換えます。なぜなら、私たちはそれに興味がないからです。 \code{Cons} への二番目の引数は変数 \code{t} に束縛されます (これらのものを変数と呼びますが、厳密に言えば、それらは決して変化しません: 一度式に束縛されると、変数は決して変わりません) 。返り値は \code{Just t} です。今、あなたの \code{List} がどのように作成されたかに応じて、それは一つの節にマッチします。それが \code{Cons} を使って作成された場合、それに渡された二つの引数が回収されます (そして最初のものが破棄されます) 。
 
-Even more elaborate sum types are implemented in C++ using polymorphic
-class hierarchies. A family of classes with a common ancestor may be
-understood as one variant type, in which the vtable serves as a hidden
-tag. What in Haskell would be done by pattern matching on the
-constructor, and by calling specialized code, in C++ is accomplished by
-dispatching a call to a virtual function based on the vtable pointer.
+さらに複雑な和型は、C++で多型クラス階層を使用して実装されます。共通の祖先を持つクラスの族は、一つの変種型として理解することができます。その中で、vtableは隠されたタグとして機能します。Haskellではコンストラクタにパターンマッチングを行い、特殊なコードを呼び出すことが行われるのと同様のことが、C++ではvtableポインタに基づいて仮想関数への呼び出しをディスパッチすることで達成されます。
 
-You will rarely see \code{union} used as a sum type in C++ because of
-severe limitations on what can go into a union. You can't even put a
-\code{std::string} into a union because it has a copy constructor.
+\code{union} がC++で和型としてあまり使われない理由は、そこに入れることができるものに重大な制限があるためです。コピー構造体を持つ \code{std::string} をunionに入れることさえできません。
 
-\section{Algebra of Types}
+\section{型の代数}
 
-Taken separately, product and sum types can be used to define a variety
-of useful data structures, but the real strength comes from combining
-the two. Once again we are invoking the power of composition.
+個別に取り扱うと、積型と和型は多様な有用なデータ構造を定義するために使用することができますが、2つを組み合わせることから真の強みが生まれます。再び、構成の力を呼び出しています。
 
-Let's summarize what we've discovered so far. We've seen two commutative
-monoidal structures underlying the type system: We have the sum types
-with \code{Void} as the neutral element, and the product types with
-the unit type, \code{()}, as the neutral element. We'd like to think
-of them as analogous to addition and multiplication. In this analogy,
-\code{Void} would correspond to zero, and unit, \code{()}, to one.
+これまでに発見したことを要約してみましょう。我々は、\code{Void} を中立要素とする和型と、Unit型 \code{()} を中立要素とする積型という、2つの可換モノイダル構造を型システムの下に見てきました。それらを加算と乗算に類似させて考えたいと思います。この類推では、\code{Void} はゼロに、単位、\code{()} は一に相当するでしょう。
 
-Let's see how far we can stretch this analogy. For instance, does
-multiplication by zero give zero? In other words, is a product type with
-one component being \code{Void} isomorphic to \code{Void}? For
-example, is it possible to create a pair of, say \code{Int} and
-\code{Void}?
+この類推をどこまで伸ばすことができるか見てみましょう。例えば、ゼロによる乗算はゼロを与えるのか？言い換えれば、一つのコンポーネントが \code{Void} である積型は \code{Void} と同型ですか？例えば、\code{Int} と \code{Void} のペアを作成することは可能でしょうか？
 
-To create a pair you need two values. Although you can easily come up
-with an integer, there is no value of type \code{Void}. Therefore, for
-any type \code{a}, the type \code{(a, Void)} is uninhabited --- has
-no values --- and is therefore equivalent to \code{Void}. In other
-words, $a \times 0 = 0$.
+ペアを作成するためには2つの値が必要です。整数を簡単に思いつくことはできますが、 \code{Void} 型の値はありません。したがって、任意の型 \code{a} に対して、型 \code{(a, Void)} は住人がいない --- 値がない --- したがって \code{Void} と同等です。言い換えれば、$a \times 0 = 0$ です。
 
-Another thing that links addition and multiplication is the distributive
-property:
+加算と乗算を結び付けるもう一つのことは分配則です: 
 \[a \times (b + c) = a \times b + a \times c\]
-Does it also hold for product and sum types? Yes, it does --- up to
-isomorphisms, as usual. The left hand side corresponds to the type:
+これも積型と和型のために成り立ちますか？はい、それは成り立ちます --- いつものように、通常は同型性までです。左辺に対応する型は: 
 
 \src{snippet32}
-and the right hand side corresponds to the type:
+そして右辺に対応する型は: 
 
 \src{snippet33}
-Here's the function that converts them one way:
+一方向への変換を行う関数はこちらです: 
 
 \src{snippet34}
-and here's one that goes the other way:
+そして、もう一方向への変換を行う関数はこちらです: 
 
 \src{snippet35}
-The \code{case of} statement is used for pattern matching inside
-functions. Each pattern is followed by an arrow and the expression to be
-evaluated when the pattern matches. For instance, if you call
-\code{prodToSum} with the value:
+\code{case of} 文は関数内でのパターンマッチングに使用されます。各パターンは矢印に続いて、パターンがマッチした時に評価される式が続きます。例えば、値を持って \code{prodToSum} を呼び出す場合: 
 
 \src{snippet36}
-the \code{e} in \code{case e of} will be equal to
-\code{Left "Hi!"}. It will match the pattern \code{Left y},
-substituting \code{"Hi!"} for \code{y}. Since the \code{x} has
-already been matched to \code{2}, the result of the \code{case of}
-clause, and the whole function, will be \code{Left (2, "Hi!")}, as
-expected.
+\code{e} は \code{case e of} で \code{Left "Hi!"} と等しくなります。それはパターン \code{Left y} と一致し、\code{"Hi!"} を \code{y} として置き換えます。既に \code{x} に \code{2} と一致させているため、\code{case of} 節の結果、そして関数全体の結果は、期待通り \code{Left (2, "Hi!")} になります。
 
-I'm not going to prove that these two functions are the inverse of each
-other, but if you think about it, they must be! They are just trivially
-re-packing the contents of the two data structures. It's the same data,
-only different format.
+これら二つの関数が互いに逆であることを証明するつもりはありませんが、それらについて考えると、そうでなければならないとわかります！それらはただ二つのデータ構造の内容を単純に再パッケージングしているだけです。同じデータ、ただ異なるフォーマットです。
 
-Mathematicians have a name for two such intertwined monoids: it's called
-a \newterm{semiring}. It's not a full \newterm{ring}, because we can't define
-subtraction of types. That's why a semiring is sometimes called a
-\newterm{rig}, which is a pun on ``ring without an \emph{n}'' (negative).
-But barring that, we can get a lot of mileage from translating
-statements about, say, natural numbers, which form a rig, to statements
-about types. Here's a translation table with some entries of interest:
+これらのような互いに結びついたモノイドには数学者が名前をつけています: それを\newterm{半環}と呼びます。それは完全な\newterm{環}ではありません、なぜなら我々は型の減算を定義することができないからです。それがなぜ半環は時々\newterm{rig}、つまり「n (negative、否定的) なしの環」と呼ばれるのかという理由です。しかしながら、それを除いて、我々は自然数についての声明、それがrigを形成するという声明を型についての声明に翻訳することから多くの利益を得ることができます。ここに興味のあるいくつかのエントリーの翻訳表があります: 
 
 \begin{longtable}[]{@{}ll@{}}
   \toprule
-  Numbers      & Types\tabularnewline
+  数字      & 型\tabularnewline
   \midrule
   \endhead
   $0$          & \code{Void}\tabularnewline
   $1$          & \code{()}\tabularnewline
   $a + b$      & \code{Either a b = Left a | Right b}\tabularnewline
-  $a \times b$ & \code{(a, b)} or \code{Pair a b = Pair a b}\tabularnewline
+  $a \times b$ & \code{(a, b)} または \code{Pair a b = Pair a b}\tabularnewline
   $2 = 1 + 1$  & \code{data Bool = True | False}\tabularnewline
   $1 + a$      & \code{data Maybe = Nothing | Just a}\tabularnewline
   \bottomrule
 \end{longtable}
 
 \noindent
-The list type is quite interesting, because it's defined as a solution
-to an equation. The type we are defining appears on both sides of the
-equation:
+リスト型はかなり興味深いです、なぜならそれは方程式の解として定義されているからです。我々が定義している型は方程式の両側に現れます: 
 
 \src{snippet37}
-If we do our usual substitutions, and also replace \code{List a} with
-\code{x}, we get the equation:
+もし我々が通常の置換を行い、また \code{List a} を \code{x} と置き換えると、我々は方程式を得ます: 
 
 \begin{Verbatim}
   x = 1 + a * x
 \end{Verbatim}
-We can't solve it using traditional algebraic methods because we can't
-subtract or divide types. But we can try a series of substitutions,
-where we keep replacing \code{x} on the right hand side with
-\code{(1 + a*x)}, and use the distributive property. This leads to
-the following series:
+我々は伝統的な代数的手法を使用してそれを解くことはできません、なぜなら我々は型を減算したり除算したりすることができないからです。しかし、我々は右辺の \code{x} を \code{(1 + a*x)} と置き換え、分配則を使って続ける一連の置換を試みることができます。これは以下のシリーズにつながります: 
 
 \begin{Verbatim}
   x = 1 + a*x
@@ -422,31 +232,17 @@ the following series:
   ...
   x = 1 + a + a*a + a*a*a + a*a*a*a...
 \end{Verbatim}
-We end up with an infinite sum of products (tuples), which can be
-interpreted as: A list is either empty, \code{1}; or a singleton,
-\code{a}; or a pair, \code{a*a}; or a triple, \code{a*a*a};
-etc\ldots{} Well, that's exactly what a list is --- a string of
-\code{a}s!
+我々は無限の積 (タプル) の和で終わります、それは次のように解釈されます: リストは空、\code{1} であるか、単一要素、\code{a} であるか、ペア、\code{a*a} であるか、三つ組、\code{a*a*a} であるか、等々…まさにリストがそうです --- \code{a} の列！
 
-There's much more to lists than that, and we'll come back to them and
-other recursive data structures after we learn about functors and fixed
-points.
+リストにはそれ以上のものがあり、我々は関手と不動点について学んだ後にリストと他の再帰的データ構造に戻ってきます。
 
-Solving equations with symbolic variables --- that's algebra! It's what
-gives these types their name: algebraic data types.
+記号変数を使った方程式の解法、それが代数です！それがこれらの型に彼らの名前を与えるものです: 代数的データ型。
 
-Finally, I should mention one very important interpretation of the
-algebra of types. Notice that a product of two types \code{a} and
-\code{b} must contain both a value of type \code{a} \emph{and} a
-value of type \code{b}, which means both types must be inhabited. A
-sum of two types, on the other hand, contains either a value of type
-\code{a} \emph{or} a value of type \code{b}, so it's enough if one
-of them is inhabited. Logical \emph{and} and \emph{or} also form a
-semiring, and it too can be mapped into type theory:
+最後に、型の代数の非常に重要な解釈について言及するべきです。二つの型 \code{a} と \code{b} の積は \code{a} \emph{と} \code{b} の両方の値を含まなければならないことに注意してください、これは両方の型が居住されていなければならないことを意味します。一方で二つの型の和は、 \code{a} \emph{または} \code{b} の値を含むので、それらの一つが居住されていれば十分です。\emph{and} と \emph{or} の論理も半環を形成し、それも型理論にマッピングすることができます: 
 
 \begin{longtable}[]{@{}ll@{}}
   \toprule
-  Logic                & Types\tabularnewline
+  論理                & 型\tabularnewline
   \midrule
   \endhead
   $\mathit{false}$     & \code{Void}\tabularnewline
@@ -457,54 +253,41 @@ semiring, and it too can be mapped into type theory:
 \end{longtable}
 
 \noindent
-This analogy goes deeper, and is the basis of the Curry-Howard
-isomorphism between logic and type theory. We'll come back to it when we
-talk about function types.
+この類似はより深く、論理と型理論の間のCurry-Howard対応の基礎を形成しています。我々は関数型について話すときにそれに戻ってきます。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Show the isomorphism between \code{Maybe a} and
-        \code{Either () a}.
+        \code{Maybe a} と \code{Either () a} の間の同型を示してください。
   \item
-        Here's a sum type defined in Haskell:
+        Haskellで定義された和型をこちらです: 
 
         \begin{snip}{haskell}
 data Shape = Circle Float 
            | Rect Float Float
 \end{snip}
-        When we want to define a function like \code{area} that acts on a
-        \code{Shape}, we do it by pattern matching on the two constructors:
+        \code{Shape} に対して行動するような関数、例えば \code{area} を定義したいとき、我々は二つのコンストラクタに対してパターンマッチングを行います: 
 
         \begin{snip}{haskell}
 area :: Shape -> Float
 area (Circle r) = pi * r * r
 area (Rect d h) = d * h
 \end{snip}
-        Implement \code{Shape} in C++ or Java as an interface and create two
-        classes: \code{Circle} and \code{Rect}. Implement \code{area} as
-        a virtual function.
+        C++またはJavaで \code{Shape} をインターフェースとして実装し、\code{Circle} と \code{Rect} の二つのクラスを作成してください。\code{area} を仮想関数として実装してください。
   \item
-        Continuing with the previous example: We can easily add a new function
-        \code{circ} that calculates the circumference of a \code{Shape}.
-        We can do it without touching the definition of \code{Shape}:
+        前の例に引き続き: \code{Shape} の周囲を計算する \code{circ} という新しい関数を簡単に追加できます。我々は \code{Shape} の定義に触れることなくそれを行うことができます: 
 
         \begin{snip}{haskell}
 circ :: Shape -> Float
 circ (Circle r) = 2.0 * pi * r
 circ (Rect d h) = 2.0 * (d + h)
 \end{snip}
-        Add \code{circ} to your C++ or Java implementation. What parts of
-        the original code did you have to touch?
+        あなたのC++またはJavaの実装に \code{circ} を追加してください。元のコードのどの部分に触れましたか？
   \item
-        Continuing further: Add a new shape, \code{Square}, to
-        \code{Shape} and make all the necessary updates. What code did you
-        have to touch in Haskell vs. C++ or Java? (Even if you're not a
-        Haskell programmer, the modifications should be pretty obvious.)
+        さらに進んで: 新しい形状、\code{Square} を \code{Shape} に追加し、必要なすべての更新を行ってください。HaskellとC++またはJavaではどのコードに触れなければならなかったか？ (あなたがHaskellプログラマでなくても、変更はかなり明白であるはずです。) 
   \item
-        Show that $a + a = 2 \times a$ holds for types (up to
-        isomorphism). Remember that $2$ corresponds to \code{Bool},
-        according to our translation table.
+        同型の違いを除いて (up to isomorphism)、型に対して $a + a = 2 \times a$ が成り立つことを示してください。私たちの翻訳表によれば、$2$ が \code{Bool} に対応することを思い出してください。
 \end{enumerate}
+

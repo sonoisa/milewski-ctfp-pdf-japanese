@@ -1,54 +1,20 @@
 % !TEX root = ../../ctfp-print.tex
 
-\lettrine[lhang=0.17]{M}{ost constructions in} category theory are generalizations of results
-from other more specific areas of mathematics. Things like products,
-coproducts, monoids, exponentials, etc., have been known long before
-category theory. They might have been known under different names in
-different branches of mathematics. A Cartesian product in set theory, a
-meet in order theory, a conjunction in logic --- they are all specific
-examples of the abstract idea of a categorical product.
+\lettrine[lhang=0.17]{圏}{論}のほとんどの構成は、数学の他のより具体的な領域からの結果の一般化です。積、余積、モノイド、指数などは、圏論が知られる前から知られていました。それらは数学の異なる分野で異なる名前で知られていたかもしれません。集合論におけるデカルト直積、順序論におけるミート、論理学における論理積 — これらはすべて圏論的積の抽象的なアイデアの具体的な例です。
 
-The Yoneda lemma stands out in this respect as a sweeping statement
-about categories in general with little or no precedent in other
-branches of mathematics. Some say that its closest analog is Cayley's
-theorem in group theory (every group is isomorphic to a permutation
-group of some set).
+この点で、米田の補題は他の数学の分野でほとんどまたは全く前例のない一般的な圏についての包括的な声明として際立っています。いくつかは、その最も近い類似物は群論のCayleyの定理です (すべての群はいくつかの集合の置換群と同型です) 。
 
-The setting for the Yoneda lemma is an arbitrary category $\cat{C}$
-together with a functor $F$ from $\cat{C}$ to $\Set$. We've
-seen in the previous section that some $\Set$-valued functors are
-representable, that is isomorphic to a hom-functor. The Yoneda lemma
-tells us that all $\Set$-valued functors can be obtained from
-hom-functors through natural transformations, and it explicitly
-enumerates all such transformations.
+米田の補題の設定は、任意の圏$\cat{C}$と、$\cat{C}$から$\Set$への関手$F$とを合わせたものです。前の節で、いくつかの$\Set$値関手が表現可能である、つまりホム関手と同型であることを見ました。米田の補題は、すべての$\Set$値関手が自然変換を通じてホム関手から得られ、そのような変換を明示的に列挙すると言っています。
 
-When I talked about natural transformations, I mentioned that the
-naturality condition can be quite restrictive. When you define a
-component of a natural transformation at one object, naturality may be
-strong enough to ``transport'' this component to another object that is
-connected to it through a morphism. The more arrows between objects in
-the source and the target categories there are, the more constraints you
-have for transporting the components of natural transformations.
-$\Set$ happens to be a very arrow-rich category.
+自然変換について話したとき、自然性条件がかなり制限的である可能性があると述べました。ある対象における自然変換のコンポーネントを定義すると、自然性はそれを射を通じて別の対象に「輸送」するのに十分強力かもしれません。ソースとターゲットの圏の対象間の射が多ければ多いほど、自然変換のコンポーネントを輸送するための制約が多くなります。$\Set$は非常に射が豊富な圏です。
 
-The Yoneda lemma tells us that a natural transformation between a
-hom-functor and any other functor $F$ is completely determined by
-specifying the value of its single component at just one point! The rest
-of the natural transformation just follows from naturality conditions.
+米田の補題は、ホム関手と任意の他の関手$F$との間の自然変換が、たった一点、つまり$\id_a$における$\alpha_a$の単一の値を指定することによって完全に決定されることを教えてくれます。自然性条件から残りの自然変換がただちに従います。
 
-So let's review the naturality condition between the two functors
-involved in the Yoneda lemma. The first functor is the hom-functor. It
-maps any object $x$ in $\cat{C}$ to the set of morphisms
-$\cat{C}(a, x)$ --- for $a$ a fixed object in $\cat{C}$. We've
-also seen that it maps any morphism $f$ from $x \to y$ to $\cat{C}(a, f)$.
+だから、米田の補題に関わる二つの関手の間の自然性条件を見直しましょう。最初の関手はホム関手です。それは$\cat{C}$の任意の対象$x$を射の集合$\cat{C}(a, x)$に写像します — $a$は$\cat{C}$の固定された対象です。また、任意の射$f$を$x \to y$から$\cat{C}(a, f)$に写像することも見ました。
 
-The second functor is an arbitrary $\Set$-valued functor
-$F$.
+二番目の関手は任意の$\Set$値関手$F$です。
 
-Let's call the natural transformation between these two functors
-$\alpha$. Because we are operating in $\Set$, the components of
-the natural transformation, like $\alpha_x$ or $\alpha_y$, are just
-regular functions between sets:
+これら二つの関手間の自然変換を$\alpha$と呼びましょう。$\Set$で作業しているので、自然変換のコンポーネント、例えば$\alpha_x$や$\alpha_y$は単なる集合間の通常の関数です: 
 \begin{gather*}
   \alpha_x \Colon \cat{C}(a, x) \to F x \\
   \alpha_y \Colon \cat{C}(a, y) \to F y
@@ -60,23 +26,17 @@ regular functions between sets:
 \end{figure}
 
 \noindent
-And because these are just functions, we can look at their values at
-specific points. But what's a point in the set $\cat{C}(a, x)$? Here's
-the key observation: Every point in the set $\cat{C}(a, x)$ is also a
-morphism $h$ from $a$ to $x$.
+そしてこれらが単なる関数であるので、私たちは特定の点でのそれらの値を見ることができます。しかし、集合$\cat{C}(a, x)$の中の点とは何でしょうか？ここが重要な観察です: 集合$\cat{C}(a, x)$の中の全ての点もまた$a$から$x$への射$h$です。
 
-So the naturality square for $\alpha$:
+だから$\alpha$に対する自然性の四角形: 
 \[\alpha_y \circ \cat{C}(a, f) = F f \circ \alpha_x\]
-becomes, point-wise, when acting on $h$:
+は、$h$に作用するとき、点ごとに次のようになります: 
 \[\alpha_y (\cat{C}(a, f) h) = (F f) (\alpha_x h)\]
-You might recall from the previous section that the action of the
-hom-functor $\cat{C}(a,-)$ on a morphism $f$ was defined as
-precomposition:
+前の節から射$f$に対するホム関手$\cat{C}(a,-)$の作用は前合成として定義されたことを思い出してください: 
 \[\cat{C}(a, f) h = f \circ h\]
-which leads to:
+それによって次のようになります: 
 \[\alpha_y (f \circ h) = (F f) (\alpha_x h)\]
-Just how strong this condition is can be seen by specializing it to the
-case of $x = a$.
+この条件がどれほど強いかは、$x = a$の場合に特化することによって見ることができます。
 
 \begin{figure}[H]
   \centering
@@ -84,53 +44,26 @@ case of $x = a$.
 \end{figure}
 
 \noindent
-In that case $h$ becomes a morphism from $a$ to
-$a$. We know that there is at least one such morphism,
-$h = \id_a$. Let's plug it in:
+その場合$h$は$a$から$a$への射になります。少なくとも一つのそういう射、$h = \id_a$があることがわかっています。それを挿入しましょう: 
 \[\alpha_y f = (F f) (\alpha_a \id_a)\]
-Notice what has just happened: The left hand side is the action of
-$\alpha_y$ on an arbitrary element $f$ of $\cat{C}(a, y)$. And
-it is totally determined by the single value of $\alpha_a$ at
-$\id_a$. We can pick any such value and it will generate a natural
-transformation. Since the values of $\alpha_a$ are in the set
-$F a$, any point in $F a$ will define some $\alpha$.
+ただちに何が起こったかに気づいてください: 左側は$\cat{C}(a, y)$の任意の要素$f$に対する$\alpha_y$の作用です。そしてそれは$\id_a$における$\alpha_a$の単一の値によって完全に決定されます。私たちはそのような任意の値を選ぶことができ、それは自然変換を生成します。$\alpha_a$の値は$F a$の集合にありますから、$F a$の任意の点はいくつかの$\alpha$を定義することができます。
 
-Conversely, given any natural transformation $\alpha$ from
-$\cat{C}(a, -)$ to $F$, you can evaluate it at $\id_a$ to
-get a point in $F a$.
+逆に、$\cat{C}(a, -)$から$F$への任意の自然変換$\alpha$が与えられたら、それを$\id_a$で評価して$F a$の中の点を得ることができます。
 
-We have just proven the Yoneda lemma:
+これによって米田の補題が証明されました: 
 
 \begin{quote}
-  There is a one-to-one correspondence between natural transformations
-  from $\cat{C}(a, -)$ to $F$ and elements of $F a$.
+  $\cat{C}(a, -)$から$F$への自然変換と$F a$の要素との間には一対一の対応関係があります。
 \end{quote}
-in other words,
+言い換えれば、
 \[\cat{Nat}(\cat{C}(a, -), F) \cong F a\]
-Or, if we use the notation $[\cat{C}, \Set]$ for the functor
-category between $\cat{C}$ and $\Set$, the set of natural
-transformation is just a hom-set in that category, and we can write:
+あるいは、$\cat{C}$と$\Set$の間の関手圏に対する表記$[\cat{C}, \Set]$を使えば、自然変換の集合はその圏のホム集合であり、次のように書くことができます: 
 \[[\cat{C}, \Set](\cat{C}(a, -), F) \cong F a\]
-I'll explain later how this correspondence is in fact a natural
-isomorphism.
+この対応関係が実際には自然同型であることを後で説明します。
 
-Now let's try to get some intuition about this result. The most amazing
-thing is that the whole natural transformation crystallizes from just
-one nucleation site: the value we assign to it at $\id_a$. It
-spreads from that point following the naturality condition. It floods
-the image of $\cat{C}$ in $\Set$. So let's first consider what the
-image of $\cat{C}$ is under $\cat{C}(a, -)$.
+この結果についていくらか直感を得ましょう。最も驚くべきことは、全体の自然変換がただ一つの核となる点: $\id_a$でそれに割り当てる値から結晶化するということです。それは自然性条件に従ってその点から広がります。それは$\cat{C}$の$\Set$への像を溢れさせます。だからまず、$\cat{C}(a, -)$の下での$\cat{C}$の像が何であるかを考えましょう。
 
-Let's start with the image of $a$ itself. Under the hom-functor
-$\cat{C}(a, -)$, $a$ is mapped to the set $\cat{C}(a, a)$.
-Under the functor $F$, on the other hand, it is mapped to the set
-$F a$. The component of the natural transformation $\alpha_a$
-is some function from $\cat{C}(a, a)$ to $F a$. Let's focus on
-just one point in the set $\cat{C}(a, a)$, the point corresponding to
-the morphism $\id_a$. To emphasize the fact that it's just a point
-in a set, let's call it $p$. The component $\alpha_a$ should map
-$p$ to some point $q$ in $F a$. I'll show you that
-any choice of $q$ leads to a unique natural transformation.
+まず$a$自身の像から始めましょう。ホム関手$\cat{C}(a, -)$の下で、$a$は集合$\cat{C}(a, a)$に写像されます。他方、関手$F$の下では、それは集合$F a$に写像されます。自然変換$\alpha_a$のコンポーネントは$\cat{C}(a, a)$から$F a$へのいくつかの関数です。集合$\cat{C}(a, a)$の中の一点、$\id_a$に対応する点に注目しましょう。それがただの集合の中の点であるという事実を強調するために、それを$p$と呼びましょう。コンポーネント$\alpha_a$は$p$を$F a$の中のいくつかの点$q$に写像すべきです。任意の$q$の選択が一意の自然変換につながることを示します。
 
 \begin{figure}[H]
   \centering
@@ -138,15 +71,7 @@ any choice of $q$ leads to a unique natural transformation.
 \end{figure}
 
 \noindent
-The first claim is that the choice of one point $q$ uniquely
-determines the rest of the function $\alpha_a$. Indeed, let's pick any
-other point, $p'$ in $\cat{C}(a, a)$, corresponding to
-some morphism $g$ from $a$ to $a$. And here's where
-the magic of the Yoneda lemma happens: $g$ can be viewed as a
-point $p'$ in the set $\cat{C}(a, a)$. At the same time,
-it selects two \emph{functions} between sets. Indeed, under the
-hom-functor, the morphism $g$ is mapped to a function
-$\cat{C}(a, g)$; and under $F$ it's mapped to $F g$.
+最初の主張は、一つの点$q$の選択が残りの関数$\alpha_a$を一意に決定するということです。確かに、$\cat{C}(a, a)$の中の他の任意の点$p'$を選びましょう。それは$a$から$a$へのいくつかの射$g$に対応します。そして、ここで米田の補題の魔法が起こります: $g$は集合$\cat{C}(a, a)$の中の点$p'$として見ることができます。同時に、それは集合間の二つの\emph{関数}を選択します。確かに、ホム関手の下で、射$g$は関数$\cat{C}(a, g)$に写像され、$F$の下で$F g$に写像されます。
 
 \begin{figure}[H]
   \centering
@@ -154,36 +79,17 @@ $\cat{C}(a, g)$; and under $F$ it's mapped to $F g$.
 \end{figure}
 
 \noindent
-Now let's consider the action of $\cat{C}(a, g)$ on our original
-$p$ which, as you remember, corresponds to $\id_a$. It is
-defined as precomposition, $g \circ \id_a$, which is equal to $g$,
-which corresponds to our point $p'$. So the morphism
-$g$ is mapped to a function that, when acting on $p$
-produces $p'$, which is $g$. We have come full
-circle!
+今、$\cat{C}(a, g)$が私たちの元の$p$、すなわち$\id_a$に対応するものに作用することを考えましょう。それは前合成として定義されます、$g \circ \id_a$、それは$g$に等しく、私たちの点$p'$に対応します。だから射$g$は、$p$に作用すると$p'$を生成する関数に写像されます、それは$g$です。私たちは一周しました！
 
-Now consider the action of $F g$ on $q$. It is some
-$q'$, a point in $F a$. To complete the naturality
-square, $p'$ must be mapped to $q'$ under
-$\alpha_a$. We picked an arbitrary $p'$ (an arbitrary
-$g$) and derived its mapping under $\alpha_a$. The function
-$\alpha_a$ is thus completely determined.
+今、$F g$が$q$に作用することを考えましょう。それは$F a$の中のいくつかの点$q'$です。自然性の四角形を完成させるために、$p'$は$\alpha_a$の下で$q'$に写像されなければなりません。私たちは任意の$p'$ (任意の$g$) を選んで、$\alpha_a$の下でのその写像を導き出しました。関数$\alpha_a$はそうして完全に決定されます。
 
-The second claim is that $\alpha_x$ is uniquely determined for any
-object $x$ in $\cat{C}$ that is connected to $a$. The
-reasoning is analogous, except that now we have two more sets,
-$\cat{C}(a, x)$ and $F x$, and the morphism $g$ from
-$a$ to $x$ is mapped, under the hom-functor, to:
+$a$に接続されている$\cat{C}$の任意の対象$x$に対して、$\alpha_x$も一意に決定されるという第二の主張があります。推論は類似していますが、今度は2つの追加の集合、$\cat{C}(a, x)$と$F x$があり、$a$から$x$への射$g$はホム関手の下で次のように写像されます: 
 \[\cat{C}(a, g) \Colon \cat{C}(a, a) \to \cat{C}(a, x)\]
-and under $F$ to:
+そして$F$の下では: 
 \[F g \Colon F a \to F x\]
-Again, $\cat{C}(a, g)$ acting on our $p$ is given by the
-precomposition: $g \circ \id_a$, which corresponds to a point
-$p'$ in $\cat{C}(a, x)$. Naturality determines the value
-of $\alpha_x$ acting on $p'$ to be:
+再び、$\cat{C}(a, g)$が私たちの$p$に作用することは前合成によって与えられます: $g \circ \id_a$、それは$\cat{C}(a, x)$の中の点$p'$に対応します。自然性は$\alpha_x$が$p'$に作用する値を決定します: 
 \[q' = (F g) q\]
-Since $p'$ was arbitrary, the whole function $\alpha_x$ is
-thus determined.
+$p'$が任意であったので、関数$\alpha_x$全体がそうして決定されます。
 
 \begin{figure}[H]
   \centering
@@ -191,134 +97,76 @@ thus determined.
 \end{figure}
 
 \noindent
-What if there are objects in $\cat{C}$ that have no connection to
-$a$? They are all mapped under $\cat{C}(a, -)$ to a single set
---- the empty set. Recall that the empty set is the initial object in
-the category of sets. It means that there is a unique function from this
-set to any other set. We called this function \code{absurd}. So here,
-again, we have no choice for the component of the natural
-transformation: it can only be \code{absurd}.
+$a$に接続がない$\cat{C}$の対象があった場合はどうでしょうか？それらはすべて$\cat{C}(a, -)$の下で単一の集合 --- 空集合に写像されます。空集合は集合の圏の始対象です。それはこの集合から任意の他の集合への一意の関数があることを意味します。この関数を\code{absurd}と呼びます。だからここでも、自然変換のコンポーネントに対して選択の余地はありません: それは\code{absurd}以外にはありえません。
 
-One way of understanding the Yoneda lemma is to realize that natural
-transformations between $\Set$-valued functors are just families
-of functions, and functions are in general lossy. A function may
-collapse information and it may cover only parts of its codomain. The
-only functions that are not lossy are the ones that are invertible ---
-the isomorphisms. It follows then that the best structure-preserving
-$\Set$-valued functors are the representable ones. They are either
-the hom-functors or the functors that are naturally isomorphic to
-hom-functors. Any other functor $F$ is obtained from a
-hom-functor through a lossy transformation. Such a transformation may
-not only lose information, but it may also cover only a small part of
-the image of the functor $F$ in $\Set$.
+米田の補題を理解する一つの方法は、$\Set$値関手間の自然変換が関数の族であり、関数は一般的に情報を損失するものであることを認識することです。関数は情報を崩壊させるかもしれませんし、その終域の一部だけを覆うかもしれません。損失がない唯一の関数は可逆なもの、つまり同型です。それに続いて、最良の構造を保持する$\Set$値関手は表現可能なものです。それらはホム関手か、ホム関手に自然に同型な関手です。任意の他の関手$F$は、情報を失う変換を通じてホム関手から得られます。そのような変換は情報を失うだけでなく、関手$F$の$\Set$における像のごく一部しか覆わないかもしれません。
 
-\section{Yoneda in Haskell}
+\section{Haskellでの米田}
 
-We have already encountered the hom-functor in Haskell under the guise
-of the reader functor:
+すでにHaskellでホム関手に出会いました、それはreader関手の仮面をかぶっています: 
 
 \src{snippet01}
-The reader maps morphisms (here, functions) by precomposition:
+Readerは射 (ここでは関数) を前合成によって写像します: 
 
 \src{snippet02}
-The Yoneda lemma tells us that the reader functor can be naturally
-mapped to any other functor.
+米田の補題は、Reader関手が任意の他の関手に自然に写像できると教えてくれます。
 
-A natural transformation is a polymorphic function. So given a functor
-\code{F}, we have a mapping to it from the reader functor:
+自然変換は多相的関数です。だから、関手\code{F}が与えられたら、私たちはReader関手からそれに対する写像を持っています: 
 
 \src{snippet03}
-As usual, \code{forall} is optional, but I like to write it explicitly
-to emphasize parametric polymorphism of natural transformations.
+通常、\code{forall}は省略可能ですが、自然変換のパラメトリック多相性を強調するために、私はそれを明示的に書くのが好きです。
 
-The Yoneda lemma tells us that these natural transformations are in
-one-to-one correspondence with the elements of \code{F a}:
+米田の補題は、これらの自然変換が\code{F a}の要素と一対一に対応していることを教えてくれます: 
 
 \begin{snipv}
 forall x . (a -> x) -> F x \ensuremath{\cong} F a
 \end{snipv}
-The right hand side of this identity is what we would normally consider
-a data structure. Remember the interpretation of functors as generalized
-containers? \code{F a} is a container of \code{a}. But the left
-hand side is a polymorphic function that takes a function as an
-argument. The Yoneda lemma tells us that the two representations are
-equivalent --- they contain the same information.
+この等式の右側は、私たちが通常データ構造と考えるものです。関手を一般化されたコンテナとしての解釈を覚えていますか？\code{F a}は\code{a}のコンテナです。しかし、左側は関数を引数として取る多相的関数です。米田の補題は、二つの表現が等価である、つまり同じ情報を含んでいることを教えてくれます。
 
-Another way of saying this is: Give me a polymorphic function of the
-type:
+これを言い換えると: 私にこの型の多相的関数を与えてください: 
 
 \src{snippet04}
-and I'll produce a container of \code{a}. The trick is the one we used
-in the proof of the Yoneda lemma: we call this function with \code{id}
-to get an element of \code{F a}:
+そして私は\code{a}のコンテナを生成します。トリックは、米田の補題の証明で使用したものと同じです: この関数を\code{id}で呼び出して、\code{F a}の要素を得ます: 
 
 \src{snippet05}
-The converse is also true: Given a value of the type \code{F a}:
+逆もまた真です: \code{F a}の型の値が与えられた場合: 
 
 \src{snippet06}
-one can define a polymorphic function:
+誰かが正しい型の多相的関数を定義できます: 
 
 \src{snippet07}
-of the correct type. You can easily go back and forth between the two
-representations.
+二つの表現間を簡単に行き来することができます。
 
-The advantage of having multiple representations is that one might be
-easier to compose than the other, or that one might be more efficient in
-some applications than the other.
+複数の表現を持つ利点は、一方が他方よりも組み合わせやすいか、あるいはいくつかの応用においてより効率的である可能性があることです。
 
-The simplest illustration of this principle is the code transformation
-that is often used in compiler construction: the continuation passing
-style or \acronym{CPS}. It's the simplest application of the Yoneda lemma to the
-identity functor. Replacing \code{F} with identity produces:
+この原理の最も単純な例は、しばしばコンパイラ開発に使用されるコード変換です: 継続渡しスタイルまたは\acronym{CPS}です。それは、恒等関手に米田の補題を適用した最も単純な応用です。\code{F}を恒等関手で置き換えると: 
 
 \begin{snipv}
 forall r . (a -> r) -> r \ensuremath{\cong} a
 \end{snipv}
-The interpretation of this formula is that any type \code{a} can be
-replaced by a function that takes a ``handler'' for \code{a}. A
-handler is a function accepting \code{a} and performing the rest of
-the computation --- the continuation. (The type \code{r} usually
-encapsulates some kind of status code.)
+この公式の解釈は、任意の型\code{a}が\code{a}を受け取る「ハンドラー」を取る関数に置き換えられるということです。ハンドラーは\code{a}を受け入れて残りの計算を行う関数です。  (型\code{r}は通常、何らかの種類の状態コードをカプセル化します。) 
 
-This style of programming is very common in UIs, in asynchronous
-systems, and in concurrent programming. The drawback of \acronym{CPS} is that it
-involves inversion of control. The code is split between producers and
-consumers (handlers), and is not easily composable. Anybody who's done
-any amount of nontrivial web programming is familiar with the nightmare
-of spaghetti code from interacting stateful handlers. As we'll see
-later, judicious use of functors and monads can restore some
-compositional properties of \acronym{CPS}.
+このプログラミングスタイルは、UI、非同期システム、および並行プログラミングで非常に一般的です。CPSの欠点は、制御の反転が含まれることです。コードはプロデューサーとコンシューマー (ハンドラー) の間で分割され、容易に組み合わせることができません。状態フルハンドラーが交錯するスパゲッティコードの悪夢に慣れている人は誰でも、Webプログラミングをある程度以上行ったことがあるでしょう。後で見るように、関手とモナドの賢明な使用は、CPSの組成特性のいくつかを復元することができます。
 
-\section{Co-Yoneda}
+\section{余米田}
 
-As usual, we get a bonus construction by inverting the direction of
-arrows. The Yoneda lemma can be applied to the opposite category
-$\cat{C}^\mathit{op}$ to give us a mapping between contravariant
-functors.
+いつものように、射の方向を反転することによってボーナス構造を得ます。米田の補題は、逆圏$\cat{C}^\mathit{op}$に適用され、反変関手間の写像を与えます。
 
-Equivalently, we can derive the co-Yoneda lemma by fixing the target
-object of our hom-functors instead of the source. We get the
-contravariant hom-functor from $\cat{C}$ to $\Set$:
-$\cat{C}(-, a)$. The contravariant version of the Yoneda lemma
-establishes one-to-one correspondence between natural transformations
-from this functor to any other contravariant functor $F$ and the
-elements of the set $F a$:
+同等に、私たちは、私たちのホム関手の代わりにターゲット対象を固定することによって、余米田の補題を導出することができます。私たちは$\cat{C}$から$\Set$への反変ホム関手$\cat{C}(-, a)$を得ます。余米田の補題の反変版は、この関手から任意の他の反変関手$F$への自然変換と$F a$の集合の要素との間に一対一の対応を確立します: 
 \[\cat{Nat}(\cat{C}(-, a), F) \cong F a\]
-Here's the Haskell version of the co-Yoneda lemma:
+これがHaskell版の余米田の補題です: 
 
 \begin{snipv}
 forall x . (x -> a) -> F x \ensuremath{\cong} F a
 \end{snipv}
-Notice that in some literature it's the contravariant version that's
-called the Yoneda lemma.
+いくつかの文献では、反変版が米田の補題と呼ばれていることに注意してください。
 
-\section{Challenges}
+\section{チャレンジ}
 
 \begin{enumerate}
   \tightlist
   \item
-        Show that the two functions \code{phi} and \code{psi} that form
-        the Yoneda isomorphism in Haskell are inverses of each other.
+        Haskellでの米田同型を形成する二つの関数\code{phi}と\code{psi}が互いに逆であることを示してください。
 
         \begin{snip}{haskell}
 phi :: (forall x . (a -> x) -> F x) -> F a
@@ -328,22 +176,16 @@ psi :: F a -> (forall x . (a -> x) -> F x)
 psi fa h = fmap h fa
 \end{snip}
   \item
-        A discrete category is one that has objects but no morphisms other
-        than identity morphisms. How does the Yoneda lemma work for functors
-        from such a category?
+        対象はあるが、恒等射以外の射がない離散圏に対して、米田の補題はどのように機能しますか？
   \item
-        A list of units \code{{[}(){]}} contains no other information but
-        its length. So, as a data type, it can be considered an encoding of
-        integers. An empty list encodes zero, a singleton \code{{[}(){]}} (a
-        value, not a type) encodes one, and so on. Construct another
-        representation of this data type using the Yoneda lemma for the list
-        functor.
+        単位のリスト\code{{[}(){]}}は、その長さ以外の情報を含みません。したがって、データ型として、それは整数のエンコーディングと見なすことができます。空リストはゼロを、一つの要素のリスト\code{{[}(){]}} (値であり型ではありません) は一を、そして以下同様です。リスト関手に対する米田の補題を使用して、このデータ型の別の表現を構成してください。
 \end{enumerate}
 
-\section{Bibliography}
+\section{参考文献}
 
 \begin{enumerate}
   \tightlist
   \item
-        \urlref{https://www.youtube.com/watch?v=TLMxHB19khE}{Catsters} video.
+        \urlref{https://www.youtube.com/watch?v=TLMxHB19khE}{Catsters}のビデオ。
 \end{enumerate}
+

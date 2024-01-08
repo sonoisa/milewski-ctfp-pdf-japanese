@@ -1,6 +1,6 @@
 /.vscode/
 /.direnv/
-/build/
+#/build/
 /result
 .DS_Store
 src/.dotty-ide-disabled
@@ -24,3 +24,4 @@ out/*
 *.ind
 *.out
 *.toc
+prompt*.txt
