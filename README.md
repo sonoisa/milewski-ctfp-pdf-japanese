@@ -3,7 +3,7 @@
 これは[Category Theory For Programmers 非公式PDF版](https://github.com/hmemcpy/milewski-ctfp-pdf)を日本語に翻訳するプロジェクトです。
 
 ![Category Theory for Programmers][ctfp image]
-
+画像の出典: https://github.com/hmemcpy/milewski-ctfp-pdf
 
 ## 日本語版PDF
 
