@@ -5,9 +5,9 @@
 ![Category Theory for Programmers][ctfp image]
 
 
-## PDF
+## 日本語版PDF
 
-組版済みのPDFファイルは下記からダウンロードできます。
+プログラマのための圏論 (Category Theory For Programmers 日本語版) のPDFファイルは下記からダウンロードできます。  
 まだ翻訳の修正途中であるため、変な部分が多々あると思います。
 
 - 閲覧用
