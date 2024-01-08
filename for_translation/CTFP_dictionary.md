@@ -1,0 +1,246 @@
+- 2-categories: 2-圏
+- 2-category: 2-圏
+- a meet in order theory: 順序理論における交わり
+- ad hoc polymorphism: アドホック多相性
+- additive: 加法
+- adjoint: 随伴
+- adjunct: 随伴
+- adjunction: 随伴
+- algebra: 代数
+- algebraic data type: 代数的データ型
+- Anamorphism: Anamorphism
+- arity: アリティ
+- arrows: 矢印
+- associative: 結合的
+- basic product operations: 基本積演算
+- bicartesian closed: 双デカルト閉
+- bicategories: 双圏
+- bicategory: 双圏
+- biclosed: 双閉
+- bifunctor: 双関手
+- bijection: 全単射
+- bottom: ボトム
+- cancel: 相殺
+- canonical: 標準
+- Cartesian Closed Categories: デカルト閉圏
+- Cartesian Closed Category: デカルト閉圏
+- Cartesian closed: デカルト閉
+- Cartesian product: 直積
+- cartesian: デカルト
+- Catamprphism: Catamprphism
+- categories: 圏
+- category: 圏
+- Co-Yoneda: 余米田
+- coalgebra: 余代数
+- cocone: 余錐
+- codomain: 終域
+- coend: 余エンド
+- coequalizer: 余イコライザ
+- colimit: 余極限
+- commutative diagram: 可換図式
+- commutative: 可換
+- commuting diagram: 可換図式
+- comonad: 余モナド
+- comonoid: 余モノイド
+- component: コンポーネント
+- composability: 合成可能性
+- composable: 合成可能
+- composition: 合成
+- cone: 錐
+- conjunction: 論理積
+- contextual computation: 文脈的計算
+- continuation: 継続
+- continuity: 連続性
+- contravariant: 反変
+- coproduct: 余積
+- cospan: 余スパン
+- counit: 余単位
+- covariant: 共変
+- Curry-Howard: Curry-Howard
+- Curry: Curry
+- Currying: Curry化
+- declarative programming: 宣言的プログラミング
+- deduction: 演繹
+- denotational semantics: 表示的意味論
+- dinatural transformation: 双自然変換
+- disjoint union: 非交和
+- domain: 始域
+- duality: 双対性
+- effects: 作用
+- Eilenberg-Moore category: Eilenberg-Moore圏
+- Eilenberg-Moore: Eilenberg-Moore
+- element: 要素
+- embedding: 埋め込み
+- end: エンド
+- endofunctors: 自己関手
+- enriched categories: 豊穣圏
+- enriched category: 豊穣圏
+- enriched functor: 豊穣関手
+- enriched: 豊穣
+- epi: エピ
+- equality: 等価性
+- equalizer: イコライザ
+- equational reasoning: 等号推論
+- equivalence relation: 同値関係
+- equivalence: 同値性
+- evaluation: 評価
+- exceptions: 例外
+- exponential: 指数
+- factorizer: ファクトライザ
+- faithful functor: 忠実関手
+- faithful: 忠実
+- faithfulness: 忠実性
+- fixed point: 不動点
+- folds: 畳み込み
+- forgetful functor: 忘却関手
+- forgetful: 忘却
+- free categories: 自由圏
+- free category: 自由圏
+- free functor: 自由関手
+- free monad: 自由モナド
+- free monoid: 自由モノイド
+- free: 自由
+- Fubini theorem: Fubiniの定理
+- full functor: 充満関手
+- fullness: 充満性
+- fully faithful: 充満忠実
+- function application: 関数適用
+- function composition: 関数合成
+- functor categories: 関手圏
+- functor category: 関手圏
+- functor: 関手
+- group theory: 群論
+- Haskell: Haskell
+- Hom-set: ホム集合
+- Hom: ホム
+- homomorphism: 準同型
+- homotopy: ホモトピー
+- horizontal composition: 水平合成
+- induction: 帰納
+- initial algebra: 始代数
+- initial object: 始対象
+- injective: 単射
+- instance: インスタンス
+- isomorphism: 同型
+- Kan extension: Kan拡張
+- Kan: Kan
+- Kleisli: Kleisli
+- Lawvere theory: Lawvere理論
+- Lawvere: Lawvere
+- left adjoint: 左随伴
+- Lense: レンズ
+- lifted: 持ち上げられた
+- limit: 極限
+- linear order: 線形順序
+- List functor: List関手
+- locally small categories: 局所的に小さい圏
+- small category: 小さい圏
+- large category: 大きい圏
+- Maybe functor: Maybe関手
+- monad: モナド
+- monic: モニック
+- mono: モノ
+- monoid: モノイド
+- monoidal category: モノイダル圏
+- monoidal categories: モノイダル圏
+- monoidal: モノイダル
+- morphism: 射
+- Natural isomorphism: 自然同型
+- natural transformation: 自然変換
+- natural: 自然
+- naturality condition: 自然性条件
+- naturality: 自然性
+- naturally isomorphic: 自然に同型
+- Ninja: 忍者
+- nondeterminism: 非決定性
+- object: 対象
+- operational semantics: 操作的意味論
+- opposite category: 逆圏
+- opposite categories: 逆圏
+- ordered categories: 順序圏
+- ordered category: 順序圏
+- ordered set: 順序集合
+- parametric polymorphism: パラメトリック多相性
+- partial order: 半順序
+- partiality: 部分性
+- Peano: Peano
+- polymorphic function: 多相的関数
+- poset: 半順序集合
+- predicate: 述語
+- premonoidal: プレモノイダル
+- preorder: 前順序
+- presheaf: 前層
+- product type: 積型
+- product: 積
+- profunctor: プロ関手
+- profunctor: プロ関手
+- proof-relevant relation: 証明関連関係
+- pullback: 引き戻し
+- pure functions: 純粋関数
+- pushout: 押し出し
+- quantifier: 量化子
+- quotient: 商
+- rank: ランク
+- Reader functor: Reader関手
+- Representability: 表現可能性
+- representable functor: 表現可能関手
+- representable presheaf: 表現可能前層
+- representable: 表現可能
+- representation: 表現
+- right adjoint: 右随伴
+- ring: 環
+- Scala: Scala
+- self enrichment: 自己豊穣化
+- semiring: 半環
+- side effect: 副作用
+- small category: 小さい圏
+- small categories: 小さい圏
+- span: スパン
+- State monad: Stateモナド
+- Store comonad: Store余モナド
+- Stream comonad: Strean余モナド
+- subcategory: 部分圏
+- subcategories: 部分圏
+- subclass: 子クラス
+- subobject: 部分対象
+- sum type: 和型
+- superclass: 親クラス
+- surjective: 全射
+- symmetric: 対称的
+- T-algebra: T-代数
+- tensor: テンソル
+- terminal object: 終対象
+- theorems for free: 無料の定理
+- topoi: トポイ
+- topological sort: トポロジカルソート
+- topology: トポロジー
+- topos: トポス
+- total order: 全順序
+- triangular identities: 三角恒等式
+- type inference: 型推論
+- type theory: 型理論
+- type: 型
+- typing: 型付け
+- typeclass: 型クラス
+- underlying set: 台集合
+- underlying: 台となる
+- unit: 単位
+- universal cone: 普遍錐
+- universal construction: 普遍構成
+- universal: 普遍
+- universality: 普遍性
+- variant: バリアント
+- vertical composition: 垂直合成
+- wedge condition: くさび条件
+- wedge: くさび
+- Writer category: Writer圏
+- Writer functor: Writer関手
+- Writer monad: Writerモナド
+- Yoneda embedding: 米田埋め込み
+- Yoneda functor: 米田関手
+- Yoneda: 米田
+- Yoneda’s lemma: 米田の補題
+- Zermelo-Fraenkel: Zermelo-Fraenkel
+- inclusion functor: 包含関手
+- tuple: タプル
+- programmer: プログラマ
