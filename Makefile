@@ -32,3 +32,5 @@ ctfp-print-scala:
 lint:
 	$(foreach file, $(call rwildcard,$(shell dirname "$(INPUT)"),*.tex), latexindent -l -w $(file);)
 
+clean:
+	rm src/*.aux src/*.fls src/*.idx src/*.ilg src/*.ind src/*.log src/*.fdb_latexmk src/*.out src/*.pdf src/*.toc src/_minted-ctfp/*.pygtex src/_minted-ctfp/*.pygstyle
