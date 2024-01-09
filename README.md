@@ -26,38 +26,38 @@
 - [x] ChatGPTを用いた全ページの機械翻訳
 - [x] サンプリングしたページにおける単語レベルの誤訳の修正
 - 各ページの手動翻訳修正
-  - [x] 0.0
-  - [ ] 1.1
-  - [ ] 1.2
-  - [ ] 1.3
-  - [ ] 1.4
-  - [ ] 1.5
-  - [ ] 1.6
-  - [ ] 1.7
-  - [ ] 1.8
-  - [ ] 1.9
-  - [ ] 1.10
-  - [ ] 2.1
-  - [ ] 2.2
-  - [ ] 2.3
-  - [ ] 2.4
-  - [ ] 2.5
-  - [ ] 2.6
-  - [ ] 3.1
-  - [ ] 3.2
-  - [ ] 3.3
-  - [ ] 3.4
-  - [ ] 3.5
-  - [ ] 3.6
-  - [ ] 3.7
-  - [ ] 3.8
-  - [ ] 3.9
-  - [ ] 3.10
-  - [ ] 3.11
-  - [ ] 3.12
-  - [ ] 3.13
-  - [ ] 3.14
-  - [ ] 3.15
+  - [x] 0.0 Preface
+  - [x] 1.1 Category: The Essence of Composition
+  - [ ] 1.2 Types and Functions
+  - [ ] 1.3 Categories Great and Small
+  - [ ] 1.4 Kleisli Categories
+  - [ ] 1.5 Products and Coproducts
+  - [ ] 1.6 Simple Algebraic Data Types
+  - [ ] 1.7 Functors
+  - [ ] 1.8 Functoriality
+  - [ ] 1.9 Function Types
+  - [ ] 1.10 Natural Transformations
+  - [ ] 2.1 Declarative Programming
+  - [ ] 2.2 Limits and Colimits
+  - [ ] 2.3 Free Monoids
+  - [ ] 2.4 Representable Functors
+  - [ ] 2.5 The Yoneda Lemma
+  - [ ] 2.6 Yoneda Embedding
+  - [ ] 3.1 It's All About Morphisms
+  - [ ] 3.2 Adjunctions
+  - [ ] 3.3 Free/Forgetful Adjunctions
+  - [ ] 3.4 Monads: Programmer's Definition
+  - [ ] 3.5 Monads and Effects
+  - [ ] 3.6 Monads Categorically
+  - [ ] 3.7 Comonads
+  - [ ] 3.8 F-Algebras
+  - [ ] 3.9 Algebras for Monads
+  - [ ] 3.10 Ends and Coends
+  - [ ] 3.11 Kan Extensions
+  - [ ] 3.12 Enriched Categories
+  - [ ] 3.13 Topoi
+  - [ ] 3.14 Lawvere Theories
+  - [ ] 3.15 Monads, Monoids, and Categories
   - [ ] その他のページ
 
 

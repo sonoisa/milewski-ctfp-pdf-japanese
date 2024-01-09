@@ -11,6 +11,8 @@ rwildcard=$(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2))
 setup:
 	nix develop
 
+all: ctfp ctfp-scala ctfp-ocaml ctfp-print ctfp-print-scala ctfp-print-ocaml
+
 ctfp:
 	cd src; $(LATEXMK_COMMAND) -jobname=ctfp ctfp-reader.tex; cp ctfp.pdf $(OUTPUT_DIRECTORY)/
 
