@@ -29,7 +29,7 @@
   - [x] 0.0 Preface
   - [x] 1.1 Category: The Essence of Composition
   - [x] 1.2 Types and Functions
-  - [ ] 1.3 Categories Great and Small
+  - [x] 1.3 Categories Great and Small
   - [ ] 1.4 Kleisli Categories
   - [ ] 1.5 Products and Coproducts
   - [ ] 1.6 Simple Algebraic Data Types

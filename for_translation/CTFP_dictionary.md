@@ -13,7 +13,7 @@
 - arrows: 矢印
 - associative: 結合的
 - basic product operations: 基本積演算
-- bicartesian closed: 双デカルト閉
+- bicartesian closed: 双Cartesian閉
 - bicategories: 双圏
 - bicategory: 双圏
 - biclosed: 双閉
@@ -22,11 +22,11 @@
 - bottom: ボトム
 - cancel: 相殺
 - canonical: 標準
-- Cartesian Closed Categories: デカルト閉圏
-- Cartesian Closed Category: デカルト閉圏
-- Cartesian closed: デカルト閉
+- Cartesian Closed Categories: Cartesian閉圏
+- Cartesian Closed Category: Cartesian閉圏
+- Cartesian closed: Cartesian閉
 - Cartesian product: 直積
-- cartesian: デカルト
+- cartesian: Cartesian
 - Catamprphism: Catamprphism
 - categories: 圏
 - category: 圏

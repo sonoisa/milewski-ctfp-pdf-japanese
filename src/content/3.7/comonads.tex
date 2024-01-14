@@ -69,7 +69,7 @@ Readerモナドと積型余モナドの間のつながりはさらに深く、Re
 次に、\code{extend}を解剖できるかどうかを考えるかもしれません。関数\code{w a -> b}を引数\code{w a}に適用するだけでいいのではないかと誘惑されるかもしれませんが、その結果の\code{b}を\code{w b}に変換する方法がないことにすぐ気づきます。覚えておいてください、余モナドは値を持ち上げる手段を提供しません。この点で、モナドの類似構造では\code{fmap}を使いました。ここで\code{fmap}を使う唯一の方法は、\code{w (w a)}型のものを手元に持っている場合です。もし私たちが\code{w a}を\\ \code{w (w a)}に変換できればいいのです。そして、便利なことに、それはまさに\code{join}の双対です。それを\code{duplicate}と呼びます: 
 
 \src{snippet14}
-したがって、モナドの定義と同様に、余モナドには余Kleisli射、\code{extend}、または\code{duplicate}を使用する3つの同等の定義があります。以下は、\code{Control.Comonad}ライブラリから直接取られたHaskellの定義です: 
+従って、モナドの定義と同様に、余モナドには余Kleisli射、\code{extend}、または\code{duplicate}を使用する3つの同等の定義があります。以下は、\code{Control.Comonad}ライブラリから直接取られたHaskellの定義です: 
 
 \src{snippet15}
 \code{extend}と\code{duplicate}のデフォルト実装が提供されているため、どちらか一方をオーバーライドするだけで済みます。
